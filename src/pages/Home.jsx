@@ -45,14 +45,14 @@ const WHO_SUBCATEGORIES = {
   services: [
     { label: 'Photography', icon: <svg {...I}><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> },
     { label: 'Private Chef', icon: <svg {...I}><path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 9.18 0A4 4 0 0 1 18 13.87V21H6z"/><path d="M6 17h12"/></svg> },
+    { label: 'Hair', icon: <svg {...I}><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.12 15.88M14.47 14.48 20 20M8.12 8.12 12 12"/></svg> },
     { label: 'Massage', icon: <svg {...I}><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4z"/><path d="M6 1v3m4-3v3m4-3v3"/></svg> },
     { label: 'Prepared Meals', icon: <svg {...I}><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 12h18"/><path d="M9 5v14m6-14v14"/></svg> },
+    { label: 'Nails', icon: <svg {...I}><path d="M10 3h4l1 6H9z"/><rect x="9" y="9" width="6" height="11" rx="1"/><path d="M12 20v2"/></svg> },
     { label: 'Personal Training', icon: <svg {...I}><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2"/><path d="M12 1v2"/><path d="M10 1h4"/></svg> },
     { label: 'Makeup', icon: <svg {...I}><path d="M9 3h6l1 7H8z"/><rect x="8" y="10" width="8" height="10" rx="1"/><path d="M12 20v2"/></svg> },
-    { label: 'Hair', icon: <svg {...I}><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.12 15.88M14.47 14.48 20 20M8.12 8.12 12 12"/></svg> },
     { label: 'Spa Treatments', icon: <svg {...I}><path d="M12 22c6 0 8-4 8-9H4c0 5 2 9 8 9z"/><path d="M12 2C6 2 4 8 4 13"/><path d="M12 2c6 0 8 6 8 11"/></svg> },
     { label: 'Catering', icon: <svg {...I}><path d="M4 18h16"/><path d="M4 18c0-8 3.5-13 8-13s8 5 8 13"/><path d="M12 2v3"/></svg> },
-    { label: 'Nails', icon: <svg {...I}><path d="M10 3h4l1 6H9z"/><rect x="9" y="9" width="6" height="11" rx="1"/><path d="M12 20v2"/></svg> },
   ],
 }
 
