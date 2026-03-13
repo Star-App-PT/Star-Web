@@ -15,7 +15,8 @@
   padding-bottom: 0;
 }
 
-.home__hero .container {
+/* Hero has both classes (home__hero + container); target same element so width applies */
+.home__hero.container {
   max-width: 448px;
 }
 
