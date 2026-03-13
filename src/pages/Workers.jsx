@@ -1,10 +1,11 @@
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { CATEGORIES, PICKED_DATES } from '../data/workers'
 import useUserLocation from '../hooks/useUserLocation'
 import './Workers.css'
 
 export default function Workers() {
+  const navigate = useNavigate()
   const { t } = useTranslation()
   const [searchParams] = useSearchParams()
   const selectedCategory = searchParams.get('category') || 'cleaners'
@@ -32,10 +33,9 @@ export default function Workers() {
             <a key={worker.id} className="workers-page__card" href={`/worker/${worker.id}`} target="_blank" rel="noopener noreferrer">
               <div className="workers-page__image-wrap">
                 <img src={worker.heroImage} alt={worker.specialty} className="workers-page__image" />
-                <img src={worker.image} alt={worker.name} className="workers-page__avatar" />
                 <span className="workers-page__pill">{t('home.topRated')}</span>
               </div>
-
+              <img src={worker.image} alt={worker.name} className="workers-page__avatar" />
               <div className="workers-page__body">
                 <p className="workers-page__name">{worker.name}</p>
                 <p className="workers-page__skill">{worker.specialty}</p>

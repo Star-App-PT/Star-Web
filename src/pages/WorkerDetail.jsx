@@ -248,8 +248,8 @@ export default function WorkerDetail() {
                       <a key={sw.id} href={`/worker/${sw.id}`} target="_blank" rel="noopener noreferrer" className="wd__similar-card">
                         <div className="wd__similar-img-wrap">
                           <img src={sw.heroImage} alt={sw.name} className="wd__similar-img" />
-                          <img src={sw.image} alt="" className="wd__similar-avatar" />
                         </div>
+                        <img src={sw.image} alt="" className="wd__similar-avatar" />
                         <div className="wd__similar-body">
                           <p className="wd__similar-name">{sw.name}</p>
                           <p className="wd__similar-skill">{sw.specialty}</p>

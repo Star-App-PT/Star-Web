@@ -395,11 +395,11 @@
 
 .wd__similar-card {
   border-radius: 14px;
-  overflow: hidden;
   background: var(--star-white);
   border: 1px solid var(--star-gray-200);
   text-decoration: none;
   transition: box-shadow 0.15s, transform 0.15s;
+  position: relative;
 }
 
 .wd__similar-card:hover {
@@ -409,6 +409,8 @@
 
 .wd__similar-img-wrap {
   position: relative;
+  border-radius: 14px 14px 0 0;
+  overflow: hidden;
 }
 
 .wd__similar-img {
@@ -419,19 +421,21 @@
 }
 
 .wd__similar-avatar {
-  position: absolute;
-  bottom: 8px;
-  left: 8px;
-  width: 36px;
-  height: 36px;
+  display: block;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid var(--star-white);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  border: 3px solid var(--star-white);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  margin: -26px auto 0;
+  position: relative;
+  z-index: 2;
 }
 
 .wd__similar-body {
-  padding: 12px;
+  padding: 4px 12px 12px;
+  text-align: center;
 }
 
 .wd__similar-name {
