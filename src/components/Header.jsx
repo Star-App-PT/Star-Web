@@ -39,7 +39,7 @@ export default function Header() {
       <div className="star-header__inner container">
         <Link to="/" className="star-header__logo">
           <img
-            src="/assets/Star-App-Logo-Transp.png"
+            src="/star-logolblue.svg"
             onError={(e) => { e.target.onerror = null; e.target.src = '/star-logo-blue.svg' }}
             alt="Star"
             className="star-header__logo-img"
