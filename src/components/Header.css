@@ -27,8 +27,9 @@
 
 .star-header__category {
   display: inline-flex;
+  flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--star-gray-800);
