@@ -1,4 +1,6 @@
+/* Gap below header = search bar height (60px). On .home so nothing overrides it. */
 .home {
+  padding-top: 60px;
   padding-bottom: 48px;
   background: var(--star-white);
 }
@@ -9,10 +11,7 @@
   padding: 0 24px;
 }
 
-/* Gap between header bottom and search bar top = same height as the search bar (60px); margin so .container doesn't override */
 .home__hero {
-  margin-top: 60px;
-  padding-top: 0;
   padding-bottom: 0;
 }
 
