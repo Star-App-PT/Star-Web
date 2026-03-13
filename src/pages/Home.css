@@ -17,7 +17,7 @@
 
 /* Hero has both classes (home__hero + container); target same element so width applies */
 .home__hero.container {
-  max-width: 596px;
+  max-width: 775px;
 }
 
 .home__search {
