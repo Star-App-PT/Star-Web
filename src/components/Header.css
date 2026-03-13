@@ -52,6 +52,10 @@
   object-fit: contain;
 }
 
+.star-header__category--services {
+  gap: 0;
+}
+
 .star-header__category--services .star-header__category-icon {
   width: 114px;
   height: 114px;
