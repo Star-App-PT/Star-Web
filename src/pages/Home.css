@@ -761,7 +761,17 @@
 }
 
 .home__who-ico {
-  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.home__who-ico svg {
+  width: 18px;
+  height: 18px;
 }
 
 .home__who-more {
