@@ -335,6 +335,11 @@
   flex-shrink: 0;
 }
 
+.wd__review-avatar--photo {
+  object-fit: cover;
+  background: var(--star-gray-200);
+}
+
 .wd__review-author {
   font-size: 0.9rem;
   font-weight: 600;

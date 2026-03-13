@@ -47,10 +47,13 @@ import actionBabysitting from '../assets/workers/action/action-babysitting.jpg'
  *                      similar-workers grid. Render it via <WorkerAvatar>.
  *                      May be null/undefined if the worker hasn't uploaded one yet.
  *
- *   worker.heroImage — A CATEGORY ACTION PHOTO provided by the platform.
- *                      Shows someone performing this type of work (not the
- *                      actual worker). Used as the main card image and the
- *                      banner on the profile page. Never null.
+ *   worker.heroImage — The worker's COVER PHOTO. Workers can upload their
+ *                      own (e.g. a spotless kitchen, a finished tiling job,
+ *                      a beautiful shot they took). Until they upload one,
+ *                      we show a platform-provided category action photo.
+ *                      Used as the main listing card image AND the hero
+ *                      banner on the profile page — both pull from this
+ *                      single field, so updating it updates everywhere.
  *
  * All other fields (name, specialty, rating, hourlyRate, bio, etc.) are
  * also authoritative here. Every UI surface reads from this module, so

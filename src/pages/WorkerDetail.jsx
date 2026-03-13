@@ -4,13 +4,14 @@ import { getWorkerById, getSimilarWorkers } from '../data/workers'
 import WorkerAvatar from '../components/WorkerAvatar'
 import './WorkerDetail.css'
 
+// image field is optional — when null/undefined, show first-letter initial badge
 const REVIEWS_DATA = [
-  { author: 'João P.', location: 'Porto', rating: 5, timeAgo: '2 days ago', text: 'Absolutely fantastic work. Punctual, professional, and left everything perfect. Will book again without hesitation!' },
-  { author: 'Sara M.', location: 'Porto', rating: 5, timeAgo: '6 days ago', text: 'So reliable and friendly. Exceeded my expectations. Highly recommend to anyone in Porto.' },
-  { author: 'Tomás R.', location: 'Vila Nova de Gaia', rating: 5, timeAgo: '1 week ago', text: 'Great communication from start to finish. Fair pricing and outstanding quality. The attention to detail was remarkable and I could tell they genuinely cared about doing an excellent job.' },
-  { author: 'Luísa F.', location: 'Matosinhos', rating: 4, timeAgo: '1 week ago', text: 'Very good service overall. Arrived on time and did a thorough job. Would use again for sure.' },
-  { author: 'Pedro C.', location: 'Porto', rating: 5, timeAgo: '2 weeks ago', text: 'Incredible attention to detail. My apartment has never looked this good. Five stars well deserved!' },
-  { author: 'Ana L.', location: 'Porto', rating: 5, timeAgo: '3 weeks ago', text: 'Professional, fast, and left my home spotless. Already booked a second session.' },
+  { author: 'João P.', image: null, location: 'Porto', rating: 5, timeAgo: '2 days ago', text: 'Absolutely fantastic work. Punctual, professional, and left everything perfect. Will book again without hesitation!' },
+  { author: 'Sara M.', image: null, location: 'Porto', rating: 5, timeAgo: '6 days ago', text: 'So reliable and friendly. Exceeded my expectations. Highly recommend to anyone in Porto.' },
+  { author: 'Tomás R.', image: null, location: 'Vila Nova de Gaia', rating: 5, timeAgo: '1 week ago', text: 'Great communication from start to finish. Fair pricing and outstanding quality. The attention to detail was remarkable and I could tell they genuinely cared about doing an excellent job.' },
+  { author: 'Luísa F.', image: null, location: 'Matosinhos', rating: 4, timeAgo: '1 week ago', text: 'Very good service overall. Arrived on time and did a thorough job. Would use again for sure.' },
+  { author: 'Pedro C.', image: null, location: 'Porto', rating: 5, timeAgo: '2 weeks ago', text: 'Incredible attention to detail. My apartment has never looked this good. Five stars well deserved!' },
+  { author: 'Ana L.', image: null, location: 'Porto', rating: 5, timeAgo: '3 weeks ago', text: 'Professional, fast, and left my home spotless. Already booked a second session.' },
 ]
 
 const QUAL_ICONS = {
@@ -184,7 +185,10 @@ export default function WorkerDetail() {
                     {visibleReviews.map((r, i) => (
                       <div key={i} className="wd__review">
                         <div className="wd__review-header">
-                          <div className="wd__review-avatar">{r.author[0]}</div>
+                          {r.image
+                            ? <img src={r.image} alt={r.author} className="wd__review-avatar wd__review-avatar--photo" />
+                            : <div className="wd__review-avatar">{r.author[0]}</div>
+                          }
                           <div>
                             <p className="wd__review-author">{r.author}</p>
                             <p className="wd__review-loc">{r.location}</p>
