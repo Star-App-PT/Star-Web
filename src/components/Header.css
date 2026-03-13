@@ -55,6 +55,7 @@
 
 .star-header__category--services {
   gap: 0;
+  margin-left: -10px;
 }
 
 .star-header__category--services .star-header__category-icon {
