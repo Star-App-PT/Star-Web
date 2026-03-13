@@ -224,6 +224,9 @@
   cursor: pointer;
   scroll-snap-align: start;
   transition: transform 0.15s, box-shadow 0.15s;
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }
 
 .home__worker-card:hover {
@@ -243,6 +246,18 @@
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+.home__worker-card-avatar {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2.5px solid var(--star-white);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .home__worker-card-pill {

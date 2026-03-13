@@ -31,7 +31,7 @@
 
 /* Hero image */
 .wd__hero {
-  margin-bottom: 28px;
+  margin-bottom: 0;
 }
 
 .wd__hero-img-wrap {
@@ -48,19 +48,30 @@
   display: block;
 }
 
-/* Content layout */
-.wd__content {
-  display: grid;
-  grid-template-columns: 1fr 380px;
-  gap: 48px;
-  align-items: start;
+/* Profile header — centered below hero */
+.wd__profile-header {
+  text-align: center;
+  margin-bottom: 32px;
+  position: relative;
+  padding-top: 0;
 }
 
-.wd__main {
-  min-width: 0;
+.wd__avatar-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: -52px;
+  margin-bottom: 16px;
 }
 
-/* Header */
+.wd__avatar {
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--star-white);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
 .wd__name {
   font-size: 1.75rem;
   font-weight: 700;
@@ -77,6 +88,7 @@
 .wd__stats {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
   font-size: 0.95rem;
   color: var(--star-gray-800);
@@ -88,6 +100,18 @@
 
 .wd__stat-dot {
   color: var(--star-gray-300);
+}
+
+/* Content layout */
+.wd__content {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 48px;
+  align-items: start;
+}
+
+.wd__main {
+  min-width: 0;
 }
 
 .wd__divider {
@@ -172,17 +196,83 @@
   line-height: 1.4;
 }
 
-/* Reviews */
-.wd__reviews-grid {
+/* Portfolio */
+.wd__portfolio-desc {
+  font-size: 0.9rem;
+  color: var(--star-gray-500);
+  margin: -8px 0 16px;
+}
+
+.wd__portfolio-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.wd__portfolio-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.wd__portfolio-placeholder {
+  aspect-ratio: 4 / 3;
+  background: var(--star-gray-100);
+  border: 2px dashed var(--star-gray-300);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--star-gray-400);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.wd__portfolio-label {
+  font-size: 0.8rem;
+  color: var(--star-gray-600);
+  margin: 8px 0 0;
+  text-align: center;
+}
+
+/* Reviews — horizontal scrollable like Google Maps */
+.wd__no-reviews {
+  font-size: 1rem;
+  color: var(--star-gray-500);
+  font-style: italic;
+  margin: 0;
+}
+
+.wd__reviews-scroll {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scroll-snap-type: x proximity;
+}
+
+.wd__reviews-scroll::-webkit-scrollbar {
+  height: 5px;
+}
+
+.wd__reviews-scroll::-webkit-scrollbar-thumb {
+  background: var(--star-gray-300);
+  border-radius: 3px;
 }
 
 .wd__review {
+  flex: 0 0 300px;
   padding: 20px;
   border: 1px solid var(--star-gray-200);
   border-radius: 14px;
+  cursor: pointer;
+  scroll-snap-align: start;
+  transition: box-shadow 0.15s;
+}
+
+.wd__review:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .wd__review-header {
@@ -219,11 +309,28 @@
   margin: 0;
 }
 
+.wd__review-stars {
+  margin-left: auto;
+  font-size: 0.8rem;
+  color: var(--star-gray-900);
+  letter-spacing: 1px;
+  flex-shrink: 0;
+}
+
 .wd__review-text {
   font-size: 0.9rem;
   line-height: 1.5;
   color: var(--star-gray-700);
   margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.wd__review--expanded .wd__review-text {
+  -webkit-line-clamp: unset;
+  overflow: visible;
 }
 
 /* Map */
@@ -279,7 +386,7 @@
   transform: scale(1.08);
 }
 
-/* Similar workers */
+/* Similar workers — also uses hero + avatar pattern */
 .wd__similar-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -300,11 +407,27 @@
   transform: translateY(-2px);
 }
 
+.wd__similar-img-wrap {
+  position: relative;
+}
+
 .wd__similar-img {
   width: 100%;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
   display: block;
+}
+
+.wd__similar-avatar {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--star-white);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 .wd__similar-body {
@@ -453,8 +576,8 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .wd__reviews-grid {
-    grid-template-columns: 1fr;
+  .wd__portfolio-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -467,5 +590,9 @@
 
   .wd__similar-grid {
     grid-template-columns: 1fr;
+  }
+
+  .wd__portfolio-grid {
+    grid-template-columns: 1fr 1fr;
   }
 }

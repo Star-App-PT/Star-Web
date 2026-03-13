@@ -1,12 +1,21 @@
 import { useParams, useNavigate, Link } from 'react-router-dom'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { getWorkerById, getSimilarWorkers, PICKED_DATES } from '../data/workers'
 import './WorkerDetail.css'
 
 const REVIEWS_SAMPLE = [
-  { author: 'João P.', date: 'July 2025', text: 'Absolutely fantastic work. Punctual, professional, and left everything perfect. Will book again!' },
-  { author: 'Sara M.', date: 'June 2025', text: 'So reliable and friendly. Exceeded my expectations. Highly recommend to anyone in Porto.' },
-  { author: 'Tomás R.', date: 'May 2025', text: 'Great communication from start to finish. Fair pricing and outstanding quality.' },
+  { author: 'João P.', date: 'July 2025', rating: 5, text: 'Absolutely fantastic work. Punctual, professional, and left everything perfect. Will book again!' },
+  { author: 'Sara M.', date: 'June 2025', rating: 5, text: 'So reliable and friendly. Exceeded my expectations. Highly recommend to anyone in Porto.' },
+  { author: 'Tomás R.', date: 'May 2025', rating: 5, text: 'Great communication from start to finish. Fair pricing and outstanding quality.' },
+  { author: 'Luísa F.', date: 'April 2025', rating: 4, text: 'Very good service overall. Arrived on time and did a thorough job. Would use again for sure.' },
+  { author: 'Pedro C.', date: 'March 2025', rating: 5, text: 'Incredible attention to detail. My apartment has never looked this good. Five stars deserved!' },
+]
+
+const PORTFOLIO_PLACEHOLDERS = [
+  { label: 'Before & After', desc: 'Kitchen deep clean' },
+  { label: 'Completed Job', desc: 'Living room renovation' },
+  { label: 'Before & After', desc: 'Bathroom restoration' },
+  { label: 'Completed Job', desc: 'Office setup' },
 ]
 
 export default function WorkerDetail() {
@@ -14,6 +23,8 @@ export default function WorkerDetail() {
   const navigate = useNavigate()
   const mapRef = useRef(null)
   const mapInstanceRef = useRef(null)
+  const reviewsScrollRef = useRef(null)
+  const [expandedReview, setExpandedReview] = useState(null)
   const worker = getWorkerById(id)
 
   useEffect(() => {
@@ -65,7 +76,7 @@ export default function WorkerDetail() {
         })
         const marker = L.marker([sw.lat, sw.lng], { icon: icon }).addTo(map)
         marker.on('click', () => {
-          navigate(`/worker/${sw.id}`)
+          window.open(`/worker/${sw.id}`, '_blank')
         })
         marker.bindTooltip(`${sw.name} · ${sw.specialty}`, { direction: 'top', offset: [0, -14] })
       })
@@ -96,6 +107,7 @@ export default function WorkerDetail() {
   }
 
   const similar = getSimilarWorkers(worker, 4)
+  const hasReviews = worker.reviews > 0
 
   return (
     <div className="wd">
@@ -107,31 +119,32 @@ export default function WorkerDetail() {
 
         <div className="wd__hero">
           <div className="wd__hero-img-wrap">
-            <img src={worker.image} alt={worker.name} className="wd__hero-img" />
+            <img src={worker.heroImage} alt={`${worker.specialty} in action`} className="wd__hero-img" />
+          </div>
+        </div>
+
+        <div className="wd__profile-header">
+          <div className="wd__avatar-wrap">
+            <img src={worker.image} alt={worker.name} className="wd__avatar" />
+          </div>
+          <h1 className="wd__name">{worker.name}</h1>
+          <p className="wd__specialty">{worker.specialty} in {worker.city}</p>
+          <div className="wd__stats">
+            <span className="wd__stat">★ {worker.rating.toFixed(1)}</span>
+            <span className="wd__stat-dot">·</span>
+            <span className="wd__stat">{worker.reviews} reviews</span>
+            <span className="wd__stat-dot">·</span>
+            <span className="wd__stat">Member since {worker.memberSince}</span>
           </div>
         </div>
 
         <div className="wd__content">
           <div className="wd__main">
-            <div className="wd__header">
-              <h1 className="wd__name">{worker.name}</h1>
-              <p className="wd__specialty">{worker.specialty} in {worker.city}</p>
-              <div className="wd__stats">
-                <span className="wd__stat">★ {worker.rating.toFixed(1)}</span>
-                <span className="wd__stat-dot">·</span>
-                <span className="wd__stat">{worker.reviews} reviews</span>
-                <span className="wd__stat-dot">·</span>
-                <span className="wd__stat">{worker.city}</span>
-              </div>
-            </div>
-
-            <hr className="wd__divider" />
-
             <div className="wd__host-row">
               <img src={worker.image} alt="" className="wd__host-avatar" />
               <div>
                 <p className="wd__host-name">{worker.specialty} by {worker.name}</p>
-                <p className="wd__host-meta">Member since {worker.memberSince} · {worker.languages.join(', ')}</p>
+                <p className="wd__host-meta">{worker.languages.join(', ')}</p>
               </div>
             </div>
 
@@ -170,22 +183,51 @@ export default function WorkerDetail() {
 
             <hr className="wd__divider" />
 
-            <div className="wd__reviews">
-              <h2 className="wd__section-title">★ {worker.rating.toFixed(1)} · {worker.reviews} reviews</h2>
-              <div className="wd__reviews-grid">
-                {REVIEWS_SAMPLE.map((r, i) => (
-                  <div key={i} className="wd__review">
-                    <div className="wd__review-header">
-                      <div className="wd__review-avatar">{r.author[0]}</div>
-                      <div>
-                        <p className="wd__review-author">{r.author}</p>
-                        <p className="wd__review-date">{r.date}</p>
-                      </div>
+            <div className="wd__portfolio">
+              <h2 className="wd__section-title">Portfolio</h2>
+              <p className="wd__portfolio-desc">Photos from completed jobs. Workers upload these after each booking.</p>
+              <div className="wd__portfolio-grid">
+                {PORTFOLIO_PLACEHOLDERS.map((p, i) => (
+                  <div key={i} className="wd__portfolio-item">
+                    <div className="wd__portfolio-placeholder">
+                      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+                      <span>{p.label}</span>
                     </div>
-                    <p className="wd__review-text">{r.text}</p>
+                    <p className="wd__portfolio-label">{p.desc}</p>
                   </div>
                 ))}
               </div>
+            </div>
+
+            <hr className="wd__divider" />
+
+            <div className="wd__reviews">
+              <h2 className="wd__section-title">★ {worker.rating.toFixed(1)} · {worker.reviews} reviews</h2>
+              {!hasReviews ? (
+                <p className="wd__no-reviews">No client reviews yet</p>
+              ) : (
+                <div className="wd__reviews-scroll" ref={reviewsScrollRef}>
+                  {REVIEWS_SAMPLE.map((r, i) => (
+                    <div
+                      key={i}
+                      className={`wd__review ${expandedReview === i ? 'wd__review--expanded' : ''}`}
+                      onClick={() => setExpandedReview(expandedReview === i ? null : i)}
+                    >
+                      <div className="wd__review-header">
+                        <div className="wd__review-avatar">{r.author[0]}</div>
+                        <div>
+                          <p className="wd__review-author">{r.author}</p>
+                          <p className="wd__review-date">{r.date}</p>
+                        </div>
+                        <div className="wd__review-stars">
+                          {'★'.repeat(r.rating)}{'☆'.repeat(5 - r.rating)}
+                        </div>
+                      </div>
+                      <p className="wd__review-text">{r.text}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             <hr className="wd__divider" />
@@ -203,14 +245,17 @@ export default function WorkerDetail() {
                   <h2 className="wd__section-title">Similar workers nearby</h2>
                   <div className="wd__similar-grid">
                     {similar.map((sw) => (
-                      <Link key={sw.id} to={`/worker/${sw.id}`} className="wd__similar-card">
-                        <img src={sw.image} alt={sw.name} className="wd__similar-img" />
+                      <a key={sw.id} href={`/worker/${sw.id}`} target="_blank" rel="noopener noreferrer" className="wd__similar-card">
+                        <div className="wd__similar-img-wrap">
+                          <img src={sw.heroImage} alt={sw.name} className="wd__similar-img" />
+                          <img src={sw.image} alt="" className="wd__similar-avatar" />
+                        </div>
                         <div className="wd__similar-body">
                           <p className="wd__similar-name">{sw.name}</p>
                           <p className="wd__similar-skill">{sw.specialty}</p>
                           <p className="wd__similar-price">€{sw.hourlyRate}/hr · ★ {sw.rating.toFixed(1)}</p>
                         </div>
-                      </Link>
+                      </a>
                     ))}
                   </div>
                 </div>
