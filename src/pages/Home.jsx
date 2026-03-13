@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect, useRef } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import './Home.css'
@@ -14,6 +14,68 @@ function shuffle(arr) {
   return a
 }
 
+const SUGGESTED_LOCATIONS = [
+  { city: 'Porto', desc: 'Northern Portugal' },
+  { city: 'Lisbon', desc: 'Capital Region' },
+  { city: 'Faro', desc: 'Algarve' },
+]
+
+const WHO_SUBCATEGORIES = {
+  cleaners: [
+    { label: 'Deep Clean', icon: '🧽' },
+    { label: 'Regular Clean', icon: '🧹' },
+    { label: 'Post-Build', icon: '🏗️' },
+    { label: 'End of Tenancy', icon: '🏠' },
+    { label: 'Office Clean', icon: '🏢' },
+    { label: 'Carpet Clean', icon: '🫧' },
+    { label: 'Window Clean', icon: '🪟' },
+    { label: 'Oven Clean', icon: '🍳' },
+    { label: 'Garage Clean', icon: '🚗' },
+    { label: 'After-Party Clean', icon: '🎉' },
+  ],
+  handymen: [
+    { label: 'Plumbing', icon: '🔧' },
+    { label: 'Electrical', icon: '⚡' },
+    { label: 'Painting', icon: '🎨' },
+    { label: 'Tiling', icon: '🔲' },
+    { label: 'Carpentry', icon: '🪵' },
+    { label: 'Furniture Assembly', icon: '🪑' },
+    { label: 'Appliances', icon: '🔌' },
+    { label: 'Flooring', icon: '🪵' },
+    { label: 'Plastering', icon: '🧱' },
+    { label: 'Locksmith', icon: '🔑' },
+  ],
+  services: [
+    { label: 'Photography', icon: '📸' },
+    { label: 'Private Chef', icon: '👨‍🍳' },
+    { label: 'Massage', icon: '💆' },
+    { label: 'Prepared Meals', icon: '🍱' },
+    { label: 'Personal Training', icon: '💪' },
+    { label: 'Makeup', icon: '💄' },
+    { label: 'Hair', icon: '✂️' },
+    { label: 'Spa Treatments', icon: '🧖' },
+    { label: 'Catering', icon: '🍽️' },
+    { label: 'Nails', icon: '💅' },
+  ],
+}
+
+const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+const DAY_NAMES = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+
+function fmtShortDate(d) {
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+}
+
+function buildCalendarCells(year, month) {
+  let startPad = new Date(year, month, 1).getDay() - 1
+  if (startPad < 0) startPad = 6
+  const daysInMonth = new Date(year, month + 1, 0).getDate()
+  const cells = []
+  for (let i = 0; i < startPad; i++) cells.push(null)
+  for (let d = 1; d <= daysInMonth; d++) cells.push(d)
+  return cells
+}
+
 export default function Home() {
   const { t } = useTranslation()
   const navigate = useNavigate()
@@ -22,6 +84,20 @@ export default function Home() {
   const [favorites, setFavorites] = useState(new Set())
   const { city: CITY, supported: citySupported, userCityName } = useUserLocation()
 
+  const [openDropdown, setOpenDropdown] = useState(null)
+  const [whereValue, setWhereValue] = useState('')
+  const [whenValue, setWhenValue] = useState('')
+  const [whoValue, setWhoValue] = useState('')
+  const searchWrapRef = useRef(null)
+  const todayRef = useRef(new Date())
+  const today = todayRef.current
+  const [calYear, setCalYear] = useState(today.getFullYear())
+  const [calMonth, setCalMonth] = useState(today.getMonth())
+  const [recentLocations, setRecentLocations] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('star-recent-locations') || '[]') }
+    catch { return [] }
+  })
+
   const current = CATEGORIES.find((c) => c.id === selectedCategory) || CATEGORIES[0]
   const categoryLabel = selectedCategory === 'cleaners' ? t('home.categoryClean') : selectedCategory === 'handymen' ? t('home.categoryRepair') : t('home.categoryServices')
 
@@ -29,6 +105,46 @@ export default function Home() {
     const others = CATEGORIES.filter((c) => c.id !== selectedCategory).flatMap((c) => c.workers)
     return shuffle(others).slice(0, 6)
   }, [selectedCategory])
+
+  useEffect(() => {
+    const subs = WHO_SUBCATEGORIES[selectedCategory] || []
+    setWhoValue((prev) => (prev && !subs.find((s) => s.label === prev) ? '' : prev))
+  }, [selectedCategory])
+
+  useEffect(() => {
+    const handler = (e) => {
+      if (searchWrapRef.current && !searchWrapRef.current.contains(e.target)) setOpenDropdown(null)
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [])
+
+  const toggleDropdown = (name) => setOpenDropdown((prev) => (prev === name ? null : name))
+
+  const selectWhere = (city) => {
+    setWhereValue(city)
+    setOpenDropdown(null)
+    const updated = [city, ...recentLocations.filter((c) => c !== city)].slice(0, 5)
+    setRecentLocations(updated)
+    localStorage.setItem('star-recent-locations', JSON.stringify(updated))
+  }
+
+  const selectWhen = (displayText) => {
+    setWhenValue(displayText)
+    setOpenDropdown(null)
+  }
+
+  const selectCalendarDay = (day) => {
+    if (!day) return
+    const d = new Date(calYear, calMonth, day)
+    if (d < new Date(today.getFullYear(), today.getMonth(), today.getDate())) return
+    selectWhen(fmtShortDate(d))
+  }
+
+  const selectWho = (label) => {
+    setWhoValue((prev) => (prev === label ? '' : label))
+    setOpenDropdown(null)
+  }
 
   const toggleFavorite = (e, id) => {
     e.preventDefault()
@@ -43,31 +159,150 @@ export default function Home() {
 
   const handleSearch = (e) => {
     e.preventDefault()
-    navigate('/search')
+    if (!whereValue) return
+    navigate(`/search?where=${encodeURIComponent(whereValue)}&when=${encodeURIComponent(whenValue)}&who=${encodeURIComponent(whoValue)}`)
+  }
+
+  const tomorrow = new Date(today)
+  tomorrow.setDate(tomorrow.getDate() + 1)
+  const satOffset = today.getDay() === 6 ? 0 : (today.getDay() === 0 ? 6 : 6 - today.getDay())
+  const saturday = new Date(today)
+  saturday.setDate(today.getDate() + satOffset)
+  const sunday = new Date(saturday)
+  sunday.setDate(sunday.getDate() + 1)
+
+  const quickDates = [
+    { label: 'Today', sub: fmtShortDate(today), value: `Today, ${fmtShortDate(today)}` },
+    { label: 'Tomorrow', sub: fmtShortDate(tomorrow), value: `Tomorrow, ${fmtShortDate(tomorrow)}` },
+    { label: 'This weekend', sub: `${fmtShortDate(saturday)} – ${fmtShortDate(sunday)}`, value: `This weekend, ${fmtShortDate(saturday)} – ${fmtShortDate(sunday)}` },
+  ]
+
+  const calendarCells = buildCalendarCells(calYear, calMonth)
+  const isCurrentMonth = calYear === today.getFullYear() && calMonth === today.getMonth()
+  const canGoPrev = calYear > today.getFullYear() || (calYear === today.getFullYear() && calMonth > today.getMonth())
+
+  const prevMonth = () => {
+    if (calMonth === 0) { setCalYear((y) => y - 1); setCalMonth(11) }
+    else setCalMonth((m) => m - 1)
+  }
+  const nextMonth = () => {
+    if (calMonth === 11) { setCalYear((y) => y + 1); setCalMonth(0) }
+    else setCalMonth((m) => m + 1)
   }
 
   return (
     <div className="home">
       <div className="home__hero container">
-        <form className="home__search" onSubmit={handleSearch}>
-          <div className="home__search-field">
-            <span className="home__search-label">{t('common.where')}</span>
-            <input type="text" placeholder={t('home.placeholderWhere')} className="home__search-input" readOnly />
-          </div>
-          <div className="home__search-divider" />
-          <div className="home__search-field">
-            <span className="home__search-label">{t('common.when')}</span>
-            <input type="text" placeholder={t('home.placeholderWhen')} className="home__search-input" readOnly />
-          </div>
-          <div className="home__search-divider" />
-          <div className="home__search-field">
-            <span className="home__search-label">{t('common.who')}</span>
-            <input type="text" placeholder={t('home.placeholderWho')} className="home__search-input" readOnly />
-          </div>
-          <button type="submit" className="home__search-btn" aria-label="Search">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-          </button>
-        </form>
+        <div className="home__search-wrap" ref={searchWrapRef}>
+          <form className="home__search" onSubmit={handleSearch}>
+            <div className="home__search-field" onClick={() => toggleDropdown('where')}>
+              <span className="home__search-label">{t('common.where')}</span>
+              <span className={`home__search-val ${!whereValue ? 'home__search-val--ph' : ''}`}>
+                {whereValue || t('home.placeholderWhere')}
+              </span>
+            </div>
+            <div className="home__search-divider" />
+            <div className="home__search-field" onClick={() => toggleDropdown('when')}>
+              <span className="home__search-label">{t('common.when')}</span>
+              <span className={`home__search-val ${!whenValue ? 'home__search-val--ph' : ''}`}>
+                {whenValue || t('home.placeholderWhen')}
+              </span>
+            </div>
+            <div className="home__search-divider" />
+            <div className="home__search-field" onClick={() => toggleDropdown('who')}>
+              <span className="home__search-label">{t('common.who')}</span>
+              <span className={`home__search-val ${!whoValue ? 'home__search-val--ph' : ''}`}>
+                {whoValue || t('home.placeholderWho')}
+              </span>
+            </div>
+            <button type="submit" className={`home__search-btn${!whereValue ? ' home__search-btn--off' : ''}`} disabled={!whereValue} aria-label="Search">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            </button>
+          </form>
+
+          {openDropdown && <div className="home__dd-backdrop" onClick={() => setOpenDropdown(null)} />}
+
+          {openDropdown === 'where' && (
+            <div className="home__dd home__dd--where">
+              {recentLocations.length > 0 && (
+                <>
+                  <p className="home__dd-heading">Recent searches</p>
+                  {recentLocations.map((city) => (
+                    <button key={city} type="button" className="home__dd-opt" onClick={() => selectWhere(city)}>
+                      <span className="home__dd-pin">🕐</span>
+                      <div><span className="home__dd-city">{city}</span></div>
+                    </button>
+                  ))}
+                  <div className="home__dd-sep" />
+                </>
+              )}
+              <p className="home__dd-heading">Suggested locations</p>
+              {SUGGESTED_LOCATIONS.map(({ city, desc }) => (
+                <button key={city} type="button" className="home__dd-opt" onClick={() => selectWhere(city)}>
+                  <span className="home__dd-pin">📍</span>
+                  <div>
+                    <span className="home__dd-city">{city}</span>
+                    <span className="home__dd-desc">{desc}</span>
+                  </div>
+                </button>
+              ))}
+            </div>
+          )}
+
+          {openDropdown === 'when' && (
+            <div className="home__dd home__dd--when">
+              <div className="home__when-row">
+                <div className="home__when-quick">
+                  {quickDates.map((q) => (
+                    <button key={q.label} type="button" className="home__when-opt" onClick={() => selectWhen(q.value)}>
+                      <span className="home__when-opt-lbl">{q.label}</span>
+                      <span className="home__when-opt-sub">{q.sub}</span>
+                    </button>
+                  ))}
+                </div>
+                <div className="home__cal">
+                  <div className="home__cal-head">
+                    <button type="button" className="home__cal-arr" onClick={prevMonth} disabled={!canGoPrev}>‹</button>
+                    <span className="home__cal-mo">{MONTH_NAMES[calMonth]} {calYear}</span>
+                    <button type="button" className="home__cal-arr" onClick={nextMonth}>›</button>
+                  </div>
+                  <div className="home__cal-dayrow">
+                    {DAY_NAMES.map((d) => <span key={d} className="home__cal-dn">{d}</span>)}
+                  </div>
+                  <div className="home__cal-grid">
+                    {calendarCells.map((day, i) => {
+                      const isPast = day && new Date(calYear, calMonth, day) < new Date(today.getFullYear(), today.getMonth(), today.getDate())
+                      const isToday = day && isCurrentMonth && day === today.getDate()
+                      return (
+                        <button key={i} type="button"
+                          className={`home__cal-c${!day ? ' home__cal-c--e' : ''}${isToday ? ' home__cal-c--today' : ''}${isPast ? ' home__cal-c--past' : ''}`}
+                          onClick={() => selectCalendarDay(day)} disabled={!day || isPast}
+                        >{day || ''}</button>
+                      )
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {openDropdown === 'who' && (
+            <div className="home__dd home__dd--who">
+              <div className="home__who-pills">
+                {(WHO_SUBCATEGORIES[selectedCategory] || []).map(({ label, icon }) => (
+                  <button key={label} type="button"
+                    className={`home__who-pill${whoValue === label ? ' home__who-pill--on' : ''}`}
+                    onClick={() => selectWho(label)}
+                  >
+                    <span className="home__who-ico">{icon}</span>
+                    {label}
+                  </button>
+                ))}
+              </div>
+              <p className="home__who-more">✨ More coming soon</p>
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="home__main container">
