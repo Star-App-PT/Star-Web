@@ -1,0 +1,71 @@
+{
+  "common": {
+    "back": "Volver",
+    "continue": "Continuar",
+    "cancel": "Cancelar",
+    "done": "Listo"
+  },
+  "header": {
+    "becomeAStar": "Ser una Star"
+  },
+  "home": {
+    "title": "Tu hogar, limpio y arreglado.",
+    "becomeAStar": "Ser una Star"
+  },
+  "workerProfile": {
+    "title": "Cuéntanos más sobre ti",
+    "profilePhoto": "Foto de perfil",
+    "choosePhoto": "Elegir archivo"
+  },
+  "workerProfileCleaner": {
+    "intro": "Elige los servicios de limpieza que ofreces. Puedes seleccionar más de uno.",
+    "skillsTitle": "Tus servicios de limpieza",
+    "other": "Otro",
+    "otherPlaceholder": "Añade otros servicios de limpieza",
+    "basicInfoTitle": "Información básica",
+    "firstName": "Nombre",
+    "firstNamePlaceholder": "Nombre",
+    "lastName": "Apellidos",
+    "lastNamePlaceholder": "Apellidos",
+    "email": "Email",
+    "emailPlaceholder": "tu@ejemplo.com",
+    "phone": "Teléfono",
+    "phonePlaceholder": "+34 612 345 678",
+    "address": "Dirección",
+    "addressPlaceholder": "Calle y número",
+    "addressLine2": "Línea 2 (opcional)",
+    "addressLine2Placeholder": "Piso, puerta, etc.",
+    "city": "Ciudad",
+    "cityPlaceholder": "Ciudad",
+    "postcode": "Código postal",
+    "postcodePlaceholder": "Código postal",
+    "country": "País",
+    "countryPlaceholder": "País",
+    "dob": "Fecha de nacimiento",
+    "deepCleaning": "Limpieza profunda",
+    "glassCleaning": "Limpieza de cristales",
+    "exitCleaning": "Limpieza de salida",
+    "homeCleaning": "Limpieza del hogar",
+    "bathCleaning": "Limpieza de baños",
+    "kitchenClean": "Limpieza de cocina",
+    "fridgeDetail": "Detalle nevera",
+    "floorCleaning": "Limpieza de suelos",
+    "sofaCleaning": "Limpieza de sofás",
+    "workCleaning": "Limpieza de oficinas",
+    "buildCleaning": "Limpieza post-obra",
+    "hostCleaning": "Limpieza de alojamiento",
+    "laundryClean": "Lavandería",
+    "patioCleanup": "Limpieza de jardín",
+    "carValeting": "Car valeting",
+    "autoDetailing": "Detalle automóvil"
+  },
+  "workerSkill": {
+    "heading": "¿Cuál de estas describe mejor tu habilidad?",
+    "clean": "Limpieza",
+    "repair": "Reparaciones",
+    "services": "Servicios"
+  },
+  "workerSignup": {
+    "getStarted": "Empezar"
+  }
+}

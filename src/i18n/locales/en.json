@@ -1,0 +1,71 @@
+{
+  "common": {
+    "back": "Back",
+    "continue": "Continue",
+    "cancel": "Cancel",
+    "done": "Done"
+  },
+  "header": {
+    "becomeAStar": "Become a Star"
+  },
+  "home": {
+    "title": "Your home, clean and fixed.",
+    "becomeAStar": "Become a Star"
+  },
+  "workerProfile": {
+    "title": "Tell us more about you",
+    "profilePhoto": "Profile photo",
+    "choosePhoto": "Choose file"
+  },
+  "workerProfileCleaner": {
+    "intro": "Choose the cleaning services you offer. You can select more than one.",
+    "skillsTitle": "Your cleaning services",
+    "other": "Other",
+    "otherPlaceholder": "Add any other cleaning skills here",
+    "basicInfoTitle": "Basic information",
+    "firstName": "First name",
+    "firstNamePlaceholder": "First name",
+    "lastName": "Last name",
+    "lastNamePlaceholder": "Last name",
+    "email": "Email",
+    "emailPlaceholder": "you@example.com",
+    "phone": "Phone number",
+    "phonePlaceholder": "+351 912 345 678",
+    "address": "Address",
+    "addressPlaceholder": "Street and number",
+    "addressLine2": "Address line 2 (optional)",
+    "addressLine2Placeholder": "Apartment, suite, etc.",
+    "city": "City",
+    "cityPlaceholder": "City",
+    "postcode": "Postcode",
+    "postcodePlaceholder": "Postcode",
+    "country": "Country",
+    "countryPlaceholder": "Country",
+    "dob": "Date of birth",
+    "deepCleaning": "Deep Cleaning",
+    "glassCleaning": "Glass Cleaning",
+    "exitCleaning": "Exit Cleaning",
+    "homeCleaning": "Home Cleaning",
+    "bathCleaning": "Bath Cleaning",
+    "kitchenClean": "Kitchen Clean",
+    "fridgeDetail": "Fridge Detail",
+    "floorCleaning": "Floor Cleaning",
+    "sofaCleaning": "Sofa Cleaning",
+    "workCleaning": "Work Cleaning",
+    "buildCleaning": "Build Cleaning",
+    "hostCleaning": "Host Cleaning",
+    "laundryClean": "Laundry Clean",
+    "patioCleanup": "Patio Cleanup",
+    "carValeting": "Car Valeting",
+    "autoDetailing": "Auto Detailing"
+  },
+  "workerSkill": {
+    "heading": "Which of these best describes your skill?",
+    "clean": "Cleaning",
+    "repair": "Repairs",
+    "services": "Services"
+  },
+  "workerSignup": {
+    "getStarted": "Get started"
+  }
+}

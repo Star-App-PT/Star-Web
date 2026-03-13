@@ -1,0 +1,39 @@
+.star-header {
+  border-bottom: 1px solid var(--star-gray-200);
+  background: var(--star-white);
+}
+
+.star-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.star-header__logo-img {
+  height: 52px;
+  width: auto;
+  display: block;
+}
+
+.star-header__cta {
+  padding: 10px 20px;
+  border-radius: var(--radius-pill);
+  background: var(--star-blue);
+  color: var(--star-white);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  text-decoration: none;
+}
+
+.star-header__cta:hover {
+  opacity: 0.92;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}

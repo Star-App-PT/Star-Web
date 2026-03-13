@@ -1,0 +1,71 @@
+{
+  "common": {
+    "back": "Voltar",
+    "continue": "Continuar",
+    "cancel": "Cancelar",
+    "done": "Concluir"
+  },
+  "header": {
+    "becomeAStar": "Ser uma Star"
+  },
+  "home": {
+    "title": "A sua casa, limpa e arranjada.",
+    "becomeAStar": "Ser uma Star"
+  },
+  "workerProfile": {
+    "title": "Conte-nos mais sobre si",
+    "profilePhoto": "Foto de perfil",
+    "choosePhoto": "Escolher ficheiro"
+  },
+  "workerProfileCleaner": {
+    "intro": "Escolha os serviços de limpeza que oferece. Pode selecionar mais do que um.",
+    "skillsTitle": "Os seus serviços de limpeza",
+    "other": "Outro",
+    "otherPlaceholder": "Indique outros serviços de limpeza",
+    "basicInfoTitle": "Informação básica",
+    "firstName": "Nome próprio",
+    "firstNamePlaceholder": "Nome",
+    "lastName": "Apelido",
+    "lastNamePlaceholder": "Apelido",
+    "email": "Email",
+    "emailPlaceholder": "voce@exemplo.pt",
+    "phone": "Telefone",
+    "phonePlaceholder": "+351 912 345 678",
+    "address": "Morada",
+    "addressPlaceholder": "Rua e número",
+    "addressLine2": "Linha 2 (opcional)",
+    "addressLine2Placeholder": "Andar, apartamento, etc.",
+    "city": "Cidade",
+    "cityPlaceholder": "Cidade",
+    "postcode": "Código postal",
+    "postcodePlaceholder": "Código postal",
+    "country": "País",
+    "countryPlaceholder": "País",
+    "dob": "Data de nascimento",
+    "deepCleaning": "Limpeza profunda",
+    "glassCleaning": "Limpeza de vidros",
+    "exitCleaning": "Limpeza de saída",
+    "homeCleaning": "Limpeza doméstica",
+    "bathCleaning": "Limpeza de casas de banho",
+    "kitchenClean": "Limpeza de cozinha",
+    "fridgeDetail": "Detalhe frigorífico",
+    "floorCleaning": "Limpeza de pavimentos",
+    "sofaCleaning": "Limpeza de sofás",
+    "workCleaning": "Limpeza de escritórios",
+    "buildCleaning": "Limpeza pós-obra",
+    "hostCleaning": "Limpeza de alojamento",
+    "laundryClean": "Lavandaria",
+    "patioCleanup": "Arrumação de jardim",
+    "carValeting": "Car valeting",
+    "autoDetailing": "Detalhe automóvel"
+  },
+  "workerSkill": {
+    "heading": "Qual destas melhor descreve a sua competência?",
+    "clean": "Limpeza",
+    "repair": "Reparações",
+    "services": "Serviços"
+  },
+  "workerSignup": {
+    "getStarted": "Começar"
+  }
+}
