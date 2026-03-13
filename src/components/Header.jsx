@@ -1,7 +1,13 @@
 import { useState, useRef, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import './Header.css'
+
+const CATEGORY_IDS = [
+  { id: 'cleaners', labelKey: 'home.categoryClean', icon: '/assets/icon-clean.png' },
+  { id: 'handymen', labelKey: 'home.categoryRepair', icon: '/assets/icon-repair.png' },
+  { id: 'services', labelKey: 'home.categoryServices', icon: '/assets/icon-services.png' },
+]
 
 const LANGUAGES = [
   { code: 'en', label: 'English' },
@@ -14,8 +20,11 @@ const CODE_TO_LABEL = { en: 'ENG', 'pt-PT': 'PTG', es: 'ES' }
 export default function Header() {
   const { t, i18n } = useTranslation()
   const location = useLocation()
+  const [searchParams] = useSearchParams()
   const [langOpen, setLangOpen] = useState(false)
   const langRef = useRef(null)
+
+  const activeCategory = location.pathname === '/' ? (searchParams.get('category') || 'cleaners') : null
 
   const isMinimalHeader =
     location.pathname === '/worker/signup' ||
@@ -47,18 +56,16 @@ export default function Header() {
         </Link>
         {!isMinimalHeader && (
           <div className="star-header__categories">
-            <span className="star-header__category">
-              <img src="/assets/icon-clean.png" alt="" className="star-header__category-icon" onError={(e) => { e.target.style.display = 'none' }} />
-              <span>{t('home.categoryClean')}</span>
-            </span>
-            <span className="star-header__category">
-              <img src="/assets/icon-repair.png" alt="" className="star-header__category-icon" onError={(e) => { e.target.style.display = 'none' }} />
-              <span>{t('home.categoryRepair')}</span>
-            </span>
-            <span className="star-header__category">
-              <img src="/assets/icon-services.png" alt="" className="star-header__category-icon" onError={(e) => { e.target.style.display = 'none' }} />
-              <span>{t('home.categoryServices')}</span>
-            </span>
+            {CATEGORY_IDS.map(({ id, labelKey, icon }) => (
+              <Link
+                key={id}
+                to={location.pathname === '/' ? `/?category=${id}` : `/?category=${id}`}
+                className={`star-header__category ${activeCategory === id ? 'star-header__category--active' : ''}`}
+              >
+                <img src={icon} alt="" className="star-header__category-icon" onError={(e) => { e.target.style.display = 'none' }} />
+                <span>{t(labelKey)}</span>
+              </Link>
+            ))}
           </div>
         )}
         <nav className="star-header__nav">

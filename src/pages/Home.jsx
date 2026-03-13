@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import './Home.css'
 
@@ -62,7 +62,8 @@ function shuffle(arr) {
 export default function Home() {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const [selectedCategory, setSelectedCategory] = useState('cleaners')
+  const [searchParams] = useSearchParams()
+  const selectedCategory = searchParams.get('category') || 'cleaners'
   const [favorites, setFavorites] = useState(new Set())
 
   const current = CATEGORIES.find((c) => c.id === selectedCategory) || CATEGORIES[0]
@@ -111,23 +112,6 @@ export default function Home() {
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
           </button>
         </form>
-      </div>
-
-      <div className="home__tabs-wrap">
-        <div className="home__tabs container">
-          <button type="button" className={`home__tab ${selectedCategory === 'cleaners' ? 'home__tab--active' : ''}`} onClick={() => setSelectedCategory('cleaners')}>
-            <img src="/assets/icon-clean.png" alt="" className="home__tab-icon" onError={(e) => { e.target.style.display = 'none' }} />
-            <span>{t('home.categoryClean')}</span>
-          </button>
-          <button type="button" className={`home__tab ${selectedCategory === 'handymen' ? 'home__tab--active' : ''}`} onClick={() => setSelectedCategory('handymen')}>
-            <img src="/assets/icon-repair.png" alt="" className="home__tab-icon" onError={(e) => { e.target.style.display = 'none' }} />
-            <span>{t('home.categoryRepair')}</span>
-          </button>
-          <button type="button" className={`home__tab ${selectedCategory === 'services' ? 'home__tab--active' : ''}`} onClick={() => setSelectedCategory('services')}>
-            <img src="/assets/icon-services.png" alt="" className="home__tab-icon" onError={(e) => { e.target.style.display = 'none' }} />
-            <span>{t('home.categoryServices')}</span>
-          </button>
-        </div>
       </div>
 
       <div className="home__main container">

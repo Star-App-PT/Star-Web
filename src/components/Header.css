@@ -32,6 +32,17 @@
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--star-gray-800);
+  text-decoration: none;
+  padding-bottom: 6px;
+  border-bottom: 2px solid transparent;
+}
+
+.star-header__category:hover {
+  color: var(--star-gray-900);
+}
+
+.star-header__category--active {
+  border-bottom-color: #222;
 }
 
 .star-header__category-icon {
