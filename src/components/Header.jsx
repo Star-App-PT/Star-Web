@@ -69,6 +69,11 @@ export default function Header() {
           </div>
         )}
         <nav className="star-header__nav">
+          {!isMinimalHeader && (
+            <Link to="/worker/signup" className="star-header__cta">
+              {t('header.becomeAStar')}
+            </Link>
+          )}
           <div className="star-header__lang" ref={langRef}>
             <button
               type="button"
@@ -98,11 +103,6 @@ export default function Header() {
               </ul>
             )}
           </div>
-          {!isMinimalHeader && (
-            <Link to="/worker/signup" className="star-header__cta">
-              {t('header.becomeAStar')}
-            </Link>
-          )}
         </nav>
       </div>
     </header>
