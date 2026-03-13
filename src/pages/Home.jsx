@@ -138,6 +138,7 @@ export default function Home() {
               </div>
               <div className="home__worker-card-body">
                 <p className="home__worker-card-name">{w.name}</p>
+                <p className="home__worker-card-skill">{w.specialty}</p>
                 <p className="home__worker-card-meta">{PICKED_DATES}</p>
                 <p className="home__worker-card-price">€{w.hourlyRate} / hour</p>
                 <p className="home__worker-card-rating">★ {w.rating.toFixed(1)}</p>
@@ -159,6 +160,7 @@ export default function Home() {
               </div>
               <div className="home__worker-card-body">
                 <p className="home__worker-card-name">{w.name}</p>
+                <p className="home__worker-card-skill">{w.specialty}</p>
                 <p className="home__worker-card-meta">{PICKED_DATES}</p>
                 <p className="home__worker-card-price">€{w.hourlyRate} / hour</p>
                 <p className="home__worker-card-rating">★ {w.rating.toFixed(1)}</p>

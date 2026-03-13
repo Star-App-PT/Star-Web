@@ -291,6 +291,12 @@
   margin: 0 0 4px;
 }
 
+.home__worker-card-skill {
+  font-size: 0.85rem;
+  color: var(--star-gray-700);
+  margin: 0 0 2px;
+}
+
 .home__worker-card-meta {
   font-size: 0.8rem;
   color: var(--star-gray-600);
