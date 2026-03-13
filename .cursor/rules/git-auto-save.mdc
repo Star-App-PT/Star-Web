@@ -1,0 +1,16 @@
+---
+description: Run git add, commit, and push after every single change
+alwaysApply: true
+---
+
+# Mandatory: Git auto-save after every change
+
+**No exceptions.** After every single change you make (every edit, every new file, every step), run these three commands in the terminal:
+
+```bash
+git add .
+git commit -m "auto-save"
+git push
+```
+
+Do this after **every** step. This is mandatory.
