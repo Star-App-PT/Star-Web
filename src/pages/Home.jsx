@@ -14,12 +14,6 @@ function shuffle(arr) {
   return a
 }
 
-const SUGGESTED_LOCATIONS = [
-  { city: 'Porto', desc: 'Northern Portugal' },
-  { city: 'Lisbon', desc: 'Capital Region' },
-  { city: 'Faro', desc: 'Algarve' },
-]
-
 const WHO_SUBCATEGORIES = {
   cleaners: [
     { label: 'Deep Clean', icon: '🧽' },
@@ -82,7 +76,7 @@ export default function Home() {
   const [searchParams] = useSearchParams()
   const selectedCategory = searchParams.get('category') || 'cleaners'
   const [favorites, setFavorites] = useState(new Set())
-  const { city: CITY, supported: citySupported, userCityName } = useUserLocation()
+  const { city: CITY, supported: citySupported, userCityName, nearbyCities } = useUserLocation()
 
   const [openDropdown, setOpenDropdown] = useState(null)
   const [whereValue, setWhereValue] = useState('')
@@ -236,8 +230,8 @@ export default function Home() {
                   <div className="home__dd-sep" />
                 </>
               )}
-              <p className="home__dd-heading">Suggested locations</p>
-              {SUGGESTED_LOCATIONS.map(({ city, desc }) => (
+              <p className="home__dd-heading">Nearby cities</p>
+              {nearbyCities.map(({ city, desc }) => (
                 <button key={city} type="button" className="home__dd-opt" onClick={() => selectWhere(city)}>
                   <span className="home__dd-pin">📍</span>
                   <div>
