@@ -136,9 +136,9 @@
   object-fit: contain;
 }
 
-/* Main content */
+/* Main content – gap below search bar = same as gap above search bar (48px) */
 .home__main {
-  padding-top: 16px;
+  padding-top: 48px;
 }
 
 .home__hero-card {
