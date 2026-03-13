@@ -12,7 +12,7 @@
 }
 
 .home__hero {
-  padding-bottom: 0;
+  padding-bottom: 48px;
 }
 
 /* Hero has both classes (home__hero + container); target same element so width applies */
@@ -136,9 +136,8 @@
   object-fit: contain;
 }
 
-/* Main content – gap below search bar = same as gap above search bar (48px) */
 .home__main {
-  padding-top: 48px;
+  padding-top: 0;
 }
 
 .home__hero-card {
