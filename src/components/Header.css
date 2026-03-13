@@ -21,7 +21,7 @@
 
 .star-header__categories {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   gap: 20px;
 }
 
