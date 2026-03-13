@@ -400,3 +400,41 @@
 .home__cta:hover {
   opacity: 0.92;
 }
+
+/* Coming soon banner */
+.home__coming-soon {
+  text-align: center;
+  padding: 32px 24px;
+  margin-bottom: 28px;
+  background: var(--star-gray-50);
+  border: 1px solid var(--star-gray-200);
+  border-radius: 16px;
+}
+
+.home__coming-soon-icon {
+  color: var(--star-blue);
+  margin-bottom: 12px;
+}
+
+.home__coming-soon-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--star-gray-900);
+  margin: 0 0 8px;
+}
+
+.home__coming-soon-desc {
+  font-size: 0.95rem;
+  color: var(--star-gray-600);
+  margin: 0 0 8px;
+  max-width: 480px;
+  margin-inline: auto;
+  line-height: 1.5;
+}
+
+.home__coming-soon-sub {
+  font-size: 0.85rem;
+  color: var(--star-gray-500);
+  margin: 0;
+  font-style: italic;
+}

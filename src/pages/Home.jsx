@@ -2,7 +2,8 @@ import { useState, useMemo } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import './Home.css'
-import { CATEGORIES, CITY, PICKED_DATES, CLEANERS, HANDYMEN, SERVICES } from '../data/workers'
+import { CATEGORIES, PICKED_DATES, CLEANERS, HANDYMEN, SERVICES } from '../data/workers'
+import useUserLocation from '../hooks/useUserLocation'
 
 function shuffle(arr) {
   const a = [...arr]
@@ -18,6 +19,7 @@ export default function Home() {
   const [searchParams] = useSearchParams()
   const selectedCategory = searchParams.get('category') || 'cleaners'
   const [favorites, setFavorites] = useState(new Set())
+  const { city: CITY, supported: citySupported, userCityName } = useUserLocation()
 
   const current = CATEGORIES.find((c) => c.id === selectedCategory) || CATEGORIES[0]
   const categoryLabel = selectedCategory === 'cleaners' ? t('home.categoryClean') : selectedCategory === 'handymen' ? t('home.categoryRepair') : t('home.categoryServices')
@@ -68,6 +70,18 @@ export default function Home() {
       </div>
 
       <div className="home__main container">
+        {!citySupported && userCityName && (
+          <div className="home__coming-soon">
+            <div className="home__coming-soon-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <h3 className="home__coming-soon-title">Star is coming soon to {userCityName}!</h3>
+            <p className="home__coming-soon-desc">
+              Try choosing a different service type, or change the location to find workers in other areas.
+            </p>
+            <p className="home__coming-soon-sub">Showing workers in {CITY} instead.</p>
+          </div>
+        )}
         <div className="home__hero-card">
           <div>
             <h2 className="home__hero-title">{t('home.continueSearching', { category: categoryLabel.toLowerCase(), location: CITY })}</h2>
@@ -81,7 +95,7 @@ export default function Home() {
         <h3 className="home__section-title">{t('home.workersInLocation', { location: CITY })}</h3>
         <div className="home__cards-scroll">
           {current.workers.map((w) => (
-            <div key={w.id} className="home__worker-card" role="button" tabIndex={0} onClick={() => navigate(`/workers?category=${selectedCategory}`)}>
+            <div key={w.id} className="home__worker-card" role="button" tabIndex={0} onClick={() => navigate(`/worker/${w.id}`)}>
               <div className="home__worker-card-img-wrap">
                 <img src={w.image} alt="" className="home__worker-card-img" />
                 <span className="home__worker-card-pill">{t('home.topRated')}</span>
@@ -103,7 +117,7 @@ export default function Home() {
         <h3 className="home__section-title home__section-title--discover">{t('home.otherWorkersInArea')}</h3>
         <div className="home__cards-scroll">
           {otherWorkersMixed.map((w) => (
-            <div key={w.id} className="home__worker-card" role="button" tabIndex={0} onClick={() => navigate(`/workers?category=${selectedCategory}`)}>
+            <div key={w.id} className="home__worker-card" role="button" tabIndex={0} onClick={() => navigate(`/worker/${w.id}`)}>
               <div className="home__worker-card-img-wrap">
                 <img src={w.image} alt="" className="home__worker-card-img" />
                 <span className="home__worker-card-pill">{t('home.topRated')}</span>
