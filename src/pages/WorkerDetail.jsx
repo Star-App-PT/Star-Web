@@ -4,23 +4,6 @@ import { getWorkerById, getSimilarWorkers } from '../data/workers'
 import WorkerAvatar from '../components/WorkerAvatar'
 import './WorkerDetail.css'
 
-import clientJoao from '../assets/workers/clients/joao.jpg'
-import clientSara from '../assets/workers/clients/sara.jpg'
-import clientTomas from '../assets/workers/clients/tomas.jpg'
-import clientLuisa from '../assets/workers/clients/luisa.jpg'
-import clientPedro from '../assets/workers/clients/pedro.jpg'
-import clientAna from '../assets/workers/clients/ana.jpg'
-
-// image field is optional — when null/undefined, show first-letter initial badge
-const REVIEWS_DATA = [
-  { author: 'João P.', image: clientJoao, location: 'Porto', rating: 5, timeAgo: '2 days ago', text: 'Absolutely fantastic work. Punctual, professional, and left everything perfect. Will book again without hesitation!' },
-  { author: 'Sara M.', image: clientSara, location: 'Porto', rating: 5, timeAgo: '6 days ago', text: 'So reliable and friendly. Exceeded my expectations. Highly recommend to anyone in Porto.' },
-  { author: 'Tomás R.', image: clientTomas, location: 'Vila Nova de Gaia', rating: 5, timeAgo: '1 week ago', text: 'Great communication from start to finish. Fair pricing and outstanding quality. The attention to detail was remarkable and I could tell they genuinely cared about doing an excellent job.' },
-  { author: 'Luísa F.', image: clientLuisa, location: 'Matosinhos', rating: 4, timeAgo: '1 week ago', text: 'Very good service overall. Arrived on time and did a thorough job. Would use again for sure.' },
-  { author: 'Pedro C.', image: clientPedro, location: 'Porto', rating: 5, timeAgo: '2 weeks ago', text: 'Incredible attention to detail. My apartment has never looked this good. Five stars well deserved!' },
-  { author: 'Ana L.', image: clientAna, location: 'Porto', rating: 5, timeAgo: '3 weeks ago', text: 'Professional, fast, and left my home spotless. Already booked a second session.' },
-]
-
 const QUAL_ICONS = {
   clock: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>,
   award: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>,
@@ -87,10 +70,11 @@ export default function WorkerDetail() {
   }
 
   const hasPackages = worker.packages && worker.packages.length > 0
-  const hasReviews = worker.reviews > 0
+  const reviews = worker.clientReviews || []
+  const hasReviews = reviews.length > 0
   const hasQualifications = worker.qualifications && worker.qualifications.length > 0
   const hasGallery = worker.gallery && worker.gallery.length > 0
-  const visibleReviews = showAllReviews ? REVIEWS_DATA : REVIEWS_DATA.slice(0, 4)
+  const visibleReviews = showAllReviews ? reviews : reviews.slice(0, 4)
 
   const toggleReviewExpand = (i) => {
     setExpandedReviews((prev) => {
@@ -136,9 +120,11 @@ export default function WorkerDetail() {
                 <p className="wd__card-tagline">{worker.tagline || worker.bio}</p>
                 <p className="wd__card-meta">{worker.specialty} in {worker.city}</p>
                 <p className="wd__card-location">{worker.serviceLocation || `Service provided at client's home`}</p>
-                <a href="#wd-reviews" onClick={scrollToReviews} className="wd__card-rating">
-                  ★ {worker.rating.toFixed(2)} · {worker.reviews} reviews
-                </a>
+                {hasReviews && (
+                  <a href="#wd-reviews" onClick={scrollToReviews} className="wd__card-rating">
+                    ★ {worker.rating.toFixed(1)} · {reviews.length} review{reviews.length !== 1 ? 's' : ''}
+                  </a>
+                )}
                 <p className="wd__card-price">From <strong>€{worker.hourlyRate}</strong> / hour</p>
               </div>
               <div className="wd__card-actions">
@@ -183,11 +169,11 @@ export default function WorkerDetail() {
 
             {/* Section 2: Client Reviews */}
             <section className="wd__section" id="wd-reviews">
-              <h2 className="wd__section-title">★ {worker.rating.toFixed(1)} · {worker.reviews} reviews</h2>
               {!hasReviews ? (
                 <p className="wd__empty-text">No client reviews yet</p>
               ) : (
                 <>
+                  <h2 className="wd__section-title">★ {worker.rating.toFixed(1)} · {reviews.length} review{reviews.length !== 1 ? 's' : ''}</h2>
                   <div className="wd__reviews-grid">
                     {visibleReviews.map((r, i) => (
                       <div key={i} className="wd__review">
@@ -212,9 +198,9 @@ export default function WorkerDetail() {
                       </div>
                     ))}
                   </div>
-                  {!showAllReviews && REVIEWS_DATA.length > 4 && (
+                  {!showAllReviews && reviews.length > 4 && (
                     <button type="button" className="wd__show-all-btn" onClick={() => setShowAllReviews(true)}>
-                      Show all {worker.reviews} reviews
+                      Show all {reviews.length} reviews
                     </button>
                   )}
                 </>

@@ -42,7 +42,8 @@ export default function Workers() {
                 <p className="workers-page__skill">{worker.specialty}</p>
                 <p className="workers-page__meta">{PICKED_DATES}</p>
                 <p className="workers-page__price">€{worker.hourlyRate} / hour</p>
-                <p className="workers-page__rating">★ {worker.rating.toFixed(1)}</p>
+                {worker.rating != null && <p className="workers-page__rating">★ {worker.rating.toFixed(1)}</p>}
+                {worker.rating == null && <p className="workers-page__rating workers-page__rating--new">New</p>}
               </div>
             </a>
           ))}

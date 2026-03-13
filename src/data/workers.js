@@ -17,6 +17,13 @@ import hairStylistImage from '../assets/workers/services/hair-stylist.jpg'
 import massageTherapistImage from '../assets/workers/services/massage-therapist.jpg'
 import babysitterImage from '../assets/workers/services/babysitter.jpg'
 
+import clientJoao from '../assets/workers/clients/joao.jpg'
+import clientSara from '../assets/workers/clients/sara.jpg'
+import clientTomas from '../assets/workers/clients/tomas.jpg'
+import clientLuisa from '../assets/workers/clients/luisa.jpg'
+import clientPedro from '../assets/workers/clients/pedro.jpg'
+import clientAna from '../assets/workers/clients/ana.jpg'
+
 import actionHomeCleaning from '../assets/workers/action/action-home-cleaning.jpg'
 import actionDeepCleaning from '../assets/workers/action/action-deep-cleaning.jpg'
 import actionOfficeCleaning from '../assets/workers/action/action-office-cleaning.jpg'
@@ -371,6 +378,45 @@ export const SERVICES = [
 ]
 
 export const ALL_WORKERS = [...CLEANERS, ...HANDYMEN, ...SERVICES]
+
+/* ------------------------------------------------------------------ *
+ *  CLIENT REVIEWS — mock data for development.                       *
+ *  In production these come from the database after real bookings.   *
+ *  The image field is optional: null → initial-letter badge.         *
+ * ------------------------------------------------------------------ */
+const _r1 = { author: 'João P.', image: clientJoao, location: 'Porto', rating: 5, timeAgo: '2 days ago', text: 'Absolutely fantastic work. Punctual, professional, and left everything perfect. Will book again without hesitation!' }
+const _r2 = { author: 'Sara M.', image: clientSara, location: 'Porto', rating: 5, timeAgo: '6 days ago', text: 'So reliable and friendly. Exceeded my expectations. Highly recommend to anyone in Porto.' }
+const _r3 = { author: 'Tomás R.', image: clientTomas, location: 'Vila Nova de Gaia', rating: 5, timeAgo: '1 week ago', text: 'Great communication from start to finish. Fair pricing and outstanding quality. The attention to detail was remarkable and I could tell they genuinely cared about doing an excellent job.' }
+const _r4 = { author: 'Luísa F.', image: clientLuisa, location: 'Matosinhos', rating: 4, timeAgo: '1 week ago', text: 'Very good service overall. Arrived on time and did a thorough job. Would use again for sure.' }
+const _r5 = { author: 'Pedro C.', image: clientPedro, location: 'Porto', rating: 5, timeAgo: '2 weeks ago', text: 'Incredible attention to detail. My apartment has never looked this good. Five stars well deserved!' }
+const _r6 = { author: 'Ana L.', image: clientAna, location: 'Porto', rating: 5, timeAgo: '3 weeks ago', text: 'Professional, fast, and left my home spotless. Already booked a second session.' }
+
+const MOCK_REVIEWS_BY_ID = {
+  c1: [_r1, _r2, _r3, _r4, _r5, _r6],
+  c2: [_r1, _r2, _r4, _r5],
+  c6: [_r2, _r6],
+  h1: [_r1, _r3, _r4, _r5, _r6],
+  h2: [_r1, _r2, _r3, _r4, _r5, _r6],
+  h4: [_r1, _r3, _r5],
+  h6: [_r2, _r4],
+  s1: [_r2, _r3, _r5, _r6],
+  s2: [_r1, _r4, _r6],
+  s3: [_r1, _r2, _r3, _r5],
+  s4: [_r1, _r2, _r3, _r4, _r5],
+  s5: [_r1, _r2, _r3, _r4, _r5, _r6],
+  s6: [_r4, _r6],
+}
+
+ALL_WORKERS.forEach((w) => {
+  w.clientReviews = MOCK_REVIEWS_BY_ID[w.id] || []
+  if (w.clientReviews.length > 0) {
+    w.reviews = w.clientReviews.length
+    w.rating = +(w.clientReviews.reduce((sum, r) => sum + r.rating, 0) / w.clientReviews.length).toFixed(1)
+  } else {
+    w.reviews = 0
+    w.rating = null
+  }
+})
 
 export const CATEGORIES = [
   { id: 'cleaners', labelKey: 'home.categoryClean', workers: CLEANERS },

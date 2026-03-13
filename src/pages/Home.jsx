@@ -110,7 +110,8 @@ export default function Home() {
                 <p className="home__worker-card-skill">{w.specialty}</p>
                 <p className="home__worker-card-meta">{PICKED_DATES}</p>
                 <p className="home__worker-card-price">€{w.hourlyRate} / hour</p>
-                <p className="home__worker-card-rating">★ {w.rating.toFixed(1)}</p>
+                {w.rating != null && <p className="home__worker-card-rating">★ {w.rating.toFixed(1)}</p>}
+                {w.rating == null && <p className="home__worker-card-rating home__worker-card-rating--new">New</p>}
               </div>
             </a>
           ))}
@@ -133,7 +134,8 @@ export default function Home() {
                 <p className="home__worker-card-skill">{w.specialty}</p>
                 <p className="home__worker-card-meta">{PICKED_DATES}</p>
                 <p className="home__worker-card-price">€{w.hourlyRate} / hour</p>
-                <p className="home__worker-card-rating">★ {w.rating.toFixed(1)}</p>
+                {w.rating != null && <p className="home__worker-card-rating">★ {w.rating.toFixed(1)}</p>}
+                {w.rating == null && <p className="home__worker-card-rating home__worker-card-rating--new">New</p>}
               </div>
             </a>
           ))}
