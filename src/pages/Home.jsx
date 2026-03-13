@@ -49,7 +49,7 @@ const WHO_SUBCATEGORIES = {
     { label: 'Massage', icon: <svg {...I}><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4z"/><path d="M6 1v3m4-3v3m4-3v3"/></svg> },
     { label: 'Prepared Meals', icon: <svg {...I}><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 12h18"/><path d="M9 5v14m6-14v14"/></svg> },
     { label: 'Nails', icon: <svg {...I}><path d="M10 3h4l1 6H9z"/><rect x="9" y="9" width="6" height="11" rx="1"/><path d="M12 20v2"/></svg> },
-    { label: 'Personal Training', icon: <svg {...I}><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2"/><path d="M12 1v2"/><path d="M10 1h4"/></svg> },
+    { label: 'Training', icon: <svg {...I}><path d="M6.5 6v12M17.5 6v12"/><path d="M3 8v8M21 8v8"/><path d="M6.5 12h11"/></svg> },
     { label: 'Makeup', icon: <svg {...I}><path d="M9 3h6l1 7H8z"/><rect x="8" y="10" width="8" height="10" rx="1"/><path d="M12 20v2"/></svg> },
     { label: 'Spa Treatments', icon: <svg {...I}><path d="M12 22c6 0 8-4 8-9H4c0 5 2 9 8 9z"/><path d="M12 2C6 2 4 8 4 13"/><path d="M12 2c6 0 8 6 8 11"/></svg> },
     { label: 'Catering', icon: <svg {...I}><path d="M4 18h16"/><path d="M4 18c0-8 3.5-13 8-13s8 5 8 13"/><path d="M12 2v3"/></svg> },
