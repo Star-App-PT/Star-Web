@@ -9,9 +9,9 @@
   padding: 0 24px;
 }
 
-/* Search bar – gap below header matches header height (72px); margin so .container doesn't override */
+/* Gap between header bottom and search bar top = same height as the search bar (60px); margin so .container doesn't override */
 .home__hero {
-  margin-top: 72px;
+  margin-top: 60px;
   padding-top: 0;
   padding-bottom: 0;
 }
