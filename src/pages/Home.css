@@ -1,6 +1,6 @@
-/* Gap below header = search bar height (60px). On .home so nothing overrides it. */
+/* Gap below header = search bar height (48px). On .home so nothing overrides it. */
 .home {
-  padding-top: 60px;
+  padding-top: 48px;
   padding-bottom: 48px;
   background: var(--star-white);
 }
@@ -16,19 +16,19 @@
 }
 
 .home__hero .container {
-  max-width: 840px;
+  max-width: 640px;
 }
 
 .home__search {
   display: flex;
   align-items: center;
-  min-height: 60px;
+  min-height: 48px;
   background: var(--star-white);
   border: 1px solid var(--star-gray-200);
-  border-radius: 60px;
+  border-radius: 48px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
   overflow: hidden;
-  padding: 4px 4px 4px 20px;
+  padding: 4px 4px 4px 16px;
 }
 
 .home__search:hover {
@@ -38,7 +38,7 @@
 .home__search-field {
   flex: 1;
   min-width: 0;
-  padding: 12px 8px;
+  padding: 8px 6px;
 }
 
 .home__search-label {
@@ -64,14 +64,14 @@
 
 .home__search-divider {
   width: 1px;
-  height: 24px;
+  height: 20px;
   background: var(--star-gray-200);
   flex-shrink: 0;
 }
 
 .home__search-btn {
-  width: 52px;
-  height: 52px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   border: none;
   background: var(--star-blue);
@@ -81,7 +81,7 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  margin-left: 8px;
+  margin-left: 6px;
 }
 
 .home__search-btn:hover {
