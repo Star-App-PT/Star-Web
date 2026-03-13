@@ -21,16 +21,15 @@
 
 .star-header__categories {
   display: flex;
-  align-items: flex-end;
-  gap: 20px;
+  align-items: center;
+  gap: 32px;
 }
 
 .star-header__category {
   display: inline-flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 0px;
-  width: 120px;
+  gap: 2px;
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--star-gray-800);
@@ -55,13 +54,11 @@
 
 .star-header__category--services {
   gap: 0;
-  margin-left: -10px;
 }
 
 .star-header__category--services .star-header__category-icon {
   width: 114px;
   height: 114px;
-  margin-top: 14px;
 }
 
 .star-header__nav {
