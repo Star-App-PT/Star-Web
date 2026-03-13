@@ -235,7 +235,7 @@ export default function Home() {
               <p className="home__dd-heading">Nearby cities</p>
               {nearbyCities.map(({ city, desc }) => (
                 <button key={city} type="button" className="home__dd-opt" onClick={() => selectWhere(city)}>
-                  <span className="home__dd-pin">📍</span>
+                  <span className="home__dd-pin"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 21c-4.97-5.37-8-8.65-8-12a8 8 0 0 1 16 0c0 3.35-3.03 6.63-8 12z"/><circle cx="12" cy="9" r="3"/></svg></span>
                   <div>
                     <span className="home__dd-city">{city}</span>
                     <span className="home__dd-desc">{desc}</span>
