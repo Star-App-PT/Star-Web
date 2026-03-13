@@ -1,6 +1,7 @@
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
 import { getWorkerById, getSimilarWorkers, PICKED_DATES } from '../data/workers'
+import WorkerAvatar from '../components/WorkerAvatar'
 import './WorkerDetail.css'
 
 const REVIEWS_SAMPLE = [
@@ -125,7 +126,7 @@ export default function WorkerDetail() {
 
         <div className="wd__profile-header">
           <div className="wd__avatar-wrap">
-            <img src={worker.image} alt={worker.name} className="wd__avatar" />
+            <WorkerAvatar worker={worker} size={104} className="wd__avatar" />
           </div>
           <h1 className="wd__name">{worker.name}</h1>
           <p className="wd__specialty">{worker.specialty} in {worker.city}</p>
@@ -141,7 +142,7 @@ export default function WorkerDetail() {
         <div className="wd__content">
           <div className="wd__main">
             <div className="wd__host-row">
-              <img src={worker.image} alt="" className="wd__host-avatar" />
+              <WorkerAvatar worker={worker} size={56} className="wd__host-avatar" />
               <div>
                 <p className="wd__host-name">{worker.specialty} by {worker.name}</p>
                 <p className="wd__host-meta">{worker.languages.join(', ')}</p>
@@ -249,7 +250,7 @@ export default function WorkerDetail() {
                         <div className="wd__similar-img-wrap">
                           <img src={sw.heroImage} alt={sw.name} className="wd__similar-img" />
                         </div>
-                        <img src={sw.image} alt="" className="wd__similar-avatar" />
+                        <WorkerAvatar worker={sw} size={52} className="wd__similar-avatar" />
                         <div className="wd__similar-body">
                           <p className="wd__similar-name">{sw.name}</p>
                           <p className="wd__similar-skill">{sw.specialty}</p>

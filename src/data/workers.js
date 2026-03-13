@@ -36,6 +36,27 @@ import actionHairStyling from '../assets/workers/action/action-hair-styling.jpg'
 import actionMassage from '../assets/workers/action/action-massage.jpg'
 import actionBabysitting from '../assets/workers/action/action-babysitting.jpg'
 
+/**
+ * Worker data — single source of truth for all worker information.
+ *
+ * IMAGE FIELDS (two distinct concepts):
+ *
+ *   worker.image     — The worker's PROFILE PHOTO (uploaded by the worker).
+ *                      This is the single source for every circular avatar
+ *                      in the app: listing cards, profile page, host row,
+ *                      similar-workers grid. Render it via <WorkerAvatar>.
+ *                      May be null/undefined if the worker hasn't uploaded one yet.
+ *
+ *   worker.heroImage — A CATEGORY ACTION PHOTO provided by the platform.
+ *                      Shows someone performing this type of work (not the
+ *                      actual worker). Used as the main card image and the
+ *                      banner on the profile page. Never null.
+ *
+ * All other fields (name, specialty, rating, hourlyRate, bio, etc.) are
+ * also authoritative here. Every UI surface reads from this module, so
+ * updating a value here propagates everywhere automatically.
+ */
+
 export const PICKED_DATES = 'Aug 1 – Aug 3'
 
 export const SUPPORTED_CITIES = {

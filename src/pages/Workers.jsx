@@ -2,6 +2,7 @@ import { useSearchParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { CATEGORIES, PICKED_DATES } from '../data/workers'
 import useUserLocation from '../hooks/useUserLocation'
+import WorkerAvatar from '../components/WorkerAvatar'
 import './Workers.css'
 
 export default function Workers() {
@@ -35,7 +36,7 @@ export default function Workers() {
                 <img src={worker.heroImage} alt={worker.specialty} className="workers-page__image" />
                 <span className="workers-page__pill">{t('home.topRated')}</span>
               </div>
-              <img src={worker.image} alt={worker.name} className="workers-page__avatar" />
+              <WorkerAvatar worker={worker} size={68} className="workers-page__avatar" />
               <div className="workers-page__body">
                 <p className="workers-page__name">{worker.name}</p>
                 <p className="workers-page__skill">{worker.specialty}</p>
