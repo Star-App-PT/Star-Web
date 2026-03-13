@@ -4,14 +4,21 @@ import { getWorkerById, getSimilarWorkers } from '../data/workers'
 import WorkerAvatar from '../components/WorkerAvatar'
 import './WorkerDetail.css'
 
+import clientJoao from '../assets/workers/clients/joao.jpg'
+import clientSara from '../assets/workers/clients/sara.jpg'
+import clientTomas from '../assets/workers/clients/tomas.jpg'
+import clientLuisa from '../assets/workers/clients/luisa.jpg'
+import clientPedro from '../assets/workers/clients/pedro.jpg'
+import clientAna from '../assets/workers/clients/ana.jpg'
+
 // image field is optional — when null/undefined, show first-letter initial badge
 const REVIEWS_DATA = [
-  { author: 'João P.', image: null, location: 'Porto', rating: 5, timeAgo: '2 days ago', text: 'Absolutely fantastic work. Punctual, professional, and left everything perfect. Will book again without hesitation!' },
-  { author: 'Sara M.', image: null, location: 'Porto', rating: 5, timeAgo: '6 days ago', text: 'So reliable and friendly. Exceeded my expectations. Highly recommend to anyone in Porto.' },
-  { author: 'Tomás R.', image: null, location: 'Vila Nova de Gaia', rating: 5, timeAgo: '1 week ago', text: 'Great communication from start to finish. Fair pricing and outstanding quality. The attention to detail was remarkable and I could tell they genuinely cared about doing an excellent job.' },
-  { author: 'Luísa F.', image: null, location: 'Matosinhos', rating: 4, timeAgo: '1 week ago', text: 'Very good service overall. Arrived on time and did a thorough job. Would use again for sure.' },
-  { author: 'Pedro C.', image: null, location: 'Porto', rating: 5, timeAgo: '2 weeks ago', text: 'Incredible attention to detail. My apartment has never looked this good. Five stars well deserved!' },
-  { author: 'Ana L.', image: null, location: 'Porto', rating: 5, timeAgo: '3 weeks ago', text: 'Professional, fast, and left my home spotless. Already booked a second session.' },
+  { author: 'João P.', image: clientJoao, location: 'Porto', rating: 5, timeAgo: '2 days ago', text: 'Absolutely fantastic work. Punctual, professional, and left everything perfect. Will book again without hesitation!' },
+  { author: 'Sara M.', image: clientSara, location: 'Porto', rating: 5, timeAgo: '6 days ago', text: 'So reliable and friendly. Exceeded my expectations. Highly recommend to anyone in Porto.' },
+  { author: 'Tomás R.', image: clientTomas, location: 'Vila Nova de Gaia', rating: 5, timeAgo: '1 week ago', text: 'Great communication from start to finish. Fair pricing and outstanding quality. The attention to detail was remarkable and I could tell they genuinely cared about doing an excellent job.' },
+  { author: 'Luísa F.', image: clientLuisa, location: 'Matosinhos', rating: 4, timeAgo: '1 week ago', text: 'Very good service overall. Arrived on time and did a thorough job. Would use again for sure.' },
+  { author: 'Pedro C.', image: clientPedro, location: 'Porto', rating: 5, timeAgo: '2 weeks ago', text: 'Incredible attention to detail. My apartment has never looked this good. Five stars well deserved!' },
+  { author: 'Ana L.', image: clientAna, location: 'Porto', rating: 5, timeAgo: '3 weeks ago', text: 'Professional, fast, and left my home spotless. Already booked a second session.' },
 ]
 
 const QUAL_ICONS = {
