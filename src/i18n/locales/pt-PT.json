@@ -3,14 +3,31 @@
     "back": "Voltar",
     "continue": "Continuar",
     "cancel": "Cancelar",
-    "done": "Concluir"
+    "done": "Concluir",
+    "where": "Onde",
+    "when": "Quando",
+    "who": "Quem"
   },
   "header": {
     "becomeAStar": "Ser uma Star"
   },
   "home": {
     "title": "A sua casa, limpa e arranjada.",
-    "becomeAStar": "Ser uma Star"
+    "subtitle": "Marque uma visita grátis. Os profissionais vão até si, avaliam e enviam orçamento.",
+    "placeholderWhere": "Selecione a localização",
+    "placeholderWhen": "Selecione as datas",
+    "placeholderWho": "Selecione o profissional",
+    "categoryClean": "Limpeza",
+    "categoryRepair": "Reparações",
+    "categoryServices": "Serviços",
+    "workersInLocation": "Profissionais em {{location}}",
+    "otherWorkersInArea": "Outros profissionais na sua área",
+    "continueSearching": "Continuar a procurar {{category}} em {{location}}",
+    "topRated": "Mais bem avaliados",
+    "more": "Mais...",
+    "becomeAStar": "Ser uma Star",
+    "ctaText": "É profissional? Junte-se à STAR e tenha clientes na sua área.",
+    "yourArea": "a sua área"
   },
   "workerProfile": {
     "title": "Conte-nos mais sobre si",

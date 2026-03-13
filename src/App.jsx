@@ -6,6 +6,8 @@ import WorkerProfileIntro from './pages/worker/WorkerProfileIntro'
 import WorkerSkillType from './pages/worker/WorkerSkillType'
 import WorkerProfileCleaner from './pages/worker/WorkerProfileCleaner'
 import WorkerProfile from './pages/worker/WorkerProfile'
+import Search from './pages/Search'
+import Workers from './pages/Workers'
 
 export default function App() {
   return (
@@ -14,6 +16,8 @@ export default function App() {
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/workers" element={<Workers />} />
           <Route path="/worker/signup" element={<WorkerSignup />} />
           <Route path="/worker/profile/intro" element={<WorkerProfileIntro />} />
           <Route path="/worker/profile/skill" element={<WorkerSkillType />} />

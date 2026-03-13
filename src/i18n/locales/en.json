@@ -3,14 +3,31 @@
     "back": "Back",
     "continue": "Continue",
     "cancel": "Cancel",
-    "done": "Done"
+    "done": "Done",
+    "where": "Where",
+    "when": "When",
+    "who": "Who"
   },
   "header": {
     "becomeAStar": "Become a Star"
   },
   "home": {
     "title": "Your home, clean and fixed.",
-    "becomeAStar": "Become a Star"
+    "subtitle": "Book a free visit. Workers come to you, assess the job, and send a quote.",
+    "placeholderWhere": "Select your location",
+    "placeholderWhen": "Select your dates",
+    "placeholderWho": "Select your worker",
+    "categoryClean": "Cleaning",
+    "categoryRepair": "Repairs",
+    "categoryServices": "Services",
+    "workersInLocation": "Workers in {{location}}",
+    "otherWorkersInArea": "Other workers in your area",
+    "continueSearching": "Continue searching for {{category}} in {{location}}",
+    "topRated": "Top rated",
+    "more": "More...",
+    "becomeAStar": "Become a Star",
+    "ctaText": "Are you a professional? Join STAR and get clients in your area.",
+    "yourArea": "your area"
   },
   "workerProfile": {
     "title": "Tell us more about you",

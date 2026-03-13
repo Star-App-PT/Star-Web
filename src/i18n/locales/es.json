@@ -3,14 +3,31 @@
     "back": "Volver",
     "continue": "Continuar",
     "cancel": "Cancelar",
-    "done": "Listo"
+    "done": "Listo",
+    "where": "Dónde",
+    "when": "Cuándo",
+    "who": "Quién"
   },
   "header": {
     "becomeAStar": "Ser una Star"
   },
   "home": {
     "title": "Tu hogar, limpio y arreglado.",
-    "becomeAStar": "Ser una Star"
+    "subtitle": "Reserva una visita gratis. Los profesionales van a ti, valoran y envían presupuesto.",
+    "placeholderWhere": "Selecciona la ubicación",
+    "placeholderWhen": "Selecciona las fechas",
+    "placeholderWho": "Selecciona el profesional",
+    "categoryClean": "Limpieza",
+    "categoryRepair": "Reparaciones",
+    "categoryServices": "Servicios",
+    "workersInLocation": "Profesionales en {{location}}",
+    "otherWorkersInArea": "Otros profesionales en tu zona",
+    "continueSearching": "Seguir buscando {{category}} en {{location}}",
+    "topRated": "Mejor valorados",
+    "more": "Más...",
+    "becomeAStar": "Ser una Star",
+    "ctaText": "¿Eres profesional? Únete a STAR y consigue clientes en tu zona.",
+    "yourArea": "tu zona"
   },
   "workerProfile": {
     "title": "Cuéntanos más sobre ti",
