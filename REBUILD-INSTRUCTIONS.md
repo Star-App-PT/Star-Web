@@ -12,6 +12,8 @@
 
 **Do not run destructive commands (e.g. `rm -rf`) on project or document folders without confirming exactly which path and warning that if the folder is synced (e.g. iCloud), the sync copy will be removed too.**
 
+- **User (Ed) pronouns:** Use he/him/his — not they/them.
+
 ---
 
 ## Project location and Git
