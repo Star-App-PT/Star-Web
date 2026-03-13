@@ -19,6 +19,27 @@
   display: block;
 }
 
+.star-header__categories {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.star-header__category {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--star-gray-800);
+}
+
+.star-header__category-icon {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
 .star-header__nav {
   display: flex;
   align-items: center;

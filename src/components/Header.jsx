@@ -45,6 +45,22 @@ export default function Header() {
             className="star-header__logo-img"
           />
         </Link>
+        {!isMinimalHeader && (
+          <div className="star-header__categories">
+            <span className="star-header__category">
+              <img src="/assets/icon-clean.png" alt="" className="star-header__category-icon" onError={(e) => { e.target.style.display = 'none' }} />
+              <span>{t('home.categoryClean')}</span>
+            </span>
+            <span className="star-header__category">
+              <img src="/assets/icon-repair.png" alt="" className="star-header__category-icon" onError={(e) => { e.target.style.display = 'none' }} />
+              <span>{t('home.categoryRepair')}</span>
+            </span>
+            <span className="star-header__category">
+              <img src="/assets/icon-services.png" alt="" className="star-header__category-icon" onError={(e) => { e.target.style.display = 'none' }} />
+              <span>{t('home.categoryServices')}</span>
+            </span>
+          </div>
+        )}
         <nav className="star-header__nav">
           <div className="star-header__lang" ref={langRef}>
             <button
