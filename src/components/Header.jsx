@@ -60,7 +60,7 @@ export default function Header() {
               <Link
                 key={id}
                 to={location.pathname === '/' ? `/?category=${id}` : `/?category=${id}`}
-                className={`star-header__category ${activeCategory === id ? 'star-header__category--active' : ''}`}
+                className={`star-header__category ${activeCategory === id ? 'star-header__category--active' : ''} ${id === 'services' ? 'star-header__category--services' : ''}`}
               >
                 <img src={icon} alt="" className="star-header__category-icon" onError={(e) => { e.target.style.display = 'none' }} />
                 <span>{t(labelKey)}</span>

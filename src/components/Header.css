@@ -51,6 +51,11 @@
   object-fit: contain;
 }
 
+.star-header__category--services .star-header__category-icon {
+  width: 114px;
+  height: 114px;
+}
+
 .star-header__nav {
   display: flex;
   align-items: center;
