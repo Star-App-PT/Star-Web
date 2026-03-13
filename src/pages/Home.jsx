@@ -2,54 +2,7 @@ import { useState, useMemo } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import './Home.css'
-
-const CITY = 'Porto'
-const PICKED_DATES = 'Aug 1 – Aug 3'
-
-const CLEANERS = [
-  { id: 'c1', name: 'Maria', specialty: 'Deep cleaning', rating: 5.0, hourlyRate: 28, image: 'https://picsum.photos/220/220?random=1' },
-  { id: 'c2', name: 'Ana', specialty: 'Home cleaning', rating: 4.89, hourlyRate: 32, image: 'https://picsum.photos/220/220?random=2' },
-  { id: 'c3', name: 'Inês', specialty: 'Office cleaning', rating: 4.95, hourlyRate: 25, image: 'https://picsum.photos/220/220?random=3' },
-  { id: 'c4', name: 'Patrícia', specialty: 'Eco cleaning', rating: 4.8, hourlyRate: 30, image: 'https://picsum.photos/220/220?random=4' },
-  { id: 'c5', name: 'Helena', specialty: 'Move-out clean', rating: 4.9, hourlyRate: 27, image: 'https://picsum.photos/220/220?random=5' },
-  { id: 'c6', name: 'Sara', specialty: 'Window cleaning', rating: 4.7, hourlyRate: 29, image: 'https://picsum.photos/220/220?random=6' },
-  { id: 'c7', name: 'Joana', specialty: 'Deep cleaning', rating: 4.85, hourlyRate: 31, image: 'https://picsum.photos/220/220?random=7' },
-  { id: 'c8', name: 'Beatriz', specialty: 'Home cleaning', rating: 4.9, hourlyRate: 26, image: 'https://picsum.photos/220/220?random=8' },
-  { id: 'c9', name: 'Andreia', specialty: 'Office cleaning', rating: 4.88, hourlyRate: 33, image: 'https://picsum.photos/220/220?random=9' },
-  { id: 'c10', name: 'Carla', specialty: 'Eco cleaning', rating: 4.92, hourlyRate: 30, image: 'https://picsum.photos/220/220?random=10' },
-]
-
-const HANDYMEN = [
-  { id: 'h1', name: 'João', specialty: 'Plumbing', rating: 4.92, hourlyRate: 35, image: 'https://picsum.photos/220/220?random=11' },
-  { id: 'h2', name: 'Miguel', specialty: 'Electrical', rating: 5.0, hourlyRate: 42, image: 'https://picsum.photos/220/220?random=12' },
-  { id: 'h3', name: 'Rui', specialty: 'General handyman', rating: 4.78, hourlyRate: 38, image: 'https://picsum.photos/220/220?random=13' },
-  { id: 'h4', name: 'Carlos', specialty: 'Carpentry', rating: 4.9, hourlyRate: 40, image: 'https://picsum.photos/220/220?random=14' },
-  { id: 'h5', name: 'Pedro', specialty: 'Painting', rating: 4.85, hourlyRate: 37, image: 'https://picsum.photos/220/220?random=15' },
-  { id: 'h6', name: 'Bruno', specialty: 'HVAC', rating: 4.8, hourlyRate: 39, image: 'https://picsum.photos/220/220?random=16' },
-  { id: 'h7', name: 'Nuno', specialty: 'Plumbing', rating: 4.75, hourlyRate: 36, image: 'https://picsum.photos/220/220?random=17' },
-  { id: 'h8', name: 'Filipe', specialty: 'Electrical', rating: 4.95, hourlyRate: 41, image: 'https://picsum.photos/220/220?random=18' },
-  { id: 'h9', name: 'Alex', specialty: 'General handyman', rating: 4.7, hourlyRate: 34, image: 'https://picsum.photos/220/220?random=19' },
-  { id: 'h10', name: 'Daniel', specialty: 'Carpentry', rating: 4.88, hourlyRate: 38, image: 'https://picsum.photos/220/220?random=20' },
-]
-
-const SERVICES = [
-  { id: 's1', name: 'Carlos', specialty: 'Portrait photography', rating: 4.85, hourlyRate: 45, image: 'https://picsum.photos/220/220?random=21' },
-  { id: 's2', name: 'Sofia', specialty: 'Deep massage', rating: 5.0, hourlyRate: 55, image: 'https://picsum.photos/220/220?random=22' },
-  { id: 's3', name: 'Tiago', specialty: 'Car detailing', rating: 4.7, hourlyRate: 22, image: 'https://picsum.photos/220/220?random=23' },
-  { id: 's4', name: 'Rita', specialty: 'Event photography', rating: 4.9, hourlyRate: 48, image: 'https://picsum.photos/220/220?random=24' },
-  { id: 's5', name: 'Luís', specialty: 'Hair styling', rating: 4.95, hourlyRate: 52, image: 'https://picsum.photos/220/220?random=25' },
-  { id: 's6', name: 'Marta', specialty: 'Personal training', rating: 4.8, hourlyRate: 30, image: 'https://picsum.photos/220/220?random=26' },
-  { id: 's7', name: 'Patrícia', specialty: 'Massage', rating: 5.0, hourlyRate: 60, image: 'https://picsum.photos/220/220?random=27' },
-  { id: 's8', name: 'Gonçalo', specialty: 'Photography', rating: 4.76, hourlyRate: 47, image: 'https://picsum.photos/220/220?random=28' },
-  { id: 's9', name: 'Ingrid', specialty: 'Nails', rating: 4.82, hourlyRate: 28, image: 'https://picsum.photos/220/220?random=29' },
-  { id: 's10', name: 'Helder', specialty: 'Home spa', rating: 4.9, hourlyRate: 50, image: 'https://picsum.photos/220/220?random=30' },
-]
-
-const CATEGORIES = [
-  { id: 'cleaners', labelKey: 'home.categoryClean', workers: CLEANERS },
-  { id: 'handymen', labelKey: 'home.categoryRepair', workers: HANDYMEN },
-  { id: 'services', labelKey: 'home.categoryServices', workers: SERVICES },
-]
+import { CATEGORIES, CITY, PICKED_DATES, CLEANERS, HANDYMEN, SERVICES } from '../data/workers'
 
 function shuffle(arr) {
   const a = [...arr]
@@ -128,7 +81,7 @@ export default function Home() {
         <h3 className="home__section-title">{t('home.workersInLocation', { location: CITY })}</h3>
         <div className="home__cards-scroll">
           {current.workers.map((w) => (
-            <div key={w.id} className="home__worker-card" role="button" tabIndex={0} onClick={() => navigate('/workers')}>
+            <div key={w.id} className="home__worker-card" role="button" tabIndex={0} onClick={() => navigate(`/workers?category=${selectedCategory}`)}>
               <div className="home__worker-card-img-wrap">
                 <img src={w.image} alt="" className="home__worker-card-img" />
                 <span className="home__worker-card-pill">{t('home.topRated')}</span>
@@ -150,7 +103,7 @@ export default function Home() {
         <h3 className="home__section-title home__section-title--discover">{t('home.otherWorkersInArea')}</h3>
         <div className="home__cards-scroll">
           {otherWorkersMixed.map((w) => (
-            <div key={w.id} className="home__worker-card" role="button" tabIndex={0} onClick={() => navigate('/workers')}>
+            <div key={w.id} className="home__worker-card" role="button" tabIndex={0} onClick={() => navigate(`/workers?category=${selectedCategory}`)}>
               <div className="home__worker-card-img-wrap">
                 <img src={w.image} alt="" className="home__worker-card-img" />
                 <span className="home__worker-card-pill">{t('home.topRated')}</span>
@@ -167,7 +120,7 @@ export default function Home() {
               </div>
             </div>
           ))}
-          <div className="home__worker-card home__more-card" role="button" tabIndex={0} onClick={() => navigate('/workers')}>
+          <div className="home__worker-card home__more-card" role="button" tabIndex={0} onClick={() => navigate(`/workers?category=${selectedCategory}`)}>
             <div className="home__more-imgs">
               <img src={CLEANERS[0].image} alt="" />
               <img src={HANDYMEN[0].image} alt="" />
