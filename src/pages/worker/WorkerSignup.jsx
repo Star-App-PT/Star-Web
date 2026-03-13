@@ -32,7 +32,7 @@ export default function WorkerSignup() {
       <div className="signup__hero">
         <h1 className="signup__title">Become a Star</h1>
         <p className="signup__subtitle">
-          Join thousands of professionals earning on their own terms.
+          Join us in three simple steps
         </p>
       </div>
 
