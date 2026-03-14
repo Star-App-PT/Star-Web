@@ -97,7 +97,7 @@ export default function Home() {
 
   const current = CATEGORIES.find((c) => c.id === selectedCategory) || CATEGORIES[0]
   const categoryLabel = selectedCategory === 'cleaners' ? t('home.categoryClean') : selectedCategory === 'handymen' ? t('home.categoryRepair') : t('home.categoryServices')
-  const displayCity = whereValue || CITY
+  const displayCity = whereValue || userCityName || CITY
 
   const otherWorkersMixed = useMemo(() => {
     const others = CATEGORIES.filter((c) => c.id !== selectedCategory).flatMap((c) => c.workers)
@@ -108,6 +108,10 @@ export default function Home() {
     const subs = WHO_SUBCATEGORIES[selectedCategory] || []
     setWhoValue((prev) => (prev && !subs.find((s) => s.label === prev) ? '' : prev))
   }, [selectedCategory])
+
+  useEffect(() => {
+    if (userCityName && !whereValue) setWhereValue(userCityName)
+  }, [userCityName])
 
   useEffect(() => {
     const handler = (e) => {
