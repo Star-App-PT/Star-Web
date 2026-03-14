@@ -539,9 +539,9 @@
 .home__dd-opt {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   width: 100%;
-  padding: 10px 8px;
+  padding: 6px 8px;
   border: none;
   background: none;
   cursor: pointer;
@@ -555,12 +555,12 @@
 }
 
 .home__dd-pin {
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 10px;
+  border-radius: 8px;
   background: var(--star-gray-100);
   font-size: 1.1rem;
   flex-shrink: 0;
