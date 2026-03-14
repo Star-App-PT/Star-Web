@@ -270,39 +270,47 @@ export default function Home() {
 
           {openDropdown === 'where' && (
             <div className="home__dd home__dd--where">
-              {autocompleteSuggestions.length > 0 ? (
+              {recentLocations.length > 0 && (
                 <>
-                  <p className="home__dd-heading">Search results</p>
-                  {autocompleteSuggestions.map((s) => (
-                    <button key={`${s.city}-${s.lat}`} type="button" className="home__dd-opt" onClick={() => { selectWhere(s.city); setAutocompleteSuggestions([]) }}>
-                      <span className="home__dd-pin"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 21c-4.97-5.37-8-8.65-8-12a8 8 0 0 1 16 0c0 3.35-3.03 6.63-8 12z"/><circle cx="12" cy="9" r="3"/></svg></span>
-                      <div>
-                        <span className="home__dd-city">{s.city}</span>
-                        <span className="home__dd-desc">{s.region}</span>
-                      </div>
+                  <p className="home__dd-heading">Recent searches</p>
+                  {recentLocations.map((city) => (
+                    <button key={city} type="button" className="home__dd-opt" onClick={() => { selectWhere(city); setAutocompleteSuggestions([]) }}>
+                      <span className="home__dd-pin">🕐</span>
+                      <div><span className="home__dd-city">{city}</span></div>
                     </button>
                   ))}
+                  <div className="home__dd-sep" />
+                </>
+              )}
+
+              {whereValue.length >= 2 ? (
+                <>
+                  {isAutocompleteLoading && autocompleteSuggestions.length === 0 && (
+                    <p className="home__dd-heading home__dd-heading--loading">Searching...</p>
+                  )}
+                  {autocompleteSuggestions.length > 0 && (
+                    <>
+                      <p className="home__dd-heading">Results</p>
+                      {autocompleteSuggestions.map((s) => (
+                        <button key={`${s.city}-${s.lat}`} type="button" className="home__dd-opt" onClick={() => { selectWhere(s.city); setAutocompleteSuggestions([]) }}>
+                          <span className="home__dd-pin"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 21c-4.97-5.37-8-8.65-8-12a8 8 0 0 1 16 0c0 3.35-3.03 6.63-8 12z"/><circle cx="12" cy="9" r="3"/></svg></span>
+                          <div>
+                            <span className="home__dd-city">{s.city}</span>
+                            <span className="home__dd-desc">{s.region}</span>
+                          </div>
+                        </button>
+                      ))}
+                    </>
+                  )}
+                  {!isAutocompleteLoading && autocompleteSuggestions.length === 0 && (
+                    <p className="home__dd-heading home__dd-heading--loading">No cities found</p>
+                  )}
                 </>
               ) : (
                 <>
-                  {isAutocompleteLoading && whereValue.length >= 2 && (
-                    <p className="home__dd-heading home__dd-heading--loading">Searching...</p>
-                  )}
-                  {recentLocations.length > 0 && (
-                    <>
-                      <p className="home__dd-heading">Recent searches</p>
-                      {recentLocations.map((city) => (
-                        <button key={city} type="button" className="home__dd-opt" onClick={() => selectWhere(city)}>
-                          <span className="home__dd-pin">🕐</span>
-                          <div><span className="home__dd-city">{city}</span></div>
-                        </button>
-                      ))}
-                      <div className="home__dd-sep" />
-                    </>
-                  )}
                   <p className="home__dd-heading">Nearby cities</p>
                   {nearbyCities.map(({ city, desc }) => (
-                    <button key={city} type="button" className="home__dd-opt" onClick={() => selectWhere(city)}>
+                    <button key={city} type="button" className="home__dd-opt" onClick={() => { selectWhere(city); setAutocompleteSuggestions([]) }}>
                       <span className="home__dd-pin"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 21c-4.97-5.37-8-8.65-8-12a8 8 0 0 1 16 0c0 3.35-3.03 6.63-8 12z"/><circle cx="12" cy="9" r="3"/></svg></span>
                       <div>
                         <span className="home__dd-city">{city}</span>
