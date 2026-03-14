@@ -12,20 +12,20 @@ const CATEGORIES = [
 
 export default function WorkerSignup() {
   return (
-    <div className="signup">
-      <div className="signup__hero">
+    <div className="signup signup--picker">
+      <div className="signup__card">
         <h1 className="signup__title">What work do you do?</h1>
-      </div>
 
-      <div className="signup__steps">
-        {CATEGORIES.map((cat) => (
-          <Link key={cat.id} to={`/worker/signup/${cat.id}`} className="signup__step signup__step--link">
-            <div className="signup__img-wrap">
-              <img src={cat.image} alt={cat.label} className="signup__img" />
-            </div>
-            <h2 className="signup__step-title">{cat.label}</h2>
-          </Link>
-        ))}
+        <div className="signup__steps">
+          {CATEGORIES.map((cat) => (
+            <Link key={cat.id} to={`/worker/signup/${cat.id}`} className="signup__step signup__step--link">
+              <div className="signup__img-wrap">
+                <img src={cat.image} alt={cat.label} className="signup__img" />
+              </div>
+              <h2 className="signup__step-title">{cat.label}</h2>
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   )

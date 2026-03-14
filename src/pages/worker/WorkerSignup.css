@@ -4,24 +4,35 @@
   padding: 56px 24px 72px;
 }
 
-.signup__hero {
+.signup--picker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 80px);
+  padding: 40px 24px;
+}
+
+.signup__card {
+  background: var(--star-white);
+  border: 1px solid var(--star-gray-200);
+  border-radius: 24px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+  padding: 56px 64px 48px;
   text-align: center;
-  margin-bottom: 56px;
 }
 
 .signup__title {
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   font-weight: 800;
   color: var(--star-gray-900);
-  margin: 0;
+  margin: 0 0 48px;
   letter-spacing: -0.02em;
 }
 
 .signup__steps {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
-  margin-bottom: 56px;
+  display: flex;
+  justify-content: center;
+  gap: 56px;
 }
 
 .signup__step {
@@ -45,9 +56,9 @@
 
 .signup__img-wrap {
   position: relative;
-  width: 180px;
-  height: 180px;
-  margin: 0 auto 16px;
+  width: 220px;
+  height: 220px;
+  margin: 0 auto 14px;
 }
 
 .signup__img {
@@ -55,13 +66,14 @@
   height: 100%;
   object-fit: cover;
   border-radius: 50%;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--star-gray-200);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
   transition: box-shadow 0.15s;
 }
 
 .signup__step-title {
-  font-size: 1.18rem;
-  font-weight: 700;
+  font-size: 1.3rem;
+  font-weight: 800;
   color: var(--star-gray-900);
   margin: 0;
 }
@@ -302,18 +314,24 @@
 /* ================ RESPONSIVE ================ */
 
 @media (max-width: 700px) {
+  .signup__card {
+    padding: 36px 24px 32px;
+  }
+
   .signup__steps {
-    grid-template-columns: 1fr;
-    gap: 36px;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
   }
 
   .signup__title {
-    font-size: 2rem;
+    font-size: 1.6rem;
+    margin-bottom: 32px;
   }
 
   .signup__img-wrap {
-    width: 150px;
-    height: 150px;
+    width: 160px;
+    height: 160px;
   }
 
   .signup__row {
