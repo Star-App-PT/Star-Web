@@ -97,6 +97,7 @@ export default function Home() {
 
   const current = CATEGORIES.find((c) => c.id === selectedCategory) || CATEGORIES[0]
   const categoryLabel = selectedCategory === 'cleaners' ? t('home.categoryClean') : selectedCategory === 'handymen' ? t('home.categoryRepair') : t('home.categoryServices')
+  const displayCity = whereValue || CITY
 
   const otherWorkersMixed = useMemo(() => {
     const others = CATEGORIES.filter((c) => c.id !== selectedCategory).flatMap((c) => c.workers)
@@ -312,12 +313,12 @@ export default function Home() {
             <p className="home__coming-soon-desc">
               Try choosing a different service type, or change the location to find workers in other areas.
             </p>
-            <p className="home__coming-soon-sub">Showing workers in {CITY} instead.</p>
+            <p className="home__coming-soon-sub">Showing workers in {displayCity} instead.</p>
           </div>
         )}
         <div className="home__hero-card">
           <div>
-            <h2 className="home__hero-title">{t('home.continueSearching', { category: categoryLabel.toLowerCase(), location: CITY })}</h2>
+            <h2 className="home__hero-title">{t('home.continueSearching', { category: categoryLabel.toLowerCase(), location: displayCity })}</h2>
             <p className="home__hero-dates">{PICKED_DATES} · 2 guests</p>
           </div>
           <div className="home__hero-thumb">
@@ -325,7 +326,7 @@ export default function Home() {
           </div>
         </div>
 
-        <h3 className="home__section-title">{t('home.workersInLocation', { location: CITY })}</h3>
+        <h3 className="home__section-title">{t('home.workersInLocation', { location: displayCity })}</h3>
         <div className="home__cards-scroll">
           {current.workers.map((w) => (
             <a key={w.id} className="home__worker-card" href={`/worker/${w.id}`} target="_blank" rel="noopener noreferrer">
