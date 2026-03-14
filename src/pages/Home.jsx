@@ -197,11 +197,16 @@ export default function Home() {
       <div className="home__hero container">
         <div className="home__search-wrap" ref={searchWrapRef}>
           <form className="home__search" onSubmit={handleSearch}>
-            <div className="home__search-field" onClick={() => toggleDropdown('where')}>
+            <div className="home__search-field" onClick={() => { if (openDropdown !== 'where') toggleDropdown('where') }}>
               <span className="home__search-label">{t('common.where')}</span>
-              <span className={`home__search-val ${!whereValue ? 'home__search-val--ph' : ''}`}>
-                {whereValue || t('home.placeholderWhere')}
-              </span>
+              <input
+                type="text"
+                className="home__search-input"
+                placeholder={t('home.placeholderWhere')}
+                value={whereValue}
+                onChange={(e) => setWhereValue(e.target.value)}
+                onFocus={() => setOpenDropdown('where')}
+              />
             </div>
             <div className="home__search-divider" />
             <div className="home__search-field" onClick={() => toggleDropdown('when')}>

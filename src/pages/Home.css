@@ -478,6 +478,25 @@
   color: var(--star-gray-500);
 }
 
+.home__search-input {
+  display: block;
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.9rem;
+  color: var(--star-gray-800);
+  font-family: inherit;
+  padding: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.home__search-input::placeholder {
+  color: var(--star-gray-500);
+}
+
 .home__search-btn--off {
   opacity: 0.45;
   cursor: default;
