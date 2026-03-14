@@ -169,10 +169,10 @@
   width: calc(100% - 48px);
   margin: 16px auto 0;
   padding: 14px;
-  border: 2px solid var(--star-gray-900);
-  border-radius: 10px;
-  background: var(--star-white);
-  color: var(--star-gray-900);
+  border: none;
+  border-radius: 50px;
+  background: #1B4FBA;
+  color: #FFFFFF;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
@@ -180,7 +180,7 @@
 }
 
 .wd__card-message-btn:hover {
-  background: var(--star-gray-50);
+  opacity: 0.9;
 }
 
 /* ============ RIGHT — Scrollable sections ============ */
@@ -400,10 +400,10 @@
   width: 100%;
   margin-top: 24px;
   padding: 14px;
-  border: 2px solid var(--star-gray-900);
-  border-radius: 10px;
+  border: 2px solid #1B4FBA;
+  border-radius: 50px;
   background: var(--star-white);
-  color: var(--star-gray-900);
+  color: #1B4FBA;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
@@ -674,10 +674,10 @@
 
   .wd__mobile-bar-btn {
     padding: 8px 16px;
-    border: 2px solid var(--star-gray-900);
-    border-radius: 8px;
-    background: var(--star-white);
-    color: var(--star-gray-900);
+    border: none;
+    border-radius: 50px;
+    background: #1B4FBA;
+    color: #FFFFFF;
     font-size: 0.85rem;
     font-weight: 600;
     cursor: pointer;

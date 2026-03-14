@@ -93,7 +93,7 @@
 .signup__btn {
   display: inline-block;
   padding: 16px 48px;
-  border-radius: 12px;
+  border-radius: 50px;
   border: none;
   background: #1B4FBA;
   color: #FFFFFF;
@@ -122,7 +122,7 @@
 .signup__btn--full {
   width: 100%;
   padding: 16px;
-  border-radius: 10px;
+  border-radius: 50px;
   margin-top: 8px;
 }
 
