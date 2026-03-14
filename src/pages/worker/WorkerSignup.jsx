@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { supabase } from '../../supabase'
 import cleanerImg from '../../assets/workers/cleaners/cleaner-4.jpg'
 import handymanImg from '../../assets/workers/handymen/handyman-1.jpg'
 import photographerImg from '../../assets/workers/services/photographer.jpg'
@@ -26,12 +27,16 @@ const STEPS = [
 const CITIES = ['Porto', 'Lisbon', 'Faro']
 const CATEGORIES = ['Cleaning', 'Repairs', 'Services']
 
-function saveApplication(data) {
-  // TODO: Replace localStorage with Supabase insert when backend is ready
-  // e.g. supabase.from('worker_applications').insert(data)
-  const existing = JSON.parse(localStorage.getItem('star-worker-applications') || '[]')
-  existing.push({ ...data, id: crypto.randomUUID(), createdAt: new Date().toISOString() })
-  localStorage.setItem('star-worker-applications', JSON.stringify(existing))
+async function saveWorker(data) {
+  const { error } = await supabase.from('workers').insert({
+    full_name: data.fullName,
+    email: data.email,
+    phone: data.phone,
+    city: data.city,
+    service_category: data.category,
+    password: data.password,
+  })
+  if (error) throw error
 }
 
 export default function WorkerSignup() {
@@ -66,13 +71,13 @@ export default function WorkerSignup() {
     if (form.password !== form.confirmPassword) { setError('Passwords do not match'); return }
 
     // TESTING MODE - remove duplicate email check before going live
-    // In production, check if email already exists:
-    // const { data: existing } = await supabase.from('worker_applications').select('id').eq('email', form.email).single()
+    // In production, uncomment the check below to prevent duplicate registrations:
+    // const { data: existing } = await supabase.from('workers').select('id').eq('email', form.email.trim().toLowerCase()).maybeSingle()
     // if (existing) { setError('This email is already registered'); return }
 
     setSubmitting(true)
     try {
-      saveApplication({
+      await saveWorker({
         fullName: form.fullName.trim(),
         email: form.email.trim().toLowerCase(),
         phone: form.phone.trim(),
@@ -81,8 +86,8 @@ export default function WorkerSignup() {
         password: form.password,
       })
       setSubmitted(true)
-    } catch {
-      setError('Something went wrong. Please try again.')
+    } catch (err) {
+      setError(err?.message || 'Something went wrong. Please try again.')
     } finally {
       setSubmitting(false)
     }
