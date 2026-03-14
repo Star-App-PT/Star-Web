@@ -14,7 +14,7 @@ export default function WorkerSignup() {
   return (
     <div className="signup signup--picker">
       <div className="signup__card">
-        <h1 className="signup__title">What work do you do?</h1>
+        <h1 className="signup__title">What work best describes you?</h1>
 
         <div className="signup__steps">
           {CATEGORIES.map((cat) => (
