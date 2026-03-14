@@ -165,10 +165,9 @@
 }
 
 .wd__card-message-btn {
-  display: block;
-  width: calc(100% - 48px);
-  margin: 16px auto 0;
-  padding: 14px;
+  display: inline-block;
+  margin: 16px 24px 0;
+  padding: 16px 28px;
   border: none;
   border-radius: 50px;
   background: #1B4FBA;
@@ -396,10 +395,9 @@
 }
 
 .wd__show-all-btn {
-  display: block;
-  width: 100%;
+  display: inline-block;
   margin-top: 24px;
-  padding: 14px;
+  padding: 16px 28px;
   border: 2px solid #1B4FBA;
   border-radius: 50px;
   background: var(--star-white);

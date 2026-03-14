@@ -411,10 +411,10 @@
 
 .home__cta {
   display: inline-block;
-  padding: 14px 28px;
-  border-radius: var(--radius-pill);
-  background: var(--star-blue);
-  color: var(--star-white);
+  padding: 16px 28px;
+  border-radius: 50px;
+  background: #1B4FBA;
+  color: #FFFFFF;
   font-weight: 600;
   font-size: 1rem;
   text-decoration: none;

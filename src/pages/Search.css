@@ -224,8 +224,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 12px 24px;
-  border-radius: 999px;
+  padding: 16px 28px;
+  border-radius: 50px;
   background: #1B4FBA;
   color: #fff;
   font-weight: 600;
