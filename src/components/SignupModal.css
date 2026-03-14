@@ -1,0 +1,255 @@
+/* ================ OVERLAY ================ */
+
+.smodal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+/* ================ MODAL ================ */
+
+.smodal {
+  background: #FFFFFF;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 568px;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
+  animation: smodal-in 0.2s ease;
+}
+
+@keyframes smodal-in {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* ================ HEADER ================ */
+
+.smodal__header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 20px 24px;
+  border-bottom: 1px solid #EBEBEB;
+}
+
+.smodal__close {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--star-gray-800);
+  transition: background 0.15s;
+}
+
+.smodal__close:hover {
+  background: #F7F7F7;
+}
+
+.smodal__title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--star-gray-900);
+  margin: 0;
+}
+
+/* ================ BODY ================ */
+
+.smodal__body {
+  padding: 24px;
+}
+
+/* ================ PHONE GROUP ================ */
+
+.smodal__phone-group {
+  border: 1px solid #B0B0B0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.smodal__phone-top {
+  position: relative;
+  padding: 8px 14px 6px;
+  border-bottom: 1px solid #EBEBEB;
+}
+
+.smodal__phone-label {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--star-gray-500);
+  margin-bottom: 2px;
+}
+
+.smodal__country-select {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--star-gray-900);
+  appearance: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.smodal__country-chevron {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--star-gray-600);
+}
+
+.smodal__phone-bottom {
+  padding: 0;
+}
+
+.smodal__phone-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  padding: 14px;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--star-gray-900);
+  background: transparent;
+  box-sizing: border-box;
+}
+
+.smodal__phone-input::placeholder {
+  color: var(--star-gray-400);
+}
+
+.smodal__phone-group:focus-within {
+  border-color: #1B4FBA;
+  box-shadow: 0 0 0 2px rgba(27, 79, 186, 0.15);
+}
+
+/* ================ HINT ================ */
+
+.smodal__hint {
+  font-size: 0.75rem;
+  color: var(--star-gray-600);
+  margin: 10px 0 20px;
+  line-height: 1.5;
+}
+
+/* ================ CONTINUE BUTTON ================ */
+
+.smodal__continue {
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  border: none;
+  background: #1B4FBA;
+  color: #FFFFFF;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.smodal__continue:hover {
+  opacity: 0.9;
+}
+
+.smodal__continue:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ================ DIVIDER ================ */
+
+.smodal__divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.smodal__divider::before,
+.smodal__divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #EBEBEB;
+}
+
+.smodal__divider span {
+  font-size: 0.8rem;
+  color: var(--star-gray-600);
+}
+
+/* ================ SOCIAL BUTTONS ================ */
+
+.smodal__socials {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.smodal__social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #222;
+  background: #FFFFFF;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--star-gray-900);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.smodal__social-btn:hover {
+  background: #F7F7F7;
+}
+
+.smodal__social-icon {
+  position: absolute;
+  left: 16px;
+}
+
+/* ================ RESPONSIVE ================ */
+
+@media (max-width: 600px) {
+  .smodal-overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .smodal {
+    border-radius: 16px 16px 0 0;
+    max-height: 90vh;
+    animation: smodal-slide-up 0.25s ease;
+  }
+
+  @keyframes smodal-slide-up {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
+}

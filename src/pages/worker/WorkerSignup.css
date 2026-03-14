@@ -48,6 +48,10 @@
   color: inherit;
   cursor: pointer;
   transition: transform 0.15s;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
 }
 
 .signup__step--link:hover {
