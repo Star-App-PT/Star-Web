@@ -265,7 +265,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#1B4FBA",
   },
   continueBtnDisabled: {
-    backgroundColor: "#93A8D6",
+    opacity: 0.45,
   },
   continueBtnText: {
     fontSize: 16,
@@ -273,6 +273,6 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
   },
   continueBtnTextDisabled: {
-    color: "#D6DFF2",
+    color: "#FFFFFF",
   },
 });
