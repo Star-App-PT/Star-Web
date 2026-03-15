@@ -4,25 +4,22 @@ import { useAuth } from "../../contexts/AuthContext";
 
 const CATEGORIES = [
   {
-    id: "cleaner",
+    id: "cleaning",
     label: "Cleaner",
     description: "Cleaning homes, offices, cars and more",
     image: require("../../assets/icon-clean.png"),
-    route: "/worker/profile/cleaner" as const,
   },
   {
-    id: "handyman",
+    id: "repairs",
     label: "Handyman",
     description: "Plumbing, electrical, bricklaying and repairs",
     image: require("../../assets/icon-repair.png"),
-    route: "/worker/profile/cleaner" as const,
   },
   {
     id: "services",
     label: "Services",
     description: "Hair, massage, home spa and personal care",
     image: require("../../assets/icon-services.png"),
-    route: "/worker/profile/cleaner" as const,
   },
 ] as const;
 
@@ -46,7 +43,9 @@ export default function WorkerCategorySelection() {
           <Pressable
             key={cat.id}
             style={styles.card}
-            onPress={() => router.push(cat.route)}
+            onPress={() =>
+              router.push(`/worker/subcategory?category=${cat.id}`)
+            }
           >
             <Image
               source={cat.image}

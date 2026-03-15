@@ -11,6 +11,10 @@ export default function WorkerLayout() {
         name="category"
         options={{ title: "Choose your category" }}
       />
+      <Stack.Screen
+        name="subcategory"
+        options={{ headerShown: false }}
+      />
     </Stack>
   );
 }
