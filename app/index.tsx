@@ -8,16 +8,57 @@ import {
   Text,
   View,
 } from "react-native";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { Link } from "expo-router";
+import { useRouter } from "expo-router";
+import { useAuth } from "../contexts/AuthContext";
+import AuthModal from "../components/AuthModal";
+
+type AuthIntent = "become-a-star" | "menu-login" | null;
 
 export default function Index() {
+  const router = useRouter();
+  const { isLoggedIn, login, logout } = useAuth();
+
   const [selectedCategory, setSelectedCategory] = useState<
     "cleaners" | "handymen" | "services"
   >("cleaners");
   const [searchBarHovered, setSearchBarHovered] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [authModalVisible, setAuthModalVisible] = useState(false);
+  const [authIntent, setAuthIntent] = useState<AuthIntent>(null);
   const pickedDatesLabel = "Aug 1 – Aug 3";
+
+  const handleBecomeAStar = useCallback(() => {
+    if (isLoggedIn) {
+      router.push("/worker/category");
+    } else {
+      setAuthIntent("become-a-star");
+      setAuthModalVisible(true);
+    }
+  }, [isLoggedIn, router]);
+
+  const handleMenuLogin = useCallback(() => {
+    setMenuOpen(false);
+    setAuthIntent("menu-login");
+    setAuthModalVisible(true);
+  }, []);
+
+  const handleAuthSuccess = useCallback(() => {
+    login();
+    setAuthModalVisible(false);
+    const intent = authIntent;
+    setAuthIntent(null);
+
+    if (intent === "become-a-star") {
+      router.push("/worker/category");
+    }
+  }, [authIntent, login, router]);
+
+  const handleAuthClose = useCallback(() => {
+    setAuthModalVisible(false);
+    setAuthIntent(null);
+  }, []);
 
   const CITY_NAME = "Porto";
   const categoryLabel =
@@ -110,14 +151,47 @@ export default function Index() {
         contentContainerStyle={styles.contentContainer}
         showsVerticalScrollIndicator={false}
       >
-        <View
-          style={[styles.searchBar, searchBarHovered && styles.searchBarHover]}
-          onMouseEnter={() => setSearchBarHovered(true)}
-          onMouseLeave={() => setSearchBarHovered(false)}
-        >
-          <Ionicons name="search" size={20} color="#111827" style={styles.searchIcon} />
-          <Text style={styles.searchPlaceholder}>Start your search</Text>
+        {/* Top bar: search + hamburger */}
+        <View style={styles.topBar}>
+          <View
+            style={[styles.searchBar, searchBarHovered && styles.searchBarHover]}
+            onMouseEnter={() => setSearchBarHovered(true)}
+            onMouseLeave={() => setSearchBarHovered(false)}
+          >
+            <Ionicons name="search" size={20} color="#111827" style={styles.searchIcon} />
+            <Text style={styles.searchPlaceholder}>Start your search</Text>
+          </View>
+          <Pressable
+            style={styles.hamburgerBtn}
+            onPress={() => setMenuOpen(!menuOpen)}
+          >
+            <Ionicons name={menuOpen ? "close" : "menu"} size={26} color="#111827" />
+          </Pressable>
         </View>
+
+        {/* Dropdown menu */}
+        {menuOpen && (
+          <View style={styles.dropdownMenu}>
+            {!isLoggedIn && (
+              <Pressable style={styles.menuItem} onPress={handleMenuLogin}>
+                <Ionicons name="person-outline" size={18} color="#111827" />
+                <Text style={styles.menuItemText}>Log in or sign up</Text>
+              </Pressable>
+            )}
+            {isLoggedIn && (
+              <Pressable
+                style={styles.menuItem}
+                onPress={() => {
+                  setMenuOpen(false);
+                  logout();
+                }}
+              >
+                <Ionicons name="log-out-outline" size={18} color="#111827" />
+                <Text style={styles.menuItemText}>Log out</Text>
+              </Pressable>
+            )}
+          </View>
+        )}
 
         <View style={styles.categoryTabsShell}>
           <View style={styles.categoryTabs}>
@@ -230,11 +304,9 @@ export default function Index() {
           ))}
         </ScrollView>
 
-        <Link href="/worker/profile/cleaner" asChild>
-          <Pressable style={styles.becomeAStar}>
-            <Text style={styles.becomeAStarText}>Become a Star (worker signup)</Text>
-          </Pressable>
-        </Link>
+        <Pressable style={styles.becomeAStar} onPress={handleBecomeAStar}>
+          <Text style={styles.becomeAStarText}>Become a Star</Text>
+        </Pressable>
         <Text style={styles.discoverTitle}>{`Other available workers in ${CITY_NAME}`}</Text>
         {subcategoryGroups.map((group) => (
           <View key={group.label} style={styles.subcategorySection}>
@@ -276,6 +348,12 @@ export default function Index() {
           </View>
         ))}
       </ScrollView>
+
+      <AuthModal
+        visible={authModalVisible}
+        onClose={handleAuthClose}
+        onSuccess={handleAuthSuccess}
+      />
     </SafeAreaView>
   );
 }
@@ -294,7 +372,54 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingBottom: 32,
   },
+  topBar: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    marginTop: 12,
+  },
+  hamburgerBtn: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    borderWidth: 1,
+    borderColor: "#E5E7EB",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#FFFFFF",
+    shadowColor: "#000000",
+    shadowOpacity: 0.06,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 1 },
+    elevation: 2,
+  },
+  dropdownMenu: {
+    marginTop: 8,
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: "#E5E7EB",
+    backgroundColor: "#FFFFFF",
+    paddingVertical: 6,
+    shadowColor: "#000000",
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 6,
+  },
+  menuItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    gap: 10,
+  },
+  menuItemText: {
+    fontSize: 15,
+    fontWeight: "600",
+    color: "#111827",
+  },
   searchBar: {
+    flex: 1,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
@@ -310,7 +435,6 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     shadowOffset: { width: 0, height: 2 },
     elevation: 2,
-    marginTop: 12,
   },
   searchBarHover: {
     borderColor: "#111827",
