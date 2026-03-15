@@ -4,6 +4,20 @@
   padding: 56px 24px 72px;
 }
 
+.signup-page {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F7F7F7;
+  padding: 40px 24px;
+}
+
+.signup-page__content {
+  width: 100%;
+  max-width: 540px;
+}
+
 .signup--picker {
   display: flex;
   align-items: center;

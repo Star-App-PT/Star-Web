@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import cleanerImg from '../../assets/workers/cleaners/cleaner-4.jpg'
 import handymanImg from '../../assets/workers/handymen/handyman-1.jpg'
 import photographerImg from '../../assets/workers/services/photographer.jpg'
-import SignupModal from '../../components/SignupModal'
+import SignupForm from '../../components/SignupForm'
 import './WorkerSignup.css'
 
 const CATEGORIES = [
@@ -15,6 +15,19 @@ const CATEGORIES = [
 export default function WorkerSignup() {
   const { t } = useTranslation()
   const [selectedCategory, setSelectedCategory] = useState(null)
+
+  if (selectedCategory) {
+    return (
+      <div className="signup-page">
+        <div className="signup-page__content">
+          <SignupForm
+            category={selectedCategory}
+            onBack={() => setSelectedCategory(null)}
+          />
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="signup signup--picker">
@@ -37,12 +50,6 @@ export default function WorkerSignup() {
           ))}
         </div>
       </div>
-
-      <SignupModal
-        open={!!selectedCategory}
-        onClose={() => setSelectedCategory(null)}
-        category={selectedCategory}
-      />
     </div>
   )
 }
