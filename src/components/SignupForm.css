@@ -59,6 +59,13 @@
   letter-spacing: -0.01em;
 }
 
+.sf-card__lang {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 .sf-card__body {
   padding: 24px;
 }
