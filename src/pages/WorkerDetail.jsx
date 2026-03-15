@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { getWorkerById, getSimilarWorkers } from '../data/workers'
 import WorkerAvatar from '../components/WorkerAvatar'
 import './WorkerDetail.css'
@@ -13,6 +14,7 @@ const QUAL_ICONS = {
 }
 
 export default function WorkerDetail() {
+  const { t } = useTranslation()
   const { id } = useParams()
   const navigate = useNavigate()
   const mapRef = useRef(null)
@@ -63,8 +65,8 @@ export default function WorkerDetail() {
   if (!worker) {
     return (
       <div className="wd"><div className="wd__container">
-        <p>Worker not found.</p>
-        <button type="button" onClick={() => navigate(-1)} className="wd__back-btn">Go back</button>
+        <p>{t('workerDetail.workerNotFound')}</p>
+        <button type="button" onClick={() => navigate(-1)} className="wd__back-btn">{t('common.goBack')}</button>
       </div></div>
     )
   }
@@ -89,26 +91,26 @@ export default function WorkerDetail() {
     document.getElementById('wd-reviews')?.scrollIntoView({ behavior: 'smooth' })
   }
 
+  const reviewWord = reviews.length !== 1 ? t('common.reviews') : t('common.review')
+
   return (
     <div className="wd">
-      {/* Mobile top bar */}
       <div className="wd__mobile-bar">
         <WorkerAvatar worker={worker} size={36} className="wd__mobile-bar-avatar" />
         <div className="wd__mobile-bar-info">
           <span className="wd__mobile-bar-name">{worker.name}</span>
-          <span className="wd__mobile-bar-rate">From €{worker.hourlyRate}/hr</span>
+          <span className="wd__mobile-bar-rate">{t('common.fromPerHour', { price: worker.hourlyRate })}</span>
         </div>
-        <button type="button" className="wd__mobile-bar-btn">Message</button>
+        <button type="button" className="wd__mobile-bar-btn">{t('workerDetail.message')}</button>
       </div>
 
       <div className="wd__container">
         <button type="button" className="wd__back-btn" onClick={() => navigate(-1)}>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
-          Back
+          {t('common.back')}
         </button>
 
         <div className="wd__layout">
-          {/* LEFT — Sticky worker card */}
           <aside className="wd__left">
             <div className="wd__card">
               <div className="wd__card-hero-wrap">
@@ -119,30 +121,27 @@ export default function WorkerDetail() {
                 <h1 className="wd__card-name">{worker.name}</h1>
                 <p className="wd__card-tagline">{worker.tagline || worker.bio}</p>
                 <p className="wd__card-meta">{worker.specialty} in {worker.city}</p>
-                <p className="wd__card-location">{worker.serviceLocation || `Service provided at client's home`}</p>
+                <p className="wd__card-location">{worker.serviceLocation || t('workerDetail.serviceAtHome')}</p>
                 {hasReviews && (
                   <a href="#wd-reviews" onClick={scrollToReviews} className="wd__card-rating">
-                    ★ {worker.rating.toFixed(1)} · {reviews.length} review{reviews.length !== 1 ? 's' : ''}
+                    ★ {worker.rating.toFixed(1)} · {reviews.length} {reviewWord}
                   </a>
                 )}
-                <p className="wd__card-price">From <strong>€{worker.hourlyRate}</strong> / hour</p>
+                <p className="wd__card-price" dangerouslySetInnerHTML={{ __html: t('common.fromPerHour', { price: worker.hourlyRate }) }} />
               </div>
               <div className="wd__card-actions">
-                <button type="button" className="wd__card-share" aria-label="Share">
+                <button type="button" className="wd__card-share" aria-label={t('workerDetail.share')}>
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
                 </button>
-                <button type="button" className="wd__card-fav" aria-label="Favourite">
+                <button type="button" className="wd__card-fav" aria-label={t('workerDetail.favourite')}>
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
                 </button>
               </div>
-              <button type="button" className="wd__card-message-btn">Message {worker.name}</button>
+              <button type="button" className="wd__card-message-btn">{t('workerDetail.messageWorker', { name: worker.name })}</button>
             </div>
           </aside>
 
-          {/* RIGHT — Scrollable content */}
           <main className="wd__right">
-
-            {/* Section 1: Service Packages */}
             <section className="wd__section">
               {hasPackages ? (
                 <>
@@ -158,22 +157,21 @@ export default function WorkerDetail() {
                       </div>
                     </div>
                   ))}
-                  <p className="wd__pkg-note">You can message {worker.name} to customise or make changes.</p>
+                  <p className="wd__pkg-note">{t('workerDetail.customiseNote', { name: worker.name })}</p>
                 </>
               ) : (
                 <div className="wd__pkg-empty">
-                  <p>This worker hasn't added service packages yet. Message them to discuss your job.</p>
+                  <p>{t('workerDetail.noPackages')}</p>
                 </div>
               )}
             </section>
 
-            {/* Section 2: Client Reviews */}
             <section className="wd__section" id="wd-reviews">
               {!hasReviews ? (
-                <p className="wd__empty-text">No client reviews yet</p>
+                <p className="wd__empty-text">{t('workerDetail.noReviews')}</p>
               ) : (
                 <>
-                  <h2 className="wd__section-title">★ {worker.rating.toFixed(1)} · {reviews.length} review{reviews.length !== 1 ? 's' : ''}</h2>
+                  <h2 className="wd__section-title">★ {worker.rating.toFixed(1)} · {reviews.length} {reviewWord}</h2>
                   <div className="wd__reviews-grid">
                     {visibleReviews.map((r, i) => (
                       <div key={i} className="wd__review">
@@ -193,24 +191,23 @@ export default function WorkerDetail() {
                         </div>
                         <p className={`wd__review-text ${expandedReviews.has(i) ? 'wd__review-text--open' : ''}`}>{r.text}</p>
                         {r.text.length > 120 && !expandedReviews.has(i) && (
-                          <button type="button" className="wd__review-more" onClick={() => toggleReviewExpand(i)}>Show more</button>
+                          <button type="button" className="wd__review-more" onClick={() => toggleReviewExpand(i)}>{t('workerDetail.showMore')}</button>
                         )}
                       </div>
                     ))}
                   </div>
                   {!showAllReviews && reviews.length > 4 && (
                     <button type="button" className="wd__show-all-btn" onClick={() => setShowAllReviews(true)}>
-                      Show all {reviews.length} reviews
+                      {t('workerDetail.showAllReviews', { count: reviews.length })}
                     </button>
                   )}
                 </>
               )}
             </section>
 
-            {/* Section 3: Qualifications */}
             {hasQualifications && (
               <section className="wd__section">
-                <h2 className="wd__section-title">My qualifications</h2>
+                <h2 className="wd__section-title">{t('workerDetail.myQualifications')}</h2>
                 <div className="wd__quals-layout">
                   <div className="wd__quals-card">
                     <WorkerAvatar worker={worker} size={80} className="wd__quals-avatar" />
@@ -232,9 +229,8 @@ export default function WorkerDetail() {
               </section>
             )}
 
-            {/* Section 4: Gallery */}
             <section className="wd__section">
-              <h2 className="wd__section-title">My gallery</h2>
+              <h2 className="wd__section-title">{t('workerDetail.myGallery')}</h2>
               {hasGallery ? (
                 <div className="wd__gallery-grid">
                   {worker.gallery.map((img, i) => (
@@ -254,40 +250,37 @@ export default function WorkerDetail() {
               )}
             </section>
 
-            {/* Section 5: Map */}
             <section className="wd__section">
-              <h2 className="wd__section-title">Where I work</h2>
-              <p className="wd__section-sub">I travel to clients in the area shown on the map. Message me to discuss locations outside this area.</p>
+              <h2 className="wd__section-title">{t('workerDetail.whereIWork')}</h2>
+              <p className="wd__section-sub">{t('workerDetail.whereIWorkDesc')}</p>
               <div ref={mapRef} className="wd__map" />
             </section>
 
-            {/* Section 6: Things to Know */}
             <section className="wd__section">
-              <h2 className="wd__section-title">Things to know</h2>
+              <h2 className="wd__section-title">{t('workerDetail.thingsToKnow')}</h2>
               <div className="wd__know-grid">
                 <div className="wd__know-item">
                   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                  <h3>Client requirements</h3>
-                  <p>Clients must be aged 18 or over to book.</p>
+                  <h3>{t('workerDetail.clientRequirements')}</h3>
+                  <p>{t('workerDetail.clientRequirementsDesc')}</p>
                 </div>
                 <div className="wd__know-item">
                   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-                  <h3>Accessibility</h3>
-                  <p>Message {worker.name} for accessibility details.</p>
+                  <h3>{t('workerDetail.accessibility')}</h3>
+                  <p>{t('workerDetail.accessibilityDesc', { name: worker.name })}</p>
                 </div>
                 <div className="wd__know-item">
                   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="10" y1="14" x2="10" y2="14.01"/></svg>
-                  <h3>Cancellation policy</h3>
-                  <p>Cancel at any time. No penalty for clients.</p>
+                  <h3>{t('workerDetail.cancellationPolicy')}</h3>
+                  <p>{t('workerDetail.cancellationPolicyDesc')}</p>
                 </div>
               </div>
             </section>
 
-            {/* Section 7: Trust Banner */}
             <section className="wd__trust">
               <img src="/star-logo-blue.svg" alt="Star" className="wd__trust-logo" />
-              <h2 className="wd__trust-title">Workers on STAR are vetted for quality</h2>
-              <p className="wd__trust-desc">Every worker on STAR is reviewed for professionalism, reliability, and quality of work before being listed on the platform. Message us to learn more.</p>
+              <h2 className="wd__trust-title">{t('workerDetail.trustTitle')}</h2>
+              <p className="wd__trust-desc">{t('workerDetail.trustDesc')}</p>
             </section>
 
           </main>

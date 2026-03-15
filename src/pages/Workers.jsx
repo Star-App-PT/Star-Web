@@ -18,14 +18,14 @@ export default function Workers() {
     <div className="workers-page">
       <div className="workers-page__container">
         <button type="button" className="workers-page__back" onClick={() => navigate(-1)}>
-          Back
+          {t('common.back')}
         </button>
 
         <div className="workers-page__header">
           <p className="workers-page__eyebrow">{categoryLabel}</p>
           <h1 className="workers-page__title">{t('home.workersInLocation', { location: city })}</h1>
           <p className="workers-page__subtitle">
-            Browse {current.workers.length} warm, professional profiles for your next booking in {city}.
+            {t('home.browseProfiles', { count: current.workers.length, city })}
           </p>
         </div>
 
@@ -41,9 +41,9 @@ export default function Workers() {
                 <p className="workers-page__name">{worker.name}</p>
                 <p className="workers-page__skill">{worker.specialty}</p>
                 <p className="workers-page__meta">{PICKED_DATES}</p>
-                <p className="workers-page__price">€{worker.hourlyRate} / hour</p>
+                <p className="workers-page__price">{t('common.perHour', { price: worker.hourlyRate })}</p>
                 {worker.rating != null && <p className="workers-page__rating">★ {worker.rating.toFixed(1)}</p>}
-                {worker.rating == null && <p className="workers-page__rating workers-page__rating--new">New</p>}
+                {worker.rating == null && <p className="workers-page__rating workers-page__rating--new">{t('common.new')}</p>}
               </div>
             </a>
           ))}

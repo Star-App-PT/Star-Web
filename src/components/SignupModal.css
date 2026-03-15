@@ -69,6 +69,13 @@
   margin: 0;
 }
 
+.smodal__lang {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 /* ================ BODY ================ */
 
 .smodal__body {
