@@ -224,6 +224,28 @@
     "checkEmail": "Verifique o seu email",
     "checkEmailDesc": "Enviámos um link de confirmação para {{email}}. Clique no link para verificar a sua conta."
   },
+  "finishProfile": {
+    "title": "Concluir registo",
+    "legalName": "Nome legal",
+    "firstNamePlaceholder": "Nome próprio no documento",
+    "lastNamePlaceholder": "Apelido no documento",
+    "legalNameHint": "Certifique-se de que corresponde ao seu nome legal completo.",
+    "dateOfBirth": "Data de nascimento",
+    "month": "Mês",
+    "day": "Dia",
+    "year": "Ano",
+    "dobHint": "Deve ter pelo menos 18 anos para se registar.",
+    "errUnder18": "Deve ter pelo menos 18 anos para se registar.",
+    "contactInfo": "Informação de contacto",
+    "emailPlaceholder": "Email",
+    "emailHint": "Enviaremos confirmações de reserva e atualizações.",
+    "infoFromProvider": "Esta informação veio do {{provider}}.",
+    "termsPre": "Ao selecionar Concordar e continuar, concordo com os ",
+    "termsOfService": "Termos de Serviço",
+    "termsAnd": " e a ",
+    "privacyPolicy": "Política de Privacidade",
+    "agreeAndContinue": "Concordar e continuar"
+  },
   "dashboard": {
     "welcome": "Bem-vindo, {{name}}!",
     "signedInVia": "Sessão iniciada via {{provider}}",

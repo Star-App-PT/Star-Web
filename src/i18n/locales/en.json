@@ -224,6 +224,28 @@
     "checkEmail": "Check your email",
     "checkEmailDesc": "We've sent a confirmation link to {{email}}. Click the link to verify your account."
   },
+  "finishProfile": {
+    "title": "Finish signing up",
+    "legalName": "Legal name",
+    "firstNamePlaceholder": "First name on ID",
+    "lastNamePlaceholder": "Last name on ID",
+    "legalNameHint": "Make sure this matches your full legal name.",
+    "dateOfBirth": "Date of birth",
+    "month": "Month",
+    "day": "Day",
+    "year": "Year",
+    "dobHint": "You must be at least 18 to sign up.",
+    "errUnder18": "You must be at least 18 years old to sign up.",
+    "contactInfo": "Contact info",
+    "emailPlaceholder": "Email",
+    "emailHint": "We'll send you booking confirmations and updates.",
+    "infoFromProvider": "This info came from {{provider}}.",
+    "termsPre": "By selecting Agree and continue, I agree to STAR's ",
+    "termsOfService": "Terms of Service",
+    "termsAnd": " and ",
+    "privacyPolicy": "Privacy Policy",
+    "agreeAndContinue": "Agree and continue"
+  },
   "dashboard": {
     "welcome": "Welcome, {{name}}!",
     "signedInVia": "Signed in via {{provider}}",

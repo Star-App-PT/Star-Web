@@ -22,7 +22,9 @@ export default function Header() {
     location.pathname === '/worker/profile/intro' ||
     location.pathname === '/worker/profile/skill' ||
     location.pathname === '/worker/profile/cleaner' ||
-    location.pathname === '/worker/profile'
+    location.pathname === '/worker/profile' ||
+    location.pathname === '/finish-profile' ||
+    location.pathname === '/dashboard'
 
   return (
     <header className="star-header">

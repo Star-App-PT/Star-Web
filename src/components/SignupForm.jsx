@@ -34,7 +34,7 @@ export default function SignupForm({ category, onBack }) {
     setLoading(true)
     const { error: err } = await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: `${window.location.origin}/dashboard` },
+      options: { redirectTo: `${window.location.origin}/finish-profile` },
     })
     if (err) {
       setError(err.message)
@@ -47,7 +47,7 @@ export default function SignupForm({ category, onBack }) {
     setLoading(true)
     const { error: err } = await supabase.auth.signInWithOAuth({
       provider: 'apple',
-      options: { redirectTo: `${window.location.origin}/dashboard` },
+      options: { redirectTo: `${window.location.origin}/finish-profile` },
     })
     if (err) {
       setError(err.message)
@@ -75,7 +75,7 @@ export default function SignupForm({ category, onBack }) {
       email: email.trim(),
       password: password,
       options: {
-        emailRedirectTo: `${window.location.origin}/dashboard`,
+        emailRedirectTo: `${window.location.origin}/finish-profile`,
         data: { category: category || null },
       },
     })
