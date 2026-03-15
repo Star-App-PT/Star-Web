@@ -20,7 +20,7 @@
     "somethingWentWrong": "Algo correu mal. Por favor, tente novamente."
   },
   "header": {
-    "becomeAStar": "Ser uma Star"
+    "becomeAStar": "Seja uma Star"
   },
   "home": {
     "title": "A sua casa, limpa e arranjada.",
@@ -36,7 +36,7 @@
     "continueSearching": "Continuar a procurar {{category}} em {{location}}",
     "topRated": "Mais bem avaliados",
     "more": "Mais...",
-    "becomeAStar": "Ser uma Star",
+    "becomeAStar": "Seja uma Star",
     "ctaText": "É profissional? Junte-se à STAR e tenha clientes na sua área.",
     "yourArea": "a sua área",
     "comingSoonTitle": "A Star está a chegar a {{city}}!",
