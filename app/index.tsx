@@ -31,7 +31,7 @@ export default function Index() {
 
   const handleBecomeAStar = useCallback(() => {
     if (isLoggedIn) {
-      router.push("/worker/category");
+      router.push("/worker/commitment");
     } else {
       setAuthIntent("become-a-star");
       setAuthModalVisible(true);
@@ -51,7 +51,7 @@ export default function Index() {
     setAuthIntent(null);
 
     if (intent === "become-a-star") {
-      router.push("/worker/category");
+      router.push("/worker/finish-profile");
     }
   }, [authIntent, login, router]);
 

@@ -1,4 +1,5 @@
 import {
+  Alert,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -248,9 +249,15 @@ export default function WorkerProfileCleaner() {
         </Pressable>
         <Pressable
           style={styles.continueBtn}
-          onPress={() => router.push("/worker/commitment")}
+          onPress={() => {
+            Alert.alert(
+              "Profile created!",
+              "Your STAR worker profile has been submitted.",
+              [{ text: "OK", onPress: () => router.replace("/") }]
+            );
+          }}
         >
-          <Text style={styles.continueBtnText}>Continue</Text>
+          <Text style={styles.continueBtnText}>Create My Profile</Text>
         </Pressable>
       </View>
     </ScrollView>
