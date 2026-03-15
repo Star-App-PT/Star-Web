@@ -15,9 +15,11 @@ interface AuthModalProps {
   visible: boolean;
   onClose: () => void;
   onSuccess: () => void;
+  onSkip?: () => void;
 }
 
-export default function AuthModal({ visible, onClose, onSuccess }: AuthModalProps) {
+// TESTING ONLY - remove skip link before going live
+export default function AuthModal({ visible, onClose, onSuccess, onSkip }: AuthModalProps) {
   const [mode, setMode] = useState<"login" | "signup">("signup");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -114,6 +116,13 @@ export default function AuthModal({ visible, onClose, onSuccess }: AuthModalProp
             </Text>
           </Pressable>
 
+          {/* TESTING ONLY - remove skip link before going live */}
+          {onSkip && (
+            <Pressable style={styles.skipLink} onPress={onSkip}>
+              <Text style={styles.skipLinkText}>Skip (Testing Only)</Text>
+            </Pressable>
+          )}
+
           <View style={styles.switchRow}>
             <Text style={styles.switchText}>
               {mode === "signup"
@@ -189,6 +198,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
     gap: 6,
   },
+  skipLink: { alignItems: "center" as const, marginTop: 14 },
+  skipLinkText: { fontSize: 12, color: "#9CA3AF" },
   switchText: { fontSize: 14, color: "#6B7280" },
   switchLink: { fontSize: 14, fontWeight: "600", color: "#111827" },
 });

@@ -60,6 +60,14 @@ export default function Index() {
     setAuthIntent(null);
   }, []);
 
+  // TESTING ONLY - remove skip handler before going live
+  const handleSkip = useCallback(() => {
+    login();
+    setAuthModalVisible(false);
+    setAuthIntent(null);
+    router.push("/worker/category");
+  }, [login, router]);
+
   const CITY_NAME = "Porto";
   const categoryLabel =
     selectedCategory === "cleaners"
@@ -349,10 +357,12 @@ export default function Index() {
         ))}
       </ScrollView>
 
+      {/* TESTING ONLY - remove onSkip prop before going live */}
       <AuthModal
         visible={authModalVisible}
         onClose={handleAuthClose}
         onSuccess={handleAuthSuccess}
+        onSkip={handleSkip}
       />
     </SafeAreaView>
   );
