@@ -201,11 +201,18 @@
   },
   "signupModal": {
     "title": "Create your STAR account",
-    "countryRegion": "Country/Region",
-    "phonePlaceholder": "Phone number",
-    "hint": "We'll send you a confirmation code to verify your number.",
-    "continueGoogle": "Continue with Google",
-    "continueApple": "Continue with Apple",
-    "continueEmail": "Continue with email"
+    "legalName": "Legal name",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "legalNameHint": "Make sure this matches your full legal name.",
+    "dateOfBirth": "Date of birth",
+    "birthDate": "Birth date",
+    "dobHint": "You must be at least 18 to sign up.",
+    "contactInfo": "Contact info",
+    "email": "Email",
+    "emailHint": "We'll send you booking confirmations and updates.",
+    "passwordLabel": "Password",
+    "password": "Password",
+    "agreeAndContinue": "Agree and continue"
   }
 }

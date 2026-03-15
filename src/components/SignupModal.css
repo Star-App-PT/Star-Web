@@ -1,5 +1,3 @@
-/* ================ OVERLAY ================ */
-
 .smodal-overlay {
   position: fixed;
   inset: 0;
@@ -11,8 +9,6 @@
   padding: 24px;
 }
 
-/* ================ MODAL ================ */
-
 .smodal {
   background: #FFFFFF;
   border-radius: 16px;
@@ -20,7 +16,7 @@
   max-width: 568px;
   max-height: calc(100vh - 48px);
   overflow-y: auto;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.15);
   animation: smodal-in 0.2s ease;
 }
 
@@ -29,18 +25,16 @@
   to { opacity: 1; transform: scale(1); }
 }
 
-/* ================ HEADER ================ */
-
 .smodal__header {
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  padding: 20px 24px;
+  padding: 18px 24px;
   border-bottom: 1px solid #EBEBEB;
 }
 
-.smodal__close {
+.smodal__back {
   position: absolute;
   left: 16px;
   top: 50%;
@@ -54,117 +48,100 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: var(--star-gray-800);
+  color: #222;
   transition: background 0.15s;
 }
 
-.smodal__close:hover {
+.smodal__back:hover {
   background: #F7F7F7;
 }
 
 .smodal__title {
   font-size: 1rem;
   font-weight: 700;
-  color: var(--star-gray-900);
+  color: #222;
   margin: 0;
+  letter-spacing: -0.01em;
 }
-
-.smodal__lang {
-  position: absolute;
-  right: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-/* ================ BODY ================ */
 
 .smodal__body {
   padding: 24px;
 }
 
-/* ================ PHONE GROUP ================ */
+.smodal__section {
+  margin-bottom: 24px;
+}
 
-.smodal__phone-group {
-  border: 1px solid #B0B0B0;
-  border-radius: 10px;
+.smodal__label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #222;
+  margin: 0 0 8px;
+}
+
+.smodal__field-group {
+  border: 1px solid #DDDDDD;
+  border-radius: 8px;
   overflow: hidden;
 }
 
-.smodal__phone-top {
-  position: relative;
-  padding: 8px 14px 6px;
-  border-bottom: 1px solid #EBEBEB;
-}
-
-.smodal__phone-label {
-  display: block;
-  font-size: 0.7rem;
-  color: var(--star-gray-500);
-  margin-bottom: 2px;
-}
-
-.smodal__country-select {
+.smodal__input {
   width: 100%;
   border: none;
   outline: none;
-  background: transparent;
+  padding: 14px 16px;
   font-size: 0.95rem;
   font-family: inherit;
-  color: var(--star-gray-900);
-  appearance: none;
-  padding: 0;
-  cursor: pointer;
-}
-
-.smodal__country-chevron {
-  position: absolute;
-  right: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
-  color: var(--star-gray-600);
-}
-
-.smodal__phone-bottom {
-  padding: 0;
-}
-
-.smodal__phone-input {
-  width: 100%;
-  border: none;
-  outline: none;
-  padding: 14px;
-  font-size: 1rem;
-  font-family: inherit;
-  color: var(--star-gray-900);
+  color: #222;
   background: transparent;
   box-sizing: border-box;
 }
 
-.smodal__phone-input::placeholder {
-  color: var(--star-gray-400);
+.smodal__input::placeholder {
+  color: #717171;
+  font-weight: 400;
 }
 
-.smodal__phone-group:focus-within {
-  border-color: #1B4FBA;
-  box-shadow: 0 0 0 2px rgba(27, 79, 186, 0.15);
+.smodal__input--top {
+  border-bottom: 1px solid #DDDDDD;
 }
 
-/* ================ HINT ================ */
+.smodal__input--bottom {
+  /* no top border — separator is on the top input */
+}
+
+.smodal__input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.smodal__input--date {
+  padding-right: 44px;
+}
+
+.smodal__date-icon {
+  position: absolute;
+  right: 14px;
+  pointer-events: none;
+  color: #717171;
+}
+
+.smodal__field-group:focus-within {
+  border-color: #222;
+}
 
 .smodal__hint {
   font-size: 0.75rem;
-  color: var(--star-gray-600);
-  margin: 10px 0 20px;
+  color: #717171;
+  margin: 8px 0 0;
   line-height: 1.5;
 }
-
-/* ================ CONTINUE BUTTON ================ */
 
 .smodal__continue {
   width: 100%;
   padding: 14px;
-  border-radius: 10px;
+  border-radius: 8px;
   border: none;
   background: #1B4FBA;
   color: #FFFFFF;
@@ -173,75 +150,18 @@
   font-family: inherit;
   cursor: pointer;
   transition: opacity 0.15s;
+  margin-top: 8px;
 }
 
 .smodal__continue:hover {
-  opacity: 0.9;
+  opacity: 0.92;
 }
 
 .smodal__continue:disabled {
-  opacity: 0.5;
+  background: #1B4FBA;
+  opacity: 0.45;
   cursor: not-allowed;
 }
-
-/* ================ DIVIDER ================ */
-
-.smodal__divider {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin: 24px 0;
-}
-
-.smodal__divider::before,
-.smodal__divider::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: #EBEBEB;
-}
-
-.smodal__divider span {
-  font-size: 0.8rem;
-  color: var(--star-gray-600);
-}
-
-/* ================ SOCIAL BUTTONS ================ */
-
-.smodal__socials {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.smodal__social-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  width: 100%;
-  padding: 12px 14px;
-  border-radius: 10px;
-  border: 1px solid #222;
-  background: #FFFFFF;
-  font-size: 0.95rem;
-  font-weight: 600;
-  font-family: inherit;
-  color: var(--star-gray-900);
-  cursor: pointer;
-  transition: background 0.15s;
-}
-
-.smodal__social-btn:hover {
-  background: #F7F7F7;
-}
-
-.smodal__social-icon {
-  position: absolute;
-  left: 16px;
-}
-
-/* ================ RESPONSIVE ================ */
 
 @media (max-width: 600px) {
   .smodal-overlay {

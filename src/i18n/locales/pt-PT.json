@@ -201,11 +201,18 @@
   },
   "signupModal": {
     "title": "Crie a sua conta STAR",
-    "countryRegion": "País/Região",
-    "phonePlaceholder": "Número de telefone",
-    "hint": "Enviaremos um código de confirmação para verificar o seu número.",
-    "continueGoogle": "Continuar com Google",
-    "continueApple": "Continuar com Apple",
-    "continueEmail": "Continuar com email"
+    "legalName": "Nome legal",
+    "firstName": "Nome próprio",
+    "lastName": "Apelido",
+    "legalNameHint": "Certifique-se de que corresponde ao seu nome legal completo.",
+    "dateOfBirth": "Data de nascimento",
+    "birthDate": "Data de nascimento",
+    "dobHint": "Deve ter pelo menos 18 anos para se registar.",
+    "contactInfo": "Informação de contacto",
+    "email": "Email",
+    "emailHint": "Enviaremos confirmações de reserva e atualizações.",
+    "passwordLabel": "Palavra-passe",
+    "password": "Palavra-passe",
+    "agreeAndContinue": "Concordar e continuar"
   }
 }
