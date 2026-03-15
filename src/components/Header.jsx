@@ -1,6 +1,7 @@
 import { Link, useLocation, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import LanguageToggle from './LanguageToggle'
+import HamburgerMenu from './HamburgerMenu'
 import './Header.css'
 
 const CATEGORY_IDS = [
@@ -55,6 +56,7 @@ export default function Header() {
             </Link>
           )}
           <LanguageToggle />
+          <HamburgerMenu />
         </nav>
       </div>
     </header>

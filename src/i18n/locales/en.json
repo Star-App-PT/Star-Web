@@ -20,7 +20,12 @@
     "somethingWentWrong": "Something went wrong. Please try again."
   },
   "header": {
-    "becomeAStar": "Become a Star"
+    "becomeAStar": "Become a Star",
+    "helpCentre": "Help Centre",
+    "becomeAStarSubtitle": "It's easy to start earning and grow your business.",
+    "referAService": "Refer a service",
+    "joinATeam": "Join a team",
+    "logInOrSignUp": "Log in or sign up"
   },
   "home": {
     "title": "Your home, clean and fixed.",

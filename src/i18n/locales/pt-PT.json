@@ -20,7 +20,12 @@
     "somethingWentWrong": "Algo correu mal. Por favor, tente novamente."
   },
   "header": {
-    "becomeAStar": "Seja uma Star"
+    "becomeAStar": "Seja uma Star",
+    "helpCentre": "Centro de Ajuda",
+    "becomeAStarSubtitle": "É fácil começar a ganhar e fazer crescer o seu negócio.",
+    "referAService": "Recomendar um serviço",
+    "joinATeam": "Juntar-se a uma equipa",
+    "logInOrSignUp": "Iniciar sessão ou registar"
   },
   "home": {
     "title": "A sua casa, limpa e arranjada.",
