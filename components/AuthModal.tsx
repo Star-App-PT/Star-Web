@@ -1,12 +1,11 @@
 import {
   Modal,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
   View,
-  KeyboardAvoidingView,
-  Platform,
 } from "react-native";
 import { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
@@ -20,16 +19,10 @@ interface AuthModalProps {
 
 // TESTING ONLY - remove skip link before going live
 export default function AuthModal({ visible, onClose, onSuccess, onSkip }: AuthModalProps) {
-  const [mode, setMode] = useState<"login" | "signup">("signup");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
 
   const reset = () => {
-    setEmail("");
-    setPassword("");
-    setName("");
-    setMode("signup");
+    setPhone("");
   };
 
   const handleSubmit = () => {
@@ -49,71 +42,68 @@ export default function AuthModal({ visible, onClose, onSuccess, onSkip }: AuthM
       presentationStyle="pageSheet"
       onRequestClose={handleClose}
     >
-      <KeyboardAvoidingView
-        style={styles.container}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-      >
+      <View style={styles.container}>
         <View style={styles.header}>
           <Pressable onPress={handleClose} style={styles.closeBtn}>
-            <Ionicons name="close" size={24} color="#111827" />
+            <Ionicons name="close" size={22} color="#111827" />
           </Pressable>
-          <Text style={styles.headerTitle}>
-            {mode === "signup" ? "Sign up" : "Log in"}
-          </Text>
+          <Text style={styles.headerTitle}>Log in or sign up</Text>
           <View style={styles.closeBtn} />
         </View>
 
-        <View style={styles.body}>
+        <ScrollView
+          style={styles.scroll}
+          contentContainerStyle={styles.body}
+          keyboardShouldPersistTaps="handled"
+        >
           <Text style={styles.welcomeTitle}>Welcome to STAR</Text>
-          <Text style={styles.welcomeSubtitle}>
-            {mode === "signup"
-              ? "Create an account to get started"
-              : "Log in to your account"}
+
+          <View style={styles.phoneBox}>
+            <View style={styles.countryRow}>
+              <Text style={styles.countryLabel}>Country/Region</Text>
+              <View style={styles.countrySelector}>
+                <Text style={styles.countryValue}>🇵🇹 Portugal (+351)</Text>
+                <Ionicons name="chevron-down" size={18} color="#6B7280" />
+              </View>
+            </View>
+            <View style={styles.phoneDivider} />
+            <TextInput
+              style={styles.phoneInput}
+              placeholder="Phone number"
+              placeholderTextColor="#9CA3AF"
+              value={phone}
+              onChangeText={setPhone}
+              keyboardType="phone-pad"
+            />
+          </View>
+
+          <Text style={styles.phoneHint}>
+            We'll call or text you to confirm your number.
           </Text>
 
-          {mode === "signup" && (
-            <View style={styles.field}>
-              <Text style={styles.fieldLabel}>Full name</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Your full name"
-                placeholderTextColor="#9CA3AF"
-                value={name}
-                onChangeText={setName}
-                autoCapitalize="words"
-              />
-            </View>
-          )}
+          <Pressable style={styles.continueBtn} onPress={handleSubmit}>
+            <Text style={styles.continueBtnText}>Continue</Text>
+          </Pressable>
 
-          <View style={styles.field}>
-            <Text style={styles.fieldLabel}>Email</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="you@example.com"
-              placeholderTextColor="#9CA3AF"
-              value={email}
-              onChangeText={setEmail}
-              keyboardType="email-address"
-              autoCapitalize="none"
-            />
+          <View style={styles.dividerRow}>
+            <View style={styles.dividerLine} />
+            <Text style={styles.dividerText}>or</Text>
+            <View style={styles.dividerLine} />
           </View>
 
-          <View style={styles.field}>
-            <Text style={styles.fieldLabel}>Password</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Your password"
-              placeholderTextColor="#9CA3AF"
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry
-            />
-          </View>
+          <Pressable style={styles.socialBtn} onPress={handleSubmit}>
+            <Text style={styles.socialIcon}>G</Text>
+            <Text style={styles.socialBtnText}>Continue with Google</Text>
+          </Pressable>
 
-          <Pressable style={styles.submitBtn} onPress={handleSubmit}>
-            <Text style={styles.submitBtnText}>
-              {mode === "signup" ? "Sign up" : "Log in"}
-            </Text>
+          <Pressable style={styles.socialBtn} onPress={handleSubmit}>
+            <Ionicons name="logo-apple" size={20} color="#111827" />
+            <Text style={styles.socialBtnText}>Continue with Apple</Text>
+          </Pressable>
+
+          <Pressable style={styles.socialBtn} onPress={handleSubmit}>
+            <Ionicons name="mail-outline" size={20} color="#111827" />
+            <Text style={styles.socialBtnText}>Continue with email</Text>
           </Pressable>
 
           {/* TESTING ONLY - remove skip link before going live */}
@@ -122,29 +112,15 @@ export default function AuthModal({ visible, onClose, onSuccess, onSkip }: AuthM
               <Text style={styles.skipLinkText}>Skip (Testing Only)</Text>
             </Pressable>
           )}
-
-          <View style={styles.switchRow}>
-            <Text style={styles.switchText}>
-              {mode === "signup"
-                ? "Already have an account?"
-                : "Don't have an account?"}
-            </Text>
-            <Pressable
-              onPress={() => setMode(mode === "signup" ? "login" : "signup")}
-            >
-              <Text style={styles.switchLink}>
-                {mode === "signup" ? "Log in" : "Sign up"}
-              </Text>
-            </Pressable>
-          </View>
-        </View>
-      </KeyboardAvoidingView>
+        </ScrollView>
+      </View>
     </Modal>
   );
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#FFFFFF" },
+  scroll: { flex: 1 },
   header: {
     flexDirection: "row",
     alignItems: "center",
@@ -158,48 +134,106 @@ const styles = StyleSheet.create({
   headerTitle: { fontSize: 16, fontWeight: "600", color: "#111827" },
   body: { padding: 24 },
   welcomeTitle: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: "700",
     color: "#111827",
-    marginBottom: 6,
+    marginBottom: 20,
   },
-  welcomeSubtitle: {
-    fontSize: 14,
-    color: "#6B7280",
-    marginBottom: 28,
-  },
-  field: { marginBottom: 16 },
-  fieldLabel: {
-    fontSize: 14,
-    fontWeight: "600",
-    color: "#374151",
-    marginBottom: 6,
-  },
-  input: {
-    borderWidth: 2,
-    borderColor: "#E5E7EB",
+  phoneBox: {
+    borderWidth: 1,
+    borderColor: "#D1D5DB",
     borderRadius: 12,
+    overflow: "hidden",
+    marginBottom: 8,
+  },
+  countryRow: {
     paddingHorizontal: 14,
-    paddingVertical: 12,
+    paddingVertical: 10,
+  },
+  countryLabel: {
+    fontSize: 11,
+    color: "#6B7280",
+    marginBottom: 2,
+  },
+  countrySelector: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  countryValue: {
     fontSize: 15,
     color: "#111827",
   },
-  submitBtn: {
-    marginTop: 8,
+  phoneDivider: {
+    height: 1,
+    backgroundColor: "#D1D5DB",
+  },
+  phoneInput: {
+    paddingHorizontal: 14,
     paddingVertical: 14,
-    borderRadius: 999,
+    fontSize: 15,
+    color: "#111827",
+  },
+  phoneHint: {
+    fontSize: 12,
+    color: "#6B7280",
+    marginBottom: 20,
+  },
+  continueBtn: {
+    paddingVertical: 14,
+    borderRadius: 10,
     backgroundColor: "#1B4FBA",
     alignItems: "center",
+    marginBottom: 20,
   },
-  submitBtnText: { fontSize: 16, fontWeight: "600", color: "#FFFFFF" },
-  switchRow: {
+  continueBtnText: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#FFFFFF",
+  },
+  dividerRow: {
     flexDirection: "row",
-    justifyContent: "center",
-    marginTop: 20,
-    gap: 6,
+    alignItems: "center",
+    marginBottom: 20,
+    gap: 12,
   },
-  skipLink: { alignItems: "center" as const, marginTop: 14 },
-  skipLinkText: { fontSize: 12, color: "#9CA3AF" },
-  switchText: { fontSize: 14, color: "#6B7280" },
-  switchLink: { fontSize: 14, fontWeight: "600", color: "#111827" },
+  dividerLine: {
+    flex: 1,
+    height: 1,
+    backgroundColor: "#E5E7EB",
+  },
+  dividerText: {
+    fontSize: 13,
+    color: "#6B7280",
+  },
+  socialBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 14,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#111827",
+    backgroundColor: "#FFFFFF",
+    marginBottom: 12,
+    gap: 10,
+  },
+  socialIcon: {
+    fontSize: 18,
+    fontWeight: "700",
+    color: "#4285F4",
+  },
+  socialBtnText: {
+    fontSize: 15,
+    fontWeight: "600",
+    color: "#111827",
+  },
+  skipLink: {
+    alignItems: "center",
+    marginTop: 8,
+  },
+  skipLinkText: {
+    fontSize: 12,
+    color: "#9CA3AF",
+  },
 });
