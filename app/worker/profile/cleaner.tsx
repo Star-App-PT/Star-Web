@@ -351,7 +351,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 14,
     borderRadius: 999,
-    backgroundColor: "#111827",
+    backgroundColor: "#1B4FBA",
     alignItems: "center",
   },
   continueBtnText: { fontSize: 16, fontWeight: "600", color: "#FFF" },

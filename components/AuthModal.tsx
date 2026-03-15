@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
     paddingVertical: 14,
     borderRadius: 999,
-    backgroundColor: "#111827",
+    backgroundColor: "#1B4FBA",
     alignItems: "center",
   },
   submitBtnText: { fontSize: 16, fontWeight: "600", color: "#FFFFFF" },

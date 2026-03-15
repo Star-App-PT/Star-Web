@@ -599,7 +599,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     paddingHorizontal: 20,
     borderRadius: 999,
-    backgroundColor: "#111827",
+    backgroundColor: "#1B4FBA",
     alignSelf: "flex-start",
   },
   becomeAStarText: {
