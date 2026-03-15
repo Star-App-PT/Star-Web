@@ -101,7 +101,7 @@ export default function FinishProfile() {
     // TESTING MODE - remove direct skip before going live
     if (!user) {
       setSubmitting(false)
-      navigate('/dashboard', { replace: true })
+      navigate('/choose-category', { replace: true })
       return
     }
 
@@ -120,7 +120,7 @@ export default function FinishProfile() {
     if (updateErr) {
       setError(updateErr.message)
     } else {
-      navigate('/dashboard', { replace: true })
+      navigate('/choose-category', { replace: true })
     }
   }
 

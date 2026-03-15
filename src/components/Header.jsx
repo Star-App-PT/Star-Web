@@ -24,6 +24,7 @@ export default function Header() {
     location.pathname === '/worker/profile/cleaner' ||
     location.pathname === '/worker/profile' ||
     location.pathname === '/finish-profile' ||
+    location.pathname === '/choose-category' ||
     location.pathname === '/dashboard'
 
   return (
