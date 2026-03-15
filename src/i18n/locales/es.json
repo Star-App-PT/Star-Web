@@ -213,6 +213,20 @@
     "continueBtn": "Continuar",
     "continueGoogle": "Continuar con Google",
     "continueApple": "Continuar con Apple",
-    "continueEmail": "Continuar con email"
+    "continueEmail": "Continuar con email",
+    "emailTitle": "Registrarse con email",
+    "emailPlaceholder": "Email",
+    "createAccount": "Crea tu cuenta",
+    "passwordPlaceholder": "Contraseña",
+    "passwordHint": "La contraseña debe tener al menos 6 caracteres.",
+    "errPasswordLength": "La contraseña debe tener al menos 6 caracteres.",
+    "signUpBtn": "Registrarse",
+    "checkEmail": "Revisa tu email",
+    "checkEmailDesc": "Hemos enviado un enlace de confirmación a {{email}}. Haz clic en el enlace para verificar tu cuenta."
+  },
+  "dashboard": {
+    "welcome": "¡Bienvenido, {{name}}!",
+    "signedInVia": "Sesión iniciada vía {{provider}}",
+    "signOut": "Cerrar sesión"
   }
 }

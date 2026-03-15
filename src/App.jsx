@@ -10,6 +10,7 @@ import WorkerProfile from './pages/worker/WorkerProfile'
 import Search from './pages/Search'
 import Workers from './pages/Workers'
 import WorkerDetail from './pages/WorkerDetail'
+import Dashboard from './pages/Dashboard'
 
 export default function App() {
   return (
@@ -27,6 +28,7 @@ export default function App() {
           <Route path="/worker/profile/cleaner" element={<WorkerProfileCleaner />} />
           <Route path="/worker/profile" element={<WorkerProfile />} />
           <Route path="/worker/:id" element={<WorkerDetail />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </main>
     </BrowserRouter>
