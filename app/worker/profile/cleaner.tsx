@@ -246,7 +246,10 @@ export default function WorkerProfileCleaner() {
         <Pressable style={styles.backBtn} onPress={() => router.back()}>
           <Text style={styles.backBtnText}>Back</Text>
         </Pressable>
-        <Pressable style={styles.continueBtn}>
+        <Pressable
+          style={styles.continueBtn}
+          onPress={() => router.push("/worker/commitment")}
+        >
           <Text style={styles.continueBtnText}>Continue</Text>
         </Pressable>
       </View>
