@@ -205,19 +205,14 @@
     "errPasswordMatch": "Passwords do not match"
   },
   "signupModal": {
-    "title": "Create your STAR account",
-    "legalName": "Legal name",
-    "firstName": "First name",
-    "lastName": "Last name",
-    "legalNameHint": "Make sure this matches your full legal name.",
-    "dateOfBirth": "Date of birth",
-    "birthDate": "Birth date",
-    "dobHint": "You must be at least 18 to sign up.",
-    "contactInfo": "Contact info",
-    "email": "Email",
-    "emailHint": "We'll send you booking confirmations and updates.",
-    "passwordLabel": "Password",
-    "password": "Password",
-    "agreeAndContinue": "Agree and continue"
+    "logInOrSignUp": "Log in or sign up",
+    "welcomeTitle": "Welcome to STAR",
+    "countryRegion": "Country/Region",
+    "phonePlaceholder": "Phone number",
+    "phoneHint": "We'll call or text you to confirm your number.",
+    "continueBtn": "Continue",
+    "continueGoogle": "Continue with Google",
+    "continueApple": "Continue with Apple",
+    "continueEmail": "Continue with email"
   }
 }

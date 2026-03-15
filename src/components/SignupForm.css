@@ -1,22 +1,21 @@
 .signup-page {
   min-height: calc(100vh - 80px);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  background: #F7F7F7;
-  padding: 40px 24px;
+  background: #FFFFFF;
+  padding: 48px 24px 64px;
 }
 
 .signup-page__content {
   width: 100%;
-  max-width: 540px;
+  max-width: 568px;
 }
 
 .sf-card {
   background: #FFFFFF;
-  border: 1px solid #E8E8E8;
-  border-radius: 16px;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+  border: 1px solid #DDDDDD;
+  border-radius: 12px;
   overflow: hidden;
 }
 
@@ -51,91 +50,99 @@
   background: #F7F7F7;
 }
 
-.sf-card__title {
-  font-size: 1rem;
+.sf-card__header-title {
+  font-size: 0.95rem;
   font-weight: 700;
   color: #222;
-  margin: 0;
   letter-spacing: -0.01em;
-}
-
-.sf-card__lang {
-  position: absolute;
-  right: 16px;
-  top: 50%;
-  transform: translateY(-50%);
 }
 
 .sf-card__body {
   padding: 24px;
 }
 
-.sf-card__section {
-  margin-bottom: 24px;
-}
-
-.sf-card__label {
-  font-size: 0.875rem;
+.sf-card__welcome {
+  font-size: 1.4rem;
   font-weight: 600;
   color: #222;
-  margin: 0 0 8px;
+  margin: 0 0 20px;
+  letter-spacing: -0.02em;
 }
 
-.sf-card__field-group {
-  border: 1px solid #DDDDDD;
+/* Phone input group */
+.sf-card__phone-group {
+  border: 1px solid #B0B0B0;
   border-radius: 8px;
   overflow: hidden;
 }
 
-.sf-card__input {
+.sf-card__phone-top {
+  position: relative;
+  padding: 10px 16px 8px;
+  border-bottom: 1px solid #DDDDDD;
+}
+
+.sf-card__phone-label {
+  display: block;
+  font-size: 0.7rem;
+  color: #717171;
+  margin-bottom: 2px;
+}
+
+.sf-card__country-select {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: #222;
+  appearance: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.sf-card__country-chevron {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #717171;
+}
+
+.sf-card__phone-bottom {
+  padding: 0;
+}
+
+.sf-card__phone-input {
   width: 100%;
   border: none;
   outline: none;
   padding: 14px 16px;
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-family: inherit;
   color: #222;
   background: transparent;
   box-sizing: border-box;
 }
 
-.sf-card__input::placeholder {
-  color: #717171;
-  font-weight: 400;
-}
-
-.sf-card__input--top {
-  border-bottom: 1px solid #DDDDDD;
-}
-
-.sf-card__input-wrap {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.sf-card__input--date {
-  padding-right: 44px;
-}
-
-.sf-card__date-icon {
-  position: absolute;
-  right: 14px;
-  pointer-events: none;
+.sf-card__phone-input::placeholder {
   color: #717171;
 }
 
-.sf-card__field-group:focus-within {
+.sf-card__phone-group:focus-within {
   border-color: #222;
 }
 
 .sf-card__hint {
   font-size: 0.75rem;
   color: #717171;
-  margin: 8px 0 0;
+  margin: 10px 0 20px;
   line-height: 1.5;
 }
 
+/* Continue button */
 .sf-card__submit {
   width: 100%;
   padding: 14px;
@@ -148,7 +155,6 @@
   font-family: inherit;
   cursor: pointer;
   transition: opacity 0.15s;
-  margin-top: 4px;
 }
 
 .sf-card__submit:hover {
@@ -161,10 +167,65 @@
   cursor: not-allowed;
 }
 
+/* Divider */
+.sf-card__divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.sf-card__divider::before,
+.sf-card__divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #DDDDDD;
+}
+
+.sf-card__divider span {
+  font-size: 0.8rem;
+  color: #222;
+  font-weight: 400;
+}
+
+/* Social buttons */
+.sf-card__socials {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sf-card__social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid #222;
+  background: #FFFFFF;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: #222;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.sf-card__social-btn:hover {
+  background: #F7F7F7;
+}
+
+.sf-card__social-icon {
+  position: absolute;
+  left: 16px;
+}
+
 @media (max-width: 600px) {
   .signup-page {
     padding: 24px 16px;
-    align-items: flex-start;
   }
 
   .sf-card__body {

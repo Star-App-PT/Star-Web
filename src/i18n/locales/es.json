@@ -205,19 +205,14 @@
     "errPasswordMatch": "Las contraseñas no coinciden"
   },
   "signupModal": {
-    "title": "Crea tu cuenta STAR",
-    "legalName": "Nombre legal",
-    "firstName": "Nombre",
-    "lastName": "Apellidos",
-    "legalNameHint": "Asegúrate de que coincide con tu nombre legal completo.",
-    "dateOfBirth": "Fecha de nacimiento",
-    "birthDate": "Fecha de nacimiento",
-    "dobHint": "Debes tener al menos 18 años para registrarte.",
-    "contactInfo": "Información de contacto",
-    "email": "Email",
-    "emailHint": "Te enviaremos confirmaciones de reserva y actualizaciones.",
-    "passwordLabel": "Contraseña",
-    "password": "Contraseña",
-    "agreeAndContinue": "Aceptar y continuar"
+    "logInOrSignUp": "Iniciar sesión o registrarse",
+    "welcomeTitle": "Bienvenido a STAR",
+    "countryRegion": "País/Región",
+    "phonePlaceholder": "Número de teléfono",
+    "phoneHint": "Te llamaremos o enviaremos un mensaje para confirmar tu número.",
+    "continueBtn": "Continuar",
+    "continueGoogle": "Continuar con Google",
+    "continueApple": "Continuar con Apple",
+    "continueEmail": "Continuar con email"
   }
 }
