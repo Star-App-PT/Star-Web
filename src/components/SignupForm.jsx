@@ -29,6 +29,15 @@ export default function SignupForm({ category, onBack }) {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
+  // TESTING MODE - remove direct skip before going live
+  const skipToProfile = () => navigate('/finish-profile')
+
+  const handleGoogleSignIn = () => skipToProfile()
+  const handleAppleSignIn = () => skipToProfile()
+  const handleEmailContinue = (e) => { e.preventDefault(); skipToProfile() }
+  const handlePhoneContinue = (e) => { e.preventDefault(); skipToProfile() }
+
+  /* TESTING MODE - restore these handlers before going live
   const handleGoogleSignIn = async () => {
     setError('')
     setLoading(true)
@@ -90,8 +99,8 @@ export default function SignupForm({ category, onBack }) {
   const handlePhoneContinue = (e) => {
     e.preventDefault()
     if (!phone.trim()) return
-    // Phone auth to be configured later
   }
+  */
 
   const headerTitle = screen === 'email-confirm'
     ? t('signupModal.logInOrSignUp')

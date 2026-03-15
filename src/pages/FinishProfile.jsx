@@ -31,6 +31,27 @@ export default function FinishProfile() {
   ]
 
   useEffect(() => {
+    // TESTING MODE - remove direct skip before going live
+    // Allow page to load without a session for testing the profile form
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session?.user) {
+        const u = session.user
+        setUser(u)
+        setEmail(u.email || '')
+        setProvider(u.app_metadata?.provider || 'email')
+
+        const meta = u.user_metadata || {}
+        const fullName = meta.full_name || meta.name || ''
+        if (fullName) {
+          const parts = fullName.split(' ')
+          setFirstName(parts[0] || '')
+          setLastName(parts.slice(1).join(' ') || '')
+        }
+      }
+      setLoading(false)
+    })
+
+    /* TESTING MODE - restore this block before going live
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (!session?.user) {
         navigate('/worker/signup', { replace: true })
@@ -51,6 +72,7 @@ export default function FinishProfile() {
 
       setLoading(false)
     })
+    */
   }, [navigate])
 
   const canSubmit =
@@ -63,7 +85,7 @@ export default function FinishProfile() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!canSubmit || !user) return
+    if (!canSubmit) return
 
     const age = currentYear - Number(dobYear)
     if (age < 18) {
@@ -75,6 +97,13 @@ export default function FinishProfile() {
     setSubmitting(true)
 
     const dob = `${dobYear}-${String(dobMonth).padStart(2, '0')}-${String(dobDay).padStart(2, '0')}`
+
+    // TESTING MODE - remove direct skip before going live
+    if (!user) {
+      setSubmitting(false)
+      navigate('/dashboard', { replace: true })
+      return
+    }
 
     const { error: updateErr } = await supabase.auth.updateUser({
       data: {
