@@ -1,0 +1,319 @@
+.signup-page {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  background: #FFFFFF;
+  padding: 48px 24px 64px;
+}
+
+.signup-page__content {
+  width: 100%;
+  max-width: 568px;
+}
+
+.sf-card {
+  background: #FFFFFF;
+  border: 1px solid #DDDDDD;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.sf-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 18px 24px;
+  border-bottom: 1px solid #EBEBEB;
+}
+
+.sf-card__back {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #222;
+  transition: background 0.15s;
+}
+
+.sf-card__back:hover {
+  background: #F7F7F7;
+}
+
+.sf-card__header-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #222;
+  letter-spacing: -0.01em;
+}
+
+.sf-card__body {
+  padding: 24px;
+}
+
+.sf-card__welcome {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #222;
+  margin: 0 0 20px;
+  letter-spacing: -0.02em;
+}
+
+.sf-card__error {
+  background: #FEF2F2;
+  color: #B91C1C;
+  border: 1px solid #FECACA;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  margin: 0 0 16px;
+}
+
+/* Phone input group */
+.sf-card__phone-group {
+  border: 1px solid #B0B0B0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.sf-card__phone-top {
+  position: relative;
+  padding: 10px 16px 8px;
+  border-bottom: 1px solid #DDDDDD;
+}
+
+.sf-card__phone-label {
+  display: block;
+  font-size: 0.7rem;
+  color: #717171;
+  margin-bottom: 2px;
+}
+
+.sf-card__country-select {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: #222;
+  appearance: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.sf-card__country-chevron {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #717171;
+}
+
+.sf-card__phone-bottom {
+  padding: 0;
+}
+
+.sf-card__phone-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  padding: 14px 16px;
+  font-size: 1rem;
+  font-family: inherit;
+  color: #222;
+  background: transparent;
+  box-sizing: border-box;
+}
+
+.sf-card__phone-input::placeholder {
+  color: #717171;
+}
+
+.sf-card__phone-group:focus-within {
+  border-color: #222;
+}
+
+/* Generic field group (email/password screens) */
+.sf-card__field-group {
+  border: 1px solid #B0B0B0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.sf-card__field-group--stacked {
+  /* no extra styles needed, just a hook */
+}
+
+.sf-card__input {
+  width: 100%;
+  border: none;
+  outline: none;
+  padding: 14px 16px;
+  font-size: 1rem;
+  font-family: inherit;
+  color: #222;
+  background: transparent;
+  box-sizing: border-box;
+}
+
+.sf-card__input::placeholder {
+  color: #717171;
+}
+
+.sf-card__input--top {
+  border-bottom: 1px solid #DDDDDD;
+  background: #F7F7F7;
+  color: #717171;
+}
+
+.sf-card__input--bottom {
+  /* clean bottom input */
+}
+
+.sf-card__field-group:focus-within {
+  border-color: #222;
+}
+
+.sf-card__hint {
+  font-size: 0.75rem;
+  color: #717171;
+  margin: 10px 0 20px;
+  line-height: 1.5;
+}
+
+/* Continue / submit button */
+.sf-card__submit {
+  width: 100%;
+  padding: 14px;
+  border-radius: 8px;
+  border: none;
+  background: #1B4FBA;
+  color: #FFFFFF;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.sf-card__submit--mt {
+  margin-top: 20px;
+}
+
+.sf-card__submit:hover {
+  opacity: 0.92;
+}
+
+.sf-card__submit:disabled {
+  background: #1B4FBA;
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Divider */
+.sf-card__divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.sf-card__divider::before,
+.sf-card__divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #DDDDDD;
+}
+
+.sf-card__divider span {
+  font-size: 0.8rem;
+  color: #222;
+  font-weight: 400;
+}
+
+/* Social buttons */
+.sf-card__socials {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sf-card__social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid #222;
+  background: #FFFFFF;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: #222;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.sf-card__social-btn:hover {
+  background: #F7F7F7;
+}
+
+.sf-card__social-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.sf-card__social-icon {
+  position: absolute;
+  left: 16px;
+}
+
+/* Email confirmation screen */
+.sf-card__confirm {
+  text-align: center;
+  padding: 24px 0 8px;
+}
+
+.sf-card__confirm-icon {
+  margin-bottom: 20px;
+}
+
+.sf-card__confirm-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #222;
+  margin: 0 0 12px;
+}
+
+.sf-card__confirm-text {
+  font-size: 0.9rem;
+  color: #717171;
+  line-height: 1.6;
+  margin: 0 0 28px;
+}
+
+@media (max-width: 600px) {
+  .signup-page {
+    padding: 24px 16px;
+  }
+
+  .sf-card__body {
+    padding: 20px 16px;
+  }
+}

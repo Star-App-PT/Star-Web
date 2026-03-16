@@ -1,0 +1,270 @@
+.fp-page {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  background: #FFFFFF;
+  padding: 48px 24px 64px;
+}
+
+.fp-page__content {
+  width: 100%;
+  max-width: 568px;
+}
+
+.fp-card {
+  background: #FFFFFF;
+  border: 1px solid #DDDDDD;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Header */
+.fp-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 18px 24px;
+  border-bottom: 1px solid #EBEBEB;
+}
+
+.fp-card__back {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #222;
+  transition: background 0.15s;
+}
+
+.fp-card__back:hover {
+  background: #F7F7F7;
+}
+
+.fp-card__header-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #222;
+  letter-spacing: -0.01em;
+}
+
+/* Body */
+.fp-card__body {
+  padding: 24px;
+}
+
+.fp-card__body--center {
+  text-align: center;
+  padding: 48px 24px;
+}
+
+.fp-card__loading {
+  color: #717171;
+  font-size: 0.95rem;
+}
+
+.fp-card__error {
+  background: #FEF2F2;
+  color: #B91C1C;
+  border: 1px solid #FECACA;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  margin: 0 0 16px;
+}
+
+/* Sections */
+.fp-card__section {
+  margin-bottom: 24px;
+}
+
+.fp-card__label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #222;
+  margin: 0 0 8px;
+}
+
+.fp-card__label-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.fp-card__label-row .fp-card__label {
+  margin: 0;
+}
+
+.fp-card__info-icon {
+  display: inline-flex;
+  align-items: center;
+  color: #717171;
+  cursor: help;
+}
+
+/* Field group */
+.fp-card__field-group {
+  border: 1px solid #B0B0B0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.fp-card__field-group--stacked {}
+
+.fp-card__input {
+  width: 100%;
+  border: none;
+  outline: none;
+  padding: 14px 16px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: #222;
+  background: transparent;
+  box-sizing: border-box;
+}
+
+.fp-card__input::placeholder {
+  color: #717171;
+  font-weight: 400;
+}
+
+.fp-card__input--top {
+  border-bottom: 1px solid #DDDDDD;
+}
+
+.fp-card__input--bottom {}
+
+.fp-card__input--readonly {
+  background: #F7F7F7;
+  color: #717171;
+  cursor: default;
+}
+
+.fp-card__field-group:focus-within {
+  border-color: #222;
+}
+
+/* DOB dropdowns */
+.fp-card__dob-row {
+  display: flex;
+  gap: 8px;
+}
+
+.fp-card__select {
+  flex: 1;
+  padding: 14px 12px;
+  border: 1px solid #B0B0B0;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: #222;
+  background: #FFFFFF;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23717171' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+}
+
+.fp-card__select:focus {
+  border-color: #222;
+  outline: none;
+}
+
+.fp-card__select--month {
+  flex: 1.5;
+}
+
+.fp-card__select--day {
+  flex: 0.8;
+}
+
+.fp-card__select--year {
+  flex: 1;
+}
+
+/* Hints */
+.fp-card__hint {
+  font-size: 0.75rem;
+  color: #717171;
+  margin: 8px 0 0;
+  line-height: 1.5;
+}
+
+.fp-card__provider-note {
+  font-size: 0.72rem;
+  color: #B0B0B0;
+  margin: 4px 0 0;
+  font-style: italic;
+}
+
+/* Terms */
+.fp-card__terms {
+  font-size: 0.75rem;
+  color: #717171;
+  line-height: 1.6;
+  margin: 0 0 20px;
+}
+
+.fp-card__terms-link {
+  color: #1B4FBA;
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+.fp-card__terms-link:hover {
+  color: #143d8f;
+}
+
+/* Submit */
+.fp-card__submit {
+  width: 100%;
+  padding: 14px;
+  border-radius: 8px;
+  border: none;
+  background: #1B4FBA;
+  color: #FFFFFF;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.fp-card__submit:hover {
+  opacity: 0.92;
+}
+
+.fp-card__submit:disabled {
+  background: #1B4FBA;
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .fp-page {
+    padding: 24px 16px;
+  }
+
+  .fp-card__body {
+    padding: 20px 16px;
+  }
+
+  .fp-card__dob-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
