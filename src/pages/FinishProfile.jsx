@@ -33,6 +33,7 @@ export default function FinishProfile() {
   useEffect(() => {
     // TESTING MODE - remove direct skip before going live
     // Allow page to load without a session for testing the profile form
+    if (!supabase) { setLoading(false); return }
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session?.user) {
         const u = session.user
@@ -105,7 +106,7 @@ export default function FinishProfile() {
       return
     }
 
-    const { error: updateErr } = await supabase.auth.updateUser({
+    const { error: updateErr } = await supabase?.auth.updateUser({
       data: {
         full_name: `${firstName.trim()} ${lastName.trim()}`,
         first_name: firstName.trim(),

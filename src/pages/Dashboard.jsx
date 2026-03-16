@@ -11,6 +11,7 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    if (!supabase) { setLoading(false); return }
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session?.user) {
         setUser(session.user)
@@ -32,7 +33,7 @@ export default function Dashboard() {
   }, [navigate])
 
   const handleSignOut = async () => {
-    await supabase.auth.signOut()
+    await supabase?.auth.signOut()
     navigate('/')
   }
 

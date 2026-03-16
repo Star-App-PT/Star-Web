@@ -16,6 +16,7 @@ const CATEGORY_META = {
 }
 
 async function saveWorker(data) {
+  if (!supabase) return
   const { error } = await supabase.from('workers').insert({
     full_name: data.fullName,
     email: data.email,
