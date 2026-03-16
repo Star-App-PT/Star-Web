@@ -199,6 +199,15 @@ export default function SignupForm({ category, onBack }) {
                 <span>{t('signupModal.continueEmail')}</span>
               </button>
             </div>
+
+            {/* TESTING ONLY - remove skip link before going live */}
+            <button
+              type="button"
+              className="sf-card__skip-link"
+              onClick={() => navigate('/choose-category')}
+            >
+              Skip (Testing Only)
+            </button>
           </>
         )}
 

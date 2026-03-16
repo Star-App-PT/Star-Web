@@ -219,7 +219,6 @@
 
 .sf-card__submit:disabled {
   background: #1B4FBA;
-  opacity: 0.45;
   cursor: not-allowed;
 }
 
@@ -306,6 +305,26 @@
   color: #717171;
   line-height: 1.6;
   margin: 0 0 28px;
+}
+
+/* TESTING ONLY - remove skip link before going live */
+.sf-card__skip-link {
+  display: block;
+  width: 100%;
+  margin-top: 16px;
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: 0.8rem;
+  color: #9CA3AF;
+  text-align: center;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.sf-card__skip-link:hover {
+  color: #6B7280;
+  text-decoration: underline;
 }
 
 @media (max-width: 600px) {
