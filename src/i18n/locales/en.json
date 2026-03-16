@@ -246,6 +246,13 @@
     "privacyPolicy": "Privacy Policy",
     "agreeAndContinue": "Agree and continue"
   },
+  "serviceLocation": {
+    "title": "Where will you offer your service?",
+    "placeholder": "Enter a city",
+    "searching": "Searching…",
+    "noResults": "No cities found",
+    "next": "Next"
+  },
   "dashboard": {
     "welcome": "Welcome, {{name}}!",
     "signedInVia": "Signed in via {{provider}}",

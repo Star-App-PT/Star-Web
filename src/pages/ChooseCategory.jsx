@@ -16,7 +16,7 @@ export default function ChooseCategory() {
   const navigate = useNavigate()
 
   const handleSelect = (categoryId) => {
-    navigate(`/worker/signup/${categoryId}`)
+    navigate(`/service-location/${categoryId}`)
   }
 
   return (

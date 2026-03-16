@@ -246,6 +246,13 @@
     "privacyPolicy": "Política de Privacidade",
     "agreeAndContinue": "Concordar e continuar"
   },
+  "serviceLocation": {
+    "title": "Onde vai oferecer o seu serviço?",
+    "placeholder": "Introduza uma cidade",
+    "searching": "A procurar…",
+    "noResults": "Nenhuma cidade encontrada",
+    "next": "Seguinte"
+  },
   "dashboard": {
     "welcome": "Bem-vindo, {{name}}!",
     "signedInVia": "Sessão iniciada via {{provider}}",
