@@ -34,8 +34,8 @@ export default function ChooseCategory() {
             >
               <div className="signup__img-wrap">
                 <img src={cat.image} alt={t(cat.labelKey)} className="signup__img" />
+                <h2 className="signup__step-title">{t(cat.labelKey)}</h2>
               </div>
-              <h2 className="signup__step-title">{t(cat.labelKey)}</h2>
             </button>
           ))}
         </div>
