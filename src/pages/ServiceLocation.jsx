@@ -13,11 +13,38 @@ const CATEGORY_META = {
   services: { labelKey: 'workerSignup.services', image: photographerImg },
 }
 
-const DEFAULT_CITIES = [
-  { city: 'Porto', region: 'Porto, Portugal' },
-  { city: 'Lisbon', region: 'Lisbon, Portugal' },
-  { city: 'Faro', region: 'Faro, Portugal' },
+const KNOWN_CITIES = [
+  { city: 'Porto', region: 'Portugal' },
+  { city: 'Lisbon', region: 'Portugal' },
+  { city: 'Faro', region: 'Portugal' },
+  { city: 'Braga', region: 'Portugal' },
+  { city: 'Coimbra', region: 'Portugal' },
+  { city: 'Aveiro', region: 'Portugal' },
+  { city: 'Funchal', region: 'Madeira, Portugal' },
+  { city: 'Setúbal', region: 'Portugal' },
+  { city: 'Évora', region: 'Portugal' },
+  { city: 'Viseu', region: 'Portugal' },
+  { city: 'Leiria', region: 'Portugal' },
+  { city: 'Guimarães', region: 'Portugal' },
+  { city: 'Vila Nova de Gaia', region: 'Portugal' },
+  { city: 'Albufeira', region: 'Faro, Portugal' },
+  { city: 'Lagos', region: 'Faro, Portugal' },
+  { city: 'Cascais', region: 'Lisbon, Portugal' },
+  { city: 'Sintra', region: 'Lisbon, Portugal' },
+  { city: 'Madrid', region: 'Spain' },
+  { city: 'Barcelona', region: 'Spain' },
+  { city: 'London', region: 'United Kingdom' },
+  { city: 'Paris', region: 'France' },
+  { city: 'Berlin', region: 'Germany' },
+  { city: 'Amsterdam', region: 'Netherlands' },
 ]
+
+const DEFAULT_DISPLAY = KNOWN_CITIES.slice(0, 3)
+
+function filterKnown(query) {
+  const q = query.toLowerCase()
+  return KNOWN_CITIES.filter((c) => c.city.toLowerCase().includes(q)).slice(0, 5)
+}
 
 export default function ServiceLocation() {
   const { t } = useTranslation()
@@ -26,7 +53,7 @@ export default function ServiceLocation() {
   const meta = CATEGORY_META[category]
 
   const [city, setCity] = useState('')
-  const [suggestions, setSuggestions] = useState([])
+  const [apiResults, setApiResults] = useState([])
   const [showDropdown, setShowDropdown] = useState(false)
   const [loading, setLoading] = useState(false)
   const timerRef = useRef(null)
@@ -42,21 +69,20 @@ export default function ServiceLocation() {
 
   const fetchCities = useCallback((query) => {
     if (timerRef.current) clearTimeout(timerRef.current)
-    if (!query || query.length < 2) { setSuggestions([]); setLoading(false); return }
+    if (!query || query.length < 2) { setApiResults([]); setLoading(false); return }
     setLoading(true)
     timerRef.current = setTimeout(async () => {
       try {
         const res = await fetch(
-          `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&addressdetails=1&limit=8&accept-language=en`,
-          { headers: { 'Accept': 'application/json' } }
+          `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&addressdetails=1&limit=5&accept-language=en&featuretype=city`
         )
         const data = await res.json()
-        const results = data.map((r) => {
-          const addr = r.address || {}
-          const name = addr.city || addr.town || addr.village || addr.municipality || r.display_name.split(',')[0]
-          const parts = [addr.state, addr.country].filter(Boolean)
-          return { city: name, region: parts.join(', ') }
-        })
+        const results = data
+          .filter((r) => r.address && (r.address.city || r.address.town || r.address.village || r.type === 'city' || r.type === 'administrative'))
+          .map((r) => ({
+            city: r.address.city || r.address.town || r.address.village || r.display_name.split(',')[0],
+            region: [r.address.state, r.address.country].filter(Boolean).join(', '),
+          }))
         const seen = new Set()
         const unique = results.filter((r) => {
           const k = r.city.toLowerCase()
@@ -64,26 +90,27 @@ export default function ServiceLocation() {
           seen.add(k)
           return true
         })
-        setSuggestions(unique.slice(0, 5))
+        setApiResults(unique)
       } catch {
-        setSuggestions([])
+        setApiResults([])
       } finally {
         setLoading(false)
       }
-    }, 200)
+    }, 300)
   }, [])
 
   const handleInputChange = (e) => {
     const val = e.target.value
     setCity(val)
     setShowDropdown(true)
+    setApiResults([])
     fetchCities(val)
   }
 
   const handleSelect = (name) => {
     setCity(name)
     setShowDropdown(false)
-    setSuggestions([])
+    setApiResults([])
   }
 
   const handleNext = async () => {
@@ -104,16 +131,13 @@ export default function ServiceLocation() {
     return null
   }
 
-  const isSearching = city.length >= 2
-  const displaySuggestions = isSearching && suggestions.length > 0
-    ? suggestions
-    : !isSearching
-      ? DEFAULT_CITIES
-      : []
+  const query = city.trim()
+  const localMatches = query.length >= 1 ? filterKnown(query) : DEFAULT_DISPLAY
+  const displaySuggestions = apiResults.length > 0 ? apiResults : localMatches
 
   const handleClear = () => {
     setCity('')
-    setSuggestions([])
+    setApiResults([])
     setShowDropdown(true)
   }
 
@@ -183,7 +207,7 @@ export default function ServiceLocation() {
                     </div>
                   </button>
                 ))}
-                {!loading && isSearching && suggestions.length === 0 && (
+                {!loading && query.length >= 2 && displaySuggestions.length === 0 && (
                   <div className="svc-loc__dd-item svc-loc__dd-item--loading">
                     {t('serviceLocation.noResults')}
                   </div>
