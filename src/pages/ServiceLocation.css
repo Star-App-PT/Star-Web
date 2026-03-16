@@ -10,7 +10,6 @@
 .svc-loc__top {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 48px;
 }
 
 .svc-loc__back {
@@ -33,7 +32,8 @@
 .svc-loc__content {
   flex: 1;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
   gap: 80px;
 }
 
@@ -189,9 +189,8 @@
 
 .svc-loc__right {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  padding-top: 8px;
 }
 
 .svc-loc__card {
@@ -224,7 +223,7 @@
   justify-content: flex-end;
   padding: 24px 0;
   border-top: 1px solid #EBEBEB;
-  margin-top: 40px;
+  margin-top: auto;
 }
 
 .svc-loc__next {
