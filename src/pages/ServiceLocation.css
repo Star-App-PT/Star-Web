@@ -88,6 +88,25 @@
   color: #717171;
 }
 
+.svc-loc__clear {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: #EBEBEB;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.svc-loc__clear:hover {
+  background: #DDDDDD;
+}
+
 .svc-loc__dropdown {
   position: absolute;
   top: calc(100% + 8px);
@@ -99,8 +118,30 @@
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   z-index: 100;
-  max-height: 280px;
+  max-height: 360px;
   overflow-y: auto;
+}
+
+.svc-loc__dd-label {
+  padding: 12px 16px 4px;
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #717171;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.svc-loc__dd-pin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #F7F7F7;
+  flex-shrink: 0;
+  color: #222;
 }
 
 .svc-loc__dd-item {
@@ -131,11 +172,6 @@
 
 .svc-loc__dd-item--loading:hover {
   background: transparent;
-}
-
-.svc-loc__dd-icon {
-  flex-shrink: 0;
-  color: #717171;
 }
 
 .svc-loc__dd-city {

@@ -42,20 +42,21 @@ export default function ServiceLocation() {
 
   const fetchCities = useCallback((query) => {
     if (timerRef.current) clearTimeout(timerRef.current)
-    if (!query || query.length < 2) { setSuggestions([]); return }
+    if (!query || query.length < 2) { setSuggestions([]); setLoading(false); return }
     setLoading(true)
     timerRef.current = setTimeout(async () => {
       try {
         const res = await fetch(
-          `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&addressdetails=1&limit=5&accept-language=en&featuretype=city`
+          `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&addressdetails=1&limit=8&accept-language=en`,
+          { headers: { 'Accept': 'application/json' } }
         )
         const data = await res.json()
-        const results = data
-          .filter((r) => r.address && (r.address.city || r.address.town || r.address.village || r.type === 'city' || r.type === 'administrative'))
-          .map((r) => ({
-            city: r.address.city || r.address.town || r.address.village || r.display_name.split(',')[0],
-            region: [r.address.state, r.address.country].filter(Boolean).join(', '),
-          }))
+        const results = data.map((r) => {
+          const addr = r.address || {}
+          const name = addr.city || addr.town || addr.village || addr.municipality || r.display_name.split(',')[0]
+          const parts = [addr.state, addr.country].filter(Boolean)
+          return { city: name, region: parts.join(', ') }
+        })
         const seen = new Set()
         const unique = results.filter((r) => {
           const k = r.city.toLowerCase()
@@ -63,13 +64,13 @@ export default function ServiceLocation() {
           seen.add(k)
           return true
         })
-        setSuggestions(unique.length > 0 ? unique : [])
+        setSuggestions(unique.slice(0, 5))
       } catch {
         setSuggestions([])
       } finally {
         setLoading(false)
       }
-    }, 300)
+    }, 200)
   }, [])
 
   const handleInputChange = (e) => {
@@ -103,11 +104,18 @@ export default function ServiceLocation() {
     return null
   }
 
-  const displaySuggestions = city.length >= 2 && suggestions.length > 0
+  const isSearching = city.length >= 2
+  const displaySuggestions = isSearching && suggestions.length > 0
     ? suggestions
-    : city.length < 2
+    : !isSearching
       ? DEFAULT_CITIES
       : []
+
+  const handleClear = () => {
+    setCity('')
+    setSuggestions([])
+    setShowDropdown(true)
+  }
 
   return (
     <div className="svc-loc">
@@ -123,9 +131,9 @@ export default function ServiceLocation() {
 
           <div className="svc-loc__search-wrap" ref={wrapRef}>
             <div className="svc-loc__search">
-              <svg className="svc-loc__search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#717171" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 21c-4.97-5.37-8-8.65-8-12a8 8 0 0 1 16 0c0 3.35-3.03 6.63-8 12z"/>
-                <circle cx="12" cy="9" r="3"/>
+              <svg className="svc-loc__search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#717171" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="11" cy="11" r="8"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
               </svg>
               <input
                 type="text"
@@ -136,14 +144,25 @@ export default function ServiceLocation() {
                 onFocus={() => setShowDropdown(true)}
                 autoComplete="off"
               />
+              {city && (
+                <button type="button" className="svc-loc__clear" onClick={handleClear} aria-label="Clear">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#717171" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                  </svg>
+                </button>
+              )}
             </div>
 
             {showDropdown && (
               <div className="svc-loc__dropdown">
-                {loading && suggestions.length === 0 && (
+                {loading && !displaySuggestions.length && (
                   <div className="svc-loc__dd-item svc-loc__dd-item--loading">
                     {t('serviceLocation.searching')}
                   </div>
+                )}
+                {displaySuggestions.length > 0 && (
+                  <p className="svc-loc__dd-label">{t('serviceLocation.suggested')}</p>
                 )}
                 {displaySuggestions.map((s) => (
                   <button
@@ -152,17 +171,19 @@ export default function ServiceLocation() {
                     className="svc-loc__dd-item"
                     onClick={() => handleSelect(s.city)}
                   >
-                    <svg className="svc-loc__dd-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M12 21c-4.97-5.37-8-8.65-8-12a8 8 0 0 1 16 0c0 3.35-3.03 6.63-8 12z"/>
-                      <circle cx="12" cy="9" r="3"/>
-                    </svg>
+                    <div className="svc-loc__dd-pin">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M12 21c-4.97-5.37-8-8.65-8-12a8 8 0 0 1 16 0c0 3.35-3.03 6.63-8 12z"/>
+                        <circle cx="12" cy="9" r="3"/>
+                      </svg>
+                    </div>
                     <div>
                       <span className="svc-loc__dd-city">{s.city}</span>
                       <span className="svc-loc__dd-region">{s.region}</span>
                     </div>
                   </button>
                 ))}
-                {!loading && city.length >= 2 && suggestions.length === 0 && (
+                {!loading && isSearching && suggestions.length === 0 && (
                   <div className="svc-loc__dd-item svc-loc__dd-item--loading">
                     {t('serviceLocation.noResults')}
                   </div>

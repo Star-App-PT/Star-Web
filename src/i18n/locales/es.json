@@ -251,6 +251,7 @@
     "placeholder": "Introduce una ciudad",
     "searching": "Buscando…",
     "noResults": "No se encontraron ciudades",
+    "suggested": "Sugerido",
     "next": "Siguiente"
   },
   "dashboard": {
