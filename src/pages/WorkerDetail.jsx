@@ -38,6 +38,12 @@ export default function WorkerDetail() {
   const [serviceDetailChecks, setServiceDetailChecks] = useState([])
   const [goodToKnow, setGoodToKnow] = useState('')
   const [emergency24h, setEmergency24h] = useState(false)
+  const [bookingOpen, setBookingOpen] = useState(false)
+  const [calMonth, setCalMonth] = useState(() => new Date().getMonth())
+  const [calYear, setCalYear] = useState(() => new Date().getFullYear())
+  const [selectedDate, setSelectedDate] = useState(null)
+  const [selectedPkgIdx, setSelectedPkgIdx] = useState(null)
+  const [selectedTime, setSelectedTime] = useState(null)
   const worker = getWorkerById(id)
 
   const saveToSupabase = async (data) => {
@@ -105,6 +111,31 @@ export default function WorkerDetail() {
   }
 
   const hasPackages = worker.packages && worker.packages.length > 0
+  const lowestPkg = hasPackages ? worker.packages.reduce((a, b) => a.price < b.price ? a : b) : null
+  const lowestPrice = lowestPkg ? lowestPkg.price : 0
+  const lowestPriceType = lowestPkg?.priceType || 'visit'
+
+  const today = new Date()
+  const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate()
+  const firstDayOfWeek = new Date(calYear, calMonth, 1).getDay()
+  const monthLabel = new Date(calYear, calMonth).toLocaleString('en', { month: 'long', year: 'numeric' })
+  const TIME_SLOTS = ['09:00', '10:00', '11:00', '12:00', '14:00', '15:00', '16:00', '17:00']
+
+  const isDatePast = (day) => {
+    const d = new Date(calYear, calMonth, day)
+    const t = new Date(); t.setHours(0, 0, 0, 0)
+    return d < t
+  }
+  const isToday = (day) => calYear === today.getFullYear() && calMonth === today.getMonth() && day === today.getDate()
+  const prevMonth = () => {
+    if (calMonth === 0) { setCalMonth(11); setCalYear((y) => y - 1) }
+    else setCalMonth((m) => m - 1)
+  }
+  const nextMonth = () => {
+    if (calMonth === 11) { setCalMonth(0); setCalYear((y) => y + 1) }
+    else setCalMonth((m) => m + 1)
+  }
+
   const reviews = worker.clientReviews || []
   const hasReviews = reviews.length > 0
   const hasQualifications = worker.qualifications && worker.qualifications.length > 0
@@ -128,13 +159,18 @@ export default function WorkerDetail() {
 
   return (
     <div className="wd">
-      <div className="wd__mobile-bar">
-        <WorkerAvatar worker={worker} size={45} className="wd__mobile-bar-avatar" />
-        <div className="wd__mobile-bar-info">
-          <span className="wd__mobile-bar-name">{worker.name}</span>
-          <span className="wd__mobile-bar-rate">{t('common.fromPerHour', { price: worker.hourlyRate })}</span>
+      <div className="wd__booking-bar">
+        <div className="wd__booking-bar-inner">
+          <div className="wd__booking-bar-left">
+            <span className="wd__booking-bar-price">
+              {hasPackages ? `From €${lowestPrice} / ${lowestPriceType}` : 'Free visit'}
+            </span>
+            <span className="wd__booking-bar-cancel">Free cancellation</span>
+          </div>
+          <button type="button" className="wd__booking-bar-btn btn-primary" onClick={() => setBookingOpen(true)}>
+            Show dates
+          </button>
         </div>
-        <button type="button" className="wd__mobile-bar-btn btn-primary">{t('workerDetail.message')}</button>
       </div>
 
       <div className="wd__container">
@@ -171,7 +207,7 @@ export default function WorkerDetail() {
                 </button>
               </div>
               <div style={{ textAlign: 'center', padding: '16px 24px 0' }}>
-                <button type="button" className="wd__card-message-btn btn-primary">{t('workerDetail.messageWorker', { name: worker.name })}</button>
+                <button type="button" className="wd__card-message-btn btn-primary" onClick={() => setBookingOpen(true)}>Show dates</button>
               </div>
             </div>
           </aside>
@@ -187,7 +223,7 @@ export default function WorkerDetail() {
                       </div>
                       <div className="wd__pkg-info">
                         <h3 className="wd__pkg-name">{pkg.name}</h3>
-                        <p className="wd__pkg-price">€{pkg.price} <span>/ {pkg.duration}</span></p>
+                        <p className="wd__pkg-price">€{pkg.price} <span>/ {pkg.priceType || 'visit'}</span></p>
                         <p className="wd__pkg-desc">{pkg.desc}</p>
                       </div>
                     </div>
@@ -387,6 +423,97 @@ export default function WorkerDetail() {
           </main>
         </div>
       </div>
+
+      {bookingOpen && (
+        <div className="wd__bm-overlay" onClick={() => setBookingOpen(false)}>
+          <div className="wd__bm" onClick={(e) => e.stopPropagation()}>
+            <button type="button" className="wd__bm-close" onClick={() => setBookingOpen(false)} aria-label="Close">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            </button>
+
+            <h2 className="wd__bm-title">Schedule your visit</h2>
+
+            <div className="wd__bm-cal">
+              <div className="wd__bm-cal-header">
+                <button type="button" className="wd__bm-cal-nav" onClick={prevMonth}>‹</button>
+                <span className="wd__bm-cal-month">{monthLabel}</span>
+                <button type="button" className="wd__bm-cal-nav" onClick={nextMonth}>›</button>
+              </div>
+              <div className="wd__bm-cal-labels">
+                {['S','M','T','W','T','F','S'].map((d, i) => (
+                  <span key={i} className="wd__bm-cal-label">{d}</span>
+                ))}
+              </div>
+              <div className="wd__bm-cal-grid">
+                {Array.from({ length: firstDayOfWeek }).map((_, i) => (
+                  <span key={`e-${i}`} />
+                ))}
+                {Array.from({ length: daysInMonth }, (_, i) => i + 1).map((day) => {
+                  const past = isDatePast(day)
+                  const sel = selectedDate?.day === day && selectedDate?.month === calMonth && selectedDate?.year === calYear
+                  const tod = isToday(day)
+                  return (
+                    <button
+                      key={day}
+                      type="button"
+                      className={`wd__bm-cal-day${past ? ' wd__bm-cal-day--past' : ''}${sel ? ' wd__bm-cal-day--sel' : ''}${tod && !sel ? ' wd__bm-cal-day--today' : ''}`}
+                      disabled={past}
+                      onClick={() => { setSelectedDate({ day, month: calMonth, year: calYear }); setSelectedTime(null); setSelectedPkgIdx(hasPackages ? 0 : null) }}
+                    >
+                      {day}
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
+
+            {selectedDate && hasPackages && (
+              <div className="wd__bm-packages">
+                {worker.packages.map((pkg, i) => (
+                  <div
+                    key={i}
+                    className={`wd__bm-pkg${selectedPkgIdx === i ? ' wd__bm-pkg--sel' : ''}`}
+                    onClick={() => { setSelectedPkgIdx(i); setSelectedTime(null) }}
+                  >
+                    <div className="wd__bm-pkg-thumb">
+                      <img src={worker.heroImage} alt="" />
+                    </div>
+                    <div className="wd__bm-pkg-info">
+                      <p className="wd__bm-pkg-name">{pkg.name}</p>
+                      <p className="wd__bm-pkg-price">€{pkg.price} / {pkg.priceType || 'visit'}</p>
+                    </div>
+                  </div>
+                ))}
+
+                {selectedPkgIdx !== null && (
+                  <div className="wd__bm-times">
+                    {TIME_SLOTS.map((slot) => (
+                      <button
+                        key={slot}
+                        type="button"
+                        className={`wd__bm-time${selectedTime === slot ? ' wd__bm-time--sel' : ''}`}
+                        onClick={() => setSelectedTime(slot)}
+                      >
+                        {slot}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            <button
+              type="button"
+              className="wd__bm-confirm"
+              disabled={!selectedDate || !selectedTime}
+            >
+              Request visit
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

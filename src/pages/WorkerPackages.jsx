@@ -29,17 +29,19 @@ const DURATION_OPTIONS = [
   { value: 'fullday', label: 'Full day' },
 ]
 
-const GROUP_OPTIONS = [
-  { value: 'guest', labelKey: 'packages.perGuest' },
-  { value: 'group', labelKey: 'packages.perGroup' },
-  { value: 'flat', labelKey: 'packages.flatRate' },
+const PRICE_TYPE_OPTIONS = [
+  { value: 'visit', label: 'Per visit' },
+  { value: 'hour', label: 'Per hour' },
+  { value: 'person', label: 'Per person' },
+  { value: 'session', label: 'Per session' },
+  { value: 'item', label: 'Per item' },
 ]
 
 const EMPTY_PKG = {
   title: '',
   price: '',
   duration: '1hr',
-  groupType: 'guest',
+  priceType: 'visit',
   description: '',
   thumbUrl: null,
   thumbFile: null,
@@ -110,7 +112,7 @@ export default function WorkerPackages() {
               title: p.title.trim(),
               price: parseFloat(p.price),
               duration: p.duration,
-              groupType: p.groupType,
+              priceType: p.priceType,
               description: p.description.trim(),
             }))
           await supabase.auth.updateUser({ data: { worker_packages: pkgData } })
@@ -232,19 +234,16 @@ export default function WorkerPackages() {
                   </div>
 
                   <div className="pk__field">
-                    <label className="pk__field-label">{t('packages.pricingType')}</label>
-                    <div className="pk__pills">
-                      {GROUP_OPTIONS.map((o) => (
-                        <button
-                          key={o.value}
-                          type="button"
-                          className={`pk__pill${pkg.groupType === o.value ? ' pk__pill--active' : ''}`}
-                          onClick={() => updatePkg(pkg.id, 'groupType', o.value)}
-                        >
-                          {t(o.labelKey)}
-                        </button>
+                    <label className="pk__field-label">Price type</label>
+                    <select
+                      className="pk__select"
+                      value={pkg.priceType}
+                      onChange={(e) => updatePkg(pkg.id, 'priceType', e.target.value)}
+                    >
+                      {PRICE_TYPE_OPTIONS.map((o) => (
+                        <option key={o.value} value={o.value}>{o.label}</option>
                       ))}
-                    </div>
+                    </select>
                   </div>
 
                   <div className="pk__field">
@@ -274,7 +273,7 @@ export default function WorkerPackages() {
                     <div className="pk__preview-info">
                       <p className="pk__preview-title">{pkg.title}</p>
                       <p className="pk__preview-meta">
-                        €{parseFloat(pkg.price).toFixed(0)} /{t(GROUP_OPTIONS.find((o) => o.value === pkg.groupType)?.labelKey || '')}
+                        €{parseFloat(pkg.price).toFixed(0)} / {PRICE_TYPE_OPTIONS.find((o) => o.value === pkg.priceType)?.label?.replace('Per ', '') || 'visit'}
                         {' · '}{durationLabel(pkg.duration)}
                       </p>
                       {pkg.description.trim() && (

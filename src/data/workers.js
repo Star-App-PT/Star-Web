@@ -87,9 +87,9 @@ export const CLEANERS = [
     memberSince: '2021',
     serviceLocation: 'Service provided at client\'s home',
     packages: [
-      { name: 'Quick Tidy', price: 45, duration: '1.5 hrs', desc: 'Light cleaning of kitchen, bathrooms, and living areas. Perfect for weekly upkeep.' },
-      { name: 'Standard Clean', price: 75, duration: '3 hrs', desc: 'Full home cleaning including all rooms, floors, surfaces, and bathrooms.' },
-      { name: 'Deep Clean', price: 120, duration: '5 hrs', desc: 'Intensive cleaning with appliance interiors, baseboards, windows, and detailed scrubbing.' },
+      { name: 'Quick Tidy', price: 45, duration: '1.5 hrs', priceType: 'visit', desc: 'Light cleaning of kitchen, bathrooms, and living areas. Perfect for weekly upkeep.' },
+      { name: 'Standard Clean', price: 75, duration: '3 hrs', priceType: 'visit', desc: 'Full home cleaning including all rooms, floors, surfaces, and bathrooms.' },
+      { name: 'Deep Clean', price: 120, duration: '5 hrs', priceType: 'visit', desc: 'Intensive cleaning with appliance interiors, baseboards, windows, and detailed scrubbing.' },
     ],
     qualifications: [
       { icon: 'clock', title: '6 years of experience', desc: 'Professional home cleaning since 2019. Trained in eco-friendly methods.' },
@@ -108,8 +108,8 @@ export const CLEANERS = [
     memberSince: '2020',
     serviceLocation: 'Service provided at client\'s home',
     packages: [
-      { name: 'Airbnb Turnover', price: 60, duration: '2 hrs', desc: 'Fast, thorough clean between guest stays. Linen change included if provided.' },
-      { name: 'Full Deep Clean', price: 110, duration: '4 hrs', desc: 'Every surface, inside and out. Oven, fridge, cupboards, windows, and floors.' },
+      { name: 'Airbnb Turnover', price: 60, duration: '2 hrs', priceType: 'visit', desc: 'Fast, thorough clean between guest stays. Linen change included if provided.' },
+      { name: 'Full Deep Clean', price: 110, duration: '4 hrs', priceType: 'visit', desc: 'Every surface, inside and out. Oven, fridge, cupboards, windows, and floors.' },
     ],
     qualifications: [
       { icon: 'clock', title: '5 years of experience', desc: 'Specializing in Airbnb and rental turnovers since 2020.' },
@@ -142,8 +142,8 @@ export const CLEANERS = [
     memberSince: '2019',
     serviceLocation: 'Service provided at client\'s home',
     packages: [
-      { name: 'Daily Tidy', price: 40, duration: '2 hrs', desc: 'Light housekeeping — tidying, dishes, laundry folding, and surface wipe-down.' },
-      { name: 'Full Housekeeping', price: 80, duration: '4 hrs', desc: 'Complete home management including cleaning, laundry, ironing, and organisation.' },
+      { name: 'Daily Tidy', price: 40, duration: '2 hrs', priceType: 'visit', desc: 'Light housekeeping — tidying, dishes, laundry folding, and surface wipe-down.' },
+      { name: 'Full Housekeeping', price: 80, duration: '4 hrs', priceType: 'visit', desc: 'Complete home management including cleaning, laundry, ironing, and organisation.' },
     ],
     qualifications: [],
     gallery: [],
@@ -186,8 +186,8 @@ export const HANDYMEN = [
     languages: ['Portuguese', 'English'], memberSince: '2018',
     serviceLocation: 'Service provided at client\'s home',
     packages: [
-      { name: 'Small Repair', price: 50, duration: '1.5 hrs', desc: 'Minor fixes — squeaky doors, loose handles, shelf brackets, small patches.' },
-      { name: 'Custom Build', price: 150, duration: '5 hrs', desc: 'Bespoke shelving, fitted wardrobes, or custom furniture pieces to your specification.' },
+      { name: 'Small Repair', price: 50, duration: '1.5 hrs', priceType: 'visit', desc: 'Minor fixes — squeaky doors, loose handles, shelf brackets, small patches.' },
+      { name: 'Custom Build', price: 150, duration: '5 hrs', priceType: 'visit', desc: 'Bespoke shelving, fitted wardrobes, or custom furniture pieces to your specification.' },
     ],
     qualifications: [
       { icon: 'clock', title: '12 years of experience', desc: 'Master carpenter since 2012. Custom shelving, furniture, and restoration.' },
@@ -205,9 +205,9 @@ export const HANDYMEN = [
     languages: ['Portuguese', 'English', 'French'], memberSince: '2019',
     serviceLocation: 'Service provided at client\'s home',
     packages: [
-      { name: 'Emergency Callout', price: 65, duration: '1 hr', desc: 'Urgent repairs — burst pipes, blocked drains, boiler failures. Same-day response.' },
-      { name: 'Standard Repair', price: 90, duration: '2 hrs', desc: 'Tap replacement, toilet repair, pipe fixing, and general plumbing maintenance.' },
-      { name: 'Bathroom Install', price: 350, duration: '8 hrs', desc: 'Full bathroom fitting — toilet, sink, shower/tub, tiling consultation included.' },
+      { name: 'Emergency Callout', price: 65, duration: '1 hr', priceType: 'visit', desc: 'Urgent repairs — burst pipes, blocked drains, boiler failures. Same-day response.' },
+      { name: 'Standard Repair', price: 90, duration: '2 hrs', priceType: 'visit', desc: 'Tap replacement, toilet repair, pipe fixing, and general plumbing maintenance.' },
+      { name: 'Bathroom Install', price: 350, duration: '8 hrs', priceType: 'visit', desc: 'Full bathroom fitting — toilet, sink, shower/tub, tiling consultation included.' },
     ],
     qualifications: [
       { icon: 'clock', title: '7 years of experience', desc: 'Licensed plumber specializing in residential and emergency work.' },
@@ -234,8 +234,8 @@ export const HANDYMEN = [
     languages: ['Portuguese', 'English'], memberSince: '2019',
     serviceLocation: 'Service provided at client\'s location',
     packages: [
-      { name: 'Safety Inspection', price: 60, duration: '1 hr', desc: 'Full electrical safety audit with report. Fuse box check, earthing, and wiring review.' },
-      { name: 'Light Install', price: 80, duration: '2 hrs', desc: 'Installation of up to 4 light fixtures, including wiring and switch setup.' },
+      { name: 'Safety Inspection', price: 60, duration: '1 hr', priceType: 'visit', desc: 'Full electrical safety audit with report. Fuse box check, earthing, and wiring review.' },
+      { name: 'Light Install', price: 80, duration: '2 hrs', priceType: 'visit', desc: 'Installation of up to 4 light fixtures, including wiring and switch setup.' },
     ],
     qualifications: [
       { icon: 'shield', title: 'Nationally certified', desc: 'Certified by DGEG (Portuguese energy authority) for all electrical work.' },
@@ -275,9 +275,9 @@ export const SERVICES = [
     languages: ['Portuguese', 'English', 'Italian'], memberSince: '2020',
     serviceLocation: 'Provided at client\'s location',
     packages: [
-      { name: 'Portrait Express', price: 75, duration: '45 min', desc: 'Quick professional portrait session at one location. 10 edited photos delivered.' },
-      { name: 'Event Coverage', price: 200, duration: '3 hrs', desc: 'Full event photography — parties, dinners, corporate. 50+ edited photos in a gallery.' },
-      { name: 'Real Estate Shoot', price: 150, duration: '2 hrs', desc: 'Property photography for listings. HDR interiors, exteriors, drone shots available.' },
+      { name: 'Portrait Express', price: 75, duration: '45 min', priceType: 'session', desc: 'Quick professional portrait session at one location. 10 edited photos delivered.' },
+      { name: 'Event Coverage', price: 200, duration: '3 hrs', priceType: 'session', desc: 'Full event photography — parties, dinners, corporate. 50+ edited photos in a gallery.' },
+      { name: 'Real Estate Shoot', price: 150, duration: '2 hrs', priceType: 'session', desc: 'Property photography for listings. HDR interiors, exteriors, drone shots available.' },
     ],
     qualifications: [
       { icon: 'clock', title: '9 years of experience', desc: 'Specializing in portraits, lifestyle, events, and real estate photography.' },
@@ -295,9 +295,9 @@ export const SERVICES = [
     languages: ['Portuguese', 'English'], memberSince: '2021',
     serviceLocation: 'Provided at client\'s home or outdoors',
     packages: [
-      { name: 'Single Session', price: 30, duration: '1 hr', desc: 'One-on-one training session tailored to your goals. All equipment provided.' },
-      { name: 'Group Session', price: 50, duration: '1 hr', desc: 'Fun outdoor group workout for 2-4 people. HIIT, strength, or bootcamp style.' },
-      { name: '10-Session Pack', price: 250, duration: '10 hrs', desc: 'Commit to your goals with a discounted 10-session package. Includes fitness assessment.' },
+      { name: 'Single Session', price: 30, duration: '1 hr', priceType: 'session', desc: 'One-on-one training session tailored to your goals. All equipment provided.' },
+      { name: 'Group Session', price: 50, duration: '1 hr', priceType: 'session', desc: 'Fun outdoor group workout for 2-4 people. HIIT, strength, or bootcamp style.' },
+      { name: '10-Session Pack', price: 250, duration: '10 hrs', priceType: 'session', desc: 'Commit to your goals with a discounted 10-session package. Includes fitness assessment.' },
     ],
     qualifications: [
       { icon: 'shield', title: 'Nationally certified', desc: 'Certified personal trainer by the Portuguese Institute of Sport.' },
@@ -314,8 +314,8 @@ export const SERVICES = [
     languages: ['Portuguese', 'English', 'French'], memberSince: '2019',
     serviceLocation: 'Provided at client\'s home',
     packages: [
-      { name: 'Meal Prep (5 days)', price: 180, duration: '4 hrs', desc: 'Weekly meal prep — 5 days of balanced, home-cooked meals. Menu tailored to your diet.' },
-      { name: 'Dinner Party (4 guests)', price: 250, duration: '4 hrs', desc: 'Full dinner experience — 3 courses, wine pairing suggestions, all cooking and cleanup.' },
+      { name: 'Meal Prep (5 days)', price: 180, duration: '4 hrs', priceType: 'person', desc: 'Weekly meal prep — 5 days of balanced, home-cooked meals. Menu tailored to your diet.' },
+      { name: 'Dinner Party (4 guests)', price: 250, duration: '4 hrs', priceType: 'person', desc: 'Full dinner experience — 3 courses, wine pairing suggestions, all cooking and cleanup.' },
     ],
     qualifications: [
       { icon: 'clock', title: '10 years of experience', desc: 'Professional chef since 2015. Portuguese and Mediterranean cuisine.' },
@@ -332,8 +332,8 @@ export const SERVICES = [
     languages: ['Portuguese', 'English', 'Spanish'], memberSince: '2018',
     serviceLocation: 'Provided at client\'s home',
     packages: [
-      { name: 'Cut & Style', price: 45, duration: '45 min', desc: 'Wash, cut, and blow-dry. Men\'s or women\'s styles.' },
-      { name: 'Colour & Cut', price: 95, duration: '2 hrs', desc: 'Full colour treatment with cut and style. Consultation included.' },
+      { name: 'Cut & Style', price: 45, duration: '45 min', priceType: 'session', desc: 'Wash, cut, and blow-dry. Men\'s or women\'s styles.' },
+      { name: 'Colour & Cut', price: 95, duration: '2 hrs', priceType: 'session', desc: 'Full colour treatment with cut and style. Consultation included.' },
     ],
     qualifications: [
       { icon: 'clock', title: '8 years of experience', desc: 'Former senior stylist at a top Porto salon. Mobile since 2020.' },
@@ -350,9 +350,9 @@ export const SERVICES = [
     languages: ['Portuguese', 'English'], memberSince: '2020',
     serviceLocation: 'Provided at client\'s home',
     packages: [
-      { name: 'Relaxation Massage', price: 55, duration: '1 hr', desc: 'Swedish-style full-body massage. Calming oils and ambient music included.' },
-      { name: 'Deep Tissue', price: 70, duration: '1 hr', desc: 'Targeted deep tissue work for chronic tension, sports recovery, or injury rehab.' },
-      { name: 'Couples Massage', price: 120, duration: '1.5 hrs', desc: 'Side-by-side massage for two. Second therapist provided. Relaxation guaranteed.' },
+      { name: 'Relaxation Massage', price: 55, duration: '1 hr', priceType: 'session', desc: 'Swedish-style full-body massage. Calming oils and ambient music included.' },
+      { name: 'Deep Tissue', price: 70, duration: '1 hr', priceType: 'session', desc: 'Targeted deep tissue work for chronic tension, sports recovery, or injury rehab.' },
+      { name: 'Couples Massage', price: 120, duration: '1.5 hrs', priceType: 'session', desc: 'Side-by-side massage for two. Second therapist provided. Relaxation guaranteed.' },
     ],
     qualifications: [
       { icon: 'shield', title: 'Licensed therapist', desc: 'Licensed by the Portuguese Health Authority for therapeutic massage.' },
