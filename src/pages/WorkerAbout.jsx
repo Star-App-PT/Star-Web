@@ -61,7 +61,7 @@ export default function WorkerAbout() {
         }
       } catch { /* continue even if save fails */ }
     }
-    navigate(`/service-area/${category}`)
+    navigate(`/worker/signup/${category}`)
   }
 
   return (
@@ -169,7 +169,7 @@ export default function WorkerAbout() {
           disabled={!allFilled}
           onClick={handleNext}
         >
-          {t('serviceLocation.next')}
+          {t('serviceArea.next')}
         </button>
       </div>
     </div>

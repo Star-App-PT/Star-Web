@@ -124,7 +124,7 @@ export default function CategorySignup() {
     <div className="cs">
       <div className="cs__top">
         <span className="cs__step">{t('profilePhoto.step')}</span>
-        <button type="button" className="cs__back btn-back" onClick={() => navigate(`/service-area/${category}`)}>
+        <button type="button" className="cs__back btn-back" onClick={() => navigate(`/worker-about/${category}`)}>
           {t('common.back')}
         </button>
       </div>
