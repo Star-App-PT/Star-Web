@@ -246,6 +246,14 @@
     "privacyPolicy": "Privacy Policy",
     "agreeAndContinue": "Agree and continue"
   },
+  "workerAbout": {
+    "title": "Tell us a bit more about you",
+    "subtitle": "Help clients understand who you are before they book.",
+    "yearsLabel": "How many years have you been in {{category}}?",
+    "notableLabel": "Add something notable about your skill",
+    "trainingLabel": "Add a degree, training or experience",
+    "honoursLabel": "Add any honours or media features"
+  },
   "serviceLocation": {
     "title": "Where will you offer your service?",
     "placeholder": "Enter a city",

@@ -123,7 +123,7 @@ export default function ServiceLocation() {
         }
       } catch { /* continue even if save fails */ }
     }
-    navigate(`/worker/signup/${category}`)
+    navigate(`/worker-about/${category}`)
   }
 
   if (!meta) {

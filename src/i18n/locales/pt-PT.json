@@ -246,6 +246,14 @@
     "privacyPolicy": "Política de Privacidade",
     "agreeAndContinue": "Concordar e continuar"
   },
+  "workerAbout": {
+    "title": "Conte-nos um pouco mais sobre si",
+    "subtitle": "Ajude os clientes a perceber quem é antes de reservarem.",
+    "yearsLabel": "Há quantos anos trabalha em {{category}}?",
+    "notableLabel": "Adicione algo notável sobre a sua competência",
+    "trainingLabel": "Adicione um grau, formação ou experiência",
+    "honoursLabel": "Adicione prémios ou aparições nos media"
+  },
   "serviceLocation": {
     "title": "Onde vai oferecer o seu serviço?",
     "placeholder": "Introduza uma cidade",
