@@ -117,6 +117,14 @@
     "profilePhoto": "Profile photo",
     "choosePhoto": "Choose file"
   },
+  "profilePhoto": {
+    "title": "Let's finish up your profile",
+    "step": "Step 9 of 12",
+    "sectionLabel": "Profile photo",
+    "hint": "Upload a photo that clearly shows your face and shoulders. This is how clients will recognise you.",
+    "uploadLabel": "Upload photo",
+    "dragHint": "Drag to reposition · scroll to zoom"
+  },
   "workerProfileCleaner": {
     "intro": "Choose the cleaning services you offer. You can select more than one.",
     "skillsTitle": "Your cleaning services",

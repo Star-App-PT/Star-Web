@@ -117,6 +117,14 @@
     "profilePhoto": "Foto de perfil",
     "choosePhoto": "Elegir archivo"
   },
+  "profilePhoto": {
+    "title": "Vamos a terminar tu perfil",
+    "step": "Paso 9 de 12",
+    "sectionLabel": "Foto de perfil",
+    "hint": "Sube una foto que muestre claramente tu rostro y hombros. Así es como los clientes te reconocerán.",
+    "uploadLabel": "Subir foto",
+    "dragHint": "Arrastra para reposicionar · desplaza para zoom"
+  },
   "workerProfileCleaner": {
     "intro": "Elige los servicios de limpieza que ofreces. Puedes seleccionar más de uno.",
     "skillsTitle": "Tus servicios de limpieza",

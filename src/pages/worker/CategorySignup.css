@@ -1,0 +1,219 @@
+.cs {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  flex-direction: column;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 32px 48px 24px;
+}
+
+.cs__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cs__step {
+  font-size: 0.8rem;
+  color: #717171;
+  font-weight: 500;
+}
+
+.cs__back {
+  padding: 8px 16px;
+  border: 1px solid #222;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: #222;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.cs__back:hover {
+  background: #f7f7f7;
+}
+
+/* ── Body ── */
+
+.cs__body {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cs__card {
+  width: 100%;
+  max-width: 680px;
+  text-align: center;
+}
+
+.cs__title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #222;
+  line-height: 1.2;
+  margin: 0 0 40px;
+  letter-spacing: -0.02em;
+}
+
+/* ── Photo section ── */
+
+.cs__section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cs__label {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #222;
+  margin: 0 0 8px;
+}
+
+.cs__hint {
+  font-size: 0.95rem;
+  color: #717171;
+  margin: 0 0 28px;
+  max-width: 420px;
+  line-height: 1.5;
+}
+
+/* ── Circular frame ── */
+
+.cs__frame {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 2px dashed #C0C0C0;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FAFAFA;
+  touch-action: none;
+  user-select: none;
+}
+
+.cs__frame--confirmed {
+  border-style: solid;
+  border-color: #1B4FBA;
+}
+
+.cs__frame-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  transition: none;
+}
+
+.cs__frame-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: #B0B0B0;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.cs__file {
+  display: none;
+}
+
+/* ── Cancel / Done actions ── */
+
+.cs__actions {
+  display: flex;
+  gap: 32px;
+  margin-top: 16px;
+}
+
+.cs__action {
+  border: none;
+  background: none;
+  padding: 6px 4px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.cs__action--cancel {
+  color: #717171;
+}
+
+.cs__action--cancel:hover {
+  color: #444;
+}
+
+.cs__action--done {
+  color: #1B4FBA;
+}
+
+.cs__action--done:hover {
+  color: #153f96;
+}
+
+.cs__drag-hint {
+  margin: 12px 0 0;
+  font-size: 0.8rem;
+  color: #B0B0B0;
+}
+
+/* ── Footer / Next ── */
+
+.cs__footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 24px 0;
+  border-top: 1px solid #EBEBEB;
+  margin-top: auto;
+}
+
+.cs__next {
+  padding: 14px 32px;
+  border-radius: 8px;
+  border: none;
+  background: #1B4FBA;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.cs__next:hover {
+  opacity: 0.92;
+}
+
+.cs__next:disabled {
+  background: #1B4FBA;
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 768px) {
+  .cs {
+    padding: 24px 20px;
+  }
+
+  .cs__title {
+    font-size: 1.6rem;
+  }
+
+  .cs__frame {
+    width: 180px;
+    height: 180px;
+  }
+}
