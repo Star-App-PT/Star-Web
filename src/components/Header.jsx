@@ -56,11 +56,6 @@ export default function Header() {
           </div>
         )}
         <nav className="star-header__nav">
-          {!isMinimalHeader && (
-            <Link to="/worker/signup" className="star-header__cta btn-primary">
-              {t('header.becomeAStar')}
-            </Link>
-          )}
           <LanguageToggle />
           <HamburgerMenu />
         </nav>
