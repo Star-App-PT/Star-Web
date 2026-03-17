@@ -12,6 +12,7 @@ export default function CategorySignup() {
   const navigate = useNavigate()
   const fileRef = useRef(null)
   const frameRef = useRef(null)
+  const pickerOpen = useRef(false)
 
   const [imgSrc, setImgSrc] = useState(null)
   const [confirmed, setConfirmed] = useState(false)
@@ -21,7 +22,14 @@ export default function CategorySignup() {
   const dragStart = useRef({ x: 0, y: 0 })
   const offsetStart = useRef({ x: 0, y: 0 })
 
+  const openPicker = () => {
+    if (pickerOpen.current || imgSrc) return
+    pickerOpen.current = true
+    fileRef.current?.click()
+  }
+
   const handleFile = (e) => {
+    pickerOpen.current = false
     const file = e.target.files?.[0]
     if (!file) return
     const url = URL.createObjectURL(file)
@@ -110,10 +118,11 @@ export default function CategorySignup() {
             <h2 className="cs__label">{t('profilePhoto.sectionLabel')}</h2>
             <p className="cs__hint">{t('profilePhoto.hint')}</p>
 
+            <input ref={fileRef} type="file" accept="image/*" className="cs__file" onChange={handleFile} />
             <div
               ref={frameRef}
               className={`cs__frame${confirmed ? ' cs__frame--confirmed' : ''}`}
-              onClick={() => !imgSrc && fileRef.current?.click()}
+              onClick={!imgSrc ? openPicker : undefined}
               onPointerDown={imgSrc && !confirmed ? onPointerDown : undefined}
               onWheel={imgSrc && !confirmed ? onWheel : undefined}
               style={{ cursor: imgSrc && !confirmed ? (dragging ? 'grabbing' : 'grab') : 'pointer' }}
@@ -129,7 +138,7 @@ export default function CategorySignup() {
                   }}
                 />
               ) : (
-                <div className="cs__frame-empty" onClick={() => fileRef.current?.click()}>
+                <div className="cs__frame-empty">
                   <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#B0B0B0" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
                     <circle cx="12" cy="13" r="4"/>
@@ -137,7 +146,6 @@ export default function CategorySignup() {
                   <span>{t('profilePhoto.uploadLabel')}</span>
                 </div>
               )}
-              <input ref={fileRef} type="file" accept="image/*" className="cs__file" onChange={handleFile} />
             </div>
 
             {imgSrc && !confirmed && (
