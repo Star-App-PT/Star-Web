@@ -13,6 +13,12 @@ const DEFAULT_THUMBS = {
   services: actionPhotography,
 }
 
+const CATEGORY_PROFILE = {
+  cleaning: '/worker/c1',
+  repairs: '/worker/h1',
+  services: '/worker/s1',
+}
+
 const DURATION_OPTIONS = [
   { value: '30min', label: '30 min' },
   { value: '1hr', label: '1 hr' },
@@ -111,7 +117,7 @@ export default function WorkerPackages() {
         }
       } catch { /* continue */ }
     }
-    navigate('/dashboard')
+    navigate(CATEGORY_PROFILE[category] || '/worker/c1')
   }
 
   const durationLabel = (val) => DURATION_OPTIONS.find((o) => o.value === val)?.label || val
@@ -304,7 +310,7 @@ export default function WorkerPackages() {
         {/* DEMO ONLY — REMOVE BEFORE LAUNCH */}
         <span
           style={{ display: 'block', textAlign: 'center', marginTop: 12, color: '#AAAAAA', fontSize: 14, cursor: 'pointer' }}
-          onClick={() => navigate('/dashboard')}
+          onClick={() => navigate(CATEGORY_PROFILE[category] || '/worker/c1')}
         >
           Skip (Demo Only)
         </span>
