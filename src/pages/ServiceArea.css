@@ -1,0 +1,388 @@
+.sa {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  flex-direction: column;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 32px 48px 24px;
+}
+
+.sa__top {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.sa__back {
+  padding: 8px 16px;
+  border: 1px solid #222;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: #222;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.sa__back:hover {
+  background: #f7f7f7;
+}
+
+/* ── Body ── */
+
+.sa__body {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sa__card {
+  width: 100%;
+  max-width: 680px;
+}
+
+.sa__title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #222;
+  line-height: 1.2;
+  margin: 0 0 8px;
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+
+.sa__subtitle {
+  font-size: 1rem;
+  color: #717171;
+  margin: 0 0 32px;
+  text-align: center;
+}
+
+/* ── Search bar ── */
+
+.sa__search-wrap {
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.sa__search {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 2px solid #DDDDDD;
+  border-radius: 40px;
+  padding: 14px 20px;
+  background: #fff;
+  transition: border-color 0.15s;
+}
+
+.sa__search:focus-within {
+  border-color: #222;
+}
+
+.sa__search-icon {
+  flex-shrink: 0;
+}
+
+.sa__input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  font-family: inherit;
+  color: #222;
+  background: transparent;
+}
+
+.sa__input::placeholder {
+  color: #B0B0B0;
+}
+
+.sa__clear {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: #EBEBEB;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.sa__clear:hover {
+  background: #DDDDDD;
+}
+
+/* ── Dropdown ── */
+
+.sa__dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid #DDDDDD;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  z-index: 100;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.sa__dd-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 14px 20px;
+  border: none;
+  background: transparent;
+  font-size: 0.9rem;
+  font-family: inherit;
+  color: #222;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.1s;
+}
+
+.sa__dd-item:hover {
+  background: #f7f7f7;
+}
+
+.sa__dd-item--loading {
+  color: #717171;
+  cursor: default;
+  font-size: 0.85rem;
+}
+
+.sa__dd-item--loading:hover {
+  background: transparent;
+}
+
+.sa__dd-pin {
+  flex-shrink: 0;
+}
+
+.sa__dd-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Map ── */
+
+.sa__map-wrap {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #EBEBEB;
+}
+
+.sa__map {
+  width: 100%;
+  height: 380px;
+}
+
+.sa-map-pin {
+  background: none !important;
+  border: none !important;
+}
+
+.sa__drive-pill {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 24px;
+  border-radius: 40px;
+  border: none;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: #222;
+  cursor: pointer;
+  transition: box-shadow 0.15s;
+}
+
+.sa__drive-pill:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.sa__drive-emoji {
+  font-size: 1.1rem;
+}
+
+/* ── Footer / Save ── */
+
+.sa__footer {
+  padding: 24px 0;
+  border-top: 1px solid #EBEBEB;
+  margin-top: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.sa__save {
+  width: 100%;
+  max-width: 680px;
+  padding: 16px;
+  border-radius: 12px;
+  border: none;
+  background: #222;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.sa__save:hover {
+  opacity: 0.88;
+}
+
+.sa__save:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* ── Modal ── */
+
+.sa-modal__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sa-modal {
+  background: #fff;
+  border-radius: 20px;
+  width: 92%;
+  max-width: 420px;
+  padding: 28px 24px 24px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+}
+
+.sa-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.sa-modal__title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #222;
+  margin: 0;
+}
+
+.sa-modal__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  color: #222;
+  transition: background 0.15s;
+}
+
+.sa-modal__close:hover {
+  background: #f0f0f0;
+}
+
+.sa-modal__options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.sa-modal__opt {
+  width: 100%;
+  padding: 14px;
+  border: 2px solid #222;
+  border-radius: 12px;
+  background: #fff;
+  color: #222;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.15s, color 0.15s;
+}
+
+.sa-modal__opt:hover {
+  background: #f7f7f7;
+}
+
+.sa-modal__opt--active {
+  background: #222;
+  color: #fff;
+  border-color: #222;
+}
+
+.sa-modal__opt--active:hover {
+  background: #333;
+}
+
+.sa-modal__done {
+  width: 100%;
+  padding: 16px;
+  border-radius: 12px;
+  border: none;
+  background: #222;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.sa-modal__done:hover {
+  opacity: 0.88;
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 768px) {
+  .sa {
+    padding: 24px 20px;
+  }
+
+  .sa__title {
+    font-size: 1.6rem;
+  }
+
+  .sa__map {
+    height: 300px;
+  }
+
+  .sa-modal {
+    width: 95%;
+    padding: 24px 20px 20px;
+  }
+}

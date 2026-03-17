@@ -254,6 +254,19 @@
     "trainingLabel": "Adicione um grau, formação ou experiência",
     "honoursLabel": "Adicione prémios ou aparições nos media"
   },
+  "serviceArea": {
+    "title": "Defina a sua área de serviço",
+    "subtitle": "Introduza o seu endereço ou ponto de partida e defina o tempo máximo de deslocação.",
+    "placeholder": "Introduza a sua localização inicial",
+    "searching": "A procurar…",
+    "modalTitle": "O seu tempo de deslocação",
+    "opt30": "30 min",
+    "opt60": "1 hora",
+    "opt90": "1,5 horas",
+    "opt120": "2 horas",
+    "done": "Concluído",
+    "save": "Guardar"
+  },
   "serviceLocation": {
     "title": "Onde vai oferecer o seu serviço?",
     "placeholder": "Introduza uma cidade",

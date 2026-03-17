@@ -61,7 +61,7 @@ export default function WorkerAbout() {
         }
       } catch { /* continue even if save fails */ }
     }
-    navigate(`/worker/signup/${category}`)
+    navigate(`/service-area/${category}`)
   }
 
   return (

@@ -27,6 +27,7 @@ export default function Header() {
     location.pathname === '/choose-category' ||
     location.pathname.startsWith('/service-location') ||
     location.pathname.startsWith('/worker-about') ||
+    location.pathname.startsWith('/service-area') ||
     location.pathname === '/dashboard'
 
   return (
