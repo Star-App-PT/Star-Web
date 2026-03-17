@@ -1,5 +1,5 @@
 .wd {
-  padding: 24px 0 80px;
+  padding: 24px 0 24px;
   background: var(--star-white);
 }
 
@@ -128,6 +128,38 @@
   justify-content: center;
   gap: 12px;
   padding: 12px 24px 0;
+}
+
+/* Booking bar — bottom of worker card only (desktop) */
+.wd__card-booking {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px 20px;
+  margin-top: 8px;
+  border-top: 1px solid var(--star-gray-200);
+}
+
+.wd__card-booking-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.wd__card-booking-price {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--star-gray-900);
+}
+
+.wd__card-booking-cancel {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #2E7D32;
+}
+
+.wd__card-booking-btn {
+  /* inherits .btn-primary */
 }
 
 .wd__card-share,
@@ -753,22 +785,13 @@
   line-height: 1.6;
 }
 
-/* ============ FIXED BOOKING BAR ============ */
+/* ============ FIXED BOOKING BAR (mobile only) ============ */
 
 .wd__booking-bar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 200;
-  background: var(--star-white);
-  border-top: 1px solid var(--star-gray-200);
-  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.08);
+  display: none;
 }
 
 .wd__booking-bar-inner {
-  max-width: 1120px;
-  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1091,8 +1114,24 @@
     display: none;
   }
 
-  .wd__booking-bar-inner {
+  .wd__booking-bar--mobile {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    background: var(--star-white);
+    border-top: 1px solid var(--star-gray-200);
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .wd__booking-bar--mobile .wd__booking-bar-inner {
     padding: 12px 20px;
+  }
+
+  .wd {
+    padding-bottom: 80px;
   }
 
   .wd__reviews-grid {
