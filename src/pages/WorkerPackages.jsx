@@ -115,7 +115,7 @@ export default function WorkerPackages() {
               priceType: p.priceType,
               description: p.description.trim(),
             }))
-          await supabase.auth.updateUser({ data: { worker_packages: pkgData } })
+          await supabase.auth.updateUser({ data: { worker_packages: pkgData, is_worker: true } })
         }
       } catch { /* continue */ }
     }

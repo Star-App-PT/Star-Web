@@ -1,11 +1,13 @@
 import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { supabase } from '../supabase'
 import './HamburgerMenu.css'
 
 export default function HamburgerMenu() {
   const { t } = useTranslation()
   const [open, setOpen] = useState(false)
+  const [isStarWorker, setIsStarWorker] = useState(false)
   const ref = useRef(null)
 
   useEffect(() => {
@@ -14,6 +16,17 @@ export default function HamburgerMenu() {
     }
     document.addEventListener('mousedown', handler)
     return () => document.removeEventListener('mousedown', handler)
+  }, [])
+
+  useEffect(() => {
+    if (!supabase) return
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setIsStarWorker(!!session?.user?.user_metadata?.is_worker)
+    })
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsStarWorker(!!session?.user?.user_metadata?.is_worker)
+    })
+    return () => subscription?.unsubscribe()
   }, [])
 
   return (
@@ -62,9 +75,11 @@ export default function HamburgerMenu() {
           <button type="button" className="hmenu__item" onClick={() => setOpen(false)}>
             {t('header.referAService')}
           </button>
-          <button type="button" className="hmenu__item" onClick={() => setOpen(false)}>
-            {t('header.joinATeam')}
-          </button>
+          {isStarWorker && (
+            <button type="button" className="hmenu__item" onClick={() => setOpen(false)}>
+              {t('header.joinATeam')}
+            </button>
+          )}
 
           <div className="hmenu__sep" />
 
