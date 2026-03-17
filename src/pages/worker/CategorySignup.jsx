@@ -141,7 +141,7 @@ export default function CategorySignup() {
             <input ref={fileRef} type="file" accept="image/*" className="cs__file" onChange={handleFile} />
             <div
               ref={frameRef}
-              className={`cs__frame${confirmed ? ' cs__frame--confirmed' : ''}`}
+              className={`cs__frame${imgSrc ? ' cs__frame--has-photo' : ''}`}
               onClick={!imgSrc ? openPicker : undefined}
               onPointerDown={imgSrc && !confirmed ? onPointerDown : undefined}
               onWheel={imgSrc && !confirmed ? onWheel : undefined}

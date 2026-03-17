@@ -1,7 +1,11 @@
+// Map uses Leaflet + CartoDB tiles (free, no API key required).
+// To switch to Google Maps, set VITE_GOOGLE_MAPS_API_KEY in .env
+// and replace the Leaflet code below with @react-google-maps/api.
 import { useState, useRef, useCallback, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { supabase } from '../supabase'
+import 'leaflet/dist/leaflet.css'
 import './ServiceArea.css'
 
 const DRIVE_OPTIONS = [
@@ -95,7 +99,6 @@ export default function ServiceArea() {
 
     async function initMap() {
       const L = await import('leaflet')
-      await import('leaflet/dist/leaflet.css')
       if (cancelled) return
 
       if (mapInstance.current) {
@@ -112,6 +115,9 @@ export default function ServiceArea() {
           maxZoom: 19,
         }).addTo(map)
         mapInstance.current = map
+
+        // Leaflet needs a size recalc when its container is conditionally rendered
+        setTimeout(() => { map.invalidateSize() }, 100)
       }
 
       if (markerRef.current) markerRef.current.remove()
@@ -133,6 +139,8 @@ export default function ServiceArea() {
       }).addTo(mapInstance.current)
 
       mapInstance.current.fitBounds(circleRef.current.getBounds(), { padding: [20, 20] })
+      // Ensure tiles load fully after bounds change
+      setTimeout(() => { mapInstance.current?.invalidateSize() }, 200)
     }
 
     initMap()

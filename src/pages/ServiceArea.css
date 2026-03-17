@@ -15,7 +15,7 @@
 .sa__back {
   padding: 8px 16px;
   border: 1px solid #222;
-  border-radius: 8px;
+  border-radius: 50px;
   background: #fff;
   font-size: 0.85rem;
   font-weight: 600;
@@ -232,16 +232,14 @@
   border-top: 1px solid #EBEBEB;
   margin-top: auto;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
 }
 
 .sa__save {
-  width: 100%;
-  max-width: 680px;
-  padding: 16px;
-  border-radius: 12px;
+  padding: 16px 28px;
+  border-radius: 50px;
   border: none;
-  background: #222;
+  background: #1B4FBA;
   color: #fff;
   font-size: 1rem;
   font-weight: 600;
@@ -255,7 +253,8 @@
 }
 
 .sa__save:disabled {
-  opacity: 0.35;
+  background: #1B4FBA;
+  opacity: 0.4;
   cursor: not-allowed;
 }
 
@@ -322,8 +321,8 @@
 .sa-modal__opt {
   width: 100%;
   padding: 14px;
-  border: 2px solid #222;
-  border-radius: 12px;
+  border: 2px solid #DDDDDD;
+  border-radius: 50px;
   background: #fff;
   color: #222;
   font-size: 1rem;
@@ -331,7 +330,7 @@
   font-family: inherit;
   cursor: pointer;
   text-align: center;
-  transition: background 0.15s, color 0.15s;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
 
 .sa-modal__opt:hover {
@@ -339,21 +338,21 @@
 }
 
 .sa-modal__opt--active {
-  background: #222;
+  background: #1B4FBA;
   color: #fff;
-  border-color: #222;
+  border-color: #1B4FBA;
 }
 
 .sa-modal__opt--active:hover {
-  background: #333;
+  background: #153f96;
 }
 
 .sa-modal__done {
   width: 100%;
   padding: 16px;
-  border-radius: 12px;
+  border-radius: 50px;
   border: none;
-  background: #222;
+  background: #1B4FBA;
   color: #fff;
   font-size: 1rem;
   font-weight: 600;

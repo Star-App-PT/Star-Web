@@ -15,7 +15,7 @@
 .wa__back {
   padding: 8px 16px;
   border: 1px solid #222;
-  border-radius: 8px;
+  border-radius: 50px;
   background: #fff;
   font-size: 0.85rem;
   font-weight: 600;
@@ -166,8 +166,8 @@
 }
 
 .wa__next {
-  padding: 14px 32px;
-  border-radius: 8px;
+  padding: 16px 28px;
+  border-radius: 50px;
   border: none;
   background: #1B4FBA;
   color: #fff;
