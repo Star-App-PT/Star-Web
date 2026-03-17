@@ -39,6 +39,11 @@ export default function WorkerDetail() {
   const [goodToKnow, setGoodToKnow] = useState('')
   const [emergency24h, setEmergency24h] = useState(false)
   const [showBookingModal, setShowBookingModal] = useState(false)
+  const [weekStart, setWeekStart] = useState(() => {
+    const d = new Date(); d.setHours(0, 0, 0, 0)
+    d.setDate(d.getDate() - d.getDay())
+    return d
+  })
   const [selectedDate, setSelectedDate] = useState(null)
   const [selectedPkgIdx, setSelectedPkgIdx] = useState(null)
   const [selectedTime, setSelectedTime] = useState(null)
@@ -49,6 +54,9 @@ export default function WorkerDetail() {
       const todayDate = new Date()
       todayDate.setHours(0, 0, 0, 0)
       setSelectedDate(todayDate)
+      const startOfWeek = new Date(todayDate)
+      startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay())
+      setWeekStart(startOfWeek)
       setSelectedTime(null)
       setSelectedPkgIdx(null)
     }
@@ -124,6 +132,20 @@ export default function WorkerDetail() {
   const lowestPriceType = lowestPkg?.priceType || 'visit'
 
   const TIME_SLOTS = ['09:00', '10:00', '11:00', '12:00', '14:00', '15:00', '16:00', '17:00']
+  const DAY_LABELS = ['S', 'M', 'T', 'W', 'T', 'F', 'S']
+  const today = (() => { const d = new Date(); d.setHours(0, 0, 0, 0); return d })()
+
+  const weekDays = Array.from({ length: 7 }, (_, i) => {
+    const d = new Date(weekStart)
+    d.setDate(d.getDate() + i)
+    return d
+  })
+  const weekMonthLabel = weekDays[0].toLocaleString('en', { month: 'long', year: 'numeric' })
+  const prevWeek = () => setWeekStart((prev) => { const d = new Date(prev); d.setDate(d.getDate() - 7); return d })
+  const nextWeek = () => setWeekStart((prev) => { const d = new Date(prev); d.setDate(d.getDate() + 7); return d })
+  const isDatePast = (d) => d < today
+  const isToday = (d) => d.getTime() === today.getTime()
+  const isSameDay = (a, b) => a && b && a.getTime() === b.getTime()
 
   const firstName = worker.name.split(' ')[0]
 
@@ -433,6 +455,39 @@ export default function WorkerDetail() {
             </button>
 
             <h2 className="wd__bm-title">Schedule your visit</h2>
+
+            <div className="wd__bm-cal">
+              <div className="wd__bm-cal-header">
+                <span className="wd__bm-cal-month">{weekMonthLabel}</span>
+                <div className="wd__bm-cal-header-right">
+                  <button type="button" className="wd__bm-cal-nav" onClick={prevWeek} disabled={weekStart <= today}>‹</button>
+                  <button type="button" className="wd__bm-cal-nav" onClick={nextWeek}>›</button>
+                </div>
+              </div>
+              <div className="wd__bm-cal-labels">
+                {DAY_LABELS.map((d, i) => (
+                  <span key={i} className="wd__bm-cal-label">{d}</span>
+                ))}
+              </div>
+              <div className="wd__bm-cal-grid">
+                {weekDays.map((d) => {
+                  const past = isDatePast(d)
+                  const sel = isSameDay(selectedDate, d)
+                  const tod = isToday(d)
+                  return (
+                    <button
+                      key={d.toISOString()}
+                      type="button"
+                      className={`wd__bm-cal-day${past ? ' wd__bm-cal-day--past' : ''}${sel ? ' wd__bm-cal-day--sel' : ''}${tod && !sel ? ' wd__bm-cal-day--today' : ''}`}
+                      disabled={past}
+                      onClick={() => { setSelectedDate(new Date(d)); setSelectedTime(null); setSelectedPkgIdx(null) }}
+                    >
+                      {d.getDate()}
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
 
             {hasPackages && (
               <div className="wd__bm-packages">
