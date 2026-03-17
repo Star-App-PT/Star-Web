@@ -141,7 +141,7 @@ export default function CategorySignup() {
             <input ref={fileRef} type="file" accept="image/*" className="cs__file" onChange={handleFile} />
             <div
               ref={frameRef}
-              className={`cs__frame${imgSrc ? ' cs__frame--has-photo' : ''}`}
+              className={`cs__frame${imgSrc ? '' : ' cs__frame--empty'}`}
               onClick={!imgSrc ? openPicker : undefined}
               onPointerDown={imgSrc && !confirmed ? onPointerDown : undefined}
               onWheel={imgSrc && !confirmed ? onWheel : undefined}
@@ -257,7 +257,7 @@ export default function CategorySignup() {
 
       <div className="cs__footer">
         <button type="button" className="cs__next btn-primary" disabled={!confirmed} onClick={handleNext}>
-          {t('serviceLocation.next')}
+          {t('serviceArea.next')}
         </button>
       </div>
     </div>
