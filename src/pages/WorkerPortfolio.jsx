@@ -78,34 +78,40 @@ export default function WorkerPortfolio() {
           />
 
           <div className="wp__grid">
-            {photos.map((photo, i) => (
-              <div key={photo.id} className={`wp__cell${i === 0 ? ' wp__cell--featured' : ''}`}>
-                <img src={photo.url} alt="" className="wp__cell-img" />
+            {Array.from({ length: MAX_PHOTOS }).map((_, i) => {
+              const photo = photos[i]
+              const isFeatured = i === 0
+              if (photo) {
+                return (
+                  <div key={photo.id} className={`wp__cell${isFeatured ? ' wp__cell--featured' : ''}`}>
+                    <img src={photo.url} alt="" className="wp__cell-img" />
+                    <button
+                      type="button"
+                      className="wp__cell-remove"
+                      onClick={() => removePhoto(photo.id)}
+                      aria-label="Remove"
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                      </svg>
+                    </button>
+                  </div>
+                )
+              }
+              return (
                 <button
+                  key={`empty-${i}`}
                   type="button"
-                  className="wp__cell-remove"
-                  onClick={() => removePhoto(photo.id)}
-                  aria-label="Remove"
+                  className={`wp__cell wp__cell--empty${isFeatured ? ' wp__cell--featured' : ''}`}
+                  onClick={() => fileRef.current?.click()}
                 >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                  <svg width={isFeatured ? 32 : 22} height={isFeatured ? 32 : 22} viewBox="0 0 24 24" fill="none" stroke="#C0C0C0" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
                   </svg>
+                  {isFeatured && <span className="wp__cell-add-label">{t('portfolio.addPhoto')}</span>}
                 </button>
-              </div>
-            ))}
-
-            {photos.length < MAX_PHOTOS && (
-              <button
-                type="button"
-                className={`wp__cell wp__cell--add${photos.length === 0 ? ' wp__cell--featured' : ''}`}
-                onClick={() => fileRef.current?.click()}
-              >
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#B0B0B0" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-                </svg>
-                <span className="wp__cell-add-label">{t('portfolio.addPhoto')}</span>
-              </button>
-            )}
+              )
+            })}
           </div>
 
           <p className="wp__counter">{photos.length} / {MAX_PHOTOS} {t('portfolio.photos')}</p>
