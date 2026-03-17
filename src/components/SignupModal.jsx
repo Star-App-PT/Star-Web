@@ -113,7 +113,7 @@ export default function SignupModal({ open, onClose, category }) {
 
           <button
             type="submit"
-            className="smodal__continue"
+            className="smodal__continue btn-primary"
             disabled={!canSubmit}
           >
             {t('signupModal.agreeAndContinue')}

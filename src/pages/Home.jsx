@@ -465,7 +465,7 @@ export default function Home() {
 
         <div className="home__cta-block">
           <p className="home__cta-text">{t('home.ctaText')}</p>
-          <Link to="/worker/signup" className="home__cta">
+          <Link to="/worker/signup" className="home__cta btn-primary">
             {t('home.becomeAStar')}
           </Link>
         </div>

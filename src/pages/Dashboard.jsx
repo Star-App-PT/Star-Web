@@ -81,10 +81,10 @@ export default function Dashboard() {
         </p>
 
         <div className="dashboard__actions">
-          <button type="button" className="dashboard__btn dashboard__btn--home" onClick={() => navigate('/')}>
+          <button type="button" className="dashboard__btn dashboard__btn--home btn-primary" onClick={() => navigate('/')}>
             {t('common.backToHome')}
           </button>
-          <button type="button" className="dashboard__btn dashboard__btn--signout" onClick={handleSignOut}>
+          <button type="button" className="dashboard__btn dashboard__btn--signout btn-back" onClick={handleSignOut}>
             {t('dashboard.signOut')}
           </button>
         </div>

@@ -74,34 +74,15 @@
 }
 
 .dashboard__btn {
-  width: 100%;
-  padding: 12px;
-  border-radius: 50px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  font-family: inherit;
-  cursor: pointer;
-  transition: opacity 0.15s;
+  /* visual styles via .btn-primary or .btn-back */
 }
 
 .dashboard__btn--home {
-  background: #1B4FBA;
-  color: #FFFFFF;
-  border: none;
-}
-
-.dashboard__btn--home:hover {
-  opacity: 0.92;
+  /* visual styles via .btn-primary */
 }
 
 .dashboard__btn--signout {
-  background: #FFFFFF;
-  color: #222;
-  border: 1px solid #DDDDDD;
-}
-
-.dashboard__btn--signout:hover {
-  background: #F7F7F7;
+  /* visual styles via .btn-back */
 }
 
 @media (max-width: 600px) {

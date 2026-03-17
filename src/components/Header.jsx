@@ -57,7 +57,7 @@ export default function Header() {
         )}
         <nav className="star-header__nav">
           {!isMinimalHeader && (
-            <Link to="/worker/signup" className="star-header__cta">
+            <Link to="/worker/signup" className="star-header__cta btn-primary">
               {t('header.becomeAStar')}
             </Link>
           )}

@@ -144,7 +144,7 @@ export default function ServiceLocation() {
   return (
     <div className="svc-loc">
       <div className="svc-loc__top">
-        <button type="button" className="svc-loc__back" onClick={() => navigate(-1)}>
+        <button type="button" className="svc-loc__back btn-back" onClick={() => navigate(-1)}>
           {t('common.back')}
         </button>
       </div>
@@ -228,7 +228,7 @@ export default function ServiceLocation() {
       <div className="svc-loc__footer">
         <button
           type="button"
-          className="svc-loc__next"
+          className="svc-loc__next btn-primary"
           disabled={!city.trim()}
           onClick={handleNext}
         >

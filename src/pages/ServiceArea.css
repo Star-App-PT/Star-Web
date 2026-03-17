@@ -13,20 +13,7 @@
 }
 
 .sa__back {
-  padding: 8px 16px;
-  border: 1px solid #222;
-  border-radius: 50px;
-  background: #fff;
-  font-size: 0.85rem;
-  font-weight: 600;
-  font-family: inherit;
-  color: #222;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-
-.sa__back:hover {
-  background: #f7f7f7;
+  /* visual styles via .btn-back */
 }
 
 /* ── Body ── */
@@ -348,21 +335,8 @@
 }
 
 .sa-modal__done {
+  /* visual styles via .btn-primary; full-width inside modal */
   width: 100%;
-  padding: 16px;
-  border-radius: 50px;
-  border: none;
-  background: #1B4FBA;
-  color: #fff;
-  font-size: 1rem;
-  font-weight: 600;
-  font-family: inherit;
-  cursor: pointer;
-  transition: opacity 0.15s;
-}
-
-.sa-modal__done:hover {
-  opacity: 0.88;
 }
 
 /* ── Responsive ── */

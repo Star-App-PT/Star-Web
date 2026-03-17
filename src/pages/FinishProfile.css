@@ -231,27 +231,7 @@
 
 /* Submit */
 .fp-card__submit {
-  width: 100%;
-  padding: 14px;
-  border-radius: 50px;
-  border: none;
-  background: #1B4FBA;
-  color: #FFFFFF;
-  font-size: 1rem;
-  font-weight: 600;
-  font-family: inherit;
-  cursor: pointer;
-  transition: opacity 0.15s;
-}
-
-.fp-card__submit:hover {
-  opacity: 0.92;
-}
-
-.fp-card__submit:disabled {
-  background: #1B4FBA;
-  opacity: 0.45;
-  cursor: not-allowed;
+  /* visual styles via .btn-primary */
 }
 
 @media (max-width: 600px) {

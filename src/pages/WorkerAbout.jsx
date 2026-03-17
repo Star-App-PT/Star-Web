@@ -69,7 +69,7 @@ export default function WorkerAbout() {
       <div className="wa__top">
         <button
           type="button"
-          className="wa__back"
+          className="wa__back btn-back"
           onClick={() => navigate(`/service-location/${category}`)}
         >
           {t('common.back')}
@@ -165,7 +165,7 @@ export default function WorkerAbout() {
       <div className="wa__footer">
         <button
           type="button"
-          className="wa__next"
+          className="wa__next btn-primary"
           disabled={!allFilled}
           onClick={handleNext}
         >

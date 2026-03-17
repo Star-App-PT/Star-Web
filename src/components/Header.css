@@ -72,17 +72,7 @@
 
 
 .star-header__cta {
-  padding: 10px 20px;
-  border-radius: var(--radius-pill);
-  background: var(--star-blue);
-  color: var(--star-white);
-  font-weight: 600;
-  font-size: 0.9375rem;
-  text-decoration: none;
-}
-
-.star-header__cta:hover {
-  opacity: 0.92;
+  /* visual styles via .btn-primary */
 }
 
 .container {

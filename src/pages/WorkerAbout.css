@@ -13,20 +13,7 @@
 }
 
 .wa__back {
-  padding: 8px 16px;
-  border: 1px solid #222;
-  border-radius: 50px;
-  background: #fff;
-  font-size: 0.85rem;
-  font-weight: 600;
-  font-family: inherit;
-  color: #222;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-
-.wa__back:hover {
-  background: #f7f7f7;
+  /* visual styles via .btn-back */
 }
 
 .wa__body {
@@ -121,10 +108,13 @@
 
 .wa__textarea-wrap {
   position: relative;
+  overflow: hidden;
+  border-radius: 12px;
 }
 
 .wa__textarea {
   width: 100%;
+  height: 90px;
   border: 1px solid #B0B0B0;
   border-radius: 12px;
   padding: 14px 16px;
@@ -166,26 +156,7 @@
 }
 
 .wa__next {
-  padding: 16px 28px;
-  border-radius: 50px;
-  border: none;
-  background: #1B4FBA;
-  color: #fff;
-  font-size: 1rem;
-  font-weight: 600;
-  font-family: inherit;
-  cursor: pointer;
-  transition: opacity 0.15s;
-}
-
-.wa__next:hover {
-  opacity: 0.92;
-}
-
-.wa__next:disabled {
-  background: #1B4FBA;
-  opacity: 0.4;
-  cursor: not-allowed;
+  /* visual styles via .btn-primary */
 }
 
 /* ── Responsive ── */

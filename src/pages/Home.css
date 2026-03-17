@@ -410,19 +410,7 @@
 }
 
 .home__cta {
-  display: inline-block;
-  padding: 16px 28px;
-  border-radius: 50px;
-  background: #1B4FBA;
-  color: #FFFFFF;
-  font-weight: 600;
-  font-size: 1rem;
-  text-decoration: none;
-  transition: opacity 0.2s;
-}
-
-.home__cta:hover {
-  opacity: 0.92;
+  /* visual styles via .btn-primary */
 }
 
 /* Coming soon banner */

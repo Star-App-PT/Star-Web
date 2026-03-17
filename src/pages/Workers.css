@@ -10,13 +10,7 @@
 }
 
 .workers-page__back {
-  border: 1px solid var(--star-gray-200);
-  background: var(--star-white);
-  color: var(--star-gray-800);
-  border-radius: 999px;
-  padding: 10px 16px;
-  font: inherit;
-  cursor: pointer;
+  /* visual styles via .btn-back */
   margin-bottom: 20px;
 }
 

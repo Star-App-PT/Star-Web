@@ -261,7 +261,7 @@ export default function FinishProfile() {
 
             <button
               type="submit"
-              className="fp-card__submit"
+              className="fp-card__submit btn-primary"
               disabled={!canSubmit || submitting}
             >
               {submitting ? t('common.submitting') : t('finishProfile.agreeAndContinue')}

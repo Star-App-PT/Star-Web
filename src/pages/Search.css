@@ -221,22 +221,7 @@
 }
 
 .search-page__empty-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 16px 28px;
-  border-radius: 50px;
-  background: #1B4FBA;
-  color: #fff;
-  font-weight: 600;
-  font-size: 0.95rem;
-  border: none;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-
-.search-page__empty-btn:hover {
-  background: #163f96;
+  /* visual styles via .btn-primary */
 }
 
 /* Responsive */

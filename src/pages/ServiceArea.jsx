@@ -189,7 +189,7 @@ export default function ServiceArea() {
   return (
     <div className="sa">
       <div className="sa__top">
-        <button type="button" className="sa__back" onClick={() => navigate(`/worker-about/${category}`)}>
+        <button type="button" className="sa__back btn-back" onClick={() => navigate(`/worker-about/${category}`)}>
           {t('common.back')}
         </button>
       </div>
@@ -288,7 +288,7 @@ export default function ServiceArea() {
               ))}
             </div>
 
-            <button type="button" className="sa-modal__done" onClick={confirmDrive}>
+            <button type="button" className="sa-modal__done btn-primary" onClick={confirmDrive}>
               {t('serviceArea.done')}
             </button>
           </div>

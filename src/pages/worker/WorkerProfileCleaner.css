@@ -136,30 +136,9 @@
 }
 
 .worker-profile-cleaner__back {
-  padding: 14px 32px;
-  border-radius: 999px;
-  border: 2px solid var(--star-gray-200);
-  background: var(--star-white);
-  color: var(--star-gray-900);
-  font-size: 1rem;
-  font-weight: 600;
-  font-family: inherit;
-  cursor: pointer;
-  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.14);
+  /* visual styles via .btn-back */
 }
 
 .worker-profile-cleaner__continue {
-  padding: 14px 28px;
-  border-radius: var(--radius-pill);
-  border: none;
-  background: var(--star-blue);
-  color: var(--star-white);
-  font-size: 1rem;
-  font-weight: 600;
-  font-family: inherit;
-  cursor: pointer;
-}
-
-.worker-profile-cleaner__continue:hover {
-  opacity: 0.92;
+  /* visual styles via .btn-primary */
 }

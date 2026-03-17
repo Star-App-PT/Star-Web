@@ -18,14 +18,14 @@ export default function WorkerProfileIntro() {
         <div className="worker-profile-intro__footer">
           <button
             type="button"
-            className="worker-profile-intro__back"
+            className="worker-profile-intro__back btn-back"
             onClick={() => navigate('/worker/signup')}
           >
             {t('common.back')}
           </button>
           <button
             type="button"
-            className="worker-profile-intro__btn"
+            className="worker-profile-intro__btn btn-primary"
             onClick={() => navigate('/worker/profile/skill')}
           >
             {t('common.continue')}

@@ -164,7 +164,7 @@ export default function SignupForm({ category, onBack }) {
 
               <p className="sf-card__hint">{t('signupModal.phoneHint')}</p>
 
-              <button type="submit" className="sf-card__submit" disabled={!phone.trim()}>
+              <button type="submit" className="sf-card__submit btn-primary" disabled={!phone.trim()}>
                 {t('signupModal.continueBtn')}
               </button>
             </form>
@@ -227,7 +227,7 @@ export default function SignupForm({ category, onBack }) {
                   autoFocus
                 />
               </div>
-              <button type="submit" className="sf-card__submit sf-card__submit--mt" disabled={!email.trim()}>
+              <button type="submit" className="sf-card__submit sf-card__submit--mt btn-primary" disabled={!email.trim()}>
                 {t('signupModal.continueBtn')}
               </button>
             </form>
@@ -260,7 +260,7 @@ export default function SignupForm({ category, onBack }) {
               <p className="sf-card__hint">{t('signupModal.passwordHint')}</p>
               <button
                 type="submit"
-                className="sf-card__submit sf-card__submit--mt"
+                className="sf-card__submit sf-card__submit--mt btn-primary"
                 disabled={!password.trim() || loading}
               >
                 {loading ? t('common.submitting') : t('signupModal.signUpBtn')}
@@ -282,7 +282,7 @@ export default function SignupForm({ category, onBack }) {
             <p className="sf-card__confirm-text">{t('signupModal.checkEmailDesc', { email })}</p>
             <button
               type="button"
-              className="sf-card__submit sf-card__submit--mt"
+              className="sf-card__submit sf-card__submit--mt btn-primary"
               onClick={() => navigate('/')}
             >
               {t('common.backToHome')}

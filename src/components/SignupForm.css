@@ -196,30 +196,11 @@
 
 /* Continue / submit button */
 .sf-card__submit {
-  width: 100%;
-  padding: 14px;
-  border-radius: 50px;
-  border: none;
-  background: #1B4FBA;
-  color: #FFFFFF;
-  font-size: 1rem;
-  font-weight: 600;
-  font-family: inherit;
-  cursor: pointer;
-  transition: opacity 0.15s;
+  /* visual styles via .btn-primary */
 }
 
 .sf-card__submit--mt {
   margin-top: 20px;
-}
-
-.sf-card__submit:hover {
-  opacity: 0.92;
-}
-
-.sf-card__submit:disabled {
-  background: #1B4FBA;
-  cursor: not-allowed;
 }
 
 /* Divider */

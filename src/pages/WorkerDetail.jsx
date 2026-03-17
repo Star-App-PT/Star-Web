@@ -66,7 +66,7 @@ export default function WorkerDetail() {
     return (
       <div className="wd"><div className="wd__container">
         <p>{t('workerDetail.workerNotFound')}</p>
-        <button type="button" onClick={() => navigate(-1)} className="wd__back-btn">{t('common.goBack')}</button>
+        <button type="button" onClick={() => navigate(-1)} className="wd__back-btn btn-back">{t('common.goBack')}</button>
       </div></div>
     )
   }
@@ -101,11 +101,11 @@ export default function WorkerDetail() {
           <span className="wd__mobile-bar-name">{worker.name}</span>
           <span className="wd__mobile-bar-rate">{t('common.fromPerHour', { price: worker.hourlyRate })}</span>
         </div>
-        <button type="button" className="wd__mobile-bar-btn">{t('workerDetail.message')}</button>
+        <button type="button" className="wd__mobile-bar-btn btn-primary">{t('workerDetail.message')}</button>
       </div>
 
       <div className="wd__container">
-        <button type="button" className="wd__back-btn" onClick={() => navigate(-1)}>
+        <button type="button" className="wd__back-btn btn-back" onClick={() => navigate(-1)}>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
           {t('common.back')}
         </button>
@@ -137,7 +137,7 @@ export default function WorkerDetail() {
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
                 </button>
               </div>
-              <button type="button" className="wd__card-message-btn">{t('workerDetail.messageWorker', { name: worker.name })}</button>
+              <button type="button" className="wd__card-message-btn btn-primary">{t('workerDetail.messageWorker', { name: worker.name })}</button>
             </div>
           </aside>
 
@@ -197,7 +197,7 @@ export default function WorkerDetail() {
                     ))}
                   </div>
                   {!showAllReviews && reviews.length > 4 && (
-                    <button type="button" className="wd__show-all-btn" onClick={() => setShowAllReviews(true)}>
+                    <button type="button" className="wd__show-all-btn btn-back" onClick={() => setShowAllReviews(true)}>
                       {t('workerDetail.showAllReviews', { count: reviews.length })}
                     </button>
                   )}

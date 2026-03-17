@@ -78,7 +78,7 @@ export default function Search() {
             </div>
             <h2 className="search-page__empty-title">{t('search.noWorkersFound')}</h2>
             <p className="search-page__empty-desc">{t('search.noWorkersDesc')}</p>
-            <button type="button" className="search-page__empty-btn" onClick={() => navigate('/')}>
+            <button type="button" className="search-page__empty-btn btn-primary" onClick={() => navigate('/')}>
               {t('common.backToHome')}
             </button>
           </div>

@@ -264,14 +264,14 @@ export default function WorkerProfileCleaner() {
       <div className="worker-profile-cleaner__footer">
         <button
           type="button"
-          className="worker-profile-cleaner__back"
+          className="worker-profile-cleaner__back btn-back"
           onClick={() => navigate('/worker/profile/skill')}
         >
           {t('common.back')}
         </button>
         <button
           type="button"
-          className="worker-profile-cleaner__continue"
+          className="worker-profile-cleaner__continue btn-primary"
           onClick={handleContinue}
         >
           {t('common.continue')}

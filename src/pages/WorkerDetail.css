@@ -10,23 +10,9 @@
 }
 
 .wd__back-btn {
-  display: inline-flex;
-  align-items: center;
+  /* visual styles via .btn-back */
   gap: 6px;
-  border: 1px solid var(--star-gray-200);
-  background: var(--star-white);
-  color: var(--star-gray-800);
-  border-radius: 999px;
-  padding: 8px 16px;
-  font: inherit;
-  font-size: 0.9rem;
-  cursor: pointer;
   margin-bottom: 20px;
-  transition: background 0.15s;
-}
-
-.wd__back-btn:hover {
-  background: var(--star-gray-50);
 }
 
 /* ============ TWO-COLUMN LAYOUT ============ */
@@ -165,21 +151,8 @@
 }
 
 .wd__card-message-btn {
-  display: inline-block;
+  /* visual styles via .btn-primary */
   margin: 16px 24px 0;
-  padding: 16px 28px;
-  border: none;
-  border-radius: 50px;
-  background: #1B4FBA;
-  color: #FFFFFF;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-
-.wd__card-message-btn:hover {
-  opacity: 0.9;
 }
 
 /* ============ RIGHT — Scrollable sections ============ */
@@ -395,22 +368,8 @@
 }
 
 .wd__show-all-btn {
-  display: inline-block;
+  /* visual styles via .btn-back */
   margin-top: 24px;
-  padding: 16px 28px;
-  border: 2px solid #1B4FBA;
-  border-radius: 50px;
-  background: var(--star-white);
-  color: #1B4FBA;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  font-family: inherit;
-  transition: background 0.15s;
-}
-
-.wd__show-all-btn:hover {
-  background: var(--star-gray-50);
 }
 
 /* — Qualifications — */
@@ -671,15 +630,9 @@
   }
 
   .wd__mobile-bar-btn {
+    /* visual styles via .btn-primary; compact variant */
     padding: 8px 16px;
-    border: none;
-    border-radius: 50px;
-    background: #1B4FBA;
-    color: #FFFFFF;
     font-size: 0.85rem;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: inherit;
     flex-shrink: 0;
   }
 

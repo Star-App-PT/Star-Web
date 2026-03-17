@@ -44,14 +44,14 @@ export default function WorkerSkillType() {
         <div className="worker-skill__footer">
           <button
             type="button"
-            className="worker-skill__back"
+            className="worker-skill__back btn-back"
             onClick={() => navigate('/worker/profile/intro')}
           >
             {t('common.back')}
           </button>
           <button
             type="button"
-            className="worker-skill__next"
+            className="worker-skill__next btn-primary"
             onClick={handleNext}
             disabled={!selectedId}
           >

@@ -17,7 +17,7 @@ export default function Workers() {
   return (
     <div className="workers-page">
       <div className="workers-page__container">
-        <button type="button" className="workers-page__back" onClick={() => navigate(-1)}>
+        <button type="button" className="workers-page__back btn-back" onClick={() => navigate(-1)}>
           {t('common.back')}
         </button>
 

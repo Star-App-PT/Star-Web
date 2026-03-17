@@ -106,37 +106,10 @@
 /* ================ BUTTON ================ */
 
 .signup__btn {
-  display: inline-block;
-  padding: 16px 28px;
-  border-radius: 50px;
-  border: none;
-  background: #1B4FBA;
-  color: #FFFFFF;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-  box-shadow: 0 4px 14px rgba(27, 79, 186, 0.3);
-}
-
-.signup__btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(27, 79, 186, 0.4);
-}
-
-.signup__btn:active {
-  transform: translateY(0);
-}
-
-.signup__btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none;
+  /* visual styles via .btn-primary */
 }
 
 .signup__btn--full {
-  padding: 16px 28px;
-  border-radius: 50px;
   margin-top: 8px;
   align-self: center;
 }
