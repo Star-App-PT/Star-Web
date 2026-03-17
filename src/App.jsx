@@ -15,6 +15,8 @@ import FinishProfile from './pages/FinishProfile'
 import ChooseCategory from './pages/ChooseCategory'
 import WorkerAbout from './pages/WorkerAbout'
 import ServiceArea from './pages/ServiceArea'
+import WorkerPortfolio from './pages/WorkerPortfolio'
+import WorkerPackages from './pages/WorkerPackages'
 
 export default function App() {
   return (
@@ -36,6 +38,8 @@ export default function App() {
           <Route path="/choose-category" element={<ChooseCategory />} />
           <Route path="/worker-about/:category" element={<WorkerAbout />} />
           <Route path="/service-area/:category" element={<ServiceArea />} />
+          <Route path="/worker-portfolio/:category" element={<WorkerPortfolio />} />
+          <Route path="/worker-packages/:category" element={<WorkerPackages />} />
           <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </main>

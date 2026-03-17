@@ -1,0 +1,445 @@
+.pk {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  flex-direction: column;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 32px 48px 24px;
+}
+
+.pk__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pk__step {
+  font-size: 0.8rem;
+  color: #717171;
+  font-weight: 500;
+}
+
+.pk__back {
+  /* visual styles via .btn-back */
+}
+
+.pk__file-input {
+  display: none;
+}
+
+/* ── Body ── */
+
+.pk__body {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding-top: 32px;
+}
+
+.pk__content {
+  width: 100%;
+  max-width: 640px;
+}
+
+.pk__title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #222;
+  line-height: 1.2;
+  margin: 0 0 8px;
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+
+.pk__subtitle {
+  font-size: 1rem;
+  color: #717171;
+  margin: 0 0 32px;
+  text-align: center;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ── Package cards ── */
+
+.pk__list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.pk__card {
+  border: 1px solid #E0E0E0;
+  border-radius: 16px;
+  padding: 24px;
+  background: #fff;
+}
+
+.pk__card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.pk__card-num {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #222;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.pk__card-remove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: #717171;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.pk__card-remove:hover {
+  background: #F0F0F0;
+  color: #222;
+}
+
+/* ── Thumbnail ── */
+
+.pk__card-thumb {
+  width: 100%;
+  height: 160px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  cursor: pointer;
+  background: #F7F7F7;
+  border: 2px dashed #DDDDDD;
+  transition: border-color 0.15s;
+}
+
+.pk__card-thumb:hover {
+  border-color: #AAAAAA;
+}
+
+.pk__card-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.pk__card-thumb-empty {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: #B0B0B0;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* ── Fields ── */
+
+.pk__card-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.pk__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pk__field-row {
+  display: flex;
+  gap: 16px;
+}
+
+.pk__field--half {
+  flex: 1;
+}
+
+.pk__field-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #222;
+}
+
+.pk__input {
+  padding: 12px 14px;
+  border: 1.5px solid #DDDDDD;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: #222;
+  outline: none;
+  transition: border-color 0.15s;
+  background: #fff;
+}
+
+.pk__input:focus {
+  border-color: #222;
+}
+
+.pk__input::placeholder {
+  color: #B0B0B0;
+}
+
+.pk__price-wrap {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid #DDDDDD;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color 0.15s;
+}
+
+.pk__price-wrap:focus-within {
+  border-color: #222;
+}
+
+.pk__currency {
+  padding: 12px 0 12px 14px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #717171;
+  background: #fff;
+}
+
+.pk__input--price {
+  border: none;
+  border-radius: 0;
+  padding-left: 6px;
+  flex: 1;
+  -moz-appearance: textfield;
+}
+
+.pk__input--price::-webkit-inner-spin-button,
+.pk__input--price::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.pk__select {
+  padding: 12px 14px;
+  border: 1.5px solid #DDDDDD;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: #222;
+  outline: none;
+  background: #fff;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.pk__select:focus {
+  border-color: #222;
+}
+
+/* ── Pricing type pills ── */
+
+.pk__pills {
+  display: flex;
+  gap: 8px;
+}
+
+.pk__pill {
+  padding: 8px 16px;
+  border: 1.5px solid #DDDDDD;
+  border-radius: 50px;
+  background: #fff;
+  color: #222;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.pk__pill:hover {
+  background: #F7F7F7;
+}
+
+.pk__pill--active {
+  background: #1B4FBA;
+  border-color: #1B4FBA;
+  color: #fff;
+}
+
+.pk__pill--active:hover {
+  background: #153f96;
+}
+
+/* ── Textarea ── */
+
+.pk__textarea {
+  padding: 12px 14px;
+  border: 1.5px solid #DDDDDD;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: #222;
+  resize: none;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.pk__textarea:focus {
+  border-color: #222;
+}
+
+.pk__textarea::placeholder {
+  color: #B0B0B0;
+}
+
+.pk__char-count {
+  font-size: 0.75rem;
+  color: #B0B0B0;
+  text-align: right;
+}
+
+/* ── Mini preview ── */
+
+.pk__preview {
+  display: flex;
+  gap: 16px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #EBEBEB;
+}
+
+.pk__preview-thumb {
+  width: 120px;
+  height: 80px;
+  border-radius: 10px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #F0F0F0;
+}
+
+.pk__preview-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.pk__preview-thumb-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #E8E8E8, #F5F5F5);
+}
+
+.pk__preview-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.pk__preview-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #222;
+  margin: 0 0 4px;
+}
+
+.pk__preview-meta {
+  font-size: 0.85rem;
+  color: #717171;
+  margin: 0 0 6px;
+  font-weight: 500;
+}
+
+.pk__preview-desc {
+  font-size: 0.85rem;
+  color: #555;
+  margin: 0;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── Add another button ── */
+
+.pk__add {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 16px;
+  margin-top: 16px;
+  border: 2px dashed #CCCCCC;
+  border-radius: 12px;
+  background: transparent;
+  color: #717171;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.pk__add:hover {
+  background: #F7F7F7;
+  border-color: #AAAAAA;
+}
+
+/* ── Footer ── */
+
+.pk__footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 24px 0;
+  border-top: 1px solid #EBEBEB;
+  margin-top: auto;
+}
+
+.pk__next {
+  /* visual styles via .btn-primary */
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 768px) {
+  .pk {
+    padding: 24px 20px;
+  }
+
+  .pk__title {
+    font-size: 1.6rem;
+  }
+
+  .pk__card {
+    padding: 18px;
+  }
+
+  .pk__field-row {
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .pk__preview {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .pk__preview-thumb {
+    width: 100%;
+    height: 120px;
+  }
+}

@@ -281,6 +281,32 @@
     "done": "Hecho",
     "next": "Siguiente"
   },
+  "portfolio": {
+    "step": "Paso 10 de 12",
+    "title": "Muestra tu mejor trabajo",
+    "subtitle": "Sube hasta 10 fotos de tu trabajo. A los clientes les encanta ver ejemplos reales antes de reservar.",
+    "addPhoto": "Añadir foto",
+    "photos": "fotos"
+  },
+  "packages": {
+    "step": "Paso 11 de 12",
+    "title": "Crea tus paquetes",
+    "subtitle": "Añade al menos un paquete de servicio que los clientes puedan reservar. Puedes añadir hasta cinco.",
+    "packageNum": "Paquete {{n}}",
+    "addThumb": "Añadir foto de portada",
+    "titleLabel": "Título del paquete",
+    "titlePlaceholder": "ej. Un paseo por Oporto",
+    "priceLabel": "Precio",
+    "durationLabel": "Duración",
+    "pricingType": "Tipo de precio",
+    "perGuest": "por persona",
+    "perGroup": "por grupo",
+    "flatRate": "tarifa fija",
+    "descLabel": "Descripción",
+    "descPlaceholder": "Describe lo que el cliente recibe con este paquete…",
+    "addAnother": "Añadir otro paquete",
+    "finish": "Finalizar"
+  },
   "dashboard": {
     "welcome": "¡Bienvenido, {{name}}!",
     "signedInVia": "Sesión iniciada vía {{provider}}",

@@ -1,0 +1,184 @@
+.wp {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  flex-direction: column;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 32px 48px 24px;
+}
+
+.wp__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wp__step {
+  font-size: 0.8rem;
+  color: #717171;
+  font-weight: 500;
+}
+
+.wp__back {
+  /* visual styles via .btn-back */
+}
+
+.wp__file-input {
+  display: none;
+}
+
+/* ── Body ── */
+
+.wp__body {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding-top: 32px;
+}
+
+.wp__content {
+  width: 100%;
+  max-width: 680px;
+}
+
+.wp__title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #222;
+  line-height: 1.2;
+  margin: 0 0 8px;
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+
+.wp__subtitle {
+  font-size: 1rem;
+  color: #717171;
+  margin: 0 0 32px;
+  text-align: center;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ── Photo grid ── */
+
+.wp__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.wp__cell {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #F7F7F7;
+  border: 1px solid #E8E8E8;
+}
+
+.wp__cell--featured {
+  grid-column: 1 / 3;
+  grid-row: 1 / 3;
+}
+
+.wp__cell-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.wp__cell-remove {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.wp__cell:hover .wp__cell-remove {
+  opacity: 1;
+}
+
+/* ── Add photo slot ── */
+
+.wp__cell--add {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 2px dashed #CCCCCC;
+  background: #FAFAFA;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.wp__cell--add:hover {
+  background: #F0F0F0;
+  border-color: #AAAAAA;
+}
+
+.wp__cell-add-label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #717171;
+}
+
+/* ── Counter ── */
+
+.wp__counter {
+  text-align: center;
+  margin: 16px 0 0;
+  font-size: 0.9rem;
+  color: #717171;
+  font-weight: 500;
+}
+
+/* ── Footer ── */
+
+.wp__footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 24px 0;
+  border-top: 1px solid #EBEBEB;
+  margin-top: auto;
+}
+
+.wp__next {
+  /* visual styles via .btn-primary */
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 768px) {
+  .wp {
+    padding: 24px 20px;
+  }
+
+  .wp__title {
+    font-size: 1.6rem;
+  }
+
+  .wp__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .wp__cell--featured {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+}

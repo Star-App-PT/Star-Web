@@ -110,7 +110,7 @@ export default function CategorySignup() {
         }
       } catch { /* continue */ }
     }
-    navigate('/dashboard')
+    navigate(`/worker-portfolio/${category}`)
   }
 
   if (!category) {

@@ -28,6 +28,8 @@ export default function Header() {
     location.pathname.startsWith('/service-area') ||
     location.pathname.startsWith('/worker-about') ||
     location.pathname.startsWith('/service-area') ||
+    location.pathname.startsWith('/worker-portfolio') ||
+    location.pathname.startsWith('/worker-packages') ||
     location.pathname === '/dashboard'
 
   return (
