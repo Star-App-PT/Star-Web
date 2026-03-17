@@ -39,8 +39,11 @@ export default function WorkerDetail() {
   const [goodToKnow, setGoodToKnow] = useState('')
   const [emergency24h, setEmergency24h] = useState(false)
   const [showBookingModal, setShowBookingModal] = useState(false)
-  const [calMonth, setCalMonth] = useState(() => new Date().getMonth())
-  const [calYear, setCalYear] = useState(() => new Date().getFullYear())
+  const [weekStart, setWeekStart] = useState(() => {
+    const d = new Date(); d.setHours(0, 0, 0, 0)
+    d.setDate(d.getDate() - d.getDay())
+    return d
+  })
   const [selectedDate, setSelectedDate] = useState(null)
   const [selectedPkgIdx, setSelectedPkgIdx] = useState(null)
   const [selectedTime, setSelectedTime] = useState(null)
@@ -115,26 +118,23 @@ export default function WorkerDetail() {
   const lowestPrice = lowestPkg ? lowestPkg.price : 0
   const lowestPriceType = lowestPkg?.priceType || 'visit'
 
-  const today = new Date()
-  const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate()
-  const firstDayOfWeek = new Date(calYear, calMonth, 1).getDay()
-  const monthLabel = new Date(calYear, calMonth).toLocaleString('en', { month: 'long', year: 'numeric' })
+  const today = new Date(); today.setHours(0, 0, 0, 0)
   const TIME_SLOTS = ['09:00', '10:00', '11:00', '12:00', '14:00', '15:00', '16:00', '17:00']
+  const DAY_LABELS = ['S', 'M', 'T', 'W', 'T', 'F', 'S']
 
-  const isDatePast = (day) => {
-    const d = new Date(calYear, calMonth, day)
-    const t2 = new Date(); t2.setHours(0, 0, 0, 0)
-    return d < t2
-  }
-  const isToday = (day) => calYear === today.getFullYear() && calMonth === today.getMonth() && day === today.getDate()
-  const prevMonth = () => {
-    if (calMonth === 0) { setCalMonth(11); setCalYear((y) => y - 1) }
-    else setCalMonth((m) => m - 1)
-  }
-  const nextMonth = () => {
-    if (calMonth === 11) { setCalMonth(0); setCalYear((y) => y + 1) }
-    else setCalMonth((m) => m + 1)
-  }
+  const weekDays = Array.from({ length: 7 }, (_, i) => {
+    const d = new Date(weekStart)
+    d.setDate(d.getDate() + i)
+    return d
+  })
+  const weekMonthLabel = weekDays[0].toLocaleString('en', { month: 'long', year: 'numeric' })
+
+  const prevWeek = () => setWeekStart((prev) => { const d = new Date(prev); d.setDate(d.getDate() - 7); return d })
+  const nextWeek = () => setWeekStart((prev) => { const d = new Date(prev); d.setDate(d.getDate() + 7); return d })
+
+  const isDatePast = (d) => d < today
+  const isToday2 = (d) => d.getTime() === today.getTime()
+  const isSameDay = (a, b) => a && b && a.getTime() === b.getTime()
 
   const firstName = worker.name.split(' ')[0]
 
@@ -436,34 +436,31 @@ export default function WorkerDetail() {
 
             <div className="wd__bm-cal">
               <div className="wd__bm-cal-header">
-                <span className="wd__bm-cal-month">{monthLabel}</span>
+                <span className="wd__bm-cal-month">{weekMonthLabel}</span>
                 <div className="wd__bm-cal-header-right">
-                  <button type="button" className="wd__bm-cal-nav" onClick={prevMonth}>‹</button>
-                  <button type="button" className="wd__bm-cal-nav" onClick={nextMonth}>›</button>
+                  <button type="button" className="wd__bm-cal-nav" onClick={prevWeek} disabled={weekStart <= today}>‹</button>
+                  <button type="button" className="wd__bm-cal-nav" onClick={nextWeek}>›</button>
                 </div>
               </div>
               <div className="wd__bm-cal-labels">
-                {['S','M','T','W','T','F','S'].map((d, i) => (
+                {DAY_LABELS.map((d, i) => (
                   <span key={i} className="wd__bm-cal-label">{d}</span>
                 ))}
               </div>
               <div className="wd__bm-cal-grid">
-                {Array.from({ length: firstDayOfWeek }).map((_, i) => (
-                  <span key={`e-${i}`} />
-                ))}
-                {Array.from({ length: daysInMonth }, (_, i) => i + 1).map((day) => {
-                  const past = isDatePast(day)
-                  const sel = selectedDate?.day === day && selectedDate?.month === calMonth && selectedDate?.year === calYear
-                  const tod = isToday(day)
+                {weekDays.map((d) => {
+                  const past = isDatePast(d)
+                  const sel = isSameDay(selectedDate, d)
+                  const tod = isToday2(d)
                   return (
                     <button
-                      key={day}
+                      key={d.toISOString()}
                       type="button"
                       className={`wd__bm-cal-day${past ? ' wd__bm-cal-day--past' : ''}${sel ? ' wd__bm-cal-day--sel' : ''}${tod && !sel ? ' wd__bm-cal-day--today' : ''}`}
                       disabled={past}
-                      onClick={() => { setSelectedDate({ day, month: calMonth, year: calYear }); setSelectedTime(null); setSelectedPkgIdx(null) }}
+                      onClick={() => { setSelectedDate(new Date(d)); setSelectedTime(null); setSelectedPkgIdx(null) }}
                     >
-                      {day}
+                      {d.getDate()}
                     </button>
                   )
                 })}
