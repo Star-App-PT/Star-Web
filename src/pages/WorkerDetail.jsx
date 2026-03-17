@@ -39,6 +39,11 @@ export default function WorkerDetail() {
   const [goodToKnow, setGoodToKnow] = useState('')
   const [emergency24h, setEmergency24h] = useState(false)
   const [showBookingModal, setShowBookingModal] = useState(false)
+  const [calMonth, setCalMonth] = useState(() => new Date().getMonth())
+  const [calYear, setCalYear] = useState(() => new Date().getFullYear())
+  const [selectedDate, setSelectedDate] = useState(null)
+  const [selectedPkgIdx, setSelectedPkgIdx] = useState(null)
+  const [selectedTime, setSelectedTime] = useState(null)
   const worker = getWorkerById(id)
 
   const saveToSupabase = async (data) => {
@@ -106,6 +111,32 @@ export default function WorkerDetail() {
   }
 
   const hasPackages = worker.packages && worker.packages.length > 0
+  const lowestPkg = hasPackages ? worker.packages.reduce((a, b) => a.price < b.price ? a : b) : null
+  const lowestPrice = lowestPkg ? lowestPkg.price : 0
+  const lowestPriceType = lowestPkg?.priceType || 'visit'
+
+  const today = new Date()
+  const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate()
+  const firstDayOfWeek = new Date(calYear, calMonth, 1).getDay()
+  const monthLabel = new Date(calYear, calMonth).toLocaleString('en', { month: 'long', year: 'numeric' })
+  const TIME_SLOTS = ['09:00', '10:00', '11:00', '12:00', '14:00', '15:00', '16:00', '17:00']
+
+  const isDatePast = (day) => {
+    const d = new Date(calYear, calMonth, day)
+    const t2 = new Date(); t2.setHours(0, 0, 0, 0)
+    return d < t2
+  }
+  const isToday = (day) => calYear === today.getFullYear() && calMonth === today.getMonth() && day === today.getDate()
+  const prevMonth = () => {
+    if (calMonth === 0) { setCalMonth(11); setCalYear((y) => y - 1) }
+    else setCalMonth((m) => m - 1)
+  }
+  const nextMonth = () => {
+    if (calMonth === 11) { setCalMonth(0); setCalYear((y) => y + 1) }
+    else setCalMonth((m) => m + 1)
+  }
+
+  const firstName = worker.name.split(' ')[0]
 
   const reviews = worker.clientReviews || []
   const hasReviews = reviews.length > 0
@@ -162,6 +193,11 @@ export default function WorkerDetail() {
                 <button type="button" className="wd__card-fav" aria-label={t('workerDetail.favourite')}>
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
                 </button>
+              </div>
+              <div className="wd__card-msg">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="#1B4FBA" stroke="none"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                <span>Have a question?</span>
+                <button type="button" className="wd__card-msg-link">Message {firstName}</button>
               </div>
             </div>
           </aside>
@@ -378,24 +414,121 @@ export default function WorkerDetail() {
         </div>
       </div>
 
-      <div style={{position:'fixed',bottom:0,left:0,right:0,backgroundColor:'white',borderTop:'1px solid #EEEEEE',padding:'16px 24px',display:'flex',justifyContent:'space-between',alignItems:'center',zIndex:1000}}>
-        <div>
-          <div style={{fontWeight:600,fontSize:'16px'}}>From €28 / hr</div>
-          <div style={{color:'green',fontSize:'13px'}}>Free cancellation</div>
+      <div className="wd__booking-bar">
+        <div className="wd__booking-bar-inner">
+          <div className="wd__booking-bar-left">
+            <span className="wd__booking-bar-price">
+              {hasPackages ? `From €${lowestPrice} / ${lowestPriceType}` : 'Free visit'}
+            </span>
+            <span className="wd__booking-bar-cancel">Free cancellation</span>
+          </div>
+          <button type="button" className="wd__booking-bar-btn btn-primary" onClick={() => setShowBookingModal(true)}>
+            Show dates
+          </button>
         </div>
-        <button onClick={() => setShowBookingModal(true)} style={{backgroundColor:'#1B4FBA',color:'white',border:'none',borderRadius:'50px',padding:'14px 32px',fontWeight:600,cursor:'pointer',fontSize:'15px'}}>
-          Show dates
-        </button>
       </div>
 
       {showBookingModal && (
-        <div style={{position:'fixed',top:0,left:0,right:0,bottom:0,backgroundColor:'rgba(0,0,0,0.5)',zIndex:2000,display:'flex',alignItems:'center',justifyContent:'center'}} onClick={() => setShowBookingModal(false)}>
-          <div style={{backgroundColor:'white',borderRadius:'16px',padding:'32px',width:'90%',maxWidth:'500px',maxHeight:'80vh',overflowY:'auto'}} onClick={e => e.stopPropagation()}>
-            <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'24px'}}>
-              <h2 style={{margin:0,fontSize:'22px',fontWeight:700}}>Schedule your visit</h2>
-              <button onClick={() => setShowBookingModal(false)} style={{background:'none',border:'none',fontSize:'20px',cursor:'pointer',color:'#666'}}>✕</button>
+        <div className="wd__bm-overlay" onClick={() => setShowBookingModal(false)}>
+          <div className="wd__bm" onClick={(e) => e.stopPropagation()}>
+            <button type="button" className="wd__bm-close" onClick={() => setShowBookingModal(false)} aria-label="Close">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            </button>
+
+            <h2 className="wd__bm-title">Schedule your visit</h2>
+
+            <div className="wd__bm-cal">
+              <div className="wd__bm-cal-header">
+                <span className="wd__bm-cal-month">{monthLabel}</span>
+                <div className="wd__bm-cal-header-right">
+                  <button type="button" className="wd__bm-cal-nav" onClick={prevMonth}>‹</button>
+                  <button type="button" className="wd__bm-cal-nav" onClick={nextMonth}>›</button>
+                </div>
+              </div>
+              <div className="wd__bm-cal-labels">
+                {['S','M','T','W','T','F','S'].map((d, i) => (
+                  <span key={i} className="wd__bm-cal-label">{d}</span>
+                ))}
+              </div>
+              <div className="wd__bm-cal-grid">
+                {Array.from({ length: firstDayOfWeek }).map((_, i) => (
+                  <span key={`e-${i}`} />
+                ))}
+                {Array.from({ length: daysInMonth }, (_, i) => i + 1).map((day) => {
+                  const past = isDatePast(day)
+                  const sel = selectedDate?.day === day && selectedDate?.month === calMonth && selectedDate?.year === calYear
+                  const tod = isToday(day)
+                  return (
+                    <button
+                      key={day}
+                      type="button"
+                      className={`wd__bm-cal-day${past ? ' wd__bm-cal-day--past' : ''}${sel ? ' wd__bm-cal-day--sel' : ''}${tod && !sel ? ' wd__bm-cal-day--today' : ''}`}
+                      disabled={past}
+                      onClick={() => { setSelectedDate({ day, month: calMonth, year: calYear }); setSelectedTime(null); setSelectedPkgIdx(null) }}
+                    >
+                      {day}
+                    </button>
+                  )
+                })}
+              </div>
             </div>
-            <p style={{color:'#666',textAlign:'center',marginTop:'40px'}}>Date picker coming soon</p>
+
+            {selectedDate && hasPackages && (
+              <div className="wd__bm-packages">
+                {worker.packages.map((pkg, i) => (
+                  <div key={i} className="wd__bm-pkg-group">
+                    <div className={`wd__bm-pkg${selectedPkgIdx === i ? ' wd__bm-pkg--sel' : ''}`} onClick={() => { setSelectedPkgIdx(i); setSelectedTime(null) }}>
+                      <div className="wd__bm-pkg-thumb">
+                        <img src={worker.heroImage} alt="" />
+                      </div>
+                      <div className="wd__bm-pkg-info">
+                        <p className="wd__bm-pkg-name">{pkg.name}</p>
+                        <p className="wd__bm-pkg-price">€{pkg.price} <span>/{pkg.priceType || 'visit'}</span> · {pkg.duration}</p>
+                      </div>
+                    </div>
+                    {selectedPkgIdx === i && (
+                      <div className="wd__bm-times">
+                        {TIME_SLOTS.map((slot) => (
+                          <button
+                            key={slot}
+                            type="button"
+                            className={`wd__bm-time${selectedTime === slot ? ' wd__bm-time--sel' : ''}`}
+                            onClick={() => setSelectedTime(slot)}
+                          >
+                            {slot}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {selectedDate && !hasPackages && (
+              <div className="wd__bm-times" style={{ marginTop: 16 }}>
+                {TIME_SLOTS.map((slot) => (
+                  <button
+                    key={slot}
+                    type="button"
+                    className={`wd__bm-time${selectedTime === slot ? ' wd__bm-time--sel' : ''}`}
+                    onClick={() => setSelectedTime(slot)}
+                  >
+                    {slot}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            <button
+              type="button"
+              className="wd__bm-confirm"
+              disabled={!selectedDate || !selectedTime}
+            >
+              Request visit
+            </button>
           </div>
         </div>
       )}
