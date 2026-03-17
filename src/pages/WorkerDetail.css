@@ -152,7 +152,8 @@
 
 .wd__card-message-btn {
   /* visual styles via .btn-primary */
-  margin: 16px 24px 0;
+  margin: 16px auto 0;
+  display: block;
 }
 
 /* ============ RIGHT — Scrollable sections ============ */
