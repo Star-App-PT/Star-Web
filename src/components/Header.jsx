@@ -23,13 +23,12 @@ export default function Header() {
     location.pathname === '/worker/profile/skill' ||
     location.pathname === '/worker/profile/cleaner' ||
     location.pathname === '/worker/profile' ||
-    location.pathname === '/finish-profile' ||
-    location.pathname === '/choose-category' ||
-    location.pathname.startsWith('/service-area') ||
-    location.pathname.startsWith('/worker-about') ||
-    location.pathname.startsWith('/service-area') ||
-    location.pathname.startsWith('/worker-portfolio') ||
-    location.pathname.startsWith('/worker-packages') ||
+    location.pathname === '/worker/finish-profile' ||
+    location.pathname === '/worker/choose-category' ||
+    location.pathname.startsWith('/worker/service-area') ||
+    location.pathname.startsWith('/worker/about') ||
+    location.pathname.startsWith('/worker/portfolio') ||
+    location.pathname.startsWith('/worker/packages') ||
     location.pathname === '/dashboard' ||
     location.pathname.startsWith('/client/signup')
 

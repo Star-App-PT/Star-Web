@@ -16,7 +16,7 @@ export default function ChooseCategory() {
   const navigate = useNavigate()
 
   const handleSelect = (categoryId) => {
-    navigate(`/service-area/${categoryId}`)
+    navigate(`/worker/service-area/${categoryId}`)
   }
 
   return (
@@ -43,7 +43,7 @@ export default function ChooseCategory() {
         {/* DEMO ONLY — REMOVE BEFORE LAUNCH */}
         <span
           style={{ display: 'block', textAlign: 'center', marginTop: 16, color: '#AAAAAA', fontSize: 14, cursor: 'pointer' }}
-          onClick={() => navigate('/service-area/cleaning')}
+          onClick={() => navigate('/worker/service-area/cleaning')}
         >
           Skip (Demo Only)
         </span>

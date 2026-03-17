@@ -15,7 +15,7 @@ export default function WorkerPortfolio() {
   const [photos, setPhotos] = useState([])
 
   if (!category) {
-    navigate('/choose-category', { replace: true })
+    navigate('/worker/choose-category', { replace: true })
     return null
   }
 
@@ -51,7 +51,7 @@ export default function WorkerPortfolio() {
         }
       } catch { /* continue */ }
     }
-    navigate(`/worker-packages/${category}`)
+    navigate(`/worker/packages/${category}`)
   }
 
   return (
@@ -130,7 +130,7 @@ export default function WorkerPortfolio() {
         {/* DEMO ONLY — REMOVE BEFORE LAUNCH */}
         <span
           style={{ display: 'block', textAlign: 'center', marginTop: 12, color: '#AAAAAA', fontSize: 14, cursor: 'pointer' }}
-          onClick={() => navigate(`/worker-packages/${category}`)}
+          onClick={() => navigate(`/worker/packages/${category}`)}
         >
           Skip (Demo Only)
         </span>

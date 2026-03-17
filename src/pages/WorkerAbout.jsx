@@ -70,7 +70,7 @@ export default function WorkerAbout() {
         <button
           type="button"
           className="wa__back btn-back"
-          onClick={() => navigate(`/service-area/${category}`)}
+          onClick={() => navigate(`/worker/service-area/${category}`)}
         >
           {t('common.back')}
         </button>

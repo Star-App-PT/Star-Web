@@ -57,7 +57,7 @@ export default function WorkerPackages() {
   const [activeThumbId, setActiveThumbId] = useState(null)
 
   if (!category) {
-    navigate('/choose-category', { replace: true })
+    navigate('/worker/choose-category', { replace: true })
     return null
   }
 
@@ -128,7 +128,7 @@ export default function WorkerPackages() {
     <div className="pk">
       <div className="pk__top">
         <span className="pk__step">{t('packages.step')}</span>
-        <button type="button" className="pk__back btn-back" onClick={() => navigate(`/worker-portfolio/${category}`)}>
+        <button type="button" className="pk__back btn-back" onClick={() => navigate(`/worker/portfolio/${category}`)}>
           {t('common.back')}
         </button>
       </div>

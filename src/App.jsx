@@ -38,12 +38,12 @@ export default function App() {
           <Route path="/worker/profile/cleaner" element={<WorkerProfileCleaner />} />
           <Route path="/worker/profile" element={<WorkerProfile />} />
           <Route path="/worker/:id" element={<WorkerDetail />} />
-          <Route path="/finish-profile" element={<FinishProfile />} />
-          <Route path="/choose-category" element={<ChooseCategory />} />
-          <Route path="/worker-about/:category" element={<WorkerAbout />} />
-          <Route path="/service-area/:category" element={<ServiceArea />} />
-          <Route path="/worker-portfolio/:category" element={<WorkerPortfolio />} />
-          <Route path="/worker-packages/:category" element={<WorkerPackages />} />
+          <Route path="/worker/finish-profile" element={<FinishProfile />} />
+          <Route path="/worker/choose-category" element={<ChooseCategory />} />
+          <Route path="/worker/about/:category" element={<WorkerAbout />} />
+          <Route path="/worker/service-area/:category" element={<ServiceArea />} />
+          <Route path="/worker/portfolio/:category" element={<WorkerPortfolio />} />
+          <Route path="/worker/packages/:category" element={<WorkerPackages />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/client/signup" element={<ClientSignupWelcome />} />
           <Route path="/client/signup/name" element={<ClientSignupName />} />

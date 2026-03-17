@@ -110,11 +110,11 @@ export default function CategorySignup() {
         }
       } catch { /* continue */ }
     }
-    navigate(`/worker-portfolio/${category}`)
+    navigate(`/worker/portfolio/${category}`)
   }
 
   if (!category) {
-    navigate('/choose-category', { replace: true })
+    navigate('/worker/choose-category', { replace: true })
     return null
   }
 
@@ -124,7 +124,7 @@ export default function CategorySignup() {
     <div className="cs">
       <div className="cs__top">
         <span className="cs__step">{t('profilePhoto.step')}</span>
-        <button type="button" className="cs__back btn-back" onClick={() => navigate(`/worker-about/${category}`)}>
+        <button type="button" className="cs__back btn-back" onClick={() => navigate(`/worker/about/${category}`)}>
           {t('common.back')}
         </button>
       </div>
@@ -262,7 +262,7 @@ export default function CategorySignup() {
         {/* DEMO ONLY — REMOVE BEFORE LAUNCH */}
         <span
           style={{ display: 'block', textAlign: 'center', marginTop: 12, color: '#AAAAAA', fontSize: 14, cursor: 'pointer' }}
-          onClick={() => navigate(`/worker-portfolio/${category}`)}
+          onClick={() => navigate(`/worker/portfolio/${category}`)}
         >
           Skip (Demo Only)
         </span>

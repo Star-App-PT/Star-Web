@@ -30,7 +30,7 @@ export default function SignupForm({ category, onBack }) {
   const [loading, setLoading] = useState(false)
 
   // TESTING MODE - remove direct skip before going live
-  const skipToProfile = () => navigate('/finish-profile')
+  const skipToProfile = () => navigate('/worker/finish-profile')
 
   const handleGoogleSignIn = () => skipToProfile()
   const handleAppleSignIn = () => skipToProfile()
@@ -43,7 +43,7 @@ export default function SignupForm({ category, onBack }) {
     setLoading(true)
     const { error: err } = await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: `${window.location.origin}/finish-profile` },
+      options: { redirectTo: `${window.location.origin}/worker/finish-profile` },
     })
     if (err) {
       setError(err.message)
@@ -56,7 +56,7 @@ export default function SignupForm({ category, onBack }) {
     setLoading(true)
     const { error: err } = await supabase.auth.signInWithOAuth({
       provider: 'apple',
-      options: { redirectTo: `${window.location.origin}/finish-profile` },
+      options: { redirectTo: `${window.location.origin}/worker/finish-profile` },
     })
     if (err) {
       setError(err.message)
@@ -84,7 +84,7 @@ export default function SignupForm({ category, onBack }) {
       email: email.trim(),
       password: password,
       options: {
-        emailRedirectTo: `${window.location.origin}/finish-profile`,
+        emailRedirectTo: `${window.location.origin}/worker/finish-profile`,
         data: { category: category || null },
       },
     })
@@ -203,7 +203,7 @@ export default function SignupForm({ category, onBack }) {
             {/* DEMO ONLY — REMOVE BEFORE LAUNCH */}
             <span
               style={{ display: 'block', textAlign: 'center', marginTop: 16, color: '#AAAAAA', fontSize: 14, cursor: 'pointer' }}
-              onClick={() => navigate('/finish-profile')}
+              onClick={() => navigate('/worker/finish-profile')}
             >
               Skip (Demo Only)
             </span>

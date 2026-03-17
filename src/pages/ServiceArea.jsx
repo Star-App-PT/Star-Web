@@ -218,11 +218,11 @@ export default function ServiceArea() {
         }
       } catch { /* continue */ }
     }
-    navigate(`/worker-about/${category}`)
+    navigate(`/worker/about/${category}`)
   }
 
   if (!category || !CATEGORY_META[category]) {
-    navigate('/choose-category', { replace: true })
+    navigate('/worker/choose-category', { replace: true })
     return null
   }
 
@@ -310,7 +310,7 @@ export default function ServiceArea() {
         {/* DEMO ONLY — REMOVE BEFORE LAUNCH */}
         <span
           style={{ display: 'block', textAlign: 'center', marginTop: 12, color: '#AAAAAA', fontSize: 14, cursor: 'pointer' }}
-          onClick={() => navigate(`/worker-about/${category}`)}
+          onClick={() => navigate(`/worker/about/${category}`)}
         >
           Skip (Demo Only)
         </span>

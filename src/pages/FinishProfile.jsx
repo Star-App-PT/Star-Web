@@ -102,7 +102,7 @@ export default function FinishProfile() {
     // TESTING MODE - remove direct skip before going live
     if (!user) {
       setSubmitting(false)
-      navigate('/choose-category', { replace: true })
+      navigate('/worker/choose-category', { replace: true })
       return
     }
 
@@ -121,7 +121,7 @@ export default function FinishProfile() {
     if (updateErr) {
       setError(updateErr.message)
     } else {
-      navigate('/choose-category', { replace: true })
+      navigate('/worker/choose-category', { replace: true })
     }
   }
 
@@ -270,7 +270,7 @@ export default function FinishProfile() {
             {/* DEMO ONLY — REMOVE BEFORE LAUNCH */}
             <span
               style={{ display: 'block', textAlign: 'center', marginTop: 16, color: '#AAAAAA', fontSize: 14, cursor: 'pointer' }}
-              onClick={() => navigate('/choose-category', { replace: true })}
+              onClick={() => navigate('/worker/choose-category', { replace: true })}
             >
               Skip (Demo Only)
             </span>
