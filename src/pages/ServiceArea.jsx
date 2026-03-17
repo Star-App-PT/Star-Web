@@ -6,7 +6,16 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { supabase } from '../supabase'
 import 'leaflet/dist/leaflet.css'
+import cleanerImg from '../assets/workers/cleaners/cleaner-4.jpg'
+import handymanImg from '../assets/workers/handymen/handyman-1.jpg'
+import photographerImg from '../assets/workers/services/photographer.jpg'
 import './ServiceArea.css'
+
+const CATEGORY_META = {
+  cleaning: { labelKey: 'workerSignup.cleaning', image: cleanerImg },
+  repairs:  { labelKey: 'workerSignup.repairs',  image: handymanImg },
+  services: { labelKey: 'workerSignup.services', image: photographerImg },
+}
 
 const DRIVE_OPTIONS = [
   { value: 30, labelKey: 'serviceArea.opt30' },
@@ -21,6 +30,7 @@ export default function ServiceArea() {
   const { t } = useTranslation()
   const { category } = useParams()
   const navigate = useNavigate()
+  const meta = CATEGORY_META[category] || CATEGORY_META.cleaning
 
   const [query, setQuery] = useState('')
   const [suggestions, setSuggestions] = useState([])
@@ -29,6 +39,7 @@ export default function ServiceArea() {
   const [driveTime, setDriveTime] = useState(60)
   const [modalOpen, setModalOpen] = useState(false)
   const [pendingDrive, setPendingDrive] = useState(60)
+  const [showSuggestions, setShowSuggestions] = useState(false)
 
   const timerRef = useRef(null)
   const wrapRef = useRef(null)
@@ -36,8 +47,33 @@ export default function ServiceArea() {
   const mapInstance = useRef(null)
   const circleRef = useRef(null)
   const markerRef = useRef(null)
-  const [showSuggestions, setShowSuggestions] = useState(false)
+  const geoAttempted = useRef(false)
 
+  // Auto-detect location on mount
+  useEffect(() => {
+    if (geoAttempted.current) return
+    geoAttempted.current = true
+    if (!navigator.geolocation) return
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        const { latitude, longitude } = pos.coords
+        try {
+          const res = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&accept-language=en`
+          )
+          const data = await res.json()
+          if (data?.display_name) {
+            setQuery(data.display_name)
+            setAddress({ display: data.display_name, lat: latitude, lng: longitude })
+          }
+        } catch { /* fallback: worker types manually */ }
+      },
+      () => { /* permission denied or error — worker types manually */ },
+      { timeout: 8000 }
+    )
+  }, [])
+
+  // Close dropdown on outside click
   useEffect(() => {
     const handler = (e) => {
       if (wrapRef.current && !wrapRef.current.contains(e.target)) setShowSuggestions(false)
@@ -93,6 +129,7 @@ export default function ServiceArea() {
     setShowSuggestions(false)
   }
 
+  // Map init / update
   useEffect(() => {
     if (!address || !mapRef.current) return
     let cancelled = false
@@ -115,8 +152,6 @@ export default function ServiceArea() {
           maxZoom: 19,
         }).addTo(map)
         mapInstance.current = map
-
-        // Leaflet needs a size recalc when its container is conditionally rendered
         setTimeout(() => { map.invalidateSize() }, 100)
       }
 
@@ -139,7 +174,6 @@ export default function ServiceArea() {
       }).addTo(mapInstance.current)
 
       mapInstance.current.fitBounds(circleRef.current.getBounds(), { padding: [20, 20] })
-      // Ensure tiles load fully after bounds change
       setTimeout(() => { mapInstance.current?.invalidateSize() }, 200)
     }
 
@@ -147,6 +181,7 @@ export default function ServiceArea() {
     return () => { cancelled = true }
   }, [address, driveTime])
 
+  // Cleanup map on unmount
   useEffect(() => {
     return () => {
       if (mapInstance.current) { mapInstance.current.remove(); mapInstance.current = null }
@@ -166,7 +201,7 @@ export default function ServiceArea() {
   const driveLabel = DRIVE_OPTIONS.find((o) => o.value === driveTime)
   const driveLabelText = driveLabel ? t(driveLabel.labelKey) : ''
 
-  const handleSave = async () => {
+  const handleNext = async () => {
     if (!address) return
     if (supabase) {
       try {
@@ -183,19 +218,24 @@ export default function ServiceArea() {
         }
       } catch { /* continue */ }
     }
-    navigate(`/worker/signup/${category}`)
+    navigate(`/worker-about/${category}`)
+  }
+
+  if (!category || !CATEGORY_META[category]) {
+    navigate('/choose-category', { replace: true })
+    return null
   }
 
   return (
     <div className="sa">
       <div className="sa__top">
-        <button type="button" className="sa__back btn-back" onClick={() => navigate(`/worker-about/${category}`)}>
+        <button type="button" className="sa__back btn-back" onClick={() => navigate(-1)}>
           {t('common.back')}
         </button>
       </div>
 
       <div className="sa__body">
-        <div className="sa__card">
+        <div className="sa__left">
           <h1 className="sa__title">{t('serviceArea.title')}</h1>
           <p className="sa__subtitle">{t('serviceArea.subtitle')}</p>
 
@@ -254,11 +294,18 @@ export default function ServiceArea() {
             </div>
           )}
         </div>
+
+        <div className="sa__right">
+          <div className="sa__cat-card">
+            <img src={meta.image} alt={t(meta.labelKey)} className="sa__cat-card-img" />
+            <p className="sa__cat-card-label">{t(meta.labelKey)}</p>
+          </div>
+        </div>
       </div>
 
       <div className="sa__footer">
-        <button type="button" className="sa__save" disabled={!address} onClick={handleSave}>
-          {t('serviceArea.save')}
+        <button type="button" className="sa__next btn-primary" disabled={!address} onClick={handleNext}>
+          {t('serviceArea.next')}
         </button>
       </div>
 

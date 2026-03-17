@@ -269,8 +269,8 @@
     "honoursLabel": "Añade premios o apariciones en medios"
   },
   "serviceArea": {
-    "title": "Define tu área de servicio",
-    "subtitle": "Introduce tu dirección o punto de partida y establece tu tiempo máximo de desplazamiento.",
+    "title": "¿Dónde trabajarás?",
+    "subtitle": "Introduce tu ubicación inicial y establece tu tiempo máximo de desplazamiento.",
     "placeholder": "Introduce tu ubicación inicial",
     "searching": "Buscando…",
     "modalTitle": "Tu tiempo de desplazamiento",
@@ -279,14 +279,6 @@
     "opt90": "1,5 horas",
     "opt120": "2 horas",
     "done": "Hecho",
-    "save": "Guardar"
-  },
-  "serviceLocation": {
-    "title": "¿Dónde ofrecerás tu servicio?",
-    "placeholder": "Introduce una ciudad",
-    "searching": "Buscando…",
-    "noResults": "No se encontraron ciudades",
-    "suggested": "Sugerido",
     "next": "Siguiente"
   },
   "dashboard": {

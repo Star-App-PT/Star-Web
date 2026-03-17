@@ -16,7 +16,7 @@ export default function ChooseCategory() {
   const navigate = useNavigate()
 
   const handleSelect = (categoryId) => {
-    navigate(`/service-location/${categoryId}`)
+    navigate(`/service-area/${categoryId}`)
   }
 
   return (

@@ -269,8 +269,8 @@
     "honoursLabel": "Add any honours or media features"
   },
   "serviceArea": {
-    "title": "Set your service area",
-    "subtitle": "Enter your business address or starting point, then set your maximum drive time.",
+    "title": "Where will you work?",
+    "subtitle": "Enter your starting location and set your maximum drive time.",
     "placeholder": "Enter your starting location",
     "searching": "Searching…",
     "modalTitle": "Your drive time",
@@ -279,14 +279,6 @@
     "opt90": "1.5 hours",
     "opt120": "2 hours",
     "done": "Done",
-    "save": "Save"
-  },
-  "serviceLocation": {
-    "title": "Where will you offer your service?",
-    "placeholder": "Enter a city",
-    "searching": "Searching…",
-    "noResults": "No cities found",
-    "suggested": "Suggested",
     "next": "Next"
   },
   "dashboard": {
