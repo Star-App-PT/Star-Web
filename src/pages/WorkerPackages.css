@@ -113,6 +113,7 @@
 /* ── Thumbnail ── */
 
 .pk__card-thumb {
+  position: relative;
   width: 100%;
   height: 160px;
   border-radius: 12px;
@@ -124,7 +125,12 @@
   transition: border-color 0.15s;
 }
 
-.pk__card-thumb:hover {
+.pk__card-thumb--has-img {
+  border: none;
+  cursor: default;
+}
+
+.pk__card-thumb:not(.pk__card-thumb--has-img):hover {
   border-color: #AAAAAA;
 }
 
@@ -133,6 +139,26 @@
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+.pk__card-thumb-cam {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.pk__card-thumb-cam:hover {
+  background: rgba(0, 0, 0, 0.7);
 }
 
 .pk__card-thumb-empty {

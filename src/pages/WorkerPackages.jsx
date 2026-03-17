@@ -2,7 +2,16 @@ import { useState, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { supabase } from '../supabase'
+import actionHomeCleaning from '../assets/workers/action/action-home-cleaning.jpg'
+import actionCarpentry from '../assets/workers/action/action-carpentry.jpg'
+import actionPhotography from '../assets/workers/action/action-photography.jpg'
 import './WorkerPackages.css'
+
+const DEFAULT_THUMBS = {
+  cleaning: actionHomeCleaning,
+  repairs: actionCarpentry,
+  services: actionPhotography,
+}
 
 const DURATION_OPTIONS = [
   { value: '30min', label: '30 min' },
@@ -51,7 +60,7 @@ export default function WorkerPackages() {
   }
 
   const addPackage = () => {
-    if (packages.length >= 5) return
+    if (packages.length >= 3) return
     setPackages((prev) => [...prev, { ...EMPTY_PKG, id: crypto.randomUUID() }])
   }
 
@@ -137,19 +146,41 @@ export default function WorkerPackages() {
                   )}
                 </div>
 
-                <div className="pk__card-thumb" onClick={() => openThumbPicker(pkg.id)}>
-                  {pkg.thumbUrl ? (
-                    <img src={pkg.thumbUrl} alt="" className="pk__card-thumb-img" />
-                  ) : (
-                    <div className="pk__card-thumb-empty">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#B0B0B0" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-                        <circle cx="12" cy="13" r="4"/>
-                      </svg>
-                      <span>{t('packages.addThumb')}</span>
+                {(() => {
+                  const defaultThumb = idx === 0 ? DEFAULT_THUMBS[category] || DEFAULT_THUMBS.cleaning : null
+                  const displaySrc = pkg.thumbUrl || defaultThumb
+                  return (
+                    <div
+                      className={`pk__card-thumb${displaySrc ? ' pk__card-thumb--has-img' : ''}`}
+                      onClick={!displaySrc ? () => openThumbPicker(pkg.id) : undefined}
+                    >
+                      {displaySrc ? (
+                        <>
+                          <img src={displaySrc} alt="" className="pk__card-thumb-img" />
+                          <button
+                            type="button"
+                            className="pk__card-thumb-cam"
+                            onClick={(e) => { e.stopPropagation(); openThumbPicker(pkg.id) }}
+                            aria-label="Change photo"
+                          >
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                              <circle cx="12" cy="13" r="4"/>
+                            </svg>
+                          </button>
+                        </>
+                      ) : (
+                        <div className="pk__card-thumb-empty">
+                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#B0B0B0" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                            <circle cx="12" cy="13" r="4"/>
+                          </svg>
+                          <span>{t('packages.addThumb')}</span>
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
+                  )
+                })()}
 
                 <div className="pk__card-fields">
                   <div className="pk__field">
@@ -228,8 +259,8 @@ export default function WorkerPackages() {
                 {pkg.title.trim() && pkg.price && (
                   <div className="pk__preview">
                     <div className="pk__preview-thumb">
-                      {pkg.thumbUrl ? (
-                        <img src={pkg.thumbUrl} alt="" className="pk__preview-thumb-img" />
+                      {(pkg.thumbUrl || (idx === 0 && (DEFAULT_THUMBS[category] || DEFAULT_THUMBS.cleaning))) ? (
+                        <img src={pkg.thumbUrl || DEFAULT_THUMBS[category] || DEFAULT_THUMBS.cleaning} alt="" className="pk__preview-thumb-img" />
                       ) : (
                         <div className="pk__preview-thumb-placeholder" />
                       )}
@@ -250,7 +281,7 @@ export default function WorkerPackages() {
             ))}
           </div>
 
-          {packages.length < 5 && (
+          {packages.length < 3 && (
             <button type="button" className="pk__add" onClick={addPackage}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
