@@ -1,0 +1,67 @@
+.signup-choice {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.signup-choice__card {
+  max-width: 400px;
+  width: 100%;
+  background: #fff;
+  border: 1px solid #E8E8E8;
+  border-radius: 16px;
+  padding: 32px 24px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+}
+
+.signup-choice__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #222;
+  margin: 0 0 8px;
+}
+
+.signup-choice__sub {
+  font-size: 0.9rem;
+  color: #717171;
+  margin: 0 0 24px;
+}
+
+.signup-choice__options {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.signup-choice__option {
+  display: block;
+  padding: 14px 20px;
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #222;
+  text-decoration: none;
+  transition: background 0.1s;
+}
+
+.signup-choice__option:hover {
+  background: #F7F7F7;
+}
+
+.signup-choice__sep {
+  height: 1px;
+  background: #EBEBEB;
+}
+
+.signup-choice__back {
+  display: inline-block;
+  margin-top: 24px;
+  font-size: 0.9rem;
+  color: #717171;
+  text-decoration: none;
+}
+
+.signup-choice__back:hover {
+  color: #222;
+}

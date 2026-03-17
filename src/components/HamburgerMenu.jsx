@@ -68,8 +68,16 @@ export default function HamburgerMenu() {
 
           <div className="hmenu__sep" />
 
-          <Link to="/worker/signup" className="hmenu__item" onClick={() => setOpen(false)}>
-            {t('header.logInOrSignUp')}
+          <Link to="/client/login" className="hmenu__item" onClick={() => setOpen(false)}>
+            Client login
+          </Link>
+          <div className="hmenu__sep" />
+          <Link to="/worker/login" className="hmenu__item" onClick={() => setOpen(false)}>
+            Star login
+          </Link>
+          <div className="hmenu__sep" />
+          <Link to="/signup" className="hmenu__item" onClick={() => setOpen(false)}>
+            Sign up
           </Link>
         </div>
       )}

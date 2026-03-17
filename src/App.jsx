@@ -21,6 +21,9 @@ import ClientSignupWelcome from './pages/client/signup/index'
 import ClientSignupName from './pages/client/signup/name'
 import ClientSignupPhoto from './pages/client/signup/photo'
 import ClientSignupCommitment from './pages/client/signup/commitment'
+import SignupChoice from './pages/SignupChoice'
+import ClientLogin from './pages/client/ClientLogin'
+import WorkerLogin from './pages/worker/WorkerLogin'
 
 export default function App() {
   return (
@@ -49,6 +52,9 @@ export default function App() {
           <Route path="/client/signup/name" element={<ClientSignupName />} />
           <Route path="/client/signup/photo" element={<ClientSignupPhoto />} />
           <Route path="/client/signup/commitment" element={<ClientSignupCommitment />} />
+          <Route path="/client/login" element={<ClientLogin />} />
+          <Route path="/worker/login" element={<WorkerLogin />} />
+          <Route path="/signup" element={<SignupChoice />} />
         </Routes>
       </main>
     </BrowserRouter>

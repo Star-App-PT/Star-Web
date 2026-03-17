@@ -1,0 +1,41 @@
+.login-placeholder {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.login-placeholder__card {
+  max-width: 400px;
+  width: 100%;
+  background: #fff;
+  border: 1px solid #E8E8E8;
+  border-radius: 16px;
+  padding: 32px 24px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.login-placeholder__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #222;
+  margin: 0 0 8px;
+}
+
+.login-placeholder__sub {
+  font-size: 0.9rem;
+  color: #717171;
+  margin: 0 0 24px;
+}
+
+.login-placeholder__back {
+  font-size: 0.9rem;
+  color: #717171;
+  text-decoration: none;
+}
+
+.login-placeholder__back:hover {
+  color: #222;
+}
