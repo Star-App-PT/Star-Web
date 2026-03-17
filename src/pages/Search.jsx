@@ -102,7 +102,7 @@ export default function Search() {
                     </svg>
                   </button>
                 </div>
-                <WorkerAvatar worker={w} size={68} className="search-card__avatar" />
+                <WorkerAvatar worker={w} size={85} className="search-card__avatar" />
                 <div className="search-card__body">
                   <p className="search-card__name">{w.name}</p>
                   <p className="search-card__skill">{w.specialty}</p>

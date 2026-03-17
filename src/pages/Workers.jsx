@@ -36,7 +36,7 @@ export default function Workers() {
                 <img src={worker.heroImage} alt={worker.specialty} className="workers-page__image" />
                 <span className="workers-page__pill">{t('home.topRated')}</span>
               </div>
-              <WorkerAvatar worker={worker} size={68} className="workers-page__avatar" />
+              <WorkerAvatar worker={worker} size={85} className="workers-page__avatar" />
               <div className="workers-page__body">
                 <p className="workers-page__name">{worker.name}</p>
                 <p className="workers-page__skill">{worker.specialty}</p>

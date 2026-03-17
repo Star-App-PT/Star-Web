@@ -70,11 +70,11 @@
 
 .wd__card-avatar {
   display: block;
-  margin: -40px auto 0;
+  margin: -50px auto 0;
   position: relative;
   z-index: 2;
-  border: 3px solid var(--star-white) !important;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
+  border: 3px solid #FFFFFF !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 
 .wd__card-info {
@@ -432,8 +432,8 @@
 .wd__quals-avatar {
   display: block;
   margin: 0 auto 12px;
-  border: 3px solid var(--star-white) !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  border: 3px solid #FFFFFF !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 
 .wd__quals-name {
@@ -649,8 +649,8 @@
   }
 
   .wd__mobile-bar-avatar {
-    border: 2px solid var(--star-white) !important;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+    border: 3px solid #FFFFFF !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   }
 
   .wd__mobile-bar-info {

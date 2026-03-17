@@ -96,7 +96,7 @@ export default function WorkerDetail() {
   return (
     <div className="wd">
       <div className="wd__mobile-bar">
-        <WorkerAvatar worker={worker} size={36} className="wd__mobile-bar-avatar" />
+        <WorkerAvatar worker={worker} size={45} className="wd__mobile-bar-avatar" />
         <div className="wd__mobile-bar-info">
           <span className="wd__mobile-bar-name">{worker.name}</span>
           <span className="wd__mobile-bar-rate">{t('common.fromPerHour', { price: worker.hourlyRate })}</span>
@@ -116,7 +116,7 @@ export default function WorkerDetail() {
               <div className="wd__card-hero-wrap">
                 <img src={worker.heroImage} alt={`${worker.specialty} in action`} className="wd__card-hero" />
               </div>
-              <WorkerAvatar worker={worker} size={80} className="wd__card-avatar" />
+              <WorkerAvatar worker={worker} size={100} className="wd__card-avatar" />
               <div className="wd__card-info">
                 <h1 className="wd__card-name">{worker.name}</h1>
                 <p className="wd__card-tagline">{worker.tagline || worker.bio}</p>
@@ -210,7 +210,7 @@ export default function WorkerDetail() {
                 <h2 className="wd__section-title">{t('workerDetail.myQualifications')}</h2>
                 <div className="wd__quals-layout">
                   <div className="wd__quals-card">
-                    <WorkerAvatar worker={worker} size={80} className="wd__quals-avatar" />
+                    <WorkerAvatar worker={worker} size={100} className="wd__quals-avatar" />
                     <p className="wd__quals-name">{worker.name}</p>
                     <p className="wd__quals-spec">{worker.specialty}</p>
                   </div>

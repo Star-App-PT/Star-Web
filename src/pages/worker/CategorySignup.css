@@ -91,8 +91,8 @@
 /* ── Circular frame ── */
 
 .cs__frame {
-  width: 160px;
-  height: 160px;
+  width: 200px;
+  height: 200px;
   border-radius: 50%;
   border: 2px dashed #C0C0C0;
   overflow: hidden;
@@ -106,7 +106,8 @@
 }
 
 .cs__frame--confirmed {
-  border: 3px solid #1B4FBA;
+  border: 3px solid #FFFFFF;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 
 .cs__frame-img {
@@ -234,17 +235,19 @@
    ══════════════════════════════════════ */
 
 .star-profile-ring {
-  border: 3px solid #1B4FBA;
+  border: 3px solid #FFFFFF;
   border-radius: 50%;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 
 .star-profile-ring--empty {
   border-color: #E0E0E0;
+  box-shadow: none;
 }
 
 /* ══════════════════════════════════════
@@ -314,15 +317,14 @@
 .cs__preview-avatar-wrap {
   display: flex;
   justify-content: center;
-  margin-top: -40px;
+  margin-top: -50px;
   position: relative;
   z-index: 2;
 }
 
 .cs__preview-avatar {
-  width: 80px;
-  height: 80px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  width: 100px;
+  height: 100px;
 }
 
 .cs__preview-avatar-img {
@@ -398,8 +400,8 @@
   }
 
   .cs__frame {
-    width: 140px;
-    height: 140px;
+    width: 175px;
+    height: 175px;
   }
 
   .cs__preview-cover {
@@ -407,11 +409,11 @@
   }
 
   .cs__preview-avatar {
-    width: 68px;
-    height: 68px;
+    width: 85px;
+    height: 85px;
   }
 
   .cs__preview-avatar-wrap {
-    margin-top: -34px;
+    margin-top: -42px;
   }
 }

@@ -9,7 +9,7 @@ import './WorkerAvatar.css'
  *   2. If the worker hasn't uploaded a photo, we show their initials.
  *   3. Any future change (e.g. switching to a CDN URL) happens in one place.
  */
-export default function WorkerAvatar({ worker, size = 68, className = '' }) {
+export default function WorkerAvatar({ worker, size = 85, className = '' }) {
   const initials = worker.name
     .split(' ')
     .map((n) => n[0])
