@@ -123,7 +123,13 @@
     "sectionLabel": "Foto de perfil",
     "hint": "Sube una foto que muestre claramente tu rostro y hombros. Así es como los clientes te reconocerán.",
     "uploadLabel": "Subir foto",
-    "dragHint": "Arrastra para reposicionar · desplaza para zoom"
+    "dragHint": "Arrastra para reposicionar · desplaza para zoom",
+    "cardLabel": "Tu foto de tarjeta",
+    "cardHint": "Esto es lo primero que ven los clientes al buscar profesionales. Sube una foto de calidad relacionada con tu trabajo, o mantén la imagen predeterminada por ahora.",
+    "topRated": "Mejor valorado",
+    "roleCleaning": "Limpiador del hogar",
+    "roleRepairs": "Manitas",
+    "roleServices": "Fotógrafo"
   },
   "workerProfileCleaner": {
     "intro": "Elige los servicios de limpieza que ofreces. Puedes seleccionar más de uno.",

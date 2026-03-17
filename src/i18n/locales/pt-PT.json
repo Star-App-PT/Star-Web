@@ -123,7 +123,13 @@
     "sectionLabel": "Foto de perfil",
     "hint": "Carregue uma foto que mostre claramente o seu rosto e ombros. É assim que os clientes o vão reconhecer.",
     "uploadLabel": "Carregar foto",
-    "dragHint": "Arraste para reposicionar · scroll para zoom"
+    "dragHint": "Arraste para reposicionar · scroll para zoom",
+    "cardLabel": "A foto do seu cartão",
+    "cardHint": "Esta é a primeira coisa que os clientes veem ao procurar profissionais. Carregue uma foto de qualidade relacionada com o seu trabalho, ou mantenha a imagem predefinida por agora.",
+    "topRated": "Melhor avaliado",
+    "roleCleaning": "Limpeza doméstica",
+    "roleRepairs": "Faz-tudo",
+    "roleServices": "Fotógrafo"
   },
   "workerProfileCleaner": {
     "intro": "Escolha os serviços de limpeza que oferece. Pode selecionar mais do que um.",

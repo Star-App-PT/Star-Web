@@ -2,15 +2,25 @@ import { useState, useRef, useCallback, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { supabase } from '../../supabase'
+import actionHomeCleaning from '../../assets/workers/action/action-home-cleaning.jpg'
+import actionCarpentry from '../../assets/workers/action/action-carpentry.jpg'
+import actionPhotography from '../../assets/workers/action/action-photography.jpg'
 import './CategorySignup.css'
 
-const FRAME_SIZE = 200
+const CATEGORY_META = {
+  cleaning: { defaultCover: actionHomeCleaning, roleKey: 'profilePhoto.roleCleaning' },
+  repairs:  { defaultCover: actionCarpentry,     roleKey: 'profilePhoto.roleRepairs' },
+  services: { defaultCover: actionPhotography,   roleKey: 'profilePhoto.roleServices' },
+}
 
 export default function CategorySignup() {
   const { t } = useTranslation()
   const { category } = useParams()
   const navigate = useNavigate()
+  const meta = CATEGORY_META[category] || CATEGORY_META.cleaning
+
   const fileRef = useRef(null)
+  const coverFileRef = useRef(null)
   const frameRef = useRef(null)
   const pickerOpen = useRef(false)
 
@@ -22,6 +32,8 @@ export default function CategorySignup() {
   const dragStart = useRef({ x: 0, y: 0 })
   const offsetStart = useRef({ x: 0, y: 0 })
 
+  const [coverSrc, setCoverSrc] = useState(null)
+
   const openPicker = () => {
     if (pickerOpen.current || imgSrc) return
     pickerOpen.current = true
@@ -32,11 +44,16 @@ export default function CategorySignup() {
     pickerOpen.current = false
     const file = e.target.files?.[0]
     if (!file) return
-    const url = URL.createObjectURL(file)
-    setImgSrc(url)
+    setImgSrc(URL.createObjectURL(file))
     setConfirmed(false)
     setScale(1)
     setOffset({ x: 0, y: 0 })
+  }
+
+  const handleCoverFile = (e) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setCoverSrc(URL.createObjectURL(file))
   }
 
   const handleCancel = () => {
@@ -101,6 +118,8 @@ export default function CategorySignup() {
     return null
   }
 
+  const workerName = 'Your Name'
+
   return (
     <div className="cs">
       <div className="cs__top">
@@ -111,9 +130,10 @@ export default function CategorySignup() {
       </div>
 
       <div className="cs__body">
-        <div className="cs__card">
+        <div className="cs__content">
           <h1 className="cs__title">{t('profilePhoto.title')}</h1>
 
+          {/* ── Profile photo section ── */}
           <div className="cs__section">
             <h2 className="cs__label">{t('profilePhoto.sectionLabel')}</h2>
             <p className="cs__hint">{t('profilePhoto.hint')}</p>
@@ -133,9 +153,7 @@ export default function CategorySignup() {
                   alt=""
                   className="cs__frame-img"
                   draggable={false}
-                  style={{
-                    transform: `translate(${offset.x}px, ${offset.y}px) scale(${scale})`,
-                  }}
+                  style={{ transform: `translate(${offset.x}px, ${offset.y}px) scale(${scale})` }}
                 />
               ) : (
                 <div className="cs__frame-empty">
@@ -156,9 +174,7 @@ export default function CategorySignup() {
                 <input
                   type="range"
                   className="cs__zoom-slider"
-                  min="1"
-                  max="3"
-                  step="0.01"
+                  min="1" max="3" step="0.01"
                   value={scale}
                   onChange={(e) => setScale(parseFloat(e.target.value))}
                   style={{ '--fill': `${((scale - 1) / 2) * 100}%` }}
@@ -183,6 +199,58 @@ export default function CategorySignup() {
             {imgSrc && !confirmed && (
               <p className="cs__drag-hint">{t('profilePhoto.dragHint')}</p>
             )}
+          </div>
+
+          {/* ── Card photo section ── */}
+          <div className="cs__section cs__section--card">
+            <h2 className="cs__label">{t('profilePhoto.cardLabel')}</h2>
+            <p className="cs__hint">{t('profilePhoto.cardHint')}</p>
+          </div>
+
+          {/* ── Worker card preview ── */}
+          <input ref={coverFileRef} type="file" accept="image/*" className="cs__file" onChange={handleCoverFile} />
+          <div className="cs__preview">
+            <div className="cs__preview-cover" onClick={() => coverFileRef.current?.click()}>
+              <img
+                src={coverSrc || meta.defaultCover}
+                alt=""
+                className="cs__preview-cover-img"
+              />
+              <span className="cs__preview-badge">{t('profilePhoto.topRated')}</span>
+              <span className="cs__preview-heart">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+              </span>
+              <div className="cs__preview-cam">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                  <circle cx="12" cy="13" r="4"/>
+                </svg>
+              </div>
+            </div>
+
+            <div className="cs__preview-avatar-wrap">
+              <div className={`cs__preview-avatar star-profile-ring${confirmed && imgSrc ? '' : ' star-profile-ring--empty'}`}>
+                {imgSrc ? (
+                  <img
+                    src={imgSrc}
+                    alt=""
+                    className="cs__preview-avatar-img"
+                    style={{ transform: `translate(${offset.x * 0.5}px, ${offset.y * 0.5}px) scale(${scale})` }}
+                  />
+                ) : (
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C0C0C0" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                  </svg>
+                )}
+              </div>
+            </div>
+
+            <div className="cs__preview-info">
+              <p className="cs__preview-name">{workerName}</p>
+              <p className="cs__preview-role">{t(meta.roleKey)}</p>
+            </div>
           </div>
         </div>
       </div>

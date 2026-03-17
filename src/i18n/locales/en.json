@@ -123,7 +123,13 @@
     "sectionLabel": "Profile photo",
     "hint": "Upload a photo that clearly shows your face and shoulders. This is how clients will recognise you.",
     "uploadLabel": "Upload photo",
-    "dragHint": "Drag to reposition · scroll to zoom"
+    "dragHint": "Drag to reposition · scroll to zoom",
+    "cardLabel": "Your card photo",
+    "cardHint": "This is the first thing clients see when browsing workers. Upload a quality photo related to your work, or keep the default image for now.",
+    "topRated": "Top rated",
+    "roleCleaning": "Home Cleaner",
+    "roleRepairs": "Handyman",
+    "roleServices": "Photographer"
   },
   "workerProfileCleaner": {
     "intro": "Choose the cleaning services you offer. You can select more than one.",
