@@ -474,7 +474,7 @@ export default function WorkerDetail() {
               <div className="wd__bm-packages">
                 {worker.packages.map((pkg, i) => (
                   <div key={i} className="wd__bm-pkg-group">
-                    <div className={`wd__bm-pkg${selectedPkgIdx === i ? ' wd__bm-pkg--sel' : ''}`} onClick={() => { setSelectedPkgIdx(i); setSelectedTime(null) }}>
+                    <div className="wd__bm-pkg">
                       <div className="wd__bm-pkg-thumb">
                         <img src={worker.heroImage} alt="" />
                       </div>
@@ -483,20 +483,21 @@ export default function WorkerDetail() {
                         <p className="wd__bm-pkg-price">€{pkg.price} <span>/{pkg.priceType || 'visit'}</span> · {pkg.duration}</p>
                       </div>
                     </div>
-                    {selectedPkgIdx === i && (
-                      <div className="wd__bm-times">
-                        {TIME_SLOTS.map((slot) => (
+                    <div className="wd__bm-times">
+                      {TIME_SLOTS.map((slot) => {
+                        const isSelected = selectedPkgIdx === i && selectedTime === slot
+                        return (
                           <button
                             key={slot}
                             type="button"
-                            className={`wd__bm-time${selectedTime === slot ? ' wd__bm-time--sel' : ''}`}
-                            onClick={() => setSelectedTime(slot)}
+                            className={`wd__bm-time${isSelected ? ' wd__bm-time--sel' : ''}`}
+                            onClick={() => { setSelectedPkgIdx(i); setSelectedTime(slot) }}
                           >
                             {slot}
                           </button>
-                        ))}
-                      </div>
-                    )}
+                        )
+                      })}
+                    </div>
                   </div>
                 ))}
               </div>
