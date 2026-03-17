@@ -30,7 +30,8 @@ export default function Header() {
     location.pathname.startsWith('/service-area') ||
     location.pathname.startsWith('/worker-portfolio') ||
     location.pathname.startsWith('/worker-packages') ||
-    location.pathname === '/dashboard'
+    location.pathname === '/dashboard' ||
+    location.pathname.startsWith('/client/signup')
 
   return (
     <header className="star-header">

@@ -413,6 +413,27 @@
   /* visual styles via .btn-primary */
 }
 
+.home__cta--client {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  border: 1.5px solid #222;
+  border-radius: 50px;
+  background: #fff;
+  color: #222;
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.home__cta--client:hover {
+  background: #F7F7F7;
+}
+
 /* Coming soon banner */
 .home__coming-soon {
   text-align: center;

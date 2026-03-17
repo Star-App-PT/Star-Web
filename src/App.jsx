@@ -17,6 +17,10 @@ import WorkerAbout from './pages/WorkerAbout'
 import ServiceArea from './pages/ServiceArea'
 import WorkerPortfolio from './pages/WorkerPortfolio'
 import WorkerPackages from './pages/WorkerPackages'
+import ClientSignupWelcome from './pages/client/signup/index'
+import ClientSignupName from './pages/client/signup/name'
+import ClientSignupPhoto from './pages/client/signup/photo'
+import ClientSignupCommitment from './pages/client/signup/commitment'
 
 export default function App() {
   return (
@@ -41,6 +45,10 @@ export default function App() {
           <Route path="/worker-portfolio/:category" element={<WorkerPortfolio />} />
           <Route path="/worker-packages/:category" element={<WorkerPackages />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/client/signup" element={<ClientSignupWelcome />} />
+          <Route path="/client/signup/name" element={<ClientSignupName />} />
+          <Route path="/client/signup/photo" element={<ClientSignupPhoto />} />
+          <Route path="/client/signup/commitment" element={<ClientSignupCommitment />} />
         </Routes>
       </main>
     </BrowserRouter>

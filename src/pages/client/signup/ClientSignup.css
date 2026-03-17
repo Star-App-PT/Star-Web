@@ -1,0 +1,532 @@
+/* ══════════════════════════════════════
+   Client Sign-up — shared styles
+   ══════════════════════════════════════ */
+
+.csu {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 32px 24px 48px;
+}
+
+/* ── Top bar ── */
+
+.csu__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.csu__step {
+  font-size: 0.8rem;
+  color: #717171;
+  font-weight: 500;
+}
+
+.csu__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 14px;
+  border: 1px solid #DDDDDD;
+  border-radius: 50px;
+  background: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: #222;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.csu__back:hover {
+  background: #F7F7F7;
+}
+
+/* ── Card ── */
+
+.csu__card {
+  width: 100%;
+}
+
+.csu__title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #222;
+  margin: 0 0 8px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+
+.csu__subtitle {
+  font-size: 1rem;
+  color: #717171;
+  margin: 0 0 28px;
+  text-align: center;
+}
+
+/* ── Auth option buttons ── */
+
+.csu__options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.csu__option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 14px 20px;
+  border: 1.5px solid #222;
+  border-radius: 50px;
+  background: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: #222;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.csu__option:hover {
+  background: #F7F7F7;
+}
+
+.csu__option-icon {
+  position: absolute;
+  left: 20px;
+  display: flex;
+  align-items: center;
+}
+
+/* ── "or" divider ── */
+
+.csu__divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 20px 0;
+  color: #B0B0B0;
+  font-size: 0.85rem;
+}
+
+.csu__divider::before,
+.csu__divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #DDDDDD;
+}
+
+/* ── Inputs ── */
+
+.csu__input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1.5px solid #DDDDDD;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: #222;
+  outline: none;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+}
+
+.csu__input:focus {
+  border-color: #222;
+}
+
+.csu__input::placeholder {
+  color: #B0B0B0;
+}
+
+.csu__email-btn {
+  width: 100%;
+  padding: 14px;
+  margin-top: 12px;
+  border: 1.5px solid #222;
+  border-radius: 50px;
+  background: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: #222;
+  cursor: pointer;
+  transition: background 0.15s, opacity 0.15s;
+}
+
+.csu__email-btn:hover {
+  background: #F7F7F7;
+}
+
+.csu__email-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* ── Terms + login link ── */
+
+.csu__terms {
+  font-size: 0.75rem;
+  color: #AAAAAA;
+  text-align: center;
+  margin: 24px 0 16px;
+  line-height: 1.5;
+}
+
+.csu__terms a {
+  color: #222;
+  text-decoration: underline;
+}
+
+.csu__login {
+  font-size: 0.85rem;
+  color: #717171;
+  text-align: center;
+  margin: 0;
+}
+
+.csu__login a {
+  color: #1B4FBA;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.csu__login a:hover {
+  text-decoration: underline;
+}
+
+/* ── Demo skip ── */
+
+.csu__skip {
+  display: block;
+  text-align: center;
+  margin-top: 16px;
+  color: #AAAAAA;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* ── Name page: field rows ── */
+
+.csu__field-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.csu__field-row .csu__input {
+  flex: 1;
+}
+
+.csu__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.csu__field-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #222;
+}
+
+.csu__phone-group {
+  display: flex;
+  gap: 0;
+  border: 1.5px solid #DDDDDD;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color 0.15s;
+}
+
+.csu__phone-group:focus-within {
+  border-color: #222;
+}
+
+.csu__country-select {
+  padding: 14px 8px 14px 14px;
+  border: none;
+  background: #fff;
+  font-size: 0.9rem;
+  font-family: inherit;
+  color: #222;
+  outline: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  width: 110px;
+}
+
+.csu__phone-input {
+  flex: 1;
+  padding: 14px 14px 14px 0;
+  border: none;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: #222;
+  outline: none;
+}
+
+.csu__phone-input::placeholder {
+  color: #B0B0B0;
+}
+
+/* ── Footer ── */
+
+.csu__footer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 100%;
+  padding: 24px 0;
+  border-top: 1px solid #EBEBEB;
+  margin-top: auto;
+}
+
+.csu__next {
+  /* inherits from .btn-primary */
+}
+
+/* ── Photo page ── */
+
+.csu__photo-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.csu__photo-frame {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.csu__photo-frame--empty {
+  border: 2px dashed #CCCCCC;
+  background: #F7F7F7;
+}
+
+.csu__photo-frame--filled {
+  border: 3px solid #FFFFFF;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.csu__photo-frame-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.csu__photo-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: #B0B0B0;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.csu__photo-hint {
+  font-size: 0.85rem;
+  color: #717171;
+  text-align: center;
+  margin: 0 0 20px;
+  line-height: 1.45;
+}
+
+.csu__photo-error {
+  font-size: 0.85rem;
+  color: #E53935;
+  text-align: center;
+  margin: 0 0 12px;
+  font-weight: 500;
+}
+
+.csu__zoom {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 240px;
+  margin-bottom: 12px;
+}
+
+.csu__zoom-slider {
+  flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 4px;
+  background: linear-gradient(
+    to right,
+    #1B4FBA 0%,
+    #1B4FBA var(--fill, 0%),
+    #E0E0E0 var(--fill, 0%),
+    #E0E0E0 100%
+  );
+  outline: none;
+}
+
+.csu__zoom-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #1B4FBA;
+  cursor: pointer;
+}
+
+.csu__zoom-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #1B4FBA;
+  border: none;
+  cursor: pointer;
+}
+
+.csu__photo-actions {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 8px;
+}
+
+.csu__photo-action {
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 4px 8px;
+}
+
+.csu__photo-action--cancel {
+  color: #717171;
+}
+
+.csu__photo-action--done {
+  color: #1B4FBA;
+}
+
+.csu__photo-skip {
+  display: block;
+  text-align: center;
+  margin-top: 8px;
+  color: #AAAAAA;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+/* ── Commitment page ── */
+
+.csu__commit-card {
+  width: 100%;
+  max-width: 440px;
+  border: 1px solid #E0E0E0;
+  border-radius: 20px;
+  padding: 40px 32px;
+  background: #fff;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.csu__commit-logo {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 20px;
+  display: block;
+}
+
+.csu__commit-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #222;
+  margin: 0 0 16px;
+}
+
+.csu__commit-body {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.6;
+  margin: 0 0 28px;
+}
+
+.csu__commit-agree {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 50px;
+  background: #1B4FBA;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  margin-bottom: 12px;
+}
+
+.csu__commit-agree:hover {
+  opacity: 0.92;
+}
+
+.csu__commit-decline {
+  width: 100%;
+  padding: 14px;
+  border: 1.5px solid #DDDDDD;
+  border-radius: 50px;
+  background: #fff;
+  color: #222;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.csu__commit-decline:hover {
+  background: #F7F7F7;
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 600px) {
+  .csu {
+    padding: 24px 16px 40px;
+  }
+
+  .csu__title {
+    font-size: 1.5rem;
+  }
+
+  .csu__field-row {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .csu__commit-card {
+    padding: 28px 20px;
+  }
+}

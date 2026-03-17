@@ -465,9 +465,14 @@ export default function Home() {
 
         <div className="home__cta-block">
           <p className="home__cta-text">{t('home.ctaText')}</p>
-          <Link to="/worker/signup" className="home__cta btn-primary">
-            {t('home.becomeAStar')}
-          </Link>
+          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
+            <Link to="/worker/signup" className="home__cta btn-primary">
+              {t('home.becomeAStar')}
+            </Link>
+            <Link to="/client/signup" className="home__cta home__cta--client">
+              Find a professional
+            </Link>
+          </div>
         </div>
       </div>
     </div>
