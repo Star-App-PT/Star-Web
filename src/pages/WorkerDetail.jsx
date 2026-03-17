@@ -2,8 +2,21 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { getWorkerById, getSimilarWorkers } from '../data/workers'
+import { supabase } from '../supabase'
 import WorkerAvatar from '../components/WorkerAvatar'
 import './WorkerDetail.css'
+
+const HOW_I_WORK_OPTIONS = [
+  'Works alone', 'Works in a team', 'Brings own equipment', 'Pet-friendly',
+  'Available weekends', 'Speaks English', 'Speaks Spanish',
+  'Smoke-free environment', 'Insured & certified',
+]
+
+const SERVICE_DETAIL_OPTIONS = [
+  'Minimum job applies', 'Travel surcharge may apply', 'Requires parking access',
+  'Requires electricity on site', 'Requires deposit', 'Brings own materials',
+  'Client must provide materials',
+]
 
 const QUAL_ICONS = {
   clock: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>,
@@ -21,7 +34,27 @@ export default function WorkerDetail() {
   const mapInstanceRef = useRef(null)
   const [expandedReviews, setExpandedReviews] = useState(new Set())
   const [showAllReviews, setShowAllReviews] = useState(false)
+  const [howIWork, setHowIWork] = useState([])
+  const [serviceDetailChecks, setServiceDetailChecks] = useState([])
+  const [goodToKnow, setGoodToKnow] = useState('')
+  const [emergency24h, setEmergency24h] = useState(false)
   const worker = getWorkerById(id)
+
+  const saveToSupabase = async (data) => {
+    if (!supabase) return
+    try {
+      const { data: { session } } = await supabase.auth.getSession()
+      if (session?.user) {
+        await supabase.auth.updateUser({ data })
+      }
+    } catch { /* continue */ }
+  }
+
+  const toggleChip = (arr, setArr, opt, field) => {
+    const next = arr.includes(opt) ? arr.filter((v) => v !== opt) : [...arr, opt]
+    setArr(next)
+    saveToSupabase({ [field]: next })
+  }
 
   useEffect(() => {
     if (!worker || !mapRef.current || mapInstanceRef.current) return
@@ -259,23 +292,89 @@ export default function WorkerDetail() {
             </section>
 
             <section className="wd__section">
-              <h2 className="wd__section-title">{t('workerDetail.thingsToKnow')}</h2>
-              <div className="wd__know-grid">
-                <div className="wd__know-item">
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                  <h3>{t('workerDetail.clientRequirements')}</h3>
-                  <p>{t('workerDetail.clientRequirementsDesc')}</p>
+              <h2 className="wd__section-title">Service details</h2>
+
+              <div className="wd__sd-group">
+                <h3 className="wd__sd-label">How I work</h3>
+                <div className="wd__sd-chips">
+                  {HOW_I_WORK_OPTIONS.map((opt) => (
+                    <button
+                      key={opt}
+                      type="button"
+                      className={`wd__sd-chip${howIWork.includes(opt) ? ' wd__sd-chip--on' : ''}`}
+                      onClick={() => toggleChip(howIWork, setHowIWork, opt, 'how_i_work')}
+                    >
+                      {opt}
+                    </button>
+                  ))}
                 </div>
-                <div className="wd__know-item">
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-                  <h3>{t('workerDetail.accessibility')}</h3>
-                  <p>{t('workerDetail.accessibilityDesc', { name: worker.name })}</p>
+              </div>
+
+              <hr className="wd__sd-divider" />
+
+              <div className="wd__sd-group">
+                <h3 className="wd__sd-label">Service details</h3>
+                <div className="wd__sd-chips">
+                  {SERVICE_DETAIL_OPTIONS.map((opt) => (
+                    <button
+                      key={opt}
+                      type="button"
+                      className={`wd__sd-chip${serviceDetailChecks.includes(opt) ? ' wd__sd-chip--on' : ''}`}
+                      onClick={() => toggleChip(serviceDetailChecks, setServiceDetailChecks, opt, 'service_details')}
+                    >
+                      {opt}
+                    </button>
+                  ))}
                 </div>
-                <div className="wd__know-item">
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="10" y1="14" x2="10" y2="14.01"/></svg>
-                  <h3>{t('workerDetail.cancellationPolicy')}</h3>
-                  <p>{t('workerDetail.cancellationPolicyDesc')}</p>
+              </div>
+
+              <hr className="wd__sd-divider" />
+
+              <div className="wd__sd-group">
+                <h3 className="wd__sd-label">Good to know</h3>
+                <div className="wd__sd-textarea-wrap">
+                  <textarea
+                    className="wd__sd-textarea"
+                    maxLength={150}
+                    rows={3}
+                    placeholder="Anything clients should know before booking — e.g. 'I always send a confirmation photo after the job is done.'"
+                    value={goodToKnow}
+                    onChange={(e) => setGoodToKnow(e.target.value)}
+                    onBlur={() => saveToSupabase({ good_to_know: goodToKnow })}
+                  />
+                  <span className="wd__sd-counter">{goodToKnow.length}/150</span>
                 </div>
+              </div>
+
+              <hr className="wd__sd-divider" />
+
+              <div className="wd__sd-group">
+                <div className="wd__sd-emergency-row">
+                  <div className="wd__sd-emergency-left">
+                    <span className="wd__sd-emergency-bolt">⚡</span>
+                    <h3 className="wd__sd-label wd__sd-label--inline">Emergency 24h</h3>
+                  </div>
+                  <label className="wd__sd-toggle">
+                    <input
+                      type="checkbox"
+                      checked={emergency24h}
+                      onChange={() => {
+                        const next = !emergency24h
+                        setEmergency24h(next)
+                        saveToSupabase({ emergency_24h: next })
+                      }}
+                    />
+                    <span className="wd__sd-toggle-track" />
+                  </label>
+                </div>
+                <p className={`wd__sd-emergency-status${emergency24h ? ' wd__sd-emergency-status--on' : ''}`}>
+                  {emergency24h
+                    ? '⚡ You are available for emergency callouts at any hour'
+                    : 'Not currently available for emergency callouts'}
+                </p>
+                <p className="wd__sd-emergency-note">
+                  Only turn this on if you are genuinely available to respond at any hour. Clients booking you under Emergency 24h will expect a fast response.
+                </p>
               </div>
             </section>
 

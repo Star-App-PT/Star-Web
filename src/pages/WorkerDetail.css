@@ -513,35 +513,183 @@
 .map-marker--secondary span { background: var(--star-white); color: var(--star-gray-900); border: 1px solid var(--star-gray-200); }
 .map-marker--secondary span:hover { background: var(--star-gray-900); color: var(--star-white); transform: scale(1.08); }
 
-/* — Things to Know — */
-.wd__know-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 28px;
+/* — Service Details — */
+
+.wd__sd-group {
+  margin-bottom: 4px;
 }
 
-.wd__know-item {
+.wd__sd-label {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--star-gray-900);
+  margin: 0 0 12px;
+}
+
+.wd__sd-label--inline {
+  margin: 0;
+}
+
+.wd__sd-divider {
+  border: none;
+  border-top: 1px solid var(--star-gray-200);
+  margin: 20px 0;
+}
+
+.wd__sd-chips {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 8px;
 }
 
-.wd__know-item svg {
-  color: var(--star-gray-700);
-}
-
-.wd__know-item h3 {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--star-gray-900);
-  margin: 0;
-}
-
-.wd__know-item p {
+.wd__sd-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  border: 1.5px solid #DDDDDD;
+  border-radius: 50px;
+  background: #fff;
   font-size: 0.85rem;
+  font-weight: 500;
+  font-family: inherit;
+  color: #222;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  user-select: none;
+}
+
+.wd__sd-chip:hover {
+  background: #F7F7F7;
+}
+
+.wd__sd-chip--on {
+  background: #1B4FBA;
+  border-color: #1B4FBA;
+  color: #fff;
+}
+
+.wd__sd-chip--on:hover {
+  background: #153f96;
+}
+
+.wd__sd-textarea-wrap {
+  position: relative;
+}
+
+.wd__sd-textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid #DDDDDD;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  color: #222;
+  resize: none;
+  outline: none;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+}
+
+.wd__sd-textarea:focus {
+  border-color: #222;
+}
+
+.wd__sd-textarea::placeholder {
+  color: #B0B0B0;
+}
+
+.wd__sd-counter {
+  display: block;
+  text-align: right;
+  font-size: 0.75rem;
+  color: #B0B0B0;
+  margin-top: 4px;
+}
+
+/* Emergency 24h */
+
+.wd__sd-emergency-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.wd__sd-emergency-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wd__sd-emergency-bolt {
+  font-size: 1.5rem;
+}
+
+.wd__sd-toggle {
+  position: relative;
+  display: inline-block;
+  width: 56px;
+  height: 30px;
+  flex-shrink: 0;
+}
+
+.wd__sd-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.wd__sd-toggle-track {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #D1D5DB;
+  border-radius: 30px;
+  transition: background 0.25s;
+}
+
+.wd__sd-toggle-track::before {
+  content: "";
+  position: absolute;
+  height: 24px;
+  width: 24px;
+  left: 3px;
+  bottom: 3px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.25s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.wd__sd-toggle input:checked + .wd__sd-toggle-track {
+  background: #F59E0B;
+}
+
+.wd__sd-toggle input:checked + .wd__sd-toggle-track::before {
+  transform: translateX(26px);
+}
+
+.wd__sd-emergency-status {
+  font-size: 0.9rem;
+  font-weight: 500;
   color: var(--star-gray-600);
+  margin: 0 0 8px;
+}
+
+.wd__sd-emergency-status--on {
+  font-weight: 700;
+  color: #B45309;
+}
+
+.wd__sd-emergency-note {
+  font-size: 0.8rem;
+  color: #AAAAAA;
   margin: 0;
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
 /* — Trust Banner — */
@@ -639,8 +787,8 @@
     grid-template-columns: 1fr;
   }
 
-  .wd__know-grid {
-    grid-template-columns: 1fr;
+  .wd__sd-chips {
+    gap: 6px;
   }
 
   .wd__quals-layout {
