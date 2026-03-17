@@ -101,7 +101,7 @@ export default function CategorySignup() {
   }, [imgSrc, confirmed])
 
   const handleNext = async () => {
-    if (!confirmed) return
+    if (!imgSrc) return
     if (supabase) {
       try {
         const { data: { session } } = await supabase.auth.getSession()
@@ -256,7 +256,7 @@ export default function CategorySignup() {
       </div>
 
       <div className="cs__footer">
-        <button type="button" className="cs__next btn-primary" disabled={!confirmed} onClick={handleNext}>
+        <button type="button" className="cs__next btn-primary" disabled={!imgSrc} onClick={handleNext}>
           {t('serviceArea.next')}
         </button>
       </div>
