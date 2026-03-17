@@ -171,6 +171,13 @@ export default function WorkerAbout() {
         >
           {t('serviceArea.next')}
         </button>
+        {/* DEMO ONLY — REMOVE BEFORE LAUNCH */}
+        <span
+          style={{ display: 'block', textAlign: 'center', marginTop: 12, color: '#AAAAAA', fontSize: 14, cursor: 'pointer' }}
+          onClick={() => navigate(`/worker/signup/${category}`)}
+        >
+          Skip (Demo Only)
+        </span>
       </div>
     </div>
   )

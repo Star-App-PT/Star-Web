@@ -266,6 +266,14 @@ export default function FinishProfile() {
             >
               {submitting ? t('common.submitting') : t('finishProfile.agreeAndContinue')}
             </button>
+
+            {/* DEMO ONLY — REMOVE BEFORE LAUNCH */}
+            <span
+              style={{ display: 'block', textAlign: 'center', marginTop: 16, color: '#AAAAAA', fontSize: 14, cursor: 'pointer' }}
+              onClick={() => navigate('/choose-category', { replace: true })}
+            >
+              Skip (Demo Only)
+            </span>
           </form>
         </div>
       </div>

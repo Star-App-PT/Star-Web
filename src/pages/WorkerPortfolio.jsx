@@ -127,6 +127,13 @@ export default function WorkerPortfolio() {
         >
           {t('serviceArea.next')}
         </button>
+        {/* DEMO ONLY — REMOVE BEFORE LAUNCH */}
+        <span
+          style={{ display: 'block', textAlign: 'center', marginTop: 12, color: '#AAAAAA', fontSize: 14, cursor: 'pointer' }}
+          onClick={() => navigate(`/worker-packages/${category}`)}
+        >
+          Skip (Demo Only)
+        </span>
       </div>
     </div>
   )

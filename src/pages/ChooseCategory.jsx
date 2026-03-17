@@ -39,6 +39,14 @@ export default function ChooseCategory() {
             </button>
           ))}
         </div>
+
+        {/* DEMO ONLY — REMOVE BEFORE LAUNCH */}
+        <span
+          style={{ display: 'block', textAlign: 'center', marginTop: 16, color: '#AAAAAA', fontSize: 14, cursor: 'pointer' }}
+          onClick={() => navigate('/service-area/cleaning')}
+        >
+          Skip (Demo Only)
+        </span>
       </div>
     </div>
   )

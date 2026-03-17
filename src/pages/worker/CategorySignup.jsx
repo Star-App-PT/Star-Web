@@ -259,6 +259,13 @@ export default function CategorySignup() {
         <button type="button" className="cs__next btn-primary" disabled={!imgSrc} onClick={handleNext}>
           {t('serviceArea.next')}
         </button>
+        {/* DEMO ONLY — REMOVE BEFORE LAUNCH */}
+        <span
+          style={{ display: 'block', textAlign: 'center', marginTop: 12, color: '#AAAAAA', fontSize: 14, cursor: 'pointer' }}
+          onClick={() => navigate(`/worker-portfolio/${category}`)}
+        >
+          Skip (Demo Only)
+        </span>
       </div>
     </div>
   )

@@ -307,6 +307,13 @@ export default function ServiceArea() {
         <button type="button" className="sa__next btn-primary" disabled={!address} onClick={handleNext}>
           {t('serviceArea.next')}
         </button>
+        {/* DEMO ONLY — REMOVE BEFORE LAUNCH */}
+        <span
+          style={{ display: 'block', textAlign: 'center', marginTop: 12, color: '#AAAAAA', fontSize: 14, cursor: 'pointer' }}
+          onClick={() => navigate(`/worker-about/${category}`)}
+        >
+          Skip (Demo Only)
+        </span>
       </div>
 
       {modalOpen && (

@@ -200,14 +200,13 @@ export default function SignupForm({ category, onBack }) {
               </button>
             </div>
 
-            {/* TESTING ONLY - remove skip link before going live */}
-            <button
-              type="button"
-              className="sf-card__skip-link"
-              onClick={() => navigate('/choose-category')}
+            {/* DEMO ONLY — REMOVE BEFORE LAUNCH */}
+            <span
+              style={{ display: 'block', textAlign: 'center', marginTop: 16, color: '#AAAAAA', fontSize: 14, cursor: 'pointer' }}
+              onClick={() => navigate('/finish-profile')}
             >
-              Skip (Testing Only)
-            </button>
+              Skip (Demo Only)
+            </span>
           </>
         )}
 
