@@ -1,6 +1,7 @@
 .country-code-picker {
   position: relative;
   min-width: 96px;
+  box-sizing: border-box;
 }
 
 .country-code-picker__button {
@@ -15,12 +16,15 @@
   gap: 10px;
   cursor: pointer;
   padding: 14px 14px 14px 16px;
+  border-radius: 50px 0 0 50px;
+  box-sizing: border-box;
 }
 
 .country-code-picker__inline-search {
   display: flex;
   align-items: center;
   min-height: 100%;
+  border-radius: 50px 0 0 50px;
 }
 
 .country-code-picker__value {
@@ -68,6 +72,7 @@
   color: #222;
   outline: none;
   background: transparent;
+  border-radius: 50px 0 0 50px;
 }
 
 .country-code-picker__search-input::placeholder {

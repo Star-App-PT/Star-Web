@@ -131,17 +131,20 @@
   position: relative;
   display: flex;
   align-items: stretch;
+  width: 100%;
   gap: 0;
   border: 1.5px solid #CCCCCC;
   border-radius: 50px;
   overflow: visible;
   background: #fff;
+  box-sizing: border-box;
 }
 
 .worker-profile-cleaner__phone-group .country-code-picker {
   width: 112px;
   flex-shrink: 0;
   border-right: 1px solid #DDDDDD;
+  border-radius: 50px 0 0 50px;
 }
 
 .worker-profile-cleaner__country-picker-button {
@@ -153,7 +156,10 @@
 .worker-profile-cleaner__input--phone {
   flex: 1;
   border: none;
+  border-radius: 0 50px 50px 0;
   background: transparent;
+  box-sizing: border-box;
+  min-width: 0;
 }
 
 .worker-profile-cleaner__footer {

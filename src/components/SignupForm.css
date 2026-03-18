@@ -85,10 +85,12 @@
   position: relative;
   display: flex;
   align-items: center;
+  width: 100%;
   border: 1.5px solid #CCCCCC;
   border-radius: 50px;
   overflow: visible;
   background: #fff;
+  box-sizing: border-box;
 }
 
 .sf-card__phone-label {
@@ -106,6 +108,7 @@
   width: 112px;
   flex-shrink: 0;
   border-right: 1px solid #DDDDDD;
+  border-radius: 50px 0 0 50px;
 }
 
 .sf-card__country-picker-button {
@@ -115,6 +118,7 @@
 .sf-card__phone-input {
   flex: 1;
   border: none;
+  border-radius: 0 50px 50px 0;
   outline: none;
   padding: 14px 16px;
   font-size: 1rem;
@@ -122,6 +126,7 @@
   color: #222;
   background: transparent;
   box-sizing: border-box;
+  min-width: 0;
 }
 
 .sf-card__phone-input::placeholder {
@@ -129,7 +134,7 @@
 }
 
 .sf-card__phone-group:focus-within {
-  border-color: #222;
+  border-color: #CCCCCC;
 }
 
 /* Generic field group (email/password screens) */
