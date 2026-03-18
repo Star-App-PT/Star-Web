@@ -2,19 +2,8 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useDemoMode } from '../../../contexts/DemoModeContext'
+import CountryCodePicker from '../../../components/CountryCodePicker'
 import './ClientSignup.css'
-
-const COUNTRY_CODES = [
-  { code: '+351', label: '🇵🇹 +351' },
-  { code: '+44',  label: '🇬🇧 +44' },
-  { code: '+1',   label: '🇺🇸 +1' },
-  { code: '+55',  label: '🇧🇷 +55' },
-  { code: '+33',  label: '🇫🇷 +33' },
-  { code: '+49',  label: '🇩🇪 +49' },
-  { code: '+34',  label: '🇪🇸 +34' },
-  { code: '+39',  label: '🇮🇹 +39' },
-  { code: '+31',  label: '🇳🇱 +31' },
-]
 
 export default function ClientSignupName() {
   const { t } = useTranslation()
@@ -23,7 +12,7 @@ export default function ClientSignupName() {
 
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
-  const [countryCode, setCountryCode] = useState('+351')
+  const [country, setCountry] = useState(null)
   const [phone, setPhone] = useState('')
 
   const canContinue = firstName.trim() && lastName.trim() && phone.trim()
@@ -68,15 +57,11 @@ export default function ClientSignupName() {
         <div className="csu__field">
           <label className="csu__field-label">{t('clientSignup.phoneNumber')}</label>
           <div className="csu__phone-group">
-            <select
-              className="csu__country-select"
-              value={countryCode}
-              onChange={(e) => setCountryCode(e.target.value)}
-            >
-              {COUNTRY_CODES.map((c, i) => (
-                <option key={`${c.code}-${i}`} value={c.code}>{c.label}</option>
-              ))}
-            </select>
+            <CountryCodePicker
+              value={country}
+              onChange={setCountry}
+              buttonClassName="csu__country-picker-button"
+            />
             <input
               type="tel"
               className="csu__phone-input"

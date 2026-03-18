@@ -20,6 +20,11 @@
     "submitting": "Enviando...",
     "somethingWentWrong": "Algo salió mal. Por favor, inténtalo de nuevo."
   },
+  "countryPicker": {
+    "title": "Seleccionar prefijo",
+    "searchPlaceholder": "Buscar país o prefijo",
+    "noResults": "No se encontraron países"
+  },
   "signupChoice": {
     "title": "Crear cuenta",
     "subtitle": "¿Cómo quieres usar Star SVS?",

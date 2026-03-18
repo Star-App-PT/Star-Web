@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { SUPPORTED_CITIES, DEFAULT_CITY } from '../data/workers'
 
+const DETECTED_COUNTRY_KEY = 'star_user_country_code'
+
 function haversine(lat1, lng1, lat2, lng2) {
   const R = 6371
   const dLat = ((lat2 - lat1) * Math.PI) / 180
@@ -74,6 +76,10 @@ export default function useUserLocation() {
             data.address?.state || data.address?.county || data.address?.country || ''
           const countryCode = (data.address?.country_code || '').toLowerCase()
           const outsidePortugal = countryCode && countryCode !== 'pt'
+
+          if (typeof window !== 'undefined' && countryCode) {
+            window.sessionStorage.setItem(DETECTED_COUNTRY_KEY, countryCode)
+          }
 
           if (detected) {
             seen.add(detected.toLowerCase())

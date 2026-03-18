@@ -88,7 +88,6 @@
 }
 
 .sf-card__phone-top {
-  position: relative;
   padding: 10px 16px 8px;
   border-bottom: 1px solid #DDDDDD;
 }
@@ -100,26 +99,12 @@
   margin-bottom: 2px;
 }
 
-.sf-card__country-select {
+.sf-card .country-code-picker {
   width: 100%;
-  border: none;
-  outline: none;
-  background: transparent;
-  font-size: 0.95rem;
-  font-family: inherit;
-  color: #222;
-  appearance: none;
-  padding: 0;
-  cursor: pointer;
 }
 
-.sf-card__country-chevron {
-  position: absolute;
-  right: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
-  color: #717171;
+.sf-card__country-picker-button {
+  padding: 0;
 }
 
 .sf-card__phone-bottom {

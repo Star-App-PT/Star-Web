@@ -3,20 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { supabase } from '../supabase'
 import { useDemoMode } from '../contexts/DemoModeContext'
+import CountryCodePicker from './CountryCodePicker'
 import './SignupForm.css'
-
-const COUNTRY_CODES = [
-  { code: '+351', label: 'Portugal (+351)', flag: '🇵🇹' },
-  { code: '+44',  label: 'United Kingdom (+44)', flag: '🇬🇧' },
-  { code: '+1',   label: 'United States (+1)', flag: '🇺🇸' },
-  { code: '+1',   label: 'Canada (+1)', flag: '🇨🇦' },
-  { code: '+55',  label: 'Brazil (+55)', flag: '🇧🇷' },
-  { code: '+33',  label: 'France (+33)', flag: '🇫🇷' },
-  { code: '+49',  label: 'Germany (+49)', flag: '🇩🇪' },
-  { code: '+34',  label: 'Spain (+34)', flag: '🇪🇸' },
-  { code: '+39',  label: 'Italy (+39)', flag: '🇮🇹' },
-  { code: '+31',  label: 'Netherlands (+31)', flag: '🇳🇱' },
-]
 
 export default function SignupForm({ category, onBack }) {
   const { t } = useTranslation()
@@ -24,7 +12,7 @@ export default function SignupForm({ category, onBack }) {
   const { isDemoMode } = useDemoMode()
 
   const [screen, setScreen] = useState('main')
-  const [countryCode, setCountryCode] = useState('+351')
+  const [country, setCountry] = useState(null)
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -141,16 +129,11 @@ export default function SignupForm({ category, onBack }) {
               <div className="sf-card__phone-group">
                 <div className="sf-card__phone-top">
                   <label className="sf-card__phone-label">{t('signupModal.countryRegion')}</label>
-                  <select
-                    className="sf-card__country-select"
-                    value={countryCode}
-                    onChange={(e) => setCountryCode(e.target.value)}
-                  >
-                    {COUNTRY_CODES.map((c, i) => (
-                      <option key={`${c.code}-${i}`} value={c.code}>{c.flag} {c.label}</option>
-                    ))}
-                  </select>
-                  <svg className="sf-card__country-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                  <CountryCodePicker
+                    value={country}
+                    onChange={setCountry}
+                    buttonClassName="sf-card__country-picker-button"
+                  />
                 </div>
                 <div className="sf-card__phone-bottom">
                   <input

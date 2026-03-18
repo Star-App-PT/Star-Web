@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useDemoMode } from '../../contexts/DemoModeContext'
+import CountryCodePicker from '../../components/CountryCodePicker'
 import './WorkerProfile.css'
 import './WorkerProfileCleaner.css'
 
@@ -34,6 +35,7 @@ export default function WorkerProfileCleaner() {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
+  const [phoneCountry, setPhoneCountry] = useState(null)
   const [phone, setPhone] = useState('')
   const [addressLine1, setAddressLine1] = useState('')
   const [addressLine2, setAddressLine2] = useState('')
@@ -180,13 +182,20 @@ export default function WorkerProfileCleaner() {
           <label className="worker-profile-cleaner__field-label">
             {t('workerProfileCleaner.phone')}
           </label>
-          <input
-            type="tel"
-            className="worker-profile-cleaner__input"
-            placeholder={t('workerProfileCleaner.phonePlaceholder')}
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-          />
+          <div className="worker-profile-cleaner__phone-group">
+            <CountryCodePicker
+              value={phoneCountry}
+              onChange={setPhoneCountry}
+              buttonClassName="worker-profile-cleaner__country-picker-button"
+            />
+            <input
+              type="tel"
+              className="worker-profile-cleaner__input worker-profile-cleaner__input--phone"
+              placeholder={t('workerProfileCleaner.phonePlaceholder')}
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+            />
+          </div>
         </div>
         <div className="worker-profile-cleaner__field">
           <label className="worker-profile-cleaner__field-label">

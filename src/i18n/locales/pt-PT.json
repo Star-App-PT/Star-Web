@@ -20,6 +20,11 @@
     "submitting": "A enviar...",
     "somethingWentWrong": "Algo correu mal. Por favor, tente novamente."
   },
+  "countryPicker": {
+    "title": "Selecionar indicativo",
+    "searchPlaceholder": "Pesquisar país ou indicativo",
+    "noResults": "Nenhum país encontrado"
+  },
   "signupChoice": {
     "title": "Criar conta",
     "subtitle": "Como pretende usar a Star SVS?",

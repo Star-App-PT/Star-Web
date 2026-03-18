@@ -250,23 +250,22 @@
   border-radius: 12px;
   overflow: hidden;
   transition: border-color 0.15s;
+  position: relative;
 }
 
 .csu__phone-group:focus-within {
   border-color: #222;
 }
 
-.csu__country-select {
-  padding: 14px 8px 14px 14px;
-  border: none;
-  background: #fff;
-  font-size: 0.9rem;
-  font-family: inherit;
-  color: #222;
-  outline: none;
-  cursor: pointer;
+.csu .country-code-picker {
   flex-shrink: 0;
-  width: 110px;
+  width: 120px;
+  border-right: 1px solid #E5E7EB;
+}
+
+.csu__country-picker-button {
+  height: 100%;
+  padding: 14px 10px 14px 14px;
 }
 
 .csu__phone-input {

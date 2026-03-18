@@ -127,6 +127,29 @@
   box-sizing: border-box;
 }
 
+.worker-profile-cleaner__phone-group {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.worker-profile-cleaner__phone-group .country-code-picker {
+  width: 130px;
+  flex-shrink: 0;
+}
+
+.worker-profile-cleaner__country-picker-button {
+  height: 100%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 2px solid var(--star-gray-200);
+  background: var(--star-white);
+}
+
+.worker-profile-cleaner__input--phone {
+  flex: 1;
+}
+
 .worker-profile-cleaner__footer {
   display: flex;
   justify-content: space-between;
@@ -141,4 +164,14 @@
 
 .worker-profile-cleaner__continue {
   /* visual styles via .btn-primary */
+}
+
+@media (max-width: 600px) {
+  .worker-profile-cleaner__phone-group {
+    flex-direction: column;
+  }
+
+  .worker-profile-cleaner__phone-group .country-code-picker {
+    width: 100%;
+  }
 }

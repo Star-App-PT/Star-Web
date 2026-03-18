@@ -20,6 +20,11 @@
     "submitting": "Submitting...",
     "somethingWentWrong": "Something went wrong. Please try again."
   },
+  "countryPicker": {
+    "title": "Select country code",
+    "searchPlaceholder": "Search country or code",
+    "noResults": "No countries found"
+  },
   "signupChoice": {
     "title": "Sign up",
     "subtitle": "Choose how you want to use Star SVS",

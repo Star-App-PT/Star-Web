@@ -1,0 +1,200 @@
+.country-code-picker {
+  position: relative;
+}
+
+.country-code-picker__button {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: #222;
+  font: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  cursor: pointer;
+  padding: 14px 14px 14px 16px;
+}
+
+.country-code-picker__value {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.country-code-picker__flag {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.country-code-picker__dial {
+  font-size: 0.95rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.country-code-picker__chevron {
+  color: #717171;
+  font-size: 0.95rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.country-code-picker__backdrop {
+  position: fixed;
+  inset: 0;
+  background: transparent;
+  z-index: 30;
+}
+
+.country-code-picker__backdrop--mobile {
+  background: rgba(15, 23, 42, 0.24);
+}
+
+.country-code-picker__panel {
+  background: #fff;
+  border: 1px solid #E5E7EB;
+  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.12);
+  z-index: 31;
+}
+
+.country-code-picker__panel--dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: min(360px, 90vw);
+  border-radius: 16px;
+  overflow: hidden;
+  animation: country-picker-fade 0.16s ease;
+}
+
+.country-code-picker__panel--sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 24px 24px 0 0;
+  max-height: min(70vh, 560px);
+  display: flex;
+  flex-direction: column;
+  animation: country-picker-sheet-up 0.2s ease;
+}
+
+.country-code-picker__sheet-handle {
+  width: 48px;
+  height: 5px;
+  background: #D1D5DB;
+  border-radius: 999px;
+  margin: 10px auto 8px;
+  flex-shrink: 0;
+}
+
+.country-code-picker__panel-header {
+  padding: 12px;
+  border-bottom: 1px solid #E5E7EB;
+}
+
+.country-code-picker__panel-title {
+  margin: 0 0 10px;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #222;
+}
+
+.country-code-picker__search {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #D1D5DB;
+  border-radius: 999px;
+  padding: 12px 14px;
+  font: inherit;
+  color: #222;
+  outline: none;
+}
+
+.country-code-picker__search:focus {
+  border-color: #1B4FBA;
+}
+
+.country-code-picker__list {
+  max-height: 320px;
+  overflow-y: auto;
+  padding: 6px;
+}
+
+.country-code-picker__panel--sheet .country-code-picker__list {
+  max-height: none;
+  flex: 1;
+  padding-bottom: calc(12px + env(safe-area-inset-bottom));
+}
+
+.country-code-picker__option {
+  width: 100%;
+  border: none;
+  background: transparent;
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  color: #222;
+}
+
+.country-code-picker__option:hover {
+  background: #F8FAFC;
+}
+
+.country-code-picker__option--selected {
+  background: rgba(27, 79, 186, 0.08);
+  color: #1B4FBA;
+}
+
+.country-code-picker__option-flag {
+  font-size: 1rem;
+}
+
+.country-code-picker__option-name {
+  min-width: 0;
+  font-size: 0.95rem;
+}
+
+.country-code-picker__option-dial {
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.country-code-picker__empty {
+  padding: 18px 14px;
+  text-align: center;
+  color: #6B7280;
+  font-size: 0.9rem;
+}
+
+@keyframes country-picker-fade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes country-picker-sheet-up {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
