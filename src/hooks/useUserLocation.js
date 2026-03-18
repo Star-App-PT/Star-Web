@@ -37,10 +37,14 @@ export default function useUserLocation() {
   const [supported, setSupported] = useState(true)
   const [loading, setLoading] = useState(true)
   const [userCityName, setUserCityName] = useState(null)
+  const [isOutsidePortugal, setIsOutsidePortugal] = useState(false)
   const [nearbyCities, setNearbyCities] = useState(DEFAULT_SUGGESTIONS)
 
   useEffect(() => {
     if (!navigator.geolocation) {
+      setCity(DEFAULT_CITY)
+      setUserCityName(DEFAULT_CITY)
+      setSupported(true)
       setLoading(false)
       return
     }
@@ -49,10 +53,6 @@ export default function useUserLocation() {
       async (pos) => {
         const { latitude: lat, longitude: lng } = pos.coords
         const { city: nearest, distance } = findNearestCity(lat, lng)
-
-        setCity(nearest)
-        setSupported(distance <= MAX_DISTANCE_KM)
-
         const suggestions = []
         const seen = new Set()
 
@@ -66,16 +66,31 @@ export default function useUserLocation() {
             data.address?.city || data.address?.town || data.address?.village
           const region =
             data.address?.state || data.address?.county || data.address?.country || ''
+          const countryCode = (data.address?.country_code || '').toLowerCase()
+          const outsidePortugal = countryCode && countryCode !== 'pt'
 
           if (detected) {
             seen.add(detected.toLowerCase())
             suggestions.push({ city: detected, desc: region })
             setUserCityName(detected)
+          }
+
+          if (outsidePortugal) {
+            setCity(DEFAULT_CITY)
+            setSupported(false)
+            setIsOutsidePortugal(true)
+            if (!detected) setUserCityName(DEFAULT_CITY)
           } else {
-            setUserCityName(distance <= MAX_DISTANCE_KM ? nearest : 'your area')
+            setCity(nearest)
+            setSupported(distance <= MAX_DISTANCE_KM)
+            setIsOutsidePortugal(false)
+            if (!detected) setUserCityName(nearest)
           }
         } catch {
-          setUserCityName(distance <= MAX_DISTANCE_KM ? nearest : 'your area')
+          setCity(distance <= MAX_DISTANCE_KM ? nearest : DEFAULT_CITY)
+          setSupported(distance <= MAX_DISTANCE_KM)
+          setIsOutsidePortugal(false)
+          setUserCityName(distance <= MAX_DISTANCE_KM ? nearest : DEFAULT_CITY)
         }
 
         // Overpass: find real cities and towns within 60km
@@ -114,11 +129,15 @@ export default function useUserLocation() {
         setLoading(false)
       },
       () => {
+        setCity(DEFAULT_CITY)
+        setUserCityName(DEFAULT_CITY)
+        setSupported(true)
+        setIsOutsidePortugal(false)
         setLoading(false)
       },
-      { timeout: 5000, maximumAge: 300000 }
+      { timeout: 10000, maximumAge: 0, enableHighAccuracy: true }
     )
   }, [])
 
-  return { city, supported, loading, userCityName, nearbyCities, setCity, setSupported, setUserCityName }
+  return { city, supported, loading, userCityName, isOutsidePortugal, nearbyCities, setCity, setSupported, setUserCityName }
 }

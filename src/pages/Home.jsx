@@ -79,7 +79,7 @@ export default function Home() {
   const [searchParams] = useSearchParams()
   const selectedCategory = searchParams.get('category') || 'cleaners'
   const [favorites, setFavorites] = useState(new Set())
-  const { city: CITY, supported: citySupported, userCityName, nearbyCities } = useUserLocation()
+  const { city: CITY, supported: citySupported, userCityName, isOutsidePortugal, nearbyCities } = useUserLocation()
 
   const [openDropdown, setOpenDropdown] = useState(null)
   const [whereValue, setWhereValue] = useState('')
@@ -136,7 +136,9 @@ export default function Home() {
 
   const current = CATEGORIES.find((c) => c.id === selectedCategory) || CATEGORIES[0]
   const categoryLabel = selectedCategory === 'cleaners' ? t('home.categoryClean') : selectedCategory === 'handymen' ? t('home.categoryRepair') : t('home.categoryServices')
-  const displayCity = whereValue || userCityName || CITY
+  const searchCity = whereValue || userCityName || CITY
+  const workersCity = citySupported ? searchCity : CITY
+  const comingSoonCity = isOutsidePortugal ? t('home.yourArea') : (userCityName || t('home.yourArea'))
 
   const otherWorkersMixed = useMemo(() => {
     const others = CATEGORIES.filter((c) => c.id !== selectedCategory).flatMap((c) => c.workers)
@@ -387,19 +389,19 @@ export default function Home() {
       </div>
 
       <div className="home__main container">
-        {!citySupported && userCityName && (
+        {!citySupported && searchCity && (
           <div className="home__coming-soon">
             <div className="home__coming-soon-icon">
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
             </div>
-            <h3 className="home__coming-soon-title">{t('home.comingSoonTitle', { city: userCityName })}</h3>
+            <h3 className="home__coming-soon-title">{t('home.comingSoonTitle', { city: comingSoonCity })}</h3>
             <p className="home__coming-soon-desc">{t('home.comingSoonDesc')}</p>
-            <p className="home__coming-soon-sub">{t('home.showingWorkersInstead', { city: displayCity })}</p>
+            <p className="home__coming-soon-sub">{t('home.showingWorkersInstead', { city: workersCity })}</p>
           </div>
         )}
         <div className="home__hero-card">
           <div>
-            <h2 className="home__hero-title">{t('home.continueSearching', { category: categoryLabel.toLowerCase(), location: displayCity })}</h2>
+            <h2 className="home__hero-title">{t('home.continueSearching', { category: categoryLabel.toLowerCase(), location: workersCity })}</h2>
             <p className="home__hero-dates">{PICKED_DATES} · {t('common.guests', { count: 2 })}</p>
           </div>
           <div className="home__hero-thumb">
@@ -407,7 +409,7 @@ export default function Home() {
           </div>
         </div>
 
-        <h3 className="home__section-title">{t('home.workersInLocation', { location: displayCity })}</h3>
+        <h3 className="home__section-title">{t('home.workersInLocation', { location: workersCity })}</h3>
         <div className="home__cards-scroll">
           {current.workers.map((w) => (
             <a key={w.id} className="home__worker-card" href={`/worker/${w.id}`} target="_blank" rel="noopener noreferrer">

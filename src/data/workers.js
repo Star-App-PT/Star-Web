@@ -72,6 +72,7 @@ export const PICKED_DATES = 'Aug 1 – Aug 3'
 export const SUPPORTED_CITIES = {
   Porto: { lat: 41.1579, lng: -8.6291 },
   Lisbon: { lat: 38.7223, lng: -9.1393 },
+  Faro: { lat: 37.0194, lng: -7.9304 },
 }
 
 export const DEFAULT_CITY = 'Porto'

@@ -23,6 +23,7 @@
   display: flex;
   align-items: center;
   gap: 32px;
+  min-width: 0;
 }
 
 .star-header__category {
@@ -36,6 +37,11 @@
   text-decoration: none;
   padding-bottom: 2px;
   border-bottom: 2px solid transparent;
+  min-width: 0;
+}
+
+.star-header__category span {
+  display: block;
 }
 
 .star-header__category:hover {
@@ -76,4 +82,68 @@
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 24px;
+}
+
+@media (max-width: 768px) {
+  .star-header__inner {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 8px;
+    padding: 4px 12px;
+  }
+
+  .star-header__logo-img {
+    height: 40px;
+  }
+
+  .star-header__categories {
+    justify-content: space-evenly;
+    gap: 6px;
+    width: 100%;
+  }
+
+  .star-header__category {
+    flex: 1 1 0;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    font-size: 0.65rem;
+    line-height: 1.1;
+    text-align: center;
+    padding-bottom: 0;
+  }
+
+  .star-header__category-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .star-header__category--services .star-header__category-icon {
+    width: 52px;
+    height: 52px;
+    margin-right: 0;
+  }
+
+  .star-header__nav {
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .star-header__category {
+    border-bottom: none;
+  }
+
+  .star-header__category span {
+    display: none;
+  }
+
+  .star-header__category-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .star-header__category--services .star-header__category-icon {
+    width: 46px;
+    height: 46px;
+  }
 }
