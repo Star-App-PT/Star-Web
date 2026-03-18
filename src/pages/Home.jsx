@@ -5,6 +5,7 @@ import './Home.css'
 import { CATEGORIES, PICKED_DATES, CLEANERS, HANDYMEN, SERVICES, SUPPORTED_CITIES } from '../data/workers'
 import useUserLocation from '../hooks/useUserLocation'
 import WorkerAvatar from '../components/WorkerAvatar'
+import MobileWorkerBookingFlow from '../components/MobileWorkerBookingFlow'
 
 function shuffle(arr) {
   const a = [...arr]
@@ -63,6 +64,42 @@ const MOBILE_CATEGORY_OPTIONS = [
   { value: 'handymen', label: 'Repairs' },
   { value: 'services', label: 'Services' },
 ]
+const MOBILE_HOME_TABS = [
+  {
+    value: 'cleaners',
+    label: 'Cleaning',
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M7 13c1.2 0 2-1 2-2.2V8.8C9 6.7 10.8 5 13 5h1" />
+        <path d="M14 5h4v4" />
+        <path d="M5 14h7l2 5H7z" />
+        <path d="M4 19h11" />
+      </svg>
+    ),
+  },
+  {
+    value: 'handymen',
+    label: 'Repairs',
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.3-3.3a5.5 5.5 0 0 1-7.3 7.3l-7.2 7.2a1.8 1.8 0 1 1-2.6-2.6l7.2-7.2a5.5 5.5 0 0 1 7.3-7.3z" />
+        <path d="M5 5c1.1.2 2 .9 2.4 1.9" />
+      </svg>
+    ),
+  },
+  {
+    value: 'services',
+    label: 'Services',
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M5 11h14" />
+        <path d="M7 11a5 5 0 0 1 10 0" />
+        <path d="M6 11v6a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-6" />
+        <path d="M4 20h16" />
+      </svg>
+    ),
+  },
+]
 const ALL_SERVICE_SUGGESTIONS = Object.entries(WHO_SUBCATEGORIES).flatMap(([category, items]) =>
   items.map((item) => ({ value: item.value, category }))
 )
@@ -88,7 +125,7 @@ export default function Home() {
   const [searchParams] = useSearchParams()
   const selectedCategory = searchParams.get('category') || 'cleaners'
   const [favorites, setFavorites] = useState(new Set())
-  const { city: CITY, supported: citySupported, userCityName, isOutsidePortugal, hasPreciseLocation, coords, nearbyCities } = useUserLocation()
+  const { city: CITY, supported: citySupported, userCityName, userAddress, isOutsidePortugal, hasPreciseLocation, coords, nearbyCities } = useUserLocation()
 
   const [openDropdown, setOpenDropdown] = useState(null)
   const [whereValue, setWhereValue] = useState('')
@@ -101,8 +138,10 @@ export default function Home() {
   const [mobileWhere, setMobileWhere] = useState('')
   const [mobileWhereCoords, setMobileWhereCoords] = useState(null)
   const [mobileCategory, setMobileCategory] = useState('')
+  const [mobileHomeCategory, setMobileHomeCategory] = useState('cleaners')
   const [mobileSelectedDate, setMobileSelectedDate] = useState(null)
   const [mobileDatePreset, setMobileDatePreset] = useState('today')
+  const [mobileBookingWorker, setMobileBookingWorker] = useState(null)
   const searchWrapRef = useRef(null)
   const todayRef = useRef(new Date())
   const today = todayRef.current
@@ -153,6 +192,7 @@ export default function Home() {
   }, [])
 
   const current = CATEGORIES.find((c) => c.id === selectedCategory) || CATEGORIES[0]
+  const currentMobileHome = CATEGORIES.find((c) => c.id === mobileHomeCategory) || CATEGORIES[0]
   const categoryLabel = selectedCategory === 'cleaners' ? t('home.categoryClean') : selectedCategory === 'handymen' ? t('home.categoryRepair') : t('home.categoryServices')
   const searchCity = whereValue || userCityName || CITY
   const workersCity = citySupported ? searchCity : CITY
@@ -396,6 +436,20 @@ export default function Home() {
           </span>
           <span className="home__mobile-search-launch-text">Search for a service...</span>
         </button>
+
+        <div className="home__mobile-tabs">
+          {MOBILE_HOME_TABS.map((tab) => (
+            <button
+              key={tab.value}
+              type="button"
+              className={`home__mobile-tab${mobileHomeCategory === tab.value ? ' home__mobile-tab--active' : ''}`}
+              onClick={() => setMobileHomeCategory(tab.value)}
+            >
+              <span className="home__mobile-tab-icon">{tab.icon}</span>
+              <span className="home__mobile-tab-label">{tab.label}</span>
+            </button>
+          ))}
+        </div>
 
         <div className="home__search-wrap home__desktop-search" ref={searchWrapRef}>
           <form className="home__search" onSubmit={handleSearch}>
@@ -758,6 +812,36 @@ export default function Home() {
       )}
 
       <div className="home__main container">
+        <section className="home__mobile-content">
+          <h3 className="home__mobile-section-title">Workers near you</h3>
+          <div className="home__mobile-cards-row">
+            {currentMobileHome.workers.map((worker) => (
+              <button
+                key={worker.id}
+                type="button"
+                className="home__mobile-worker-card"
+                onClick={() => setMobileBookingWorker(worker)}
+              >
+                <div className="home__mobile-worker-cover-wrap">
+                  <img src={worker.heroImage} alt="" className="home__mobile-worker-cover" />
+                </div>
+                <WorkerAvatar worker={worker} size={56} className="home__mobile-worker-avatar" />
+                <div className="home__mobile-worker-body">
+                  <p className="home__mobile-worker-name">{worker.name}</p>
+                  <p className="home__mobile-worker-category">
+                    {MOBILE_HOME_TABS.find((tab) => tab.value === mobileHomeCategory)?.label}
+                  </p>
+                  <p className="home__mobile-worker-rating">
+                    ★ {worker.rating != null ? worker.rating.toFixed(1) : 'New'} {worker.reviews ? `(${worker.reviews})` : ''}
+                  </p>
+                  <p className="home__mobile-worker-price">From €{worker.hourlyRate} / hr</p>
+                </div>
+              </button>
+            ))}
+          </div>
+        </section>
+
+        <div className="home__desktop-content">
         {!citySupported && searchCity && (
           <div className="home__coming-soon">
             <div className="home__coming-soon-icon">
@@ -845,7 +929,18 @@ export default function Home() {
             </Link>
           </div>
         </div>
+        </div>
       </div>
+
+      <MobileWorkerBookingFlow
+        open={!!mobileBookingWorker}
+        worker={mobileBookingWorker}
+        onClose={() => setMobileBookingWorker(null)}
+        userAddress={userAddress || userCityName || CITY}
+        userCoords={coords}
+        hasPreciseLocation={hasPreciseLocation}
+        categoryLabel={MOBILE_HOME_TABS.find((tab) => tab.value === mobileHomeCategory)?.label || 'Service'}
+      />
     </div>
   )
 }
