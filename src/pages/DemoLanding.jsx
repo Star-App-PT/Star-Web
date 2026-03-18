@@ -4,15 +4,15 @@ import { useDemoMode } from '../contexts/DemoModeContext'
 
 export default function DemoLanding() {
   const navigate = useNavigate()
-  const { setDemoMode } = useDemoMode()
+  const { enableDemoMode } = useDemoMode()
 
   useEffect(() => {
-    setDemoMode(true)
+    enableDemoMode()
     const timer = window.setTimeout(() => {
       navigate('/', { replace: true })
     }, 2000)
     return () => window.clearTimeout(timer)
-  }, [navigate, setDemoMode])
+  }, [navigate, enableDemoMode])
 
   return (
     <div
@@ -40,7 +40,7 @@ export default function DemoLanding() {
           style={{ width: '180px', maxWidth: '70%', marginBottom: '24px' }}
         />
         <h1 style={{ margin: '0 0 10px', color: '#1B4FBA', fontSize: '2rem', fontWeight: 700 }}>
-          Investor Demo
+          Demo
         </h1>
         <p style={{ margin: '0 0 10px', color: '#222222', fontSize: '1rem' }}>
           Skip buttons are enabled on all sign up steps.
