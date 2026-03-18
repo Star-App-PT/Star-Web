@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { supabase } from '../supabase'
+import { useDemoMode } from '../contexts/DemoModeContext'
 import './WorkerAbout.css'
 
 const PLACEHOLDERS = {
@@ -28,6 +29,7 @@ export default function WorkerAbout() {
   const { t } = useTranslation()
   const { category } = useParams()
   const navigate = useNavigate()
+  const { isDemoMode } = useDemoMode()
   const ph = PLACEHOLDERS[category] || PLACEHOLDERS.cleaning
 
   const [years, setYears] = useState(null)
@@ -172,12 +174,20 @@ export default function WorkerAbout() {
           {t('serviceArea.next')}
         </button>
         {/* DEMO ONLY — REMOVE BEFORE LAUNCH */}
-        <span
-          style={{ display: 'block', textAlign: 'center', marginTop: 12, color: '#AAAAAA', fontSize: 14, cursor: 'pointer' }}
-          onClick={() => navigate(`/worker/signup/${category}`)}
-        >
-          Skip (Demo Only)
-        </span>
+        {isDemoMode && (
+          <p
+            onClick={() => navigate(`/worker/signup/${category}`)}
+            style={{
+              textAlign: 'center',
+              color: '#AAAAAA',
+              fontSize: '14px',
+              cursor: 'pointer',
+              marginTop: '16px',
+            }}
+          >
+            Skip (Demo Only)
+          </p>
+        )}
       </div>
     </div>
   )

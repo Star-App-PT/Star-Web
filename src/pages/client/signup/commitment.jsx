@@ -1,9 +1,11 @@
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../../../supabase'
+import { useDemoMode } from '../../../contexts/DemoModeContext'
 import './ClientSignup.css'
 
 export default function ClientSignupCommitment() {
   const navigate = useNavigate()
+  const { isDemoMode } = useDemoMode()
 
   const handleAgree = async () => {
     if (supabase) {
@@ -59,9 +61,20 @@ export default function ClientSignupCommitment() {
       </div>
 
       {/* DEMO ONLY — REMOVE BEFORE LAUNCH */}
-      <span className="csu__skip" onClick={() => navigate('/')}>
-        Skip (Demo Only)
-      </span>
+      {isDemoMode && (
+        <p
+          onClick={() => navigate('/')}
+          style={{
+            textAlign: 'center',
+            color: '#AAAAAA',
+            fontSize: '14px',
+            cursor: 'pointer',
+            marginTop: '16px',
+          }}
+        >
+          Skip (Demo Only)
+        </p>
+      )}
     </div>
   )
 }

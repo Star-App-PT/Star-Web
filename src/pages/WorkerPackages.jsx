@@ -2,6 +2,7 @@ import { useState, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { supabase } from '../supabase'
+import { useDemoMode } from '../contexts/DemoModeContext'
 import actionHomeCleaning from '../assets/workers/action/action-home-cleaning.jpg'
 import actionCarpentry from '../assets/workers/action/action-carpentry.jpg'
 import actionPhotography from '../assets/workers/action/action-photography.jpg'
@@ -51,6 +52,7 @@ export default function WorkerPackages() {
   const { t } = useTranslation()
   const { category } = useParams()
   const navigate = useNavigate()
+  const { isDemoMode } = useDemoMode()
   const thumbRef = useRef(null)
 
   const [packages, setPackages] = useState([{ ...EMPTY_PKG, id: crypto.randomUUID() }])
@@ -307,12 +309,20 @@ export default function WorkerPackages() {
           {t('packages.finish')}
         </button>
         {/* DEMO ONLY — REMOVE BEFORE LAUNCH */}
-        <span
-          style={{ display: 'block', textAlign: 'center', marginTop: 12, color: '#AAAAAA', fontSize: 14, cursor: 'pointer' }}
-          onClick={() => navigate(CATEGORY_PROFILE[category] || '/worker/c1')}
-        >
-          Skip (Demo Only)
-        </span>
+        {isDemoMode && (
+          <p
+            onClick={() => navigate(CATEGORY_PROFILE[category] || '/worker/c1')}
+            style={{
+              textAlign: 'center',
+              color: '#AAAAAA',
+              fontSize: '14px',
+              cursor: 'pointer',
+              marginTop: '16px',
+            }}
+          >
+            Skip (Demo Only)
+          </p>
+        )}
       </div>
     </div>
   )

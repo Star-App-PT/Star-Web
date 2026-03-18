@@ -1,6 +1,8 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { useEffect } from 'react'
 import Header from './components/Header'
 import MobileBottomNav from './components/MobileBottomNav'
+import { DemoModeProvider, useDemoMode } from './contexts/DemoModeContext'
 import Home from './pages/Home'
 import WorkerSignup from './pages/worker/WorkerSignup'
 import CategorySignup from './pages/worker/CategorySignup'
@@ -26,13 +28,70 @@ import SignupChoice from './pages/SignupChoice'
 import ClientLogin from './pages/client/ClientLogin'
 import ClientFavourites from './pages/client/ClientFavourites'
 import WorkerLogin from './pages/worker/WorkerLogin'
+import DemoLanding from './pages/DemoLanding'
 
-export default function App() {
+function AppShell() {
+  const location = useLocation()
+  const { isDemoMode, bannerVisible, setBannerVisible, setDemoMode, exitDemoMode } = useDemoMode()
+
+  const cleanCurrentUrl = () => {
+    const params = new URLSearchParams(location.search)
+    params.delete('demo')
+    const search = params.toString()
+    return `${location.pathname}${search ? `?${search}` : ''}${location.hash || ''}`
+  }
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search)
+    if (params.get('demo') !== 'exit') return
+
+    exitDemoMode()
+    params.delete('demo')
+    const search = params.toString()
+    const nextUrl = `${location.pathname}${search ? `?${search}` : ''}${location.hash || ''}`
+    window.location.replace(nextUrl || '/')
+  }, [location, exitDemoMode])
+
+  const handleExitDemo = () => {
+    setBannerVisible(false)
+    setDemoMode(false)
+    window.location.replace(cleanCurrentUrl())
+  }
+
   return (
-    <BrowserRouter>
+    <>
       <Header />
+      {isDemoMode && bannerVisible && location.pathname !== '/demo' && (
+        <div
+          style={{
+            backgroundColor: '#F59E0B',
+            color: 'white',
+            padding: '8px 16px',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            fontSize: '13px',
+            fontWeight: 600,
+            zIndex: 9999,
+            position: 'sticky',
+            top: 0,
+          }}
+        >
+          <span>🎬 Demo Mode — Skip buttons enabled for preview</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+            <span onClick={() => setBannerVisible(false)} style={{ cursor: 'pointer' }}>✕</span>
+            <span
+              onClick={handleExitDemo}
+              style={{ cursor: 'pointer', textDecoration: 'underline' }}
+            >
+              Exit demo
+            </span>
+          </div>
+        </div>
+      )}
       <main className="app-main">
         <Routes>
+          <Route path="/demo" element={<DemoLanding />} />
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<Search />} />
           <Route path="/workers" element={<Workers />} />
@@ -61,6 +120,16 @@ export default function App() {
         </Routes>
       </main>
       <MobileBottomNav />
+    </>
+  )
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <DemoModeProvider>
+        <AppShell />
+      </DemoModeProvider>
     </BrowserRouter>
   )
 }

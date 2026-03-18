@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
+import { useDemoMode } from '../../../contexts/DemoModeContext'
 import './ClientSignup.css'
 
 export default function ClientSignupWelcome() {
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
+  const { isDemoMode } = useDemoMode()
 
   const handleGoogle = () => navigate('/client/signup/name')
   const handleApple = () => navigate('/client/signup/name')
@@ -80,9 +82,20 @@ export default function ClientSignupWelcome() {
         </p>
 
         {/* DEMO ONLY — REMOVE BEFORE LAUNCH */}
-        <span className="csu__skip" onClick={() => navigate('/client/signup/name')}>
-          Skip (Demo Only)
-        </span>
+        {isDemoMode && (
+          <p
+            onClick={() => navigate('/client/signup/name')}
+            style={{
+              textAlign: 'center',
+              color: '#AAAAAA',
+              fontSize: '14px',
+              cursor: 'pointer',
+              marginTop: '16px',
+            }}
+          >
+            Skip (Demo Only)
+          </p>
+        )}
       </div>
     </div>
   )

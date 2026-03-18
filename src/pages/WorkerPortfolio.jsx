@@ -2,6 +2,7 @@ import { useState, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { supabase } from '../supabase'
+import { useDemoMode } from '../contexts/DemoModeContext'
 import './WorkerPortfolio.css'
 
 const MAX_PHOTOS = 10
@@ -10,6 +11,7 @@ export default function WorkerPortfolio() {
   const { t } = useTranslation()
   const { category } = useParams()
   const navigate = useNavigate()
+  const { isDemoMode } = useDemoMode()
   const fileRef = useRef(null)
 
   const [photos, setPhotos] = useState([])
@@ -128,12 +130,20 @@ export default function WorkerPortfolio() {
           {t('serviceArea.next')}
         </button>
         {/* DEMO ONLY — REMOVE BEFORE LAUNCH */}
-        <span
-          style={{ display: 'block', textAlign: 'center', marginTop: 12, color: '#AAAAAA', fontSize: 14, cursor: 'pointer' }}
-          onClick={() => navigate(`/worker/packages/${category}`)}
-        >
-          Skip (Demo Only)
-        </span>
+        {isDemoMode && (
+          <p
+            onClick={() => navigate(`/worker/packages/${category}`)}
+            style={{
+              textAlign: 'center',
+              color: '#AAAAAA',
+              fontSize: '14px',
+              cursor: 'pointer',
+              marginTop: '16px',
+            }}
+          >
+            Skip (Demo Only)
+          </p>
+        )}
       </div>
     </div>
   )

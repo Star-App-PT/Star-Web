@@ -1,10 +1,12 @@
 import { useState, useRef, useCallback, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { moderateImage } from '../../../utils/moderateImage'
+import { useDemoMode } from '../../../contexts/DemoModeContext'
 import './ClientSignup.css'
 
 export default function ClientSignupPhoto() {
   const navigate = useNavigate()
+  const { isDemoMode } = useDemoMode()
   const fileRef = useRef(null)
 
   const [imgSrc, setImgSrc] = useState(null)
@@ -168,9 +170,20 @@ export default function ClientSignupPhoto() {
           Skip for now
         </span>
         {/* DEMO ONLY — REMOVE BEFORE LAUNCH */}
-        <span className="csu__skip" onClick={() => navigate('/client/signup/commitment')}>
-          Skip (Demo Only)
-        </span>
+        {isDemoMode && (
+          <p
+            onClick={() => navigate('/client/signup/commitment')}
+            style={{
+              textAlign: 'center',
+              color: '#AAAAAA',
+              fontSize: '14px',
+              cursor: 'pointer',
+              marginTop: '16px',
+            }}
+          >
+            Skip (Demo Only)
+          </p>
+        )}
       </div>
     </div>
   )

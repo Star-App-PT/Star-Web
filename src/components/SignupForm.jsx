@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { supabase } from '../supabase'
+import { useDemoMode } from '../contexts/DemoModeContext'
 import './SignupForm.css'
 
 const COUNTRY_CODES = [
@@ -20,6 +21,7 @@ const COUNTRY_CODES = [
 export default function SignupForm({ category, onBack }) {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const { isDemoMode } = useDemoMode()
 
   const [screen, setScreen] = useState('main')
   const [countryCode, setCountryCode] = useState('+351')
@@ -201,12 +203,20 @@ export default function SignupForm({ category, onBack }) {
             </div>
 
             {/* DEMO ONLY — REMOVE BEFORE LAUNCH */}
-            <span
-              style={{ display: 'block', textAlign: 'center', marginTop: 16, color: '#AAAAAA', fontSize: 14, cursor: 'pointer' }}
-              onClick={() => navigate('/worker/finish-profile')}
-            >
-              Skip (Demo Only)
-            </span>
+            {isDemoMode && (
+              <p
+                onClick={() => navigate('/worker/finish-profile')}
+                style={{
+                  textAlign: 'center',
+                  color: '#AAAAAA',
+                  fontSize: '14px',
+                  cursor: 'pointer',
+                  marginTop: '16px',
+                }}
+              >
+                Skip (Demo Only)
+              </p>
+            )}
           </>
         )}
 

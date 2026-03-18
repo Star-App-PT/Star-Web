@@ -2,6 +2,7 @@ import { useState, useRef, useCallback, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { supabase } from '../../supabase'
+import { useDemoMode } from '../../contexts/DemoModeContext'
 import actionHomeCleaning from '../../assets/workers/action/action-home-cleaning.jpg'
 import actionCarpentry from '../../assets/workers/action/action-carpentry.jpg'
 import actionPhotography from '../../assets/workers/action/action-photography.jpg'
@@ -17,6 +18,7 @@ export default function CategorySignup() {
   const { t } = useTranslation()
   const { category } = useParams()
   const navigate = useNavigate()
+  const { isDemoMode } = useDemoMode()
   const meta = CATEGORY_META[category] || CATEGORY_META.cleaning
 
   const fileRef = useRef(null)
@@ -260,12 +262,20 @@ export default function CategorySignup() {
           {t('serviceArea.next')}
         </button>
         {/* DEMO ONLY — REMOVE BEFORE LAUNCH */}
-        <span
-          style={{ display: 'block', textAlign: 'center', marginTop: 12, color: '#AAAAAA', fontSize: 14, cursor: 'pointer' }}
-          onClick={() => navigate(`/worker/portfolio/${category}`)}
-        >
-          Skip (Demo Only)
-        </span>
+        {isDemoMode && (
+          <p
+            onClick={() => navigate(`/worker/portfolio/${category}`)}
+            style={{
+              textAlign: 'center',
+              color: '#AAAAAA',
+              fontSize: '14px',
+              cursor: 'pointer',
+              marginTop: '16px',
+            }}
+          >
+            Skip (Demo Only)
+          </p>
+        )}
       </div>
     </div>
   )

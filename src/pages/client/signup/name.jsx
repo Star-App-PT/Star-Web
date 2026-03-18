@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useDemoMode } from '../../../contexts/DemoModeContext'
 import './ClientSignup.css'
 
 const COUNTRY_CODES = [
@@ -16,6 +17,7 @@ const COUNTRY_CODES = [
 
 export default function ClientSignupName() {
   const navigate = useNavigate()
+  const { isDemoMode } = useDemoMode()
 
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -95,9 +97,20 @@ export default function ClientSignupName() {
           Next
         </button>
         {/* DEMO ONLY — REMOVE BEFORE LAUNCH */}
-        <span className="csu__skip" onClick={() => navigate('/client/signup/photo')}>
-          Skip (Demo Only)
-        </span>
+        {isDemoMode && (
+          <p
+            onClick={() => navigate('/client/signup/photo')}
+            style={{
+              textAlign: 'center',
+              color: '#AAAAAA',
+              fontSize: '14px',
+              cursor: 'pointer',
+              marginTop: '16px',
+            }}
+          >
+            Skip (Demo Only)
+          </p>
+        )}
       </div>
     </div>
   )

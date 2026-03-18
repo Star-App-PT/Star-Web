@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import cleanerImg from '../assets/workers/cleaners/cleaner-4.jpg'
 import handymanImg from '../assets/workers/handymen/handyman-1.jpg'
 import photographerImg from '../assets/workers/services/photographer.jpg'
+import { useDemoMode } from '../contexts/DemoModeContext'
 import './worker/WorkerSignup.css'
 
 const CATEGORIES = [
@@ -14,6 +15,7 @@ const CATEGORIES = [
 export default function ChooseCategory() {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const { isDemoMode } = useDemoMode()
 
   const handleSelect = (categoryId) => {
     navigate(`/worker/service-area/${categoryId}`)
@@ -41,12 +43,20 @@ export default function ChooseCategory() {
         </div>
 
         {/* DEMO ONLY — REMOVE BEFORE LAUNCH */}
-        <span
-          style={{ display: 'block', textAlign: 'center', marginTop: 16, color: '#AAAAAA', fontSize: 14, cursor: 'pointer' }}
-          onClick={() => navigate('/worker/service-area/cleaning')}
-        >
-          Skip (Demo Only)
-        </span>
+        {isDemoMode && (
+          <p
+            onClick={() => navigate('/worker/service-area/cleaning')}
+            style={{
+              textAlign: 'center',
+              color: '#AAAAAA',
+              fontSize: '14px',
+              cursor: 'pointer',
+              marginTop: '16px',
+            }}
+          >
+            Skip (Demo Only)
+          </p>
+        )}
       </div>
     </div>
   )

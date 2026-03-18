@@ -9,6 +9,7 @@ import 'leaflet/dist/leaflet.css'
 import cleanerImg from '../assets/workers/cleaners/cleaner-4.jpg'
 import handymanImg from '../assets/workers/handymen/handyman-1.jpg'
 import photographerImg from '../assets/workers/services/photographer.jpg'
+import { useDemoMode } from '../contexts/DemoModeContext'
 import './ServiceArea.css'
 
 const CATEGORY_META = {
@@ -30,6 +31,7 @@ export default function ServiceArea() {
   const { t } = useTranslation()
   const { category } = useParams()
   const navigate = useNavigate()
+  const { isDemoMode } = useDemoMode()
   const meta = CATEGORY_META[category] || CATEGORY_META.cleaning
 
   const [query, setQuery] = useState('')
@@ -308,12 +310,20 @@ export default function ServiceArea() {
           {t('serviceArea.next')}
         </button>
         {/* DEMO ONLY — REMOVE BEFORE LAUNCH */}
-        <span
-          style={{ display: 'block', textAlign: 'center', marginTop: 12, color: '#AAAAAA', fontSize: 14, cursor: 'pointer' }}
-          onClick={() => navigate(`/worker/about/${category}`)}
-        >
-          Skip (Demo Only)
-        </span>
+        {isDemoMode && (
+          <p
+            onClick={() => navigate(`/worker/about/${category}`)}
+            style={{
+              textAlign: 'center',
+              color: '#AAAAAA',
+              fontSize: '14px',
+              cursor: 'pointer',
+              marginTop: '16px',
+            }}
+          >
+            Skip (Demo Only)
+          </p>
+        )}
       </div>
 
       {modalOpen && (

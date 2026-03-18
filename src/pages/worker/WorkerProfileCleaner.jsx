@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { useDemoMode } from '../../contexts/DemoModeContext'
 import './WorkerProfile.css'
 import './WorkerProfileCleaner.css'
 
@@ -26,6 +27,7 @@ const CLEANER_SKILL_IDS = [
 export default function WorkerProfileCleaner() {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const { isDemoMode } = useDemoMode()
   const [selectedSkills, setSelectedSkills] = useState([])
   const [profilePhotoUrl, setProfilePhotoUrl] = useState(null)
   const [otherSkill, setOtherSkill] = useState('')
@@ -277,6 +279,21 @@ export default function WorkerProfileCleaner() {
           {t('common.continue')}
         </button>
       </div>
+      {/* DEMO ONLY — REMOVE BEFORE LAUNCH */}
+      {isDemoMode && (
+        <p
+          onClick={() => navigate('/worker/profile')}
+          style={{
+            textAlign: 'center',
+            color: '#AAAAAA',
+            fontSize: '14px',
+            cursor: 'pointer',
+            marginTop: '16px',
+          }}
+        >
+          Skip (Demo Only)
+        </p>
+      )}
     </div>
   )
 }
