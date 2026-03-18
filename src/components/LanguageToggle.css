@@ -69,3 +69,17 @@
   font-weight: 600;
   color: var(--star-blue);
 }
+
+@media (max-width: 768px) {
+  .lang-toggle__btn {
+    gap: 0;
+    padding: 8px;
+    min-width: 40px;
+    justify-content: center;
+  }
+
+  .lang-toggle__code,
+  .lang-toggle__chevron {
+    display: none;
+  }
+}
