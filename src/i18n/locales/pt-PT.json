@@ -28,7 +28,7 @@
     "backToHome": "Voltar ao início"
   },
   "header": {
-    "becomeAStar": "Seja uma Star",
+    "becomeAStar": "Seja Star",
     "clientLogin": "Já sou Cliente",
     "helpCentre": "Centro de Ajuda",
     "becomeAStarSubtitle": "É fácil começar a ganhar e fazer crescer o seu negócio.",
@@ -52,7 +52,7 @@
     "continueSearching": "Continuar a procurar {{category}} em {{location}}",
     "topRated": "Mais bem avaliados",
     "more": "Mais...",
-    "becomeAStar": "Seja uma Star",
+    "becomeAStar": "Seja Star",
     "ctaText": "É profissional? Junte-se à STAR e tenha clientes na sua área.",
     "yourArea": "a sua área",
     "comingSoonTitle": "A Star está a chegar a {{city}}!",
