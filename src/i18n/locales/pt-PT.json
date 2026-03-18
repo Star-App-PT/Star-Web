@@ -29,10 +29,13 @@
   },
   "header": {
     "becomeAStar": "Seja uma Star",
+    "clientLogin": "Já sou Cliente",
     "helpCentre": "Centro de Ajuda",
     "becomeAStarSubtitle": "É fácil começar a ganhar e fazer crescer o seu negócio.",
-    "referAService": "Recomendar um serviço",
-    "joinATeam": "Juntar-se a uma equipa",
+    "referAService": "Indicar um serviço",
+    "joinATeam": "Entrar numa equipa",
+    "starLogin": "Já sou Star",
+    "signUp": "Registre-se",
     "logInOrSignUp": "Iniciar sessão ou registar"
   },
   "home": {

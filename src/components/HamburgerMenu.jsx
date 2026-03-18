@@ -81,15 +81,15 @@ export default function HamburgerMenu() {
           <div className="hmenu__sep" />
 
           <Link to="/client/login" className="hmenu__item" onClick={() => setOpen(false)}>
-            Client login
+            {t('header.clientLogin')}
           </Link>
           <div className="hmenu__sep" />
           <Link to="/worker/login" className="hmenu__item" onClick={() => setOpen(false)}>
-            Star login
+            {t('header.starLogin')}
           </Link>
           <div className="hmenu__sep" />
           <Link to="/signup" className="hmenu__item" onClick={() => setOpen(false)}>
-            Sign up
+            {t('header.signUp')}
           </Link>
         </div>
       )}

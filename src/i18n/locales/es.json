@@ -28,11 +28,14 @@
     "backToHome": "Volver al inicio"
   },
   "header": {
-    "becomeAStar": "Ser una Star",
+    "becomeAStar": "Conviértete en Star",
+    "clientLogin": "Ya soy Cliente",
     "helpCentre": "Centro de Ayuda",
     "becomeAStarSubtitle": "Es fácil empezar a ganar y hacer crecer tu negocio.",
     "referAService": "Recomendar un servicio",
     "joinATeam": "Unirse a un equipo",
+    "starLogin": "Ya soy Star",
+    "signUp": "Regístrate",
     "logInOrSignUp": "Iniciar sesión o registrarse"
   },
   "home": {

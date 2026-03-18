@@ -29,10 +29,13 @@
   },
   "header": {
     "becomeAStar": "Become a Star",
+    "clientLogin": "Client login",
     "helpCentre": "Help Centre",
     "becomeAStarSubtitle": "It's easy to start earning and grow your business.",
     "referAService": "Refer a service",
     "joinATeam": "Join a team",
+    "starLogin": "Star login",
+    "signUp": "Sign up",
     "logInOrSignUp": "Log in or sign up"
   },
   "home": {
