@@ -72,9 +72,6 @@ export default function HamburgerMenu() {
 
           <div className="hmenu__sep" />
 
-          <button type="button" className="hmenu__item" onClick={() => setOpen(false)}>
-            {t('header.referAService')}
-          </button>
           {isStarWorker && (
             <button type="button" className="hmenu__item" onClick={() => setOpen(false)}>
               {t('header.joinATeam')}
