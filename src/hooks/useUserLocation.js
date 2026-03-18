@@ -38,6 +38,8 @@ export default function useUserLocation() {
   const [loading, setLoading] = useState(true)
   const [userCityName, setUserCityName] = useState(null)
   const [isOutsidePortugal, setIsOutsidePortugal] = useState(false)
+  const [hasPreciseLocation, setHasPreciseLocation] = useState(false)
+  const [coords, setCoords] = useState(SUPPORTED_CITIES[DEFAULT_CITY])
   const [nearbyCities, setNearbyCities] = useState(DEFAULT_SUGGESTIONS)
 
   useEffect(() => {
@@ -45,6 +47,8 @@ export default function useUserLocation() {
       setCity(DEFAULT_CITY)
       setUserCityName(DEFAULT_CITY)
       setSupported(true)
+      setHasPreciseLocation(false)
+      setCoords(SUPPORTED_CITIES[DEFAULT_CITY])
       setLoading(false)
       return
     }
@@ -53,6 +57,8 @@ export default function useUserLocation() {
       async (pos) => {
         const { latitude: lat, longitude: lng } = pos.coords
         const { city: nearest, distance } = findNearestCity(lat, lng)
+        setCoords({ lat, lng })
+        setHasPreciseLocation(true)
         const suggestions = []
         const seen = new Set()
 
@@ -133,11 +139,25 @@ export default function useUserLocation() {
         setUserCityName(DEFAULT_CITY)
         setSupported(true)
         setIsOutsidePortugal(false)
+        setHasPreciseLocation(false)
+        setCoords(SUPPORTED_CITIES[DEFAULT_CITY])
         setLoading(false)
       },
       { timeout: 10000, maximumAge: 0, enableHighAccuracy: true }
     )
   }, [])
 
-  return { city, supported, loading, userCityName, isOutsidePortugal, nearbyCities, setCity, setSupported, setUserCityName }
+  return {
+    city,
+    supported,
+    loading,
+    userCityName,
+    isOutsidePortugal,
+    hasPreciseLocation,
+    coords,
+    nearbyCities,
+    setCity,
+    setSupported,
+    setUserCityName,
+  }
 }

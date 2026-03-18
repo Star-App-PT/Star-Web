@@ -246,3 +246,93 @@
     margin-top: -35px;
   }
 }
+
+@media (max-width: 768px) {
+  .search-page--mobile {
+    padding: 12px 0 0;
+  }
+
+  .search-page__mobile-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 0 16px 12px;
+    padding: 12px 14px;
+    border: 1px solid var(--star-gray-200);
+    border-radius: 999px;
+    background: #fff;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+  }
+
+  .search-page__mobile-summary-text {
+    min-width: 0;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--star-gray-800);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .search-page__mobile-edit {
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    background: var(--star-gray-100);
+    color: var(--star-gray-700);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .search-page__mobile-map-wrap {
+    position: relative;
+    height: calc(100vh - 150px);
+    min-height: 520px;
+    margin: 0 0 0;
+  }
+
+  .search-page__mobile-map {
+    width: 100%;
+    height: 100%;
+  }
+
+  .search-page__mobile-empty {
+    position: absolute;
+    left: 50%;
+    bottom: 24px;
+    transform: translateX(-50%);
+    max-width: calc(100% - 32px);
+    padding: 14px 18px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+    text-align: center;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--star-gray-800);
+  }
+
+  .search-map-marker {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 56px;
+    height: 32px;
+    padding: 0 12px;
+    border-radius: 999px;
+    background: #222;
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+  }
+
+  .search-map-marker--user {
+    background: #1B4FBA;
+  }
+}

@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect, useRef, useCallback } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import './Home.css'
-import { CATEGORIES, PICKED_DATES, CLEANERS, HANDYMEN, SERVICES } from '../data/workers'
+import { CATEGORIES, PICKED_DATES, CLEANERS, HANDYMEN, SERVICES, SUPPORTED_CITIES } from '../data/workers'
 import useUserLocation from '../hooks/useUserLocation'
 import WorkerAvatar from '../components/WorkerAvatar'
 
@@ -58,6 +58,14 @@ const WHO_SUBCATEGORIES = {
 
 const MONTH_KEYS = ['calendar.jan', 'calendar.feb', 'calendar.mar', 'calendar.apr', 'calendar.may', 'calendar.jun', 'calendar.jul', 'calendar.aug', 'calendar.sep', 'calendar.oct', 'calendar.nov', 'calendar.dec']
 const DAY_KEYS = ['calendar.mon', 'calendar.tue', 'calendar.wed', 'calendar.thu', 'calendar.fri', 'calendar.sat', 'calendar.sun']
+const MOBILE_CATEGORY_OPTIONS = [
+  { value: 'cleaners', label: 'Cleaning' },
+  { value: 'handymen', label: 'Repairs' },
+  { value: 'services', label: 'Services' },
+]
+const ALL_SERVICE_SUGGESTIONS = Object.entries(WHO_SUBCATEGORIES).flatMap(([category, items]) =>
+  items.map((item) => ({ value: item.value, category }))
+)
 
 function fmtShortDate(d) {
   return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
@@ -79,12 +87,21 @@ export default function Home() {
   const [searchParams] = useSearchParams()
   const selectedCategory = searchParams.get('category') || 'cleaners'
   const [favorites, setFavorites] = useState(new Set())
-  const { city: CITY, supported: citySupported, userCityName, isOutsidePortugal, nearbyCities } = useUserLocation()
+  const { city: CITY, supported: citySupported, userCityName, isOutsidePortugal, hasPreciseLocation, coords, nearbyCities } = useUserLocation()
 
   const [openDropdown, setOpenDropdown] = useState(null)
   const [whereValue, setWhereValue] = useState('')
   const [whenValue, setWhenValue] = useState('')
   const [whoValue, setWhoValue] = useState('')
+  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth <= 768)
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false)
+  const [mobileStep, setMobileStep] = useState('what')
+  const [mobileWhat, setMobileWhat] = useState('')
+  const [mobileWhere, setMobileWhere] = useState('')
+  const [mobileWhereCoords, setMobileWhereCoords] = useState(null)
+  const [mobileCategory, setMobileCategory] = useState('')
+  const [mobileSelectedDate, setMobileSelectedDate] = useState(null)
+  const [mobileDatePreset, setMobileDatePreset] = useState('today')
   const searchWrapRef = useRef(null)
   const todayRef = useRef(new Date())
   const today = todayRef.current
@@ -139,6 +156,9 @@ export default function Home() {
   const searchCity = whereValue || userCityName || CITY
   const workersCity = citySupported ? searchCity : CITY
   const comingSoonCity = isOutsidePortugal ? t('home.yourArea') : (userCityName || t('home.yourArea'))
+  const mobileSuggestions = mobileWhat.trim().length >= 2
+    ? ALL_SERVICE_SUGGESTIONS.filter(({ value }) => value.toLowerCase().includes(mobileWhat.trim().toLowerCase())).slice(0, 8)
+    : []
 
   const otherWorkersMixed = useMemo(() => {
     const others = CATEGORIES.filter((c) => c.id !== selectedCategory).flatMap((c) => c.workers)
@@ -155,6 +175,21 @@ export default function Home() {
   }, [userCityName])
 
   useEffect(() => {
+    if (!isMobile) {
+      setMobileSearchOpen(false)
+    }
+  }, [isMobile])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return undefined
+    const mq = window.matchMedia('(max-width: 768px)')
+    const update = () => setIsMobile(mq.matches)
+    update()
+    mq.addEventListener('change', update)
+    return () => mq.removeEventListener('change', update)
+  }, [])
+
+  useEffect(() => {
     const handler = (e) => {
       if (searchWrapRef.current && !searchWrapRef.current.contains(e.target)) setOpenDropdown(null)
     }
@@ -164,6 +199,65 @@ export default function Home() {
 
   const toggleDropdown = (name) => setOpenDropdown((prev) => (prev === name ? null : name))
 
+  const resetMobileDate = () => {
+    const baseToday = new Date()
+    baseToday.setHours(0, 0, 0, 0)
+    setMobileSelectedDate(baseToday)
+    setMobileDatePreset('today')
+    setCalYear(baseToday.getFullYear())
+    setCalMonth(baseToday.getMonth())
+  }
+
+  const openMobileSearch = () => {
+    setMobileSearchOpen(true)
+    setMobileStep('what')
+    setMobileWhat('')
+    setMobileCategory('')
+    setMobileWhere(userCityName || CITY || 'Porto')
+    setMobileWhereCoords(coords || SUPPORTED_CITIES[CITY] || SUPPORTED_CITIES.Porto)
+    resetMobileDate()
+    setAutocompleteSuggestions([])
+  }
+
+  const closeMobileSearch = () => {
+    setMobileSearchOpen(false)
+    setAutocompleteSuggestions([])
+  }
+
+  const nextMobileStep = () => {
+    if (mobileStep === 'what') {
+      if (hasPreciseLocation) {
+        setMobileWhere(userCityName || CITY || 'Porto')
+        setMobileWhereCoords(coords || SUPPORTED_CITIES[CITY] || SUPPORTED_CITIES.Porto)
+        setMobileStep('when')
+      } else {
+        setMobileStep('where')
+      }
+      return
+    }
+    if (mobileStep === 'where') {
+      setMobileStep('when')
+      return
+    }
+    if (mobileStep === 'when') {
+      setMobileStep('who')
+    }
+  }
+
+  const prevMobileStep = () => {
+    if (mobileStep === 'who') {
+      setMobileStep('when')
+      return
+    }
+    if (mobileStep === 'when') {
+      setMobileStep(hasPreciseLocation ? 'what' : 'where')
+      return
+    }
+    if (mobileStep === 'where') {
+      setMobileStep('what')
+    }
+  }
+
   const selectWhere = (city) => {
     setWhereValue(city)
     setOpenDropdown(null)
@@ -172,9 +266,36 @@ export default function Home() {
     localStorage.setItem('star-recent-locations', JSON.stringify(updated))
   }
 
+  const selectMobileWhere = (city, nextCoords = null) => {
+    setMobileWhere(city)
+    setMobileWhereCoords(nextCoords)
+    setAutocompleteSuggestions([])
+  }
+
   const selectWhen = (displayText) => {
     setWhenValue(displayText)
     setOpenDropdown(null)
+  }
+
+  const selectMobileWhenPreset = (preset) => {
+    if (preset === 'today') {
+      const d = new Date(today)
+      d.setHours(0, 0, 0, 0)
+      setMobileSelectedDate(d)
+      setMobileDatePreset('today')
+      return
+    }
+    if (preset === 'tomorrow') {
+      const d = new Date(tomorrow)
+      d.setHours(0, 0, 0, 0)
+      setMobileSelectedDate(d)
+      setMobileDatePreset('tomorrow')
+      return
+    }
+    const d = new Date(saturday)
+    d.setHours(0, 0, 0, 0)
+    setMobileSelectedDate(d)
+    setMobileDatePreset('weekend')
   }
 
   const selectCalendarDay = (day) => {
@@ -182,6 +303,14 @@ export default function Home() {
     const d = new Date(calYear, calMonth, day)
     if (d < new Date(today.getFullYear(), today.getMonth(), today.getDate())) return
     selectWhen(fmtShortDate(d))
+  }
+
+  const selectMobileCalendarDay = (day) => {
+    if (!day) return
+    const d = new Date(calYear, calMonth, day)
+    if (d < new Date(today.getFullYear(), today.getMonth(), today.getDate())) return
+    setMobileSelectedDate(d)
+    setMobileDatePreset('custom')
   }
 
   const selectWho = (value) => {
@@ -211,6 +340,16 @@ export default function Home() {
     e.preventDefault()
     if (!whereValue) return
     navigate(`/search?where=${encodeURIComponent(whereValue)}&when=${encodeURIComponent(whenValue)}&who=${encodeURIComponent(whoValue)}&category=${encodeURIComponent(selectedCategory)}`)
+  }
+
+  const handleMobileSearch = () => {
+    if (!mobileCategory || !mobileSelectedDate) return
+    const lat = mobileWhereCoords?.lat ?? coords?.lat ?? SUPPORTED_CITIES[CITY]?.lat ?? SUPPORTED_CITIES.Porto.lat
+    const lng = mobileWhereCoords?.lng ?? coords?.lng ?? SUPPORTED_CITIES[CITY]?.lng ?? SUPPORTED_CITIES.Porto.lng
+    navigate(
+      `/search?where=${encodeURIComponent(mobileWhere || CITY || 'Porto')}&when=${encodeURIComponent(fmtShortDate(mobileSelectedDate))}&who=${encodeURIComponent(mobileWhat)}&category=${encodeURIComponent(mobileCategory)}&lat=${encodeURIComponent(lat)}&lng=${encodeURIComponent(lng)}&mobile=1`
+    )
+    closeMobileSearch()
   }
 
   const tomorrow = new Date(today)
@@ -243,7 +382,14 @@ export default function Home() {
   return (
     <div className="home">
       <div className="home__hero container">
-        <div className="home__search-wrap" ref={searchWrapRef}>
+        <button type="button" className="home__mobile-search-launch" onClick={openMobileSearch}>
+          <span className="home__mobile-search-launch-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          </span>
+          <span className="home__mobile-search-launch-text">Search for a service...</span>
+        </button>
+
+        <div className="home__search-wrap home__desktop-search" ref={searchWrapRef}>
           <form className="home__search" onSubmit={handleSearch}>
             <div className="home__search-field" onClick={() => { if (openDropdown !== 'where') toggleDropdown('where') }}>
               <span className="home__search-label">{t('common.where')}</span>
@@ -387,6 +533,221 @@ export default function Home() {
           )}
         </div>
       </div>
+
+      {mobileSearchOpen && (
+        <>
+          <div className="home__mobile-search-backdrop" onClick={closeMobileSearch} />
+          <div className="home__mobile-search-sheet">
+            <div className="home__mobile-search-top">
+              <button
+                type="button"
+                className="home__mobile-search-icon-btn"
+                onClick={prevMobileStep}
+                disabled={mobileStep === 'what'}
+                aria-label={t('common.back')}
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+              </button>
+              <button
+                type="button"
+                className="home__mobile-search-icon-btn"
+                onClick={closeMobileSearch}
+                aria-label={t('common.cancel')}
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m18 6-12 12"/><path d="m6 6 12 12"/></svg>
+              </button>
+            </div>
+
+            <div className="home__mobile-search-step">
+              {mobileStep === 'what' && (
+                <>
+                  <h2 className="home__mobile-search-title">What are you looking for?</h2>
+                  <div className="home__mobile-input-wrap">
+                    <span className="home__mobile-input-icon">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                    </span>
+                    <input
+                      type="text"
+                      className="home__mobile-input"
+                      placeholder="e.g. photographer, cleaner, plumber"
+                      value={mobileWhat}
+                      onChange={(e) => setMobileWhat(e.target.value)}
+                      autoFocus
+                    />
+                  </div>
+                  {mobileSuggestions.length > 0 && (
+                    <div className="home__mobile-suggestions">
+                      {mobileSuggestions.map(({ value }, idx) => (
+                        <button
+                          key={`${value}-${idx}`}
+                          type="button"
+                          className="home__mobile-suggestion"
+                          onClick={() => setMobileWhat(value)}
+                        >
+                          {value}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </>
+              )}
+
+              {mobileStep === 'where' && (
+                <>
+                  <h2 className="home__mobile-search-title">Where?</h2>
+                  <p className="home__mobile-search-sub">Where do you need the service?</p>
+                  <div className="home__mobile-input-wrap">
+                    <span className="home__mobile-input-icon">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 21c-4.97-5.37-8-8.65-8-12a8 8 0 0 1 16 0c0 3.35-3.03 6.63-8 12z"/><circle cx="12" cy="9" r="3"/></svg>
+                    </span>
+                    <input
+                      type="text"
+                      className="home__mobile-input"
+                      placeholder="Search city"
+                      value={mobileWhere}
+                      onChange={(e) => {
+                        setMobileWhere(e.target.value)
+                        setMobileWhereCoords(null)
+                        fetchAutocomplete(e.target.value)
+                      }}
+                      autoFocus
+                    />
+                  </div>
+                  <div className="home__mobile-quick-pills">
+                    {['Porto', 'Lisbon', 'Faro'].map((city) => (
+                      <button
+                        key={city}
+                        type="button"
+                        className={`home__mobile-quick-pill${mobileWhere === city ? ' home__mobile-quick-pill--on' : ''}`}
+                        onClick={() => selectMobileWhere(city, SUPPORTED_CITIES[city])}
+                      >
+                        {city}
+                      </button>
+                    ))}
+                  </div>
+                  {autocompleteSuggestions.length > 0 && (
+                    <div className="home__mobile-suggestions">
+                      {autocompleteSuggestions.map((s) => (
+                        <button
+                          key={`${s.city}-${s.lat}`}
+                          type="button"
+                          className="home__mobile-suggestion"
+                          onClick={() => selectMobileWhere(s.city, { lat: s.lat, lng: s.lon })}
+                        >
+                          <span>{s.city}</span>
+                          <small>{s.region}</small>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </>
+              )}
+
+              {mobileStep === 'when' && (
+                <>
+                  <h2 className="home__mobile-search-title">When?</h2>
+                  <div className="home__mobile-when-pills">
+                    {quickDates.map((q, idx) => {
+                      const preset = idx === 0 ? 'today' : idx === 1 ? 'tomorrow' : 'weekend'
+                      return (
+                        <button
+                          key={q.label}
+                          type="button"
+                          className={`home__mobile-when-pill${mobileDatePreset === preset ? ' home__mobile-when-pill--on' : ''}`}
+                          onClick={() => selectMobileWhenPreset(preset)}
+                        >
+                          <span className="home__mobile-when-pill-label">{q.label}</span>
+                          <span className="home__mobile-when-pill-sub">{q.sub}</span>
+                        </button>
+                      )
+                    })}
+                  </div>
+                  <div className="home__mobile-cal-wrap">
+                    <div className="home__cal-head">
+                      <button type="button" className="home__cal-arr" onClick={prevMonth} disabled={!canGoPrev}>‹</button>
+                      <span className="home__cal-mo">{t(MONTH_KEYS[calMonth])} {calYear}</span>
+                      <button type="button" className="home__cal-arr" onClick={nextMonth}>›</button>
+                    </div>
+                    <div className="home__cal-dayrow">
+                      {DAY_KEYS.map((dk) => <span key={dk} className="home__cal-dn">{t(dk)}</span>)}
+                    </div>
+                    <div className="home__cal-grid">
+                      {calendarCells.map((day, i) => {
+                        const dateObj = day ? new Date(calYear, calMonth, day) : null
+                        const isPast = dateObj && dateObj < new Date(today.getFullYear(), today.getMonth(), today.getDate())
+                        const isTodayDay = dateObj && dateObj.getTime() === new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime()
+                        const isSelected = dateObj && mobileSelectedDate && dateObj.getTime() === new Date(mobileSelectedDate.getFullYear(), mobileSelectedDate.getMonth(), mobileSelectedDate.getDate()).getTime()
+                        return (
+                          <button
+                            key={i}
+                            type="button"
+                            className={`home__cal-c${!day ? ' home__cal-c--e' : ''}${isTodayDay ? ' home__cal-c--today' : ''}${isPast ? ' home__cal-c--past' : ''}${isSelected ? ' home__cal-c--selected' : ''}`}
+                            onClick={() => selectMobileCalendarDay(day)}
+                            disabled={!day || isPast}
+                          >
+                            {day || ''}
+                          </button>
+                        )
+                      })}
+                    </div>
+                  </div>
+                </>
+              )}
+
+              {mobileStep === 'who' && (
+                <>
+                  <h2 className="home__mobile-search-title">Type of service</h2>
+                  <div className="home__mobile-category-grid">
+                    {MOBILE_CATEGORY_OPTIONS.map((option) => (
+                      <button
+                        key={option.value}
+                        type="button"
+                        className={`home__mobile-category-chip${mobileCategory === option.value ? ' home__mobile-category-chip--on' : ''}`}
+                        onClick={() => setMobileCategory(option.value)}
+                      >
+                        {option.label}
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+
+            <div className="home__mobile-search-footer">
+              {mobileStep === 'when' ? (
+                <button type="button" className="home__mobile-reset" onClick={() => { setMobileSelectedDate(null); setMobileDatePreset(null) }}>
+                  Reset
+                </button>
+              ) : (
+                <span />
+              )}
+              {mobileStep === 'who' ? (
+                <button
+                  type="button"
+                  className="home__mobile-next btn-primary"
+                  disabled={!mobileCategory}
+                  onClick={handleMobileSearch}
+                >
+                  Search
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className="home__mobile-next btn-primary"
+                  disabled={
+                    (mobileStep === 'what' && mobileWhat.trim().length < 2) ||
+                    (mobileStep === 'where' && mobileWhere.trim().length < 2) ||
+                    (mobileStep === 'when' && !mobileSelectedDate)
+                  }
+                  onClick={nextMobileStep}
+                >
+                  Next
+                </button>
+              )}
+            </div>
+          </div>
+        </>
+      )}
 
       <div className="home__main container">
         {!citySupported && searchCity && (
