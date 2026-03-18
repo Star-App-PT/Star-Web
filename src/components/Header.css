@@ -22,15 +22,15 @@
 .star-header__categories {
   display: flex;
   align-items: center;
-  gap: 32px;
+  justify-content: center;
+  gap: 20px;
   min-width: 0;
 }
 
 .star-header__category {
   display: inline-flex;
-  flex-direction: row;
   align-items: center;
-  gap: 0;
+  gap: 8px;
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--star-gray-800);
@@ -38,6 +38,7 @@
   padding-bottom: 2px;
   border-bottom: 2px solid transparent;
   min-width: 0;
+  white-space: nowrap;
 }
 
 .star-header__category span {
@@ -53,19 +54,10 @@
 }
 
 .star-header__category-icon {
-  width: 95px;
-  height: 95px;
+  width: auto;
+  height: 48px;
   object-fit: contain;
-}
-
-.star-header__category--services {
-  gap: 0;
-}
-
-.star-header__category--services .star-header__category-icon {
-  width: 114px;
-  height: 114px;
-  margin-right: -16px;
+  flex-shrink: 0;
 }
 
 .star-header__nav {

@@ -904,47 +904,6 @@
     cursor: pointer;
   }
 
-  .home__mobile-category-row {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    width: 100%;
-    padding: 12px 0;
-    border-bottom: 1px solid #EEEEEE;
-  }
-
-  .home__mobile-category-link {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    min-width: 0;
-    border: none;
-    border-bottom: 1px solid transparent;
-    background: transparent;
-    color: #333333;
-    font-family: inherit;
-    padding: 0 4px 6px;
-    cursor: pointer;
-  }
-
-  .home__mobile-category-link--active {
-    color: #1B4FBA;
-    border-bottom-color: #1B4FBA;
-  }
-
-  .home__mobile-category-link-icon {
-    height: 48px;
-    width: auto;
-    object-fit: contain;
-  }
-
-  .home__mobile-category-link-label {
-    font-size: 13px;
-    line-height: 1.2;
-  }
-
   .home__mobile-search-launch-icon {
     display: inline-flex;
     align-items: center;

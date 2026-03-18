@@ -63,11 +63,6 @@ const MOBILE_CATEGORY_OPTIONS = [
   { value: 'handymen', label: 'Repairs' },
   { value: 'services', label: 'Services' },
 ]
-const MOBILE_HOME_CATEGORY_LINKS = [
-  { id: 'cleaners', labelKey: 'home.categoryClean', icon: '/assets/icon-clean.png' },
-  { id: 'handymen', labelKey: 'home.categoryRepair', icon: '/assets/icon-repair.png' },
-  { id: 'services', labelKey: 'home.categoryServices', icon: '/assets/icon-services.png' },
-]
 const ALL_SERVICE_SUGGESTIONS = Object.entries(WHO_SUBCATEGORIES).flatMap(([category, items]) =>
   items.map((item) => ({ value: item.value, category }))
 )
@@ -401,25 +396,6 @@ export default function Home() {
           </span>
           <span className="home__mobile-search-launch-text">Search for a service...</span>
         </button>
-
-        <div className="home__mobile-category-row">
-          {MOBILE_HOME_CATEGORY_LINKS.map(({ id, labelKey, icon }) => (
-            <button
-              key={id}
-              type="button"
-              className={`home__mobile-category-link${selectedCategory === id ? ' home__mobile-category-link--active' : ''}`}
-              onClick={() => navigate(`/?category=${id}`)}
-            >
-              <img
-                src={icon}
-                alt=""
-                className="home__mobile-category-link-icon"
-                onError={(e) => { e.target.style.display = 'none' }}
-              />
-              <span className="home__mobile-category-link-label">{t(labelKey)}</span>
-            </button>
-          ))}
-        </div>
 
         <div className="home__search-wrap home__desktop-search" ref={searchWrapRef}>
           <form className="home__search" onSubmit={handleSearch}>
