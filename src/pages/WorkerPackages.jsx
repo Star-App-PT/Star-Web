@@ -21,21 +21,21 @@ const CATEGORY_PROFILE = {
 }
 
 const DURATION_OPTIONS = [
-  { value: '30min', label: '30 min' },
-  { value: '1hr', label: '1 hr' },
-  { value: '1hr30', label: '1 hr 30 min' },
-  { value: '2hr', label: '2 hr' },
-  { value: '3hr', label: '3 hr' },
-  { value: '4hr', label: '4 hr' },
-  { value: 'fullday', label: 'Full day' },
+  { value: '30min', labelKey: 'packages.duration30min' },
+  { value: '1hr', labelKey: 'packages.duration1hr' },
+  { value: '1hr30', labelKey: 'packages.duration1hr30' },
+  { value: '2hr', labelKey: 'packages.duration2hr' },
+  { value: '3hr', labelKey: 'packages.duration3hr' },
+  { value: '4hr', labelKey: 'packages.duration4hr' },
+  { value: 'fullday', labelKey: 'packages.durationFullDay' },
 ]
 
 const PRICE_TYPE_OPTIONS = [
-  { value: 'visit', label: 'Per visit' },
-  { value: 'hour', label: 'Per hour' },
-  { value: 'person', label: 'Per person' },
-  { value: 'session', label: 'Per session' },
-  { value: 'item', label: 'Per item' },
+  { value: 'visit', labelKey: 'packages.priceTypeVisit', suffixKey: 'packages.priceTypeVisitSuffix' },
+  { value: 'hour', labelKey: 'packages.priceTypeHour', suffixKey: 'packages.priceTypeHourSuffix' },
+  { value: 'person', labelKey: 'packages.priceTypePerson', suffixKey: 'packages.priceTypePersonSuffix' },
+  { value: 'session', labelKey: 'packages.priceTypeSession', suffixKey: 'packages.priceTypeSessionSuffix' },
+  { value: 'item', labelKey: 'packages.priceTypeItem', suffixKey: 'packages.priceTypeItemSuffix' },
 ]
 
 const EMPTY_PKG = {
@@ -124,7 +124,10 @@ export default function WorkerPackages() {
     navigate(CATEGORY_PROFILE[category] || '/worker/c1')
   }
 
-  const durationLabel = (val) => DURATION_OPTIONS.find((o) => o.value === val)?.label || val
+  const durationLabel = (val) => {
+    const option = DURATION_OPTIONS.find((o) => o.value === val)
+    return option ? t(option.labelKey) : val
+  }
 
   return (
     <div className="pk">
@@ -229,21 +232,21 @@ export default function WorkerPackages() {
                         onChange={(e) => updatePkg(pkg.id, 'duration', e.target.value)}
                       >
                         {DURATION_OPTIONS.map((o) => (
-                          <option key={o.value} value={o.value}>{o.label}</option>
+                          <option key={o.value} value={o.value}>{t(o.labelKey)}</option>
                         ))}
                       </select>
                     </div>
                   </div>
 
                   <div className="pk__field">
-                    <label className="pk__field-label">Price type</label>
+                    <label className="pk__field-label">{t('packages.priceTypeLabel')}</label>
                     <select
                       className="pk__select"
                       value={pkg.priceType}
                       onChange={(e) => updatePkg(pkg.id, 'priceType', e.target.value)}
                     >
                       {PRICE_TYPE_OPTIONS.map((o) => (
-                        <option key={o.value} value={o.value}>{o.label}</option>
+                        <option key={o.value} value={o.value}>{t(o.labelKey)}</option>
                       ))}
                     </select>
                   </div>
@@ -275,7 +278,7 @@ export default function WorkerPackages() {
                     <div className="pk__preview-info">
                       <p className="pk__preview-title">{pkg.title}</p>
                       <p className="pk__preview-meta">
-                        €{parseFloat(pkg.price).toFixed(0)} / {PRICE_TYPE_OPTIONS.find((o) => o.value === pkg.priceType)?.label?.replace('Per ', '') || 'visit'}
+                        €{parseFloat(pkg.price).toFixed(0)} / {t(PRICE_TYPE_OPTIONS.find((o) => o.value === pkg.priceType)?.suffixKey || 'packages.priceTypeVisitSuffix')}
                         {' · '}{durationLabel(pkg.duration)}
                       </p>
                       {pkg.description.trim() && (
@@ -320,7 +323,7 @@ export default function WorkerPackages() {
               marginTop: '16px',
             }}
           >
-            Skip (Demo Only)
+            {t('common.demoSkip')}
           </p>
         )}
       </div>

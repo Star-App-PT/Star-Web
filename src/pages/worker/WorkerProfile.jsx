@@ -11,7 +11,7 @@ export default function WorkerProfile() {
   return (
     <div className="worker-profile container">
       <h1 className="worker-profile__title">{t('workerProfile.title')}</h1>
-      <p className="worker-profile__intro">Complete your profile (skills, rates, etc.).</p>
+      <p className="worker-profile__intro">{t('workerProfile.intro')}</p>
       {/* DEMO ONLY — REMOVE BEFORE LAUNCH */}
       {isDemoMode && (
         <p
@@ -24,7 +24,7 @@ export default function WorkerProfile() {
             marginTop: '16px',
           }}
         >
-          Skip (Demo Only)
+          {t('common.demoSkip')}
         </p>
       )}
     </div>

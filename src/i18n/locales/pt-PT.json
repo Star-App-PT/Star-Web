@@ -16,8 +16,16 @@
     "reviews": "avaliações",
     "goBack": "Voltar",
     "backToHome": "Voltar ao início",
+    "demoSkip": "Saltar (Apenas Demo)",
     "submitting": "A enviar...",
     "somethingWentWrong": "Algo correu mal. Por favor, tente novamente."
+  },
+  "signupChoice": {
+    "title": "Criar conta",
+    "subtitle": "Como pretende usar a Star SVS?",
+    "needService": "Preciso de um serviço",
+    "wantToWork": "Quero trabalhar",
+    "backToHome": "Voltar ao início"
   },
   "header": {
     "becomeAStar": "Seja uma Star",
@@ -115,7 +123,8 @@
   "workerProfile": {
     "title": "Conte-nos mais sobre si",
     "profilePhoto": "Foto de perfil",
-    "choosePhoto": "Escolher ficheiro"
+    "choosePhoto": "Escolher ficheiro",
+    "intro": "Complete o seu perfil (competências, preços, etc.)."
   },
   "profilePhoto": {
     "title": "Vamos terminar o seu perfil",
@@ -129,14 +138,17 @@
     "topRated": "Melhor avaliado",
     "roleCleaning": "Limpeza doméstica",
     "roleRepairs": "Faz-tudo",
-    "roleServices": "Fotógrafo"
+    "roleServices": "Fotógrafo",
+    "yourName": "O seu nome"
   },
   "workerProfileCleaner": {
     "intro": "Escolha os serviços de limpeza que oferece. Pode selecionar mais do que um.",
     "skillsTitle": "Os seus serviços de limpeza",
+    "skillsHint": "Clique em todos os que se aplicam a si.",
     "other": "Outro",
     "otherPlaceholder": "Indique outros serviços de limpeza",
     "basicInfoTitle": "Informação básica",
+    "profileAlt": "Perfil",
     "firstName": "Nome próprio",
     "firstNamePlaceholder": "Nome",
     "lastName": "Apelido",
@@ -174,10 +186,16 @@
     "autoDetailing": "Detalhe automóvel"
   },
   "workerSkill": {
+    "step": "Passo 2",
     "heading": "Qual destas melhor descreve a sua competência?",
     "clean": "Limpeza",
     "repair": "Reparações",
     "services": "Serviços"
+  },
+  "workerProfileIntro": {
+    "step": "Passo 1",
+    "title": "Fale-nos da sua competência",
+    "body": "Neste passo, vamos perguntar que tipo de competência tem e se os clientes o reservam por hora, por dia ou por mais tempo. Depois, conte-nos mais sobre a sua experiência e a região onde trabalha."
   },
   "workerSignup": {
     "getStarted": "Começar",
@@ -266,7 +284,26 @@
     "yearsLabel": "Há quantos anos trabalha em {{category}}?",
     "notableLabel": "Adicione algo notável sobre a sua competência",
     "trainingLabel": "Adicione um grau, formação ou experiência",
-    "honoursLabel": "Adicione prémios ou aparições nos media"
+    "honoursLabel": "Adicione prémios ou aparições nos media",
+    "decrease": "Diminuir",
+    "increase": "Aumentar",
+    "placeholders": {
+      "cleaning": {
+        "notable": "Trabalhei a limpar para a American Airlines - sei bem o que significa impecável.",
+        "training": "Profissional de limpeza experiente, com paixão por ambientes saudáveis e sem químicos.",
+        "honours": "Eleita a melhor profissional de limpeza doméstica do Porto durante dois anos seguidos pelos residentes locais."
+      },
+      "repairs": {
+        "notable": "Sou carpinteiro há 20 anos e continuo a adorar este ofício.",
+        "training": "Eletricista certificado com 15 anos de experiência em projetos residenciais e comerciais.",
+        "honours": "Destaque na revista Construir pelo meu trabalho de renovação de cozinhas em Lisboa."
+      },
+      "services": {
+        "notable": "Passei 3 anos como fotógrafo de equipa da revista SURFER.",
+        "training": "Estudei fotografia de belas-artes na Rhode Island School of Design.",
+        "honours": "Ganhei o primeiro lugar num concurso de fotografia da National Geographic."
+      }
+    }
   },
   "serviceArea": {
     "title": "Onde vai trabalhar?",
@@ -279,14 +316,17 @@
     "opt90": "1,5 horas",
     "opt120": "2 horas",
     "done": "Concluído",
-    "next": "Seguinte"
+    "next": "Seguinte",
+    "clear": "Limpar",
+    "close": "Fechar"
   },
   "portfolio": {
     "step": "Passo 10 de 12",
     "title": "Mostre o seu melhor trabalho",
     "subtitle": "Carregue até 10 fotos do seu trabalho. Os clientes adoram ver exemplos reais antes de reservar.",
     "addPhoto": "Adicionar foto",
-    "photos": "fotos"
+    "photos": "fotos",
+    "remove": "Remover"
   },
   "packages": {
     "step": "Passo 11 de 12",
@@ -298,6 +338,24 @@
     "titlePlaceholder": "ex. Um passeio pelo Porto",
     "priceLabel": "Preço",
     "durationLabel": "Duração",
+    "duration30min": "30 min",
+    "duration1hr": "1 h",
+    "duration1hr30": "1 h 30 min",
+    "duration2hr": "2 h",
+    "duration3hr": "3 h",
+    "duration4hr": "4 h",
+    "durationFullDay": "Dia completo",
+    "priceTypeLabel": "Tipo de preço",
+    "priceTypeVisit": "Por visita",
+    "priceTypeHour": "Por hora",
+    "priceTypePerson": "Por pessoa",
+    "priceTypeSession": "Por sessão",
+    "priceTypeItem": "Por item",
+    "priceTypeVisitSuffix": "visita",
+    "priceTypeHourSuffix": "hora",
+    "priceTypePersonSuffix": "pessoa",
+    "priceTypeSessionSuffix": "sessão",
+    "priceTypeItemSuffix": "item",
     "pricingType": "Tipo de preço",
     "perGuest": "por pessoa",
     "perGroup": "por grupo",
@@ -306,6 +364,39 @@
     "descPlaceholder": "Descreva o que o cliente recebe com este pacote…",
     "addAnother": "Adicionar outro pacote",
     "finish": "Concluir"
+  },
+  "clientSignup": {
+    "welcomeTitle": "Bem-vindo à Star SVS",
+    "welcomeSubtitle": "Encontre profissionais de confiança perto de si.",
+    "continueGoogle": "Continuar com Google",
+    "continueApple": "Continuar com Apple",
+    "continuePhone": "Continuar com número de telefone",
+    "emailAddress": "Endereço de email",
+    "continueEmail": "Continuar com email",
+    "termsPrefix": "Ao continuar, concorda com os nossos",
+    "termsOfService": "Termos de Serviço",
+    "termsAnd": "e a",
+    "privacyPolicy": "Política de Privacidade",
+    "alreadyHaveAccount": "Já tem conta?",
+    "logIn": "Iniciar sessão",
+    "step2": "Passo 2 de 4",
+    "step3": "Passo 3 de 4",
+    "step4": "Passo 4 de 4",
+    "nameTitle": "Qual é o seu nome?",
+    "nameSubtitle": "Ajude os profissionais a saber quem vão visitar.",
+    "firstName": "Nome próprio",
+    "lastName": "Apelido",
+    "phoneNumber": "Número de telefone",
+    "photoTitle": "Adicione uma foto de perfil",
+    "photoSubtitle": "Os profissionais gostam de saber quem vão encontrar.",
+    "photoRejected": "Imagem rejeitada. Carregue uma foto diferente.",
+    "uploadPhoto": "Carregar foto",
+    "looksGood": "Está ótimo",
+    "skipForNow": "Saltar por agora",
+    "commitmentTitle": "O nosso compromisso com a comunidade",
+    "commitmentBody": "A Star SVS é uma comunidade onde todos são bem-vindos. Pedimos a todos os membros que tratem os outros com respeito, simpatia e profissionalismo.",
+    "agreeAndContinue": "Concordar e continuar",
+    "decline": "Recusar"
   },
   "dashboard": {
     "welcome": "Bem-vindo, {{name}}!",

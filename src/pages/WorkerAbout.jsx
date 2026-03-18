@@ -5,24 +5,6 @@ import { supabase } from '../supabase'
 import { useDemoMode } from '../contexts/DemoModeContext'
 import './WorkerAbout.css'
 
-const PLACEHOLDERS = {
-  cleaning: {
-    notable: 'I used to clean for American Airlines — I know what spotless really means.',
-    training: 'Experienced cleaner with a passion for healthy, chemical-free environments.',
-    honours: 'Voted best home cleaner in Porto two years running by local residents.',
-  },
-  repairs: {
-    notable: 'I have been a carpenter for 20 years and I still love the craft.',
-    training: 'Certified electrician with 15 years working on residential and commercial projects.',
-    honours: 'Featured in Construir Magazine for kitchen renovation work in Lisbon.',
-  },
-  services: {
-    notable: 'I spent 3 years as a staff photographer for SURFER Magazine.',
-    training: 'Studied fine art photography at the Rhode Island School of Design.',
-    honours: 'Won first place in a National Geographic photography contest.',
-  },
-}
-
 const MAX_CHARS = 90
 
 export default function WorkerAbout() {
@@ -30,7 +12,7 @@ export default function WorkerAbout() {
   const { category } = useParams()
   const navigate = useNavigate()
   const { isDemoMode } = useDemoMode()
-  const ph = PLACEHOLDERS[category] || PLACEHOLDERS.cleaning
+  const placeholderCategory = ['cleaning', 'repairs', 'services'].includes(category) ? category : 'cleaning'
 
   const [years, setYears] = useState(null)
   const [notable, setNotable] = useState('')
@@ -93,7 +75,7 @@ export default function WorkerAbout() {
                 className="wa__stepper-btn"
                 onClick={decYears}
                 disabled={years === null || years <= 1}
-                aria-label="Decrease"
+                aria-label={t('workerAbout.decrease')}
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                   <line x1="5" y1="12" x2="19" y2="12"/>
@@ -107,7 +89,7 @@ export default function WorkerAbout() {
                 className="wa__stepper-btn"
                 onClick={incYears}
                 disabled={years >= 50}
-                aria-label="Increase"
+                aria-label={t('workerAbout.increase')}
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                   <line x1="12" y1="5" x2="12" y2="19"/>
@@ -124,7 +106,7 @@ export default function WorkerAbout() {
                 className="wa__textarea"
                 maxLength={MAX_CHARS}
                 rows={3}
-                placeholder={ph.notable}
+                placeholder={t(`workerAbout.placeholders.${placeholderCategory}.notable`)}
                 value={notable}
                 onChange={(e) => setNotable(e.target.value)}
               />
@@ -139,7 +121,7 @@ export default function WorkerAbout() {
                 className="wa__textarea"
                 maxLength={MAX_CHARS}
                 rows={3}
-                placeholder={ph.training}
+                placeholder={t(`workerAbout.placeholders.${placeholderCategory}.training`)}
                 value={training}
                 onChange={(e) => setTraining(e.target.value)}
               />
@@ -154,7 +136,7 @@ export default function WorkerAbout() {
                 className="wa__textarea"
                 maxLength={MAX_CHARS}
                 rows={3}
-                placeholder={ph.honours}
+                placeholder={t(`workerAbout.placeholders.${placeholderCategory}.honours`)}
                 value={honours}
                 onChange={(e) => setHonours(e.target.value)}
               />
@@ -185,7 +167,7 @@ export default function WorkerAbout() {
               marginTop: '16px',
             }}
           >
-            Skip (Demo Only)
+            {t('common.demoSkip')}
           </p>
         )}
       </div>

@@ -120,7 +120,7 @@ export default function CategorySignup() {
     return null
   }
 
-  const workerName = 'Your Name'
+  const workerName = t('profilePhoto.yourName')
 
   return (
     <div className="cs">
@@ -273,7 +273,7 @@ export default function CategorySignup() {
               marginTop: '16px',
             }}
           >
-            Skip (Demo Only)
+            {t('common.demoSkip')}
           </p>
         )}
       </div>

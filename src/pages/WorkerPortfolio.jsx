@@ -91,7 +91,7 @@ export default function WorkerPortfolio() {
                       type="button"
                       className="wp__cell-remove"
                       onClick={() => removePhoto(photo.id)}
-                      aria-label="Remove"
+                      aria-label={t('portfolio.remove')}
                     >
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                         <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
@@ -141,7 +141,7 @@ export default function WorkerPortfolio() {
               marginTop: '16px',
             }}
           >
-            Skip (Demo Only)
+            {t('common.demoSkip')}
           </p>
         )}
       </div>

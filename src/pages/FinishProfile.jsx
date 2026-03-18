@@ -281,7 +281,7 @@ export default function FinishProfile() {
                   marginTop: '16px',
                 }}
               >
-                Skip (Demo Only)
+                {t('common.demoSkip')}
               </p>
             )}
           </form>

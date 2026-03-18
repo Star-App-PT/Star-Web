@@ -214,7 +214,7 @@ export default function SignupForm({ category, onBack }) {
                   marginTop: '16px',
                 }}
               >
-                Skip (Demo Only)
+                {t('common.demoSkip')}
               </p>
             )}
           </>

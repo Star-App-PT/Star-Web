@@ -1,10 +1,12 @@
 import { useState, useRef, useCallback, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { moderateImage } from '../../../utils/moderateImage'
 import { useDemoMode } from '../../../contexts/DemoModeContext'
 import './ClientSignup.css'
 
 export default function ClientSignupPhoto() {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const { isDemoMode } = useDemoMode()
   const fileRef = useRef(null)
@@ -25,7 +27,7 @@ export default function ClientSignupPhoto() {
     setError('')
     const result = await moderateImage(file)
     if (!result.safe) {
-      setError(result.reason || 'Image rejected. Please upload a different photo.')
+      setError(result.reason || t('clientSignup.photoRejected'))
       if (fileRef.current) fileRef.current.value = ''
       return
     }
@@ -84,15 +86,15 @@ export default function ClientSignupPhoto() {
   return (
     <div className="csu">
       <div className="csu__top">
-        <span className="csu__step">Step 3 of 4</span>
+        <span className="csu__step">{t('clientSignup.step3')}</span>
         <button type="button" className="csu__back" onClick={() => navigate('/client/signup/name')}>
-          Back
+          {t('common.back')}
         </button>
       </div>
 
       <div className="csu__card">
-        <h1 className="csu__title">Add a profile photo</h1>
-        <p className="csu__subtitle">Workers appreciate knowing who to expect.</p>
+        <h1 className="csu__title">{t('clientSignup.photoTitle')}</h1>
+        <p className="csu__subtitle">{t('clientSignup.photoSubtitle')}</p>
 
         <input ref={fileRef} type="file" accept="image/*" style={{ display: 'none' }} onChange={handleFile} />
 
@@ -120,7 +122,7 @@ export default function ClientSignupPhoto() {
                   <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
                   <circle cx="12" cy="13" r="4"/>
                 </svg>
-                <span>Upload photo</span>
+                <span>{t('clientSignup.uploadPhoto')}</span>
               </div>
             )}
           </div>
@@ -147,10 +149,10 @@ export default function ClientSignupPhoto() {
           {imgSrc && (
             <div className="csu__photo-actions">
               <button type="button" className="csu__photo-action csu__photo-action--cancel" onClick={handleCancel}>
-                Cancel
+                {t('common.cancel')}
               </button>
               <button type="button" className="csu__photo-action csu__photo-action--done" onClick={handleDone}>
-                Done
+                {t('common.done')}
               </button>
             </div>
           )}
@@ -164,10 +166,10 @@ export default function ClientSignupPhoto() {
           disabled={!confirmed}
           onClick={() => navigate('/client/signup/commitment')}
         >
-          Looks good
+          {t('clientSignup.looksGood')}
         </button>
         <span className="csu__photo-skip" onClick={() => navigate('/client/signup/commitment')}>
-          Skip for now
+          {t('clientSignup.skipForNow')}
         </span>
         {/* DEMO ONLY — REMOVE BEFORE LAUNCH */}
         {isDemoMode && (
@@ -181,7 +183,7 @@ export default function ClientSignupPhoto() {
               marginTop: '16px',
             }}
           >
-            Skip (Demo Only)
+            {t('common.demoSkip')}
           </p>
         )}
       </div>

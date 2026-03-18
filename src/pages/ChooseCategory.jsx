@@ -54,7 +54,7 @@ export default function ChooseCategory() {
               marginTop: '16px',
             }}
           >
-            Skip (Demo Only)
+            {t('common.demoSkip')}
           </p>
         )}
       </div>

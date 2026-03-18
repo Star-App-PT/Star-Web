@@ -16,8 +16,16 @@
     "reviews": "reviews",
     "goBack": "Go back",
     "backToHome": "Back to Home",
+    "demoSkip": "Skip (Demo Only)",
     "submitting": "Submitting...",
     "somethingWentWrong": "Something went wrong. Please try again."
+  },
+  "signupChoice": {
+    "title": "Sign up",
+    "subtitle": "Choose how you want to use Star SVS",
+    "needService": "I need a service",
+    "wantToWork": "I want to work",
+    "backToHome": "Back to home"
   },
   "header": {
     "becomeAStar": "Become a Star",
@@ -115,7 +123,8 @@
   "workerProfile": {
     "title": "Tell us more about you",
     "profilePhoto": "Profile photo",
-    "choosePhoto": "Choose file"
+    "choosePhoto": "Choose file",
+    "intro": "Complete your profile (skills, rates, etc.)."
   },
   "profilePhoto": {
     "title": "Let's finish up your profile",
@@ -129,14 +138,17 @@
     "topRated": "Top rated",
     "roleCleaning": "Home Cleaner",
     "roleRepairs": "Handyman",
-    "roleServices": "Photographer"
+    "roleServices": "Photographer",
+    "yourName": "Your Name"
   },
   "workerProfileCleaner": {
     "intro": "Choose the cleaning services you offer. You can select more than one.",
     "skillsTitle": "Your cleaning services",
+    "skillsHint": "Click on every one that applies to you.",
     "other": "Other",
     "otherPlaceholder": "Add any other cleaning skills here",
     "basicInfoTitle": "Basic information",
+    "profileAlt": "Profile",
     "firstName": "First name",
     "firstNamePlaceholder": "First name",
     "lastName": "Last name",
@@ -174,10 +186,16 @@
     "autoDetailing": "Auto Detailing"
   },
   "workerSkill": {
+    "step": "Step 2",
     "heading": "Which of these best describes your skill?",
     "clean": "Cleaning",
     "repair": "Repairs",
     "services": "Services"
+  },
+  "workerProfileIntro": {
+    "step": "Step 1",
+    "title": "Tell us about your skill",
+    "body": "In this step, we'll ask which type of skill you have and whether clients will book you for an hour, a day, or longer. Then tell us more about your experience and the region you cover."
   },
   "workerSignup": {
     "getStarted": "Get started",
@@ -266,7 +284,26 @@
     "yearsLabel": "How many years have you been in {{category}}?",
     "notableLabel": "Add something notable about your skill",
     "trainingLabel": "Add a degree, training or experience",
-    "honoursLabel": "Add any honours or media features"
+    "honoursLabel": "Add any honours or media features",
+    "decrease": "Decrease",
+    "increase": "Increase",
+    "placeholders": {
+      "cleaning": {
+        "notable": "I used to clean for American Airlines - I know what spotless really means.",
+        "training": "Experienced cleaner with a passion for healthy, chemical-free environments.",
+        "honours": "Voted best home cleaner in Porto two years running by local residents."
+      },
+      "repairs": {
+        "notable": "I have been a carpenter for 20 years and I still love the craft.",
+        "training": "Certified electrician with 15 years working on residential and commercial projects.",
+        "honours": "Featured in Construir Magazine for kitchen renovation work in Lisbon."
+      },
+      "services": {
+        "notable": "I spent 3 years as a staff photographer for SURFER Magazine.",
+        "training": "Studied fine art photography at the Rhode Island School of Design.",
+        "honours": "Won first place in a National Geographic photography contest."
+      }
+    }
   },
   "serviceArea": {
     "title": "Where will you work?",
@@ -279,14 +316,17 @@
     "opt90": "1.5 hours",
     "opt120": "2 hours",
     "done": "Done",
-    "next": "Next"
+    "next": "Next",
+    "clear": "Clear",
+    "close": "Close"
   },
   "portfolio": {
     "step": "Step 10 of 12",
     "title": "Show off your best work",
     "subtitle": "Upload up to 10 photos of your work. Clients love seeing real examples before they book.",
     "addPhoto": "Add photo",
-    "photos": "photos"
+    "photos": "photos",
+    "remove": "Remove"
   },
   "packages": {
     "step": "Step 11 of 12",
@@ -298,6 +338,24 @@
     "titlePlaceholder": "e.g. A walk through Porto",
     "priceLabel": "Price",
     "durationLabel": "Duration",
+    "duration30min": "30 min",
+    "duration1hr": "1 hr",
+    "duration1hr30": "1 hr 30 min",
+    "duration2hr": "2 hr",
+    "duration3hr": "3 hr",
+    "duration4hr": "4 hr",
+    "durationFullDay": "Full day",
+    "priceTypeLabel": "Price type",
+    "priceTypeVisit": "Per visit",
+    "priceTypeHour": "Per hour",
+    "priceTypePerson": "Per person",
+    "priceTypeSession": "Per session",
+    "priceTypeItem": "Per item",
+    "priceTypeVisitSuffix": "visit",
+    "priceTypeHourSuffix": "hour",
+    "priceTypePersonSuffix": "person",
+    "priceTypeSessionSuffix": "session",
+    "priceTypeItemSuffix": "item",
     "pricingType": "Pricing type",
     "perGuest": "per guest",
     "perGroup": "per group",
@@ -306,6 +364,39 @@
     "descPlaceholder": "Describe what the client gets with this package…",
     "addAnother": "Add another package",
     "finish": "Finish"
+  },
+  "clientSignup": {
+    "welcomeTitle": "Welcome to Star SVS",
+    "welcomeSubtitle": "Find trusted professionals near you.",
+    "continueGoogle": "Continue with Google",
+    "continueApple": "Continue with Apple",
+    "continuePhone": "Continue with phone number",
+    "emailAddress": "Email address",
+    "continueEmail": "Continue with email",
+    "termsPrefix": "By continuing, you agree to our",
+    "termsOfService": "Terms of Service",
+    "termsAnd": "and",
+    "privacyPolicy": "Privacy Policy",
+    "alreadyHaveAccount": "Already have an account?",
+    "logIn": "Log in",
+    "step2": "Step 2 of 4",
+    "step3": "Step 3 of 4",
+    "step4": "Step 4 of 4",
+    "nameTitle": "What's your name?",
+    "nameSubtitle": "Let workers know who they're visiting.",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "phoneNumber": "Phone number",
+    "photoTitle": "Add a profile photo",
+    "photoSubtitle": "Workers appreciate knowing who to expect.",
+    "photoRejected": "Image rejected. Please upload a different photo.",
+    "uploadPhoto": "Upload photo",
+    "looksGood": "Looks good",
+    "skipForNow": "Skip for now",
+    "commitmentTitle": "Our community commitment",
+    "commitmentBody": "Star SVS is a community where everyone is welcome. We ask all members to treat each other with respect, kindness, and professionalism.",
+    "agreeAndContinue": "Agree and continue",
+    "decline": "Decline"
   },
   "dashboard": {
     "welcome": "Welcome, {{name}}!",

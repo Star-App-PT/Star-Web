@@ -73,7 +73,7 @@ export default function WorkerProfileCleaner() {
             {profilePhotoUrl ? (
               <img
                 src={profilePhotoUrl}
-                alt="Profile"
+                alt={t('workerProfileCleaner.profileAlt')}
                 className="worker-profile__avatar-img"
               />
             ) : (
@@ -104,7 +104,7 @@ export default function WorkerProfileCleaner() {
         <h2 className="worker-profile-cleaner__section-title">
           {t('workerProfileCleaner.skillsTitle')}
         </h2>
-        <p className="worker-profile-cleaner__hint">Click on every one that applies to you.</p>
+        <p className="worker-profile-cleaner__hint">{t('workerProfileCleaner.skillsHint')}</p>
         <div className="worker-profile-cleaner__skills">
           {CLEANER_SKILL_IDS.map((id) => (
             <button
@@ -291,7 +291,7 @@ export default function WorkerProfileCleaner() {
             marginTop: '16px',
           }}
         >
-          Skip (Demo Only)
+          {t('common.demoSkip')}
         </p>
       )}
     </div>

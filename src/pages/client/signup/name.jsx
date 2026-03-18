@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { useDemoMode } from '../../../contexts/DemoModeContext'
 import './ClientSignup.css'
 
@@ -16,6 +17,7 @@ const COUNTRY_CODES = [
 ]
 
 export default function ClientSignupName() {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const { isDemoMode } = useDemoMode()
 
@@ -34,21 +36,21 @@ export default function ClientSignupName() {
   return (
     <div className="csu">
       <div className="csu__top">
-        <span className="csu__step">Step 2 of 4</span>
+        <span className="csu__step">{t('clientSignup.step2')}</span>
         <button type="button" className="csu__back" onClick={() => navigate('/client/signup')}>
-          Back
+          {t('common.back')}
         </button>
       </div>
 
       <div className="csu__card">
-        <h1 className="csu__title">What's your name?</h1>
-        <p className="csu__subtitle">Let workers know who they're visiting.</p>
+        <h1 className="csu__title">{t('clientSignup.nameTitle')}</h1>
+        <p className="csu__subtitle">{t('clientSignup.nameSubtitle')}</p>
 
         <div className="csu__field-row">
           <input
             type="text"
             className="csu__input"
-            placeholder="First name"
+            placeholder={t('clientSignup.firstName')}
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             autoComplete="given-name"
@@ -56,7 +58,7 @@ export default function ClientSignupName() {
           <input
             type="text"
             className="csu__input"
-            placeholder="Last name"
+            placeholder={t('clientSignup.lastName')}
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             autoComplete="family-name"
@@ -64,7 +66,7 @@ export default function ClientSignupName() {
         </div>
 
         <div className="csu__field">
-          <label className="csu__field-label">Phone number</label>
+          <label className="csu__field-label">{t('clientSignup.phoneNumber')}</label>
           <div className="csu__phone-group">
             <select
               className="csu__country-select"
@@ -78,7 +80,7 @@ export default function ClientSignupName() {
             <input
               type="tel"
               className="csu__phone-input"
-              placeholder="Phone number"
+              placeholder={t('clientSignup.phoneNumber')}
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               autoComplete="tel"
@@ -94,7 +96,7 @@ export default function ClientSignupName() {
           disabled={!canContinue}
           onClick={handleNext}
         >
-          Next
+          {t('serviceArea.next')}
         </button>
         {/* DEMO ONLY — REMOVE BEFORE LAUNCH */}
         {isDemoMode && (
@@ -108,7 +110,7 @@ export default function ClientSignupName() {
               marginTop: '16px',
             }}
           >
-            Skip (Demo Only)
+            {t('common.demoSkip')}
           </p>
         )}
       </div>

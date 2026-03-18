@@ -28,7 +28,7 @@ export default function WorkerSkillType() {
   return (
     <div className="worker-skill container">
       <div className="worker-skill__wrap">
-        <p className="worker-skill__step">Step 2</p>
+        <p className="worker-skill__step">{t('workerSkill.step')}</p>
         <h1 className="worker-skill__title">{t('workerSkill.heading')}</h1>
         <div className="worker-skill__grid">
           {OPTIONS.map(({ id, labelKey }) => (
@@ -72,7 +72,7 @@ export default function WorkerSkillType() {
               marginTop: '16px',
             }}
           >
-            Skip (Demo Only)
+            {t('common.demoSkip')}
           </p>
         )}
       </div>

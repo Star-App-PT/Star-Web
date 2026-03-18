@@ -11,10 +11,10 @@ export default function WorkerProfileIntro() {
   return (
     <div className="worker-profile-intro container">
       <div className="worker-profile-intro__wrap">
-        <p className="worker-profile-intro__step">Step 1</p>
-        <h1 className="worker-profile-intro__title">Tell us about your skill</h1>
+        <p className="worker-profile-intro__step">{t('workerProfileIntro.step')}</p>
+        <h1 className="worker-profile-intro__title">{t('workerProfileIntro.title')}</h1>
         <p className="worker-profile-intro__body">
-          In this step, we'll ask which type of skill you have and whether clients will book you for an hour, a day, or longer. Then tell us more about your experience and the region you cover.
+          {t('workerProfileIntro.body')}
         </p>
         <hr className="worker-profile-intro__divider" />
         <div className="worker-profile-intro__footer">
@@ -45,7 +45,7 @@ export default function WorkerProfileIntro() {
               marginTop: '16px',
             }}
           >
-            Skip (Demo Only)
+            {t('common.demoSkip')}
           </p>
         )}
       </div>

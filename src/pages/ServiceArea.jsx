@@ -257,7 +257,7 @@ export default function ServiceArea() {
                 autoComplete="off"
               />
               {query && (
-                <button type="button" className="sa__clear" onClick={handleClear} aria-label="Clear">
+                <button type="button" className="sa__clear" onClick={handleClear} aria-label={t('serviceArea.clear')}>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#717171" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <line x1="18" y1="6" x2="6" y2="18"/>
                     <line x1="6" y1="6" x2="18" y2="18"/>
@@ -321,7 +321,7 @@ export default function ServiceArea() {
               marginTop: '16px',
             }}
           >
-            Skip (Demo Only)
+            {t('common.demoSkip')}
           </p>
         )}
       </div>
@@ -331,7 +331,7 @@ export default function ServiceArea() {
           <div className="sa-modal" onClick={(e) => e.stopPropagation()}>
             <div className="sa-modal__header">
               <h2 className="sa-modal__title">{t('serviceArea.modalTitle')}</h2>
-              <button type="button" className="sa-modal__close" onClick={() => setModalOpen(false)} aria-label="Close">
+              <button type="button" className="sa-modal__close" onClick={() => setModalOpen(false)} aria-label={t('serviceArea.close')}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <line x1="18" y1="6" x2="6" y2="18"/>
                   <line x1="6" y1="6" x2="18" y2="18"/>

@@ -1,9 +1,11 @@
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { supabase } from '../../../supabase'
 import { useDemoMode } from '../../../contexts/DemoModeContext'
 import './ClientSignup.css'
 
 export default function ClientSignupCommitment() {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const { isDemoMode } = useDemoMode()
 
@@ -34,9 +36,9 @@ export default function ClientSignupCommitment() {
   return (
     <div className="csu">
       <div className="csu__top">
-        <span className="csu__step">Step 4 of 4</span>
+        <span className="csu__step">{t('clientSignup.step4')}</span>
         <button type="button" className="csu__back" onClick={() => navigate('/client/signup/photo')}>
-          Back
+          {t('common.back')}
         </button>
       </div>
 
@@ -44,18 +46,18 @@ export default function ClientSignupCommitment() {
         <div className="csu__commit-card">
           <img src="/star-logo-blue.svg" alt="Star SVS" className="csu__commit-logo" />
 
-          <h1 className="csu__commit-title">Our community commitment</h1>
+          <h1 className="csu__commit-title">{t('clientSignup.commitmentTitle')}</h1>
 
           <p className="csu__commit-body">
-            Star SVS is a community where everyone is welcome. We ask all members to treat each other with respect, kindness, and professionalism.
+            {t('clientSignup.commitmentBody')}
           </p>
 
           <button type="button" className="csu__commit-agree" onClick={handleAgree}>
-            Agree and continue
+            {t('clientSignup.agreeAndContinue')}
           </button>
 
           <button type="button" className="csu__commit-decline" onClick={handleDecline}>
-            Decline
+            {t('clientSignup.decline')}
           </button>
         </div>
       </div>
@@ -72,7 +74,7 @@ export default function ClientSignupCommitment() {
             marginTop: '16px',
           }}
         >
-          Skip (Demo Only)
+          {t('common.demoSkip')}
         </p>
       )}
     </div>
