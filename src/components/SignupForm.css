@@ -82,14 +82,13 @@
 
 /* Phone input group */
 .sf-card__phone-group {
-  border: 1px solid #B0B0B0;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.sf-card__phone-top {
-  padding: 10px 16px 8px;
-  border-bottom: 1px solid #DDDDDD;
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: 1.5px solid #CCCCCC;
+  border-radius: 50px;
+  overflow: visible;
+  background: #fff;
 }
 
 .sf-card__phone-label {
@@ -99,20 +98,22 @@
   margin-bottom: 2px;
 }
 
+.sf-card__phone-label--standalone {
+  margin-bottom: 8px;
+}
+
 .sf-card .country-code-picker {
-  width: 100%;
+  width: 112px;
+  flex-shrink: 0;
+  border-right: 1px solid #DDDDDD;
 }
 
 .sf-card__country-picker-button {
-  padding: 0;
-}
-
-.sf-card__phone-bottom {
-  padding: 0;
+  padding: 14px 12px 14px 16px;
 }
 
 .sf-card__phone-input {
-  width: 100%;
+  flex: 1;
   border: none;
   outline: none;
   padding: 14px 16px;

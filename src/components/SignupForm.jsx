@@ -126,25 +126,23 @@ export default function SignupForm({ category, onBack }) {
             <h2 className="sf-card__welcome">{t('signupModal.welcomeTitle')}</h2>
 
             <form onSubmit={handlePhoneContinue} noValidate>
+              <label className="sf-card__phone-label sf-card__phone-label--standalone">
+                {t('signupModal.countryRegion')}
+              </label>
               <div className="sf-card__phone-group">
-                <div className="sf-card__phone-top">
-                  <label className="sf-card__phone-label">{t('signupModal.countryRegion')}</label>
-                  <CountryCodePicker
-                    value={country}
-                    onChange={setCountry}
-                    buttonClassName="sf-card__country-picker-button"
-                  />
-                </div>
-                <div className="sf-card__phone-bottom">
-                  <input
-                    type="tel"
-                    className="sf-card__phone-input"
-                    placeholder={t('signupModal.phonePlaceholder')}
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    autoComplete="tel"
-                  />
-                </div>
+                <CountryCodePicker
+                  value={country}
+                  onChange={setCountry}
+                  buttonClassName="sf-card__country-picker-button"
+                />
+                <input
+                  type="tel"
+                  className="sf-card__phone-input"
+                  placeholder={t('signupModal.phonePlaceholder')}
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  autoComplete="tel"
+                />
               </div>
 
               <p className="sf-card__hint">{t('signupModal.phoneHint')}</p>

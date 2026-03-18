@@ -244,13 +244,15 @@
 }
 
 .csu__phone-group {
-  display: flex;
-  gap: 0;
-  border: 1.5px solid #DDDDDD;
-  border-radius: 12px;
-  overflow: hidden;
-  transition: border-color 0.15s;
   position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border: 1.5px solid #CCCCCC;
+  border-radius: 50px;
+  overflow: visible;
+  transition: border-color 0.15s;
+  background: #fff;
 }
 
 .csu__phone-group:focus-within {
@@ -259,18 +261,17 @@
 
 .csu .country-code-picker {
   flex-shrink: 0;
-  width: 120px;
-  border-right: 1px solid #E5E7EB;
+  width: 112px;
+  border-right: 1px solid #DDDDDD;
 }
 
 .csu__country-picker-button {
-  height: 100%;
-  padding: 14px 10px 14px 14px;
+  padding: 14px 12px 14px 16px;
 }
 
 .csu__phone-input {
   flex: 1;
-  padding: 14px 14px 14px 0;
+  padding: 14px 16px;
   border: none;
   font-size: 0.95rem;
   font-family: inherit;

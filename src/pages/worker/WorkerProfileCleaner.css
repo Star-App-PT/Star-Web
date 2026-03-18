@@ -128,26 +128,32 @@
 }
 
 .worker-profile-cleaner__phone-group {
+  position: relative;
   display: flex;
   align-items: stretch;
-  gap: 10px;
+  gap: 0;
+  border: 1.5px solid #CCCCCC;
+  border-radius: 50px;
+  overflow: visible;
+  background: #fff;
 }
 
 .worker-profile-cleaner__phone-group .country-code-picker {
-  width: 130px;
+  width: 112px;
   flex-shrink: 0;
+  border-right: 1px solid #DDDDDD;
 }
 
 .worker-profile-cleaner__country-picker-button {
   height: 100%;
-  padding: 10px 14px;
-  border-radius: 12px;
-  border: 2px solid var(--star-gray-200);
-  background: var(--star-white);
+  padding: 10px 12px 10px 16px;
+  background: transparent;
 }
 
 .worker-profile-cleaner__input--phone {
   flex: 1;
+  border: none;
+  background: transparent;
 }
 
 .worker-profile-cleaner__footer {
@@ -166,12 +172,3 @@
   /* visual styles via .btn-primary */
 }
 
-@media (max-width: 600px) {
-  .worker-profile-cleaner__phone-group {
-    flex-direction: column;
-  }
-
-  .worker-profile-cleaner__phone-group .country-code-picker {
-    width: 100%;
-  }
-}
