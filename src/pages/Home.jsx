@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useRef, useCallback } from 'react'
-import { Link, useNavigate, useSearchParams } from 'react-router-dom'
+import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import './Home.css'
 import { CATEGORIES, PICKED_DATES, CLEANERS, HANDYMEN, SERVICES, SUPPORTED_CITIES } from '../data/workers'
@@ -84,6 +84,7 @@ function buildCalendarCells(year, month) {
 export default function Home() {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const location = useLocation()
   const [searchParams] = useSearchParams()
   const selectedCategory = searchParams.get('category') || 'cleaners'
   const [favorites, setFavorites] = useState(new Set())
@@ -188,6 +189,13 @@ export default function Home() {
     mq.addEventListener('change', update)
     return () => mq.removeEventListener('change', update)
   }, [])
+
+  useEffect(() => {
+    if (isMobile && location.state?.openMobileSearch) {
+      openMobileSearch()
+      navigate(`${location.pathname}${location.search}`, { replace: true, state: {} })
+    }
+  }, [isMobile, location, navigate])
 
   useEffect(() => {
     const handler = (e) => {

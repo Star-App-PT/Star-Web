@@ -1,0 +1,81 @@
+.mbnav__backdrop {
+  display: none;
+}
+
+.mbnav {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mbnav__backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    border: none;
+    background: rgba(0, 0, 0, 0.18);
+    padding: 0;
+    z-index: 899;
+  }
+
+  .mbnav {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: stretch;
+    height: calc(60px + env(safe-area-inset-bottom));
+    padding: 0 0 env(safe-area-inset-bottom);
+    background: #fff;
+    border-top: 1px solid #EEEEEE;
+    z-index: 900;
+  }
+
+  .mbnav__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    border: none;
+    background: transparent;
+    color: #999999;
+    text-decoration: none;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 6px 8px 8px;
+  }
+
+  .mbnav__item--active {
+    color: #1B4FBA;
+  }
+
+  .mbnav__menu {
+    position: absolute;
+    right: 12px;
+    bottom: calc(68px + env(safe-area-inset-bottom));
+    width: min(280px, calc(100vw - 24px));
+    background: #fff;
+    border: 1px solid #E8E8E8;
+    border-radius: 16px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.14);
+    overflow: hidden;
+  }
+
+  .mbnav__menu-item {
+    display: block;
+    padding: 16px 18px;
+    color: #222;
+    text-decoration: none;
+    font-size: 0.95rem;
+    background: #fff;
+  }
+
+  .mbnav__menu-sep {
+    height: 1px;
+    background: #EBEBEB;
+  }
+}

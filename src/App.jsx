@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Header from './components/Header'
+import MobileBottomNav from './components/MobileBottomNav'
 import Home from './pages/Home'
 import WorkerSignup from './pages/worker/WorkerSignup'
 import CategorySignup from './pages/worker/CategorySignup'
@@ -23,13 +24,14 @@ import ClientSignupPhoto from './pages/client/signup/photo'
 import ClientSignupCommitment from './pages/client/signup/commitment'
 import SignupChoice from './pages/SignupChoice'
 import ClientLogin from './pages/client/ClientLogin'
+import ClientFavourites from './pages/client/ClientFavourites'
 import WorkerLogin from './pages/worker/WorkerLogin'
 
 export default function App() {
   return (
     <BrowserRouter>
       <Header />
-      <main>
+      <main className="app-main">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<Search />} />
@@ -53,10 +55,12 @@ export default function App() {
           <Route path="/client/signup/photo" element={<ClientSignupPhoto />} />
           <Route path="/client/signup/commitment" element={<ClientSignupCommitment />} />
           <Route path="/client/login" element={<ClientLogin />} />
+          <Route path="/client/favourites" element={<ClientFavourites />} />
           <Route path="/worker/login" element={<WorkerLogin />} />
           <Route path="/signup" element={<SignupChoice />} />
         </Routes>
       </main>
+      <MobileBottomNav />
     </BrowserRouter>
   )
 }

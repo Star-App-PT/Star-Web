@@ -85,24 +85,7 @@
 }
 
 @media (max-width: 768px) {
-  .star-header__inner {
-    grid-template-columns: 1fr auto;
-    gap: 0;
-    padding: 4px 12px;
-  }
-
-  .star-header__logo,
-  .star-header__categories {
-    display: none;
-  }
-
-  .star-header__nav {
-    grid-column: 2;
-    justify-self: end;
-    gap: 8px;
-  }
-
   .star-header {
-    border-bottom: none;
+    display: none;
   }
 }
