@@ -37,7 +37,6 @@ export default function useUserLocation() {
   const [supported, setSupported] = useState(true)
   const [loading, setLoading] = useState(true)
   const [userCityName, setUserCityName] = useState(null)
-  const [userAddress, setUserAddress] = useState(DEFAULT_CITY)
   const [isOutsidePortugal, setIsOutsidePortugal] = useState(false)
   const [hasPreciseLocation, setHasPreciseLocation] = useState(false)
   const [coords, setCoords] = useState(SUPPORTED_CITIES[DEFAULT_CITY])
@@ -47,7 +46,6 @@ export default function useUserLocation() {
     if (!navigator.geolocation) {
       setCity(DEFAULT_CITY)
       setUserCityName(DEFAULT_CITY)
-      setUserAddress(DEFAULT_CITY)
       setSupported(true)
       setHasPreciseLocation(false)
       setCoords(SUPPORTED_CITIES[DEFAULT_CITY])
@@ -82,7 +80,6 @@ export default function useUserLocation() {
             suggestions.push({ city: detected, desc: region })
             setUserCityName(detected)
           }
-          setUserAddress(data.display_name || detected || DEFAULT_CITY)
 
           if (outsidePortugal) {
             setCity(DEFAULT_CITY)
@@ -100,7 +97,6 @@ export default function useUserLocation() {
           setSupported(distance <= MAX_DISTANCE_KM)
           setIsOutsidePortugal(false)
           setUserCityName(distance <= MAX_DISTANCE_KM ? nearest : DEFAULT_CITY)
-          setUserAddress(distance <= MAX_DISTANCE_KM ? nearest : DEFAULT_CITY)
         }
 
         // Overpass: find real cities and towns within 60km
@@ -141,7 +137,6 @@ export default function useUserLocation() {
       () => {
         setCity(DEFAULT_CITY)
         setUserCityName(DEFAULT_CITY)
-        setUserAddress(DEFAULT_CITY)
         setSupported(true)
         setIsOutsidePortugal(false)
         setHasPreciseLocation(false)
@@ -157,7 +152,6 @@ export default function useUserLocation() {
     supported,
     loading,
     userCityName,
-    userAddress,
     isOutsidePortugal,
     hasPreciseLocation,
     coords,
@@ -165,6 +159,5 @@ export default function useUserLocation() {
     setCity,
     setSupported,
     setUserCityName,
-    setUserAddress,
   }
 }

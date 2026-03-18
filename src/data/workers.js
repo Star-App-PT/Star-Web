@@ -77,12 +77,6 @@ export const SUPPORTED_CITIES = {
 
 export const DEFAULT_CITY = 'Porto'
 
-const DEFAULT_SERVICE_AREAS = {
-  Porto: { address: 'Porto, Portugal', driveTime: 45, coords: SUPPORTED_CITIES.Porto },
-  Lisbon: { address: 'Lisbon, Portugal', driveTime: 45, coords: SUPPORTED_CITIES.Lisbon },
-  Faro: { address: 'Faro, Portugal', driveTime: 45, coords: SUPPORTED_CITIES.Faro },
-}
-
 export const CLEANERS = [
   {
     id: 'c1', name: 'Maria', specialty: 'Home Cleaner', rating: 5.0, hourlyRate: 28,
@@ -415,10 +409,6 @@ const MOCK_REVIEWS_BY_ID = {
 }
 
 ALL_WORKERS.forEach((w) => {
-  const fallbackServiceArea = DEFAULT_SERVICE_AREAS[w.city] || DEFAULT_SERVICE_AREAS[DEFAULT_CITY]
-  w.service_area_address = w.service_area_address || fallbackServiceArea.address
-  w.service_area_drive_time = w.service_area_drive_time || fallbackServiceArea.driveTime
-  w.service_area_coords = w.service_area_coords || { lat: w.lat, lng: w.lng }
   w.clientReviews = MOCK_REVIEWS_BY_ID[w.id] || []
   if (w.clientReviews.length > 0) {
     w.reviews = w.clientReviews.length
