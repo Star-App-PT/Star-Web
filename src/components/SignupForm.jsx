@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { supabase } from '../supabase'
+import { supabase, AUTH_REDIRECT_URL } from '../supabase'
 import { useDemoMode } from '../contexts/DemoModeContext'
 import CountryCodePicker from './CountryCodePicker'
 import './SignupForm.css'
@@ -26,7 +26,7 @@ export default function SignupForm({ category, onBack }) {
     setLoading(true)
     const { error: err } = await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: 'https://starsvs.com' },
+      options: { redirectTo: AUTH_REDIRECT_URL },
     })
     if (err) {
       setError(err.message)
@@ -39,7 +39,7 @@ export default function SignupForm({ category, onBack }) {
     setLoading(true)
     const { error: err } = await supabase.auth.signInWithOAuth({
       provider: 'apple',
-      options: { redirectTo: 'https://starsvs.com' },
+      options: { redirectTo: AUTH_REDIRECT_URL },
     })
     if (err) {
       setError(err.message)
@@ -70,7 +70,7 @@ export default function SignupForm({ category, onBack }) {
       email: email.trim(),
       password: password,
       options: {
-        emailRedirectTo: `${window.location.origin}/worker/finish-profile`,
+        emailRedirectTo: `${AUTH_REDIRECT_URL}/worker/finish-profile`,
         data: { category: category || null },
       },
     })
