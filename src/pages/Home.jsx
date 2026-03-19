@@ -5,6 +5,7 @@ import './Home.css'
 import { CATEGORIES, PICKED_DATES, CLEANERS, HANDYMEN, SERVICES, SUPPORTED_CITIES } from '../data/workers'
 import useUserLocation from '../hooks/useUserLocation'
 import WorkerAvatar from '../components/WorkerAvatar'
+import { supabase } from '../supabase'
 
 function shuffle(arr) {
   const a = [...arr]
@@ -94,6 +95,23 @@ export default function Home() {
   const selectedCategory = searchParams.get('category') || 'cleaners'
   const [favorites, setFavorites] = useState(new Set())
   const { city: CITY, supported: citySupported, userCityName, isOutsidePortugal, hasPreciseLocation, coords, nearbyCities } = useUserLocation()
+
+  // Post-OAuth: if user is signed in but has no completed profile (new user), send to type selection then onboarding
+  useEffect(() => {
+    if (!supabase) return
+    let cancelled = false
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (cancelled || !session?.user) return
+      const profileComplete = session.user.user_metadata?.profile_complete === true
+      if (profileComplete) return // worker with completed profile → stay on home
+      supabase.from('clients').select('id').eq('id', session.user.id).maybeSingle().then(({ data: client }) => {
+        if (cancelled) return
+        if (client) return // client with record → stay on home
+        navigate('/signup', { replace: true })
+      })
+    })
+    return () => { cancelled = true }
+  }, [navigate])
 
   const [openDropdown, setOpenDropdown] = useState(null)
   const [whereValue, setWhereValue] = useState('')
