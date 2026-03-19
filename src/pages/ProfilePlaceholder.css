@@ -1,0 +1,20 @@
+.profile-placeholder {
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.profile-placeholder__text {
+  font-size: 1.1rem;
+  color: var(--star-gray-600, #4b5563);
+  margin: 0 0 20px;
+}
+
+.profile-placeholder__link {
+  color: #1B4FBA;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.profile-placeholder__link:hover {
+  text-decoration: underline;
+}

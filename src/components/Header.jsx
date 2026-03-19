@@ -82,7 +82,7 @@ export default function Header() {
         <nav className="star-header__nav">
           <LanguageToggle />
           {user && (
-            <Link to="/dashboard" className="star-header__avatar-link" aria-label="Go to profile">
+            <Link to="/profile" className="star-header__avatar-link" aria-label="Go to profile">
               {avatarUrl ? (
                 <img src={avatarUrl} alt="" className="star-header__avatar-img" />
               ) : (

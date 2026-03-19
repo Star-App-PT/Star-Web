@@ -427,6 +427,24 @@
     "agreeAndContinue": "Agree and continue",
     "decline": "Decline"
   },
+  "profile": {
+    "aboutMe": "About me",
+    "edit": "Edit",
+    "jobsBooked": "Jobs booked",
+    "reviewsReceived": "Reviews received",
+    "memberSince": "Member since",
+    "memberSinceFormat": "{{month}} {{year}}",
+    "locationNotSet": "Location not set",
+    "memberTypeClient": "Client",
+    "memberTypeWorker": "Worker",
+    "verified": "Verified",
+    "preferredLanguage": "Preferred language",
+    "myBookings": "My Bookings",
+    "savedWorkers": "Saved Workers",
+    "settings": "Settings",
+    "comingSoon": "This page is coming soon.",
+    "backToProfile": "Back to profile"
+  },
   "dashboard": {
     "welcome": "Welcome, {{name}}!",
     "signedInVia": "Signed in via {{provider}}",

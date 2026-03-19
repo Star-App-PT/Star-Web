@@ -16,6 +16,8 @@ import Search from './pages/Search'
 import Workers from './pages/Workers'
 import WorkerDetail from './pages/WorkerDetail'
 import Dashboard from './pages/Dashboard'
+import Profile from './pages/Profile'
+import ProfilePlaceholder from './pages/ProfilePlaceholder'
 import FinishProfile from './pages/FinishProfile'
 import ChooseCategory from './pages/ChooseCategory'
 import WorkerAbout from './pages/WorkerAbout'
@@ -119,6 +121,9 @@ function AppShell() {
           <Route path="/worker/portfolio/:category" element={<WorkerPortfolio />} />
           <Route path="/worker/packages/:category" element={<WorkerPackages />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/bookings" element={<ProfilePlaceholder />} />
+          <Route path="/profile/settings" element={<ProfilePlaceholder />} />
           <Route path="/client/signup" element={<ClientSignupWelcome />} />
           <Route path="/client/signup/name" element={<ClientSignupName />} />
           <Route path="/client/signup/photo" element={<ClientSignupPhoto />} />

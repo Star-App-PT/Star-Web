@@ -427,6 +427,24 @@
     "agreeAndContinue": "Aceptar y continuar",
     "decline": "Rechazar"
   },
+  "profile": {
+    "aboutMe": "Sobre mí",
+    "edit": "Editar",
+    "jobsBooked": "Reservas",
+    "reviewsReceived": "Reseñas recibidas",
+    "memberSince": "Miembro desde",
+    "memberSinceFormat": "{{month}} {{year}}",
+    "locationNotSet": "Ubicación no establecida",
+    "memberTypeClient": "Cliente",
+    "memberTypeWorker": "Profesional",
+    "verified": "Verificado",
+    "preferredLanguage": "Idioma preferido",
+    "myBookings": "Mis reservas",
+    "savedWorkers": "Profesionales guardados",
+    "settings": "Ajustes",
+    "comingSoon": "Esta página estará disponible pronto.",
+    "backToProfile": "Volver al perfil"
+  },
   "dashboard": {
     "welcome": "¡Bienvenido, {{name}}!",
     "signedInVia": "Sesión iniciada vía {{provider}}",
