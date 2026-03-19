@@ -29,6 +29,8 @@ import ClientLogin from './pages/client/ClientLogin'
 import ClientFavourites from './pages/client/ClientFavourites'
 import WorkerLogin from './pages/worker/WorkerLogin'
 import DemoLanding from './pages/DemoLanding'
+import Privacy from './pages/Privacy'
+import Terms from './pages/Terms'
 
 function AppShell() {
   const location = useLocation()
@@ -107,6 +109,8 @@ function AppShell() {
           <Route path="/client/favourites" element={<ClientFavourites />} />
           <Route path="/worker/login" element={<WorkerLogin />} />
           <Route path="/signup" element={<SignupChoice />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
         </Routes>
       </main>
       <MobileBottomNav />
