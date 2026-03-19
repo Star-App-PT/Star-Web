@@ -34,6 +34,7 @@
   },
   "signupLogin": {
     "title": "Regístrate o inicia sesión",
+    "loginTitle": "Iniciar sesión",
     "countryRegion": "País o región",
     "phonePlaceholder": "Número de teléfono",
     "continue": "Continuar",

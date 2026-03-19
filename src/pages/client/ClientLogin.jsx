@@ -1,14 +1,36 @@
-import { Link } from 'react-router-dom'
-import '../LoginPlaceholder.css'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { supabase } from '../../supabase'
+import SignupLogin from '../SignupLogin'
+import '../SignupLogin.css'
 
 export default function ClientLogin() {
-  return (
-    <div className="login-placeholder">
-      <div className="login-placeholder__card">
-        <h1 className="login-placeholder__title">Client login</h1>
-        <p className="login-placeholder__sub">Login for clients — coming soon.</p>
-        <Link to="/" className="login-placeholder__back">Back to home</Link>
+  const navigate = useNavigate()
+  const [checking, setChecking] = useState(true)
+
+  useEffect(() => {
+    if (!supabase) {
+      setChecking(false)
+      return
+    }
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session?.user) {
+        navigate('/', { replace: true })
+        return
+      }
+      setChecking(false)
+    })
+  }, [navigate])
+
+  if (checking) {
+    return (
+      <div className="signup-login">
+        <div className="signup-login__card">
+          <p className="signup-login__sub" style={{ textAlign: 'center', margin: 0 }}>Loading…</p>
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
+
+  return <SignupLogin titleKey="signupLogin.loginTitle" />
 }

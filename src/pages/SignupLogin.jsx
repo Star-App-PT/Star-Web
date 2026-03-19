@@ -6,7 +6,7 @@ import './SignupLogin.css'
 
 const CONTINUE_BLUE = '#1B4FBA'
 
-export default function SignupLogin() {
+export default function SignupLogin({ titleKey = 'signupLogin.title' }) {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const [view, setView] = useState('main') // 'main' | 'verify' | 'email'
@@ -122,7 +122,7 @@ export default function SignupLogin() {
   return (
     <div className="signup-login">
       <div className="signup-login__card">
-        <h1 className="signup-login__title">{t('signupLogin.title')}</h1>
+        <h1 className="signup-login__title">{t(titleKey)}</h1>
 
         {showEmailInput ? (
           <form onSubmit={handleEmailContinue} className="signup-login__form">

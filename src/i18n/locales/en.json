@@ -34,6 +34,7 @@
   },
   "signupLogin": {
     "title": "Sign up or log in",
+    "loginTitle": "Log in",
     "countryRegion": "Country/Region",
     "phonePlaceholder": "Phone number",
     "continue": "Continue",
