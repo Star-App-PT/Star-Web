@@ -32,36 +32,26 @@ import DemoLanding from './pages/DemoLanding'
 
 function AppShell() {
   const location = useLocation()
-  const { isDemoMode, bannerVisible, setBannerVisible, setDemoMode, exitDemoMode } = useDemoMode()
-
-  const cleanCurrentUrl = () => {
-    const params = new URLSearchParams(location.search)
-    params.delete('demo')
-    const search = params.toString()
-    return `${location.pathname}${search ? `?${search}` : ''}${location.hash || ''}`
-  }
+  const { isDemoMode, bannerVisible, setBannerVisible, exitDemoMode } = useDemoMode()
 
   useEffect(() => {
     const params = new URLSearchParams(location.search)
     if (params.get('demo') !== 'exit') return
 
-    exitDemoMode()
     params.delete('demo')
     const search = params.toString()
-    const nextUrl = `${location.pathname}${search ? `?${search}` : ''}${location.hash || ''}`
-    window.location.replace(nextUrl || '/')
-  }, [location, exitDemoMode])
+    const nextUrl = `${location.pathname}${search ? `?${search}` : ''}${location.hash || ''}` || '/'
+    window.location.replace(nextUrl)
+  }, [location])
 
   const handleExitDemo = () => {
-    setBannerVisible(false)
-    setDemoMode(false)
-    window.location.replace(cleanCurrentUrl())
+    exitDemoMode()
   }
 
   return (
     <>
       <Header />
-      {isDemoMode && bannerVisible && location.pathname !== '/demo' && (
+      {isDemoMode && bannerVisible && (
         <div
           style={{
             backgroundColor: '#F59E0B',

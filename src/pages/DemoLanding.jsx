@@ -1,18 +1,15 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useDemoMode } from '../contexts/DemoModeContext'
 
 export default function DemoLanding() {
   const navigate = useNavigate()
-  const { enableDemoMode } = useDemoMode()
 
   useEffect(() => {
-    enableDemoMode()
     const timer = window.setTimeout(() => {
       navigate('/', { replace: true })
     }, 2000)
     return () => window.clearTimeout(timer)
-  }, [navigate, enableDemoMode])
+  }, [navigate])
 
   return (
     <div

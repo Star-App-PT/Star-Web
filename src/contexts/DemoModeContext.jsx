@@ -1,7 +1,5 @@
-import { createContext, useCallback, useContext, useMemo, useState } from 'react'
-
-const DEMO_MODE_KEY = 'isDemoMode'
-const DEMO_MODE_SOURCE_KEY = 'demoModeSource'
+import { createContext, useCallback, useContext, useMemo, useState, useEffect } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const DemoModeContext = createContext({
   isDemoMode: false,
@@ -13,44 +11,21 @@ const DemoModeContext = createContext({
 })
 
 export function DemoModeProvider({ children }) {
-  const [isDemoMode, setIsDemoMode] = useState(() => {
-    if (typeof window === 'undefined') return false
-    const isStoredDemoMode = window.sessionStorage.getItem(DEMO_MODE_KEY) === 'true'
-    const hasDemoSource = window.sessionStorage.getItem(DEMO_MODE_SOURCE_KEY) === 'demo-route'
-    if (isStoredDemoMode && hasDemoSource) return true
+  const location = useLocation()
+  const navigate = useNavigate()
+  const isDemoMode = location.pathname === '/demo'
+  const [bannerVisible, setBannerVisible] = useState(true)
 
-    window.sessionStorage.removeItem(DEMO_MODE_KEY)
-    window.sessionStorage.removeItem(DEMO_MODE_SOURCE_KEY)
-    return false
-  })
-  const [bannerVisible, setBannerVisible] = useState(() => {
-    if (typeof window === 'undefined') return false
-    const isStoredDemoMode = window.sessionStorage.getItem(DEMO_MODE_KEY) === 'true'
-    const hasDemoSource = window.sessionStorage.getItem(DEMO_MODE_SOURCE_KEY) === 'demo-route'
-    return isStoredDemoMode && hasDemoSource
-  })
+  useEffect(() => {
+    if (location.pathname === '/demo') setBannerVisible(true)
+  }, [location.pathname])
 
-  const enableDemoMode = useCallback(() => {
-    if (typeof window !== 'undefined') {
-      window.sessionStorage.setItem(DEMO_MODE_KEY, 'true')
-      window.sessionStorage.setItem(DEMO_MODE_SOURCE_KEY, 'demo-route')
-    }
-    setIsDemoMode(true)
-    setBannerVisible(true)
-  }, [])
-
-  const setDemoMode = useCallback((value) => {
-    if (!value && typeof window !== 'undefined') {
-      window.sessionStorage.removeItem(DEMO_MODE_KEY)
-      window.sessionStorage.removeItem(DEMO_MODE_SOURCE_KEY)
-    }
-    setIsDemoMode(value)
-    setBannerVisible(value)
-  }, [])
+  const enableDemoMode = useCallback(() => {}, [])
+  const setDemoMode = useCallback(() => {}, [])
 
   const exitDemoMode = useCallback(() => {
-    setDemoMode(false)
-  }, [setDemoMode])
+    navigate('/')
+  }, [navigate])
 
   const value = useMemo(() => ({
     isDemoMode,
