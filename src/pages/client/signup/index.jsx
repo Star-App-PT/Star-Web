@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useDemoMode } from '../../../contexts/DemoModeContext'
+import { supabase } from '../../../supabase'
 import './ClientSignup.css'
 
 export default function ClientSignupWelcome() {
@@ -10,8 +11,12 @@ export default function ClientSignupWelcome() {
   const [email, setEmail] = useState('')
   const { isDemoMode } = useDemoMode()
 
-  const handleGoogle = () => navigate('/client/signup/name')
-  const handleApple = () => navigate('/client/signup/name')
+  const handleGoogle = () => {
+    supabase.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: 'https://starsvs.com' } })
+  }
+  const handleApple = () => {
+    supabase.auth.signInWithOAuth({ provider: 'apple', options: { redirectTo: 'https://starsvs.com' } })
+  }
   const handlePhone = () => navigate('/client/signup/name')
 
   const handleEmail = (e) => {

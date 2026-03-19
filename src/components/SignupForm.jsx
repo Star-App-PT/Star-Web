@@ -19,21 +19,14 @@ export default function SignupForm({ category, onBack }) {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
-  // TESTING MODE - remove direct skip before going live
   const skipToProfile = () => navigate('/worker/finish-profile')
 
-  const handleGoogleSignIn = () => skipToProfile()
-  const handleAppleSignIn = () => skipToProfile()
-  const handleEmailContinue = (e) => { e.preventDefault(); skipToProfile() }
-  const handlePhoneContinue = (e) => { e.preventDefault(); skipToProfile() }
-
-  /* TESTING MODE - restore these handlers before going live
   const handleGoogleSignIn = async () => {
     setError('')
     setLoading(true)
     const { error: err } = await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: `${window.location.origin}/worker/finish-profile` },
+      options: { redirectTo: 'https://starsvs.com' },
     })
     if (err) {
       setError(err.message)
@@ -46,7 +39,7 @@ export default function SignupForm({ category, onBack }) {
     setLoading(true)
     const { error: err } = await supabase.auth.signInWithOAuth({
       provider: 'apple',
-      options: { redirectTo: `${window.location.origin}/worker/finish-profile` },
+      options: { redirectTo: 'https://starsvs.com' },
     })
     if (err) {
       setError(err.message)
@@ -54,13 +47,16 @@ export default function SignupForm({ category, onBack }) {
     }
   }
 
+  const handleEmailContinue = (e) => { e.preventDefault(); skipToProfile() }
+  const handlePhoneContinue = (e) => { e.preventDefault(); skipToProfile() }
+
+  /* Email/password flow — restore when ready
   const handleEmailContinue = (e) => {
     e.preventDefault()
     if (!email.trim()) return
     setError('')
     setScreen('email-password')
   }
-
   const handleEmailSignUp = async (e) => {
     e.preventDefault()
     if (!email.trim() || !password.trim()) return
