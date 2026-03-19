@@ -16,9 +16,14 @@ export default function Header() {
   const { t } = useTranslation()
   const location = useLocation()
   const [searchParams] = useSearchParams()
-  const [avatarUrl, setAvatarUrl] = useState(null)
+  const [user, setUser] = useState(null)
 
   const activeCategory = location.pathname === '/' ? (searchParams.get('category') || 'cleaners') : null
+
+  const avatarUrl = user?.user_metadata?.avatar_url || user?.user_metadata?.picture || null
+  const displayInitial = user
+    ? (user.user_metadata?.full_name || user.user_metadata?.name || user.email || '?').charAt(0).toUpperCase()
+    : null
 
   const isMinimalHeader =
     location.pathname === '/worker/signup' ||
@@ -39,11 +44,11 @@ export default function Header() {
     if (!supabase) return
 
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setAvatarUrl(session?.user?.user_metadata?.avatar_url || null)
+      setUser(session?.user ?? null)
     })
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setAvatarUrl(session?.user?.user_metadata?.avatar_url || null)
+      setUser(session?.user ?? null)
     })
 
     return () => subscription?.unsubscribe()
@@ -76,9 +81,13 @@ export default function Header() {
         )}
         <nav className="star-header__nav">
           <LanguageToggle />
-          {avatarUrl && (
+          {user && (
             <Link to="/dashboard" className="star-header__avatar-link" aria-label="Go to profile">
-              <img src={avatarUrl} alt="" className="star-header__avatar-img" />
+              {avatarUrl ? (
+                <img src={avatarUrl} alt="" className="star-header__avatar-img" />
+              ) : (
+                <span className="star-header__avatar-initial">{displayInitial}</span>
+              )}
             </Link>
           )}
           <HamburgerMenu />

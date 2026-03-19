@@ -1,13 +1,15 @@
 import { useState, useRef, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { supabase } from '../supabase'
 import './HamburgerMenu.css'
 
 export default function HamburgerMenu() {
   const { t } = useTranslation()
+  const navigate = useNavigate()
   const [open, setOpen] = useState(false)
   const [isStarWorker, setIsStarWorker] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const ref = useRef(null)
 
   useEffect(() => {
@@ -22,12 +24,20 @@ export default function HamburgerMenu() {
     if (!supabase) return
     supabase.auth.getSession().then(({ data: { session } }) => {
       setIsStarWorker(!!session?.user?.user_metadata?.is_worker)
+      setIsLoggedIn(!!session?.user)
     })
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setIsStarWorker(!!session?.user?.user_metadata?.is_worker)
+      setIsLoggedIn(!!session?.user)
     })
     return () => subscription?.unsubscribe()
   }, [])
+
+  const handleSignOut = async () => {
+    setOpen(false)
+    await supabase?.auth.signOut()
+    navigate('/')
+  }
 
   return (
     <div className="hmenu" ref={ref}>
@@ -80,17 +90,25 @@ export default function HamburgerMenu() {
 
           <div className="hmenu__sep" />
 
-          <Link to="/client/login" className="hmenu__item" onClick={() => setOpen(false)}>
-            {t('header.clientLogin')}
-          </Link>
-          <div className="hmenu__sep" />
-          <Link to="/worker/login" className="hmenu__item" onClick={() => setOpen(false)}>
-            {t('header.starLogin')}
-          </Link>
-          <div className="hmenu__sep" />
-          <Link to="/signup" className="hmenu__item" onClick={() => setOpen(false)}>
-            {t('header.signUp')}
-          </Link>
+          {isLoggedIn ? (
+            <button type="button" className="hmenu__item" onClick={handleSignOut}>
+              {t('dashboard.signOut')}
+            </button>
+          ) : (
+            <>
+              <Link to="/client/login" className="hmenu__item" onClick={() => setOpen(false)}>
+                {t('header.clientLogin')}
+              </Link>
+              <div className="hmenu__sep" />
+              <Link to="/worker/login" className="hmenu__item" onClick={() => setOpen(false)}>
+                {t('header.starLogin')}
+              </Link>
+              <div className="hmenu__sep" />
+              <Link to="/signup" className="hmenu__item" onClick={() => setOpen(false)}>
+                {t('header.signUp')}
+              </Link>
+            </>
+          )}
         </div>
       )}
     </div>
