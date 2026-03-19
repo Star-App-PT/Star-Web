@@ -1,7 +1,9 @@
+import { useEffect, useState } from 'react'
 import { Link, useLocation, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import LanguageToggle from './LanguageToggle'
 import HamburgerMenu from './HamburgerMenu'
+import { supabase } from '../supabase'
 import './Header.css'
 
 const CATEGORY_IDS = [
@@ -14,6 +16,7 @@ export default function Header() {
   const { t } = useTranslation()
   const location = useLocation()
   const [searchParams] = useSearchParams()
+  const [avatarUrl, setAvatarUrl] = useState(null)
 
   const activeCategory = location.pathname === '/' ? (searchParams.get('category') || 'cleaners') : null
 
@@ -31,6 +34,20 @@ export default function Header() {
     location.pathname.startsWith('/worker/packages') ||
     location.pathname === '/dashboard' ||
     location.pathname.startsWith('/client/signup')
+
+  useEffect(() => {
+    if (!supabase) return
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setAvatarUrl(session?.user?.user_metadata?.avatar_url || null)
+    })
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setAvatarUrl(session?.user?.user_metadata?.avatar_url || null)
+    })
+
+    return () => subscription?.unsubscribe()
+  }, [])
 
   return (
     <header className="star-header">
@@ -59,6 +76,11 @@ export default function Header() {
         )}
         <nav className="star-header__nav">
           <LanguageToggle />
+          {avatarUrl && (
+            <Link to="/dashboard" className="star-header__avatar-link" aria-label="Go to profile">
+              <img src={avatarUrl} alt="" className="star-header__avatar-img" />
+            </Link>
+          )}
           <HamburgerMenu />
         </nav>
       </div>
