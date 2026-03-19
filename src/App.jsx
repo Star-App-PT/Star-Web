@@ -1,5 +1,6 @@
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
+import { supabase } from './supabase'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import MobileBottomNav from './components/MobileBottomNav'
@@ -35,7 +36,22 @@ import Terms from './pages/Terms'
 
 function AppShell() {
   const location = useLocation()
+  const navigate = useNavigate()
   const { isDemoMode, bannerVisible, setBannerVisible, exitDemoMode } = useDemoMode()
+
+  useEffect(() => {
+    if (!supabase) return
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (!session) return
+      if (event === 'SIGNED_IN') {
+        navigate('/', { replace: true })
+      }
+      if (event === 'INITIAL_SESSION' && window.location.hash) {
+        navigate('/', { replace: true })
+      }
+    })
+    return () => subscription?.unsubscribe()
+  }, [navigate])
 
   useEffect(() => {
     const params = new URLSearchParams(location.search)
