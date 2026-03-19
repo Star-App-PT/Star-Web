@@ -789,7 +789,7 @@ export default function Home() {
             <div className="home__coming-soon-icon">
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
             </div>
-            <h3 className="home__coming-soon-title">{t('home.comingSoonTitle', { city: comingSoonCity })}</h3>
+            <h3 className="home__coming-soon-title">{comingSoonCity === t('home.yourArea') ? t('home.comingSoonTitleYourArea') : t('home.comingSoonTitle', { city: comingSoonCity })}</h3>
             <p className="home__coming-soon-desc">{t('home.comingSoonDesc')}</p>
             <p className="home__coming-soon-sub">{t('home.showingWorkersInstead', { city: workersCity })}</p>
           </div>

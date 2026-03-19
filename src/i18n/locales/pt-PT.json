@@ -61,6 +61,7 @@
     "ctaText": "É profissional? Junte-se à STAR e tenha clientes na sua área.",
     "yourArea": "a sua área",
     "comingSoonTitle": "A Star está a chegar a {{city}}!",
+    "comingSoonTitleYourArea": "Star está a chegar em breve à sua área!",
     "comingSoonDesc": "Experimente escolher um tipo de serviço diferente ou altere a localização para encontrar profissionais noutras áreas.",
     "showingWorkersInstead": "A mostrar profissionais em {{city}}.",
     "recentSearches": "Pesquisas recentes",
