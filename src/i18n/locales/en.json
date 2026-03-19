@@ -32,6 +32,26 @@
     "wantToWork": "I want to work",
     "backToHome": "Back to home"
   },
+  "signupLogin": {
+    "title": "Sign up or log in",
+    "countryRegion": "Country/Region",
+    "phonePlaceholder": "Phone number",
+    "continue": "Continue",
+    "or": "or",
+    "continueGoogle": "Continue with Google",
+    "continueApple": "Continue with Apple",
+    "continueEmail": "Continue with email",
+    "enterCodeTitle": "Enter the code we sent to you",
+    "enterCodeSent": "We sent a 6-digit code to {{to}}",
+    "verify": "Verify",
+    "enterValidPhone": "Please enter a valid phone number",
+    "enterEmail": "Please enter your email",
+    "emailLabel": "Email",
+    "emailPlaceholder": "Email address",
+    "sendError": "Could not send code. Please try again.",
+    "verifyError": "Invalid or expired code. Please try again.",
+    "enterCode": "Please enter the 6-digit code"
+  },
   "header": {
     "becomeAStar": "Become a Star",
     "clientLogin": "Client login",

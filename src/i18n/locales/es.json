@@ -32,6 +32,26 @@
     "wantToWork": "Quiero trabajar",
     "backToHome": "Volver al inicio"
   },
+  "signupLogin": {
+    "title": "Regístrate o inicia sesión",
+    "countryRegion": "País o región",
+    "phonePlaceholder": "Número de teléfono",
+    "continue": "Continuar",
+    "or": "o",
+    "continueGoogle": "Continuar con Google",
+    "continueApple": "Continuar con Apple",
+    "continueEmail": "Continuar con email",
+    "enterCodeTitle": "Introduce el código que te enviamos",
+    "enterCodeSent": "Enviamos un código de 6 dígitos a {{to}}",
+    "verify": "Verificar",
+    "enterValidPhone": "Introduce un número de teléfono válido",
+    "enterEmail": "Introduce tu email",
+    "emailLabel": "Email",
+    "emailPlaceholder": "Correo electrónico",
+    "sendError": "No se pudo enviar el código. Inténtalo de nuevo.",
+    "verifyError": "Código inválido o caducado. Inténtalo de nuevo.",
+    "enterCode": "Introduce el código de 6 dígitos"
+  },
   "header": {
     "becomeAStar": "Conviértete en Star",
     "clientLogin": "Ya soy Cliente",

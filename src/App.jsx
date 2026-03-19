@@ -26,6 +26,7 @@ import ClientSignupWelcome from './pages/client/signup/index'
 import ClientSignupName from './pages/client/signup/name'
 import ClientSignupPhoto from './pages/client/signup/photo'
 import ClientSignupCommitment from './pages/client/signup/commitment'
+import SignupLogin from './pages/SignupLogin'
 import SignupChoice from './pages/SignupChoice'
 import ClientLogin from './pages/client/ClientLogin'
 import ClientFavourites from './pages/client/ClientFavourites'
@@ -125,7 +126,8 @@ function AppShell() {
           <Route path="/client/login" element={<ClientLogin />} />
           <Route path="/client/favourites" element={<ClientFavourites />} />
           <Route path="/worker/login" element={<WorkerLogin />} />
-          <Route path="/signup" element={<SignupChoice />} />
+          <Route path="/signup" element={<SignupLogin />} />
+          <Route path="/signup/choose" element={<SignupChoice />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
         </Routes>

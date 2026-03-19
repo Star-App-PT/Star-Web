@@ -96,6 +96,23 @@ export default function Home() {
   const [favorites, setFavorites] = useState(new Set())
   const { city: CITY, supported: citySupported, userCityName, isOutsidePortugal, hasPreciseLocation, coords, nearbyCities } = useUserLocation()
 
+  // After auth: new users (no profile) go to type selection (client vs worker)
+  useEffect(() => {
+    if (!supabase) return
+    let cancelled = false
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (cancelled || !session?.user) return
+      const profileComplete = session.user.user_metadata?.profile_complete === true
+      if (profileComplete) return
+      supabase.from('clients').select('id').eq('id', session.user.id).maybeSingle().then(({ data: client }) => {
+        if (cancelled) return
+        if (client) return
+        navigate('/signup/choose', { replace: true })
+      })
+    })
+    return () => { cancelled = true }
+  }, [navigate])
+
   const [openDropdown, setOpenDropdown] = useState(null)
   const [whereValue, setWhereValue] = useState('')
   const [whenValue, setWhenValue] = useState('')
