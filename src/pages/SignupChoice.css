@@ -55,11 +55,13 @@
 }
 
 .signup-choice__back {
-  display: inline-block;
+  display: block;
   margin-top: 24px;
+  padding-left: 20px;
   font-size: 0.9rem;
   color: #717171;
   text-decoration: none;
+  text-align: left;
 }
 
 .signup-choice__back:hover {

@@ -18,6 +18,7 @@ export default function SignupChoice() {
           <Link to="/worker/choose-category" className="signup-choice__option">
             {t('signupChoice.wantToWork')}
           </Link>
+          <div className="signup-choice__sep" />
         </div>
         <Link to="/" className="signup-choice__back">{t('signupChoice.backToHome')}</Link>
       </div>
