@@ -33,7 +33,7 @@ export default function DemoLanding() {
       >
         <img
           src="/star-logo-blue.svg"
-          alt="Star SVS"
+          alt="Star"
           style={{ width: '180px', maxWidth: '70%', marginBottom: '24px' }}
         />
         <h1 style={{ margin: '0 0 10px', color: '#1B4FBA', fontSize: '2rem', fontWeight: 700 }}>

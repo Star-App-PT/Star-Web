@@ -10,7 +10,7 @@ export default function Privacy() {
       <section className="legal-page__section">
         <h2 className="legal-page__section-title">1. Introduction</h2>
         <p>
-          Starsvs (“we”, “our”, or “us”) operates a service marketplace that connects clients with local professionals in Portugal. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our website and services. By using Starsvs, you agree to the practices described in this policy.
+          Star (“we”, “our”, or “us”) operates a service marketplace that connects clients with local professionals in Portugal. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our website and services. By using Star, you agree to the practices described in this policy.
         </p>
       </section>
 
@@ -52,7 +52,7 @@ export default function Privacy() {
       <section className="legal-page__section">
         <h2 className="legal-page__section-title">7. Changes to This Policy</h2>
         <p>
-          We may update this Privacy Policy from time to time. We will notify you of material changes by posting the updated policy on our website and updating the “Last updated” date. Your continued use of Starsvs after such changes constitutes acceptance of the updated policy.
+          We may update this Privacy Policy from time to time. We will notify you of material changes by posting the updated policy on our website and updating the “Last updated” date. Your continued use of Star after such changes constitutes acceptance of the updated policy.
         </p>
       </section>
 

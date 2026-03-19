@@ -44,7 +44,7 @@ export default function ClientSignupCommitment() {
 
       <div className="csu__card" style={{ display: 'flex', justifyContent: 'center' }}>
         <div className="csu__commit-card">
-          <img src="/star-logo-blue.svg" alt="Star SVS" className="csu__commit-logo" />
+          <img src="/star-logo-blue.svg" alt="Star" className="csu__commit-logo" />
 
           <h1 className="csu__commit-title">{t('clientSignup.commitmentTitle')}</h1>
 

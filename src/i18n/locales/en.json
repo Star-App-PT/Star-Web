@@ -27,7 +27,7 @@
   },
   "signupChoice": {
     "title": "Sign up",
-    "subtitle": "Choose how you want to use Star SVS",
+    "subtitle": "Choose how you want to use Star",
     "needService": "I need a service",
     "wantToWork": "I want to work",
     "backToHome": "Back to home"
@@ -375,7 +375,7 @@
     "finish": "Finish"
   },
   "clientSignup": {
-    "welcomeTitle": "Welcome to Star SVS",
+    "welcomeTitle": "Welcome to Star",
     "welcomeSubtitle": "Find trusted professionals near you.",
     "continueGoogle": "Continue with Google",
     "continueApple": "Continue with Apple",
@@ -403,7 +403,7 @@
     "looksGood": "Looks good",
     "skipForNow": "Skip for now",
     "commitmentTitle": "Our community commitment",
-    "commitmentBody": "Star SVS is a community where everyone is welcome. We ask all members to treat each other with respect, kindness, and professionalism.",
+    "commitmentBody": "Star is a community where everyone is welcome. We ask all members to treat each other with respect, kindness, and professionalism.",
     "agreeAndContinue": "Agree and continue",
     "decline": "Decline"
   },

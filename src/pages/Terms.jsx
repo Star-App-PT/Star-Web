@@ -10,21 +10,21 @@ export default function Terms() {
       <section className="legal-page__section">
         <h2 className="legal-page__section-title">1. Agreement to Terms</h2>
         <p>
-          These Terms of Service (“Terms”) govern your use of the Starsvs platform and related services operated by Starsvs. By accessing or using our website or services, you agree to be bound by these Terms. If you do not agree, you may not use our platform.
+          These Terms of Service (“Terms”) govern your use of the Star platform and related services operated by Star. By accessing or using our website or services, you agree to be bound by these Terms. If you do not agree, you may not use our platform.
         </p>
       </section>
 
       <section className="legal-page__section">
         <h2 className="legal-page__section-title">2. Description of Service</h2>
         <p>
-          Starsvs is a marketplace that connects clients seeking local services (such as cleaning, repairs, and other home or personal services) with independent service professionals in Portugal. We facilitate discovery, booking, and communication but do not employ the professionals; they operate as independent providers. We do not guarantee the quality, safety, or legality of any service performed.
+          Star is a marketplace that connects clients seeking local services (such as cleaning, repairs, and other home or personal services) with independent service professionals in Portugal. We facilitate discovery, booking, and communication but do not employ the professionals; they operate as independent providers. We do not guarantee the quality, safety, or legality of any service performed.
         </p>
       </section>
 
       <section className="legal-page__section">
         <h2 className="legal-page__section-title">3. Accounts and Eligibility</h2>
         <p>
-          You must be at least 18 years old and have the legal capacity to enter into a binding contract to use Starsvs. You are responsible for maintaining the confidentiality of your account and for all activity under your account. You must provide accurate and complete information when registering and keep it up to date.
+          You must be at least 18 years old and have the legal capacity to enter into a binding contract to use Star. You are responsible for maintaining the confidentiality of your account and for all activity under your account. You must provide accurate and complete information when registering and keep it up to date.
         </p>
       </section>
 
@@ -45,7 +45,7 @@ export default function Terms() {
       <section className="legal-page__section">
         <h2 className="legal-page__section-title">6. Limitation of Liability</h2>
         <p>
-          To the fullest extent permitted by law, Starsvs and its affiliates shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of the platform or from any transaction between you and a service professional. Our total liability in connection with these Terms or the platform shall not exceed the amount you paid to Starsvs in the twelve months preceding the claim, if any.
+          To the fullest extent permitted by law, Star and its affiliates shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of the platform or from any transaction between you and a service professional. Our total liability in connection with these Terms or the platform shall not exceed the amount you paid to Star in the twelve months preceding the claim, if any.
         </p>
       </section>
 
@@ -59,7 +59,7 @@ export default function Terms() {
       <section className="legal-page__section">
         <h2 className="legal-page__section-title">8. Changes</h2>
         <p>
-          We may modify these Terms at any time. We will notify you of material changes by posting the updated Terms on our website and updating the “Last updated” date. Your continued use of Starsvs after such changes constitutes acceptance of the updated Terms. If you do not agree, you must stop using the platform.
+          We may modify these Terms at any time. We will notify you of material changes by posting the updated Terms on our website and updating the “Last updated” date. Your continued use of Star after such changes constitutes acceptance of the updated Terms. If you do not agree, you must stop using the platform.
         </p>
       </section>
 

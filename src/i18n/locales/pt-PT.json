@@ -27,7 +27,7 @@
   },
   "signupChoice": {
     "title": "Criar conta",
-    "subtitle": "Como pretende usar a Star SVS?",
+    "subtitle": "Como pretende usar a Star?",
     "needService": "Preciso de um serviço",
     "wantToWork": "Quero trabalhar",
     "backToHome": "Voltar ao início"
@@ -375,7 +375,7 @@
     "finish": "Concluir"
   },
   "clientSignup": {
-    "welcomeTitle": "Bem-vindo à Star SVS",
+    "welcomeTitle": "Bem-vindo à Star",
     "welcomeSubtitle": "Encontre profissionais de confiança perto de si.",
     "continueGoogle": "Continuar com Google",
     "continueApple": "Continuar com Apple",
@@ -403,7 +403,7 @@
     "looksGood": "Está ótimo",
     "skipForNow": "Saltar por agora",
     "commitmentTitle": "O nosso compromisso com a comunidade",
-    "commitmentBody": "A Star SVS é uma comunidade onde todos são bem-vindos. Pedimos a todos os membros que tratem os outros com respeito, simpatia e profissionalismo.",
+    "commitmentBody": "A Star é uma comunidade onde todos são bem-vindos. Pedimos a todos os membros que tratem os outros com respeito, simpatia e profissionalismo.",
     "agreeAndContinue": "Concordar e continuar",
     "decline": "Recusar"
   },

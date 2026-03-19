@@ -20,6 +20,7 @@ export default function SignupChoice() {
           </Link>
           <div className="signup-choice__sep" />
         </div>
+        <div className="signup-choice__sep" />
         <Link to="/" className="signup-choice__back">{t('signupChoice.backToHome')}</Link>
       </div>
     </div>

@@ -10,7 +10,7 @@ export default function Footer() {
           <span className="star-footer__sep">·</span>
           <Link to="/terms" className="star-footer__link">Terms of Service</Link>
         </nav>
-        <p className="star-footer__copy">© 2025 Starsvs</p>
+        <p className="star-footer__copy">© 2025 Star</p>
       </div>
     </footer>
   )
