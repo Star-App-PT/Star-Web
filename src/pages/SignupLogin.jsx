@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { supabase, AUTH_REDIRECT_URL } from '../supabase'
-import CountryCodePicker from '../components/CountryCodePicker'
 import './SignupLogin.css'
 
 const CONTINUE_BLUE = '#1B4FBA'
@@ -10,41 +9,12 @@ const CONTINUE_BLUE = '#1B4FBA'
 export default function SignupLogin() {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const [country, setCountry] = useState(null)
-  const [phone, setPhone] = useState('')
   const [view, setView] = useState('main') // 'main' | 'verify' | 'email'
-  const [sentTo, setSentTo] = useState('') // phone or email for verify screen
-  const [verifyChannel, setVerifyChannel] = useState('sms') // 'sms' | 'email'
+  const [sentTo, setSentTo] = useState('') // email for verify screen
   const [code, setCode] = useState('')
   const [email, setEmail] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-
-  const dialCode = country?.dialCode || '+351'
-  const fullPhone = phone.trim() ? `${dialCode.replace(/\s/g, '')}${phone.replace(/\D/g, '')}`.trim() : ''
-
-  const handlePhoneContinue = async (e) => {
-    e.preventDefault()
-    setError('')
-    if (!fullPhone || fullPhone.length < 10) {
-      setError(t('signupLogin.enterValidPhone'))
-      return
-    }
-    setLoading(true)
-    const { error: err } = await supabase.auth.signInWithOtp({
-      phone: fullPhone.startsWith('+') ? fullPhone : `+${fullPhone}`,
-      options: { channel: 'sms' },
-    })
-    setLoading(false)
-    if (err) {
-      setError(err.message || t('signupLogin.sendError'))
-      return
-    }
-    setSentTo(fullPhone.startsWith('+') ? fullPhone : `+${fullPhone}`)
-    setVerifyChannel('sms')
-    setView('verify')
-    setCode('')
-  }
 
   const handleEmailContinue = async (e) => {
     e.preventDefault()
@@ -64,7 +34,6 @@ export default function SignupLogin() {
       return
     }
     setSentTo(email.trim())
-    setVerifyChannel('email')
     setView('verify')
     setCode('')
   }
@@ -78,31 +47,17 @@ export default function SignupLogin() {
       return
     }
     setLoading(true)
-    if (verifyChannel === 'sms') {
-      const { error: err } = await supabase.auth.verifyOtp({
-        phone: sentTo,
-        token,
-        type: 'sms',
-      })
-      setLoading(false)
-      if (err) {
-        setError(err.message || t('signupLogin.verifyError'))
-        return
-      }
-      navigate('/', { replace: true })
-    } else {
-      const { error: err } = await supabase.auth.verifyOtp({
-        email: sentTo,
-        token,
-        type: 'email',
-      })
-      setLoading(false)
-      if (err) {
-        setError(err.message || t('signupLogin.verifyError'))
-        return
-      }
-      navigate('/', { replace: true })
+    const { error: err } = await supabase.auth.verifyOtp({
+      email: sentTo,
+      token,
+      type: 'email',
+    })
+    setLoading(false)
+    if (err) {
+      setError(err.message || t('signupLogin.verifyError'))
+      return
     }
+    navigate('/', { replace: true })
   }
 
   const handleGoogle = () => {
@@ -169,36 +124,7 @@ export default function SignupLogin() {
       <div className="signup-login__card">
         <h1 className="signup-login__title">{t('signupLogin.title')}</h1>
 
-        {!showEmailInput ? (
-          <form onSubmit={handlePhoneContinue} className="signup-login__form">
-            <label className="signup-login__label">{t('signupLogin.countryRegion')}</label>
-            <div className="signup-login__phone-row">
-              <CountryCodePicker
-                value={country}
-                onChange={setCountry}
-                buttonClassName="signup-login__country-btn"
-                dropdownClassName="signup-login__country-dropdown"
-              />
-              <input
-                type="tel"
-                placeholder={t('signupLogin.phonePlaceholder')}
-                className="signup-login__input signup-login__phone-input"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                autoComplete="tel-national"
-              />
-            </div>
-            {error && <p className="signup-login__error">{error}</p>}
-            <button
-              type="submit"
-              className="signup-login__continue"
-              style={{ background: CONTINUE_BLUE }}
-              disabled={loading}
-            >
-              {loading ? t('common.submitting') : t('signupLogin.continue')}
-            </button>
-          </form>
-        ) : (
+        {showEmailInput ? (
           <form onSubmit={handleEmailContinue} className="signup-login__form">
             <label className="signup-login__label">{t('signupLogin.emailLabel')}</label>
             <input
@@ -226,14 +152,8 @@ export default function SignupLogin() {
               {t('common.back')}
             </button>
           </form>
-        )}
-
-        {!showEmailInput && (
-          <>
-            <div className="signup-login__divider">
-              <span>{t('signupLogin.or')}</span>
-            </div>
-            <div className="signup-login__socials">
+        ) : (
+          <div className="signup-login__socials">
               <button type="button" className="signup-login__social" onClick={handleGoogle}>
                 <svg className="signup-login__social-icon" viewBox="0 0 24 24" aria-hidden>
                   <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -261,7 +181,6 @@ export default function SignupLogin() {
                 {t('signupLogin.continueEmail')}
               </button>
             </div>
-          </>
         )}
         <Link to="/" className="signup-login__back-link">{t('signupChoice.backToHome')}</Link>
       </div>
