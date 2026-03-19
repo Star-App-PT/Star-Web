@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import Header from './components/Header'
+import Footer from './components/Footer'
 import MobileBottomNav from './components/MobileBottomNav'
 import { DemoModeProvider, useDemoMode } from './contexts/DemoModeContext'
 import Home from './pages/Home'
@@ -51,7 +52,7 @@ function AppShell() {
   }
 
   return (
-    <>
+    <div className="app-shell">
       <Header />
       {isDemoMode && bannerVisible && (
         <div
@@ -114,7 +115,8 @@ function AppShell() {
         </Routes>
       </main>
       <MobileBottomNav />
-    </>
+      <Footer />
+    </div>
   )
 }
 
