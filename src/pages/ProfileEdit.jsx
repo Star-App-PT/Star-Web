@@ -255,17 +255,6 @@ export default function ProfileEdit() {
     navigate('/profile')
   }
 
-  if (loading || !user) {
-    return (
-      <div className="profile-edit">
-        <div className="profile-edit__loading">{t('common.submitting')}</div>
-      </div>
-    )
-  }
-
-  const fullName = user.user_metadata?.full_name || user.user_metadata?.name || ''
-  const firstName = fullName.split(' ')[0] || user.email?.split('@')[0] || '?'
-
   const mockCardRows = useMemo(
     () =>
       MOCK_HIRED.map((w, i) => ({
@@ -279,9 +268,6 @@ export default function ProfileEdit() {
     [t],
   )
 
-  const hasBookingHistory = pastWorkers.length > 0
-  const displayHiredCards = hasBookingHistory ? pastWorkers : mockCardRows
-
   const orderedInterestIds = useMemo(() => {
     const order = PROFILE_INTEREST_OPTIONS.map((o) => o.id)
     const sel = new Set(selectedInterestIds)
@@ -290,6 +276,20 @@ export default function ProfileEdit() {
       ...selectedInterestIds.filter((id) => !order.includes(id)),
     ]
   }, [selectedInterestIds])
+
+  if (loading || !user) {
+    return (
+      <div className="profile-edit">
+        <div className="profile-edit__loading">{t('common.submitting')}</div>
+      </div>
+    )
+  }
+
+  const fullName = user.user_metadata?.full_name || user.user_metadata?.name || ''
+  const firstName = fullName.split(' ')[0] || user.email?.split('@')[0] || '?'
+
+  const hasBookingHistory = pastWorkers.length > 0
+  const displayHiredCards = hasBookingHistory ? pastWorkers : mockCardRows
 
   return (
     <div className="profile-edit">
