@@ -18,7 +18,7 @@ export default function Header() {
   const [searchParams] = useSearchParams()
   const { user } = useAuthSession()
   const { mode, setMode } = useAppMode()
-  const { loading: dualLoading, hasClientProfile, hasWorkerProfile, hasBothProfiles } = useDualProfile(user)
+  const { loading: dualLoading, hasWorkerProfile, hasBothProfiles } = useDualProfile(user)
 
   const activeCategory = location.pathname === '/' ? (searchParams.get('category') || 'cleaners') : null
 
@@ -84,7 +84,7 @@ export default function Header() {
               {t('header.switchToClient')}
             </Link>
           )}
-          {user && !dualLoading && hasClientProfile && !hasWorkerProfile && (
+          {user && !dualLoading && !hasWorkerProfile && (
             <Link to="/worker/signup" className="star-header__mode-link">
               {t('header.becomeAStar')}
             </Link>

@@ -79,7 +79,7 @@ export default function HamburgerMenu() {
   const [langModalOpen, setLangModalOpen] = useState(false)
   const { user } = useAuthSession()
   const { mode, setMode } = useAppMode()
-  const { loading: dualLoading, hasClientProfile, hasWorkerProfile, hasBothProfiles } = useDualProfile(user)
+  const { loading: dualLoading, hasWorkerProfile, hasBothProfiles } = useDualProfile(user)
   const isLoggedIn = !!user
   const ref = useRef(null)
 
@@ -195,7 +195,7 @@ export default function HamburgerMenu() {
 
               <div className="hmenu__sep" />
 
-              {!dualLoading && hasClientProfile && !hasWorkerProfile && (
+              {!dualLoading && !hasWorkerProfile && (
                 <Link to="/worker/signup" className="hmenu__promo" onClick={() => setOpen(false)}>
                   <div className="hmenu__promo-text">
                     <span className="hmenu__promo-title">{t('header.becomeAStar')}</span>
@@ -205,7 +205,7 @@ export default function HamburgerMenu() {
                 </Link>
               )}
 
-              {!dualLoading && hasClientProfile && !hasWorkerProfile && <div className="hmenu__sep" />}
+              {!dualLoading && !hasWorkerProfile && <div className="hmenu__sep" />}
 
               <button type="button" className="hmenu__item hmenu__item--signout" onClick={handleSignOut}>
                 {t('dashboard.signOut')}
