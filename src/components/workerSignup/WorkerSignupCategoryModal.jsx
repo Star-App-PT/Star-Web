@@ -53,7 +53,7 @@ export default function WorkerSignupCategoryModal({ open, onClose, onContinue })
         onClick={(e) => e.stopPropagation()}
       >
         <button type="button" className="ws-modal__close" onClick={onClose} aria-label={t('common.cancel')}>
-          <X size={20} strokeWidth={2} />
+          <X size={28} strokeWidth={2} />
         </button>
 
         <div className="ws-modal__scroll">

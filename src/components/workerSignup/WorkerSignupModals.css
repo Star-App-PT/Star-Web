@@ -29,15 +29,15 @@
 .ws-modal__panel {
   position: relative;
   width: 100%;
-  max-width: 440px;
+  max-width: 880px;
   max-height: 100vh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   margin: 16px;
   background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+  border-radius: 24px;
+  box-shadow: 0 16px 56px rgba(0, 0, 0, 0.14);
   transform: translateY(12px) scale(0.98);
   opacity: 0;
   transition:
@@ -52,11 +52,11 @@
 
 .ws-modal__close {
   position: absolute;
-  top: 14px;
-  right: 14px;
+  top: 28px;
+  right: 28px;
   z-index: 2;
-  width: 40px;
-  height: 40px;
+  width: 56px;
+  height: 56px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -74,47 +74,48 @@
 
 .ws-modal__scroll {
   overflow-y: auto;
-  padding: 52px 24px 28px;
+  padding: 88px 48px 56px;
   -webkit-overflow-scrolling: touch;
 }
 
 .ws-modal__title {
-  font-size: 1.5rem;
+  font-size: 3rem;
   font-weight: 700;
   color: #222;
-  margin: 0 0 8px;
+  margin: 0 0 16px;
   letter-spacing: -0.02em;
-  padding-right: 36px;
+  padding-right: 72px;
+  line-height: 1.15;
 }
 
 .ws-modal__sub {
-  font-size: 0.9375rem;
+  font-size: 1.875rem;
   color: #717171;
   line-height: 1.45;
-  margin: 0 0 22px;
+  margin: 0 0 44px;
 }
 
 /* Auth: match SignupLogin social rows */
 .ws-modal__socials {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
 }
 
 .ws-modal__social {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 24px;
   width: 100%;
-  padding: 14px 16px;
-  font-size: 0.9375rem;
+  padding: 28px 32px;
+  font-size: 1.875rem;
   font-weight: 600;
   font-family: inherit;
   color: #222;
   background: #fff;
-  border: 1.5px solid #b0b0b0;
-  border-radius: 8px;
+  border: 2px solid #b0b0b0;
+  border-radius: 16px;
   cursor: pointer;
   transition:
     border-color 0.15s ease,
@@ -132,30 +133,30 @@
 }
 
 .ws-modal__social-icon {
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
   flex-shrink: 0;
 }
 
 .ws-modal__form {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 24px;
 }
 
 .ws-modal__label {
-  font-size: 0.75rem;
+  font-size: 1rem;
   font-weight: 600;
   color: #222;
 }
 
 .ws-modal__input {
   width: 100%;
-  padding: 14px 16px;
-  font-size: 1rem;
+  padding: 28px 32px;
+  font-size: 2rem;
   font-family: inherit;
-  border: 1.5px solid #ccc;
-  border-radius: 8px;
+  border: 2px solid #ccc;
+  border-radius: 16px;
   box-sizing: border-box;
 }
 
@@ -165,21 +166,21 @@
 }
 
 .ws-modal__error {
-  font-size: 0.875rem;
+  font-size: 1.25rem;
   color: #c13515;
   margin: 0;
 }
 
 .ws-modal__btn-primary {
   width: 100%;
-  padding: 14px 16px;
-  font-size: 0.95rem;
+  padding: 28px 32px;
+  font-size: 1.75rem;
   font-weight: 600;
   font-family: inherit;
   color: #fff;
   background: #1b4fba;
   border: none;
-  border-radius: 8px;
+  border-radius: 16px;
   cursor: pointer;
   transition: background 0.15s ease;
 }
@@ -195,8 +196,8 @@
 
 .ws-modal__btn-text {
   width: 100%;
-  padding: 10px;
-  font-size: 0.9rem;
+  padding: 16px;
+  font-size: 1.25rem;
   font-family: inherit;
   color: #222;
   background: transparent;
@@ -207,21 +208,21 @@
 
 .ws-modal__code {
   text-align: center;
-  letter-spacing: 0.4em;
-  font-size: 1.25rem;
+  letter-spacing: 0.35em;
+  font-size: 2.5rem;
 }
 
 /* Category cards */
 .ws-modal__cat-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-bottom: 20px;
+  gap: 24px;
+  margin-bottom: 40px;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 720px) {
   .ws-modal__cat-grid {
-    gap: 8px;
+    gap: 16px;
   }
 }
 
@@ -230,11 +231,11 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 16px 8px 14px;
+  padding: 32px 16px 28px;
   background: #fff;
-  border: 2px solid #ebebeb;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 3px solid #ebebeb;
+  border-radius: 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
   cursor: pointer;
   font-family: inherit;
   transition:
@@ -244,37 +245,37 @@
 }
 
 .ws-modal__cat-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transform: translateY(-8px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
 }
 
 .ws-modal__cat-card--selected {
   border-color: #1b4fba;
-  box-shadow: 0 4px 16px rgba(27, 79, 186, 0.2);
+  box-shadow: 0 8px 32px rgba(27, 79, 186, 0.22);
 }
 
 .ws-modal__cat-card--selected:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 22px rgba(27, 79, 186, 0.22);
+  transform: translateY(-8px);
+  box-shadow: 0 16px 44px rgba(27, 79, 186, 0.24);
 }
 
 .ws-modal__cat-icon-wrap {
-  width: 56px;
-  height: 56px;
+  width: 112px;
+  height: 112px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 .ws-modal__cat-icon {
-  width: 48px;
-  height: 48px;
+  width: 96px;
+  height: 96px;
   object-fit: contain;
 }
 
 .ws-modal__cat-label {
-  font-size: 0.8125rem;
+  font-size: 1.625rem;
   font-weight: 600;
   color: #222;
   line-height: 1.25;
@@ -282,14 +283,14 @@
 
 .ws-modal__continue {
   width: 100%;
-  margin-top: 4px;
+  margin-top: 8px;
 }
 
 .ws-modal__demo {
   text-align: center;
   color: #aaa;
-  font-size: 13px;
-  margin-top: 14px;
+  font-size: 1rem;
+  margin-top: 28px;
   cursor: pointer;
 }
 
@@ -315,6 +316,41 @@
 
   .ws-modal__scroll {
     flex: 1;
-    padding-bottom: max(28px, env(safe-area-inset-bottom));
+    padding: 72px 24px max(40px, env(safe-area-inset-bottom));
+  }
+
+  .ws-modal__title {
+    font-size: clamp(1.75rem, 6vw, 2.5rem);
+    padding-right: 56px;
+  }
+
+  .ws-modal__sub {
+    font-size: clamp(1rem, 4vw, 1.35rem);
+    margin-bottom: 28px;
+  }
+
+  .ws-modal__social {
+    font-size: clamp(1rem, 4.2vw, 1.35rem);
+    padding: 18px 20px;
+  }
+
+  .ws-modal__btn-primary {
+    font-size: clamp(1.05rem, 4vw, 1.35rem);
+    padding: 18px 24px;
+  }
+
+  .ws-modal__cat-icon-wrap {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 12px;
+  }
+
+  .ws-modal__cat-icon {
+    width: 72px;
+    height: 72px;
+  }
+
+  .ws-modal__cat-label {
+    font-size: clamp(0.95rem, 3.5vw, 1.2rem);
   }
 }
