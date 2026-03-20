@@ -44,6 +44,60 @@ import actionMassage from '../assets/workers/action/action-massage.jpg'
 import actionBabysitting from '../assets/workers/action/action-babysitting.jpg'
 
 /**
+ * Unsplash portfolio images — topic-matched only (cleaning / trade / service-specific).
+ * Used for gallery (and to supplement where we need more variety than local assets).
+ */
+const US = {
+  cleaningSupplies: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1200&q=80',
+  cleaningMop: 'https://images.unsplash.com/photo-1628177145468-7e7fc8f7e46d?auto=format&fit=crop&w=1200&q=80',
+  cleaningVacuum: 'https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=1200&q=80',
+  cleaningKitchen: 'https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=1200&q=80',
+  cleaningBathroom: 'https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&fit=crop&w=1200&q=80',
+  officeWorkspace: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80',
+  officeClean: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1200&q=80',
+  laundry: 'https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?auto=format&fit=crop&w=1200&q=80',
+  windowGlass: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80',
+  windowExterior: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80',
+  windowBright: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1200&q=80',
+  officeReception: 'https://images.unsplash.com/photo-1527698266440-12104e498b87?auto=format&fit=crop&w=1200&q=80',
+  woodWorkshop: 'https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&w=1200&q=80',
+  woodworking: 'https://images.unsplash.com/photo-1611269154421-f997262b2cdb?auto=format&fit=crop&w=1200&q=80',
+  plumbingSink: 'https://images.unsplash.com/photo-1585704032915-c6600c55a61f?auto=format&fit=crop&w=1200&q=80',
+  plumbingPipes: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=1200&q=80',
+  plumbingBathroom: 'https://images.unsplash.com/photo-1607472586893-9c8854a5d9c2?auto=format&fit=crop&w=1200&q=80',
+  electricalPanel: 'https://images.unsplash.com/photo-1621905251918-48416bd8575a?auto=format&fit=crop&w=1200&q=80',
+  electricianWork: 'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=1200&q=80',
+  lightFixture: 'https://images.unsplash.com/photo-1493612276216-ee3925521041?auto=format&fit=crop&w=1200&q=80',
+  paintingRoller: 'https://images.unsplash.com/photo-1589939763522-587c8f0ad7b9?auto=format&fit=crop&w=1200&q=80',
+  paintingWall: 'https://images.unsplash.com/photo-1565184393714-061a130be593?auto=format&fit=crop&w=1200&q=80',
+  paintingInterior: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=1200&q=80',
+  photoCamera: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1200&q=80',
+  photoShoot: 'https://images.unsplash.com/photo-1542037104857-ffbb94b15af7?auto=format&fit=crop&w=1200&q=80',
+  photoWedding: 'https://images.unsplash.com/photo-1606800052052-a736af93a2ff?auto=format&fit=crop&w=1200&q=80',
+  photoStudio: 'https://images.unsplash.com/photo-1493863641943-9b68992a8d28?auto=format&fit=crop&w=1200&q=80',
+  fitnessGym: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1200&q=80',
+  fitnessWorkout: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=1200&q=80',
+  fitnessDumbbells: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1200&q=80',
+  fitnessOutdoor: 'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=1200&q=80',
+  chefCooking: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=1200&q=80',
+  chefPlating: 'https://images.unsplash.com/photo-1577219491135-ce391730cd2c?auto=format&fit=crop&w=1200&q=80',
+  chefIngredients: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1200&q=80',
+  chefKitchen: 'https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=1200&q=80',
+  hairSalon: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&q=80',
+  hairCut: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1200&q=80',
+  hairColour: 'https://images.unsplash.com/photo-1633681919458-d99b5c991f35?auto=format&fit=crop&w=1200&q=80',
+  hairTools: 'https://images.unsplash.com/photo-1522338242992-e1a54906a8da?auto=format&fit=crop&w=1200&q=80',
+  massageSpa: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=1200&q=80',
+  massageStones: 'https://images.unsplash.com/photo-1600334129128-685c5582fd35?auto=format&fit=crop&w=1200&q=80',
+  massageTable: 'https://images.unsplash.com/photo-1519823551278-64ac92734fb1?auto=format&fit=crop&w=1200&q=80',
+  massageRelax: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=80',
+  babysitterPlay: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1200&q=80',
+  babysitterReading: 'https://images.unsplash.com/photo-1476703993599-0035a21b17a4?auto=format&fit=crop&w=1200&q=80',
+  babysitterCrafts: 'https://images.unsplash.com/photo-1587654780291-39c9404d746b?auto=format&fit=crop&w=1200&q=80',
+  babysitterPark: 'https://images.unsplash.com/photo-1502086223501-7ea3ecdac867?auto=format&fit=crop&w=1200&q=80',
+}
+
+/**
  * Worker data — single source of truth for all worker information.
  *
  * IMAGE FIELDS (two distinct concepts):
@@ -97,7 +151,7 @@ export const CLEANERS = [
       { icon: 'award', title: 'Eco-certified products only', desc: 'I use only certified non-toxic, biodegradable cleaning products.' },
       { icon: 'shield', title: 'Fully insured', desc: 'Liability insurance covering accidental damage during service.' },
     ],
-    gallery: [],
+    gallery: [actionHomeCleaning, actionHousekeeping, US.cleaningVacuum, US.cleaningKitchen],
   },
   {
     id: 'c2', name: 'Ana', specialty: 'Deep Cleaner', rating: 4.9, hourlyRate: 32,
@@ -116,7 +170,7 @@ export const CLEANERS = [
       { icon: 'clock', title: '5 years of experience', desc: 'Specializing in Airbnb and rental turnovers since 2020.' },
       { icon: 'star', title: 'Top-rated on Star', desc: 'Consistently rated 4.9+ by clients across 63 reviews.' },
     ],
-    gallery: [],
+    gallery: [actionDeepCleaning, actionMoveoutCleaning, US.cleaningMop, US.cleaningBathroom],
   },
   {
     id: 'c3', name: 'Ricardo', specialty: 'Office Cleaner', rating: 4.9, hourlyRate: 25,
@@ -131,7 +185,7 @@ export const CLEANERS = [
     qualifications: [
       { icon: 'clock', title: '4 years of experience', desc: 'Servicing offices, coworking spaces, and commercial properties.' },
     ],
-    gallery: [],
+    gallery: [actionOfficeCleaning, US.officeWorkspace, US.officeClean, US.officeReception],
   },
   {
     id: 'c4', name: 'Patricia', specialty: 'Housekeeper', rating: 4.8, hourlyRate: 30,
@@ -147,7 +201,7 @@ export const CLEANERS = [
       { name: 'Full Housekeeping', price: 80, duration: '4 hrs', priceType: 'visit', desc: 'Complete home management including cleaning, laundry, ironing, and organisation.' },
     ],
     qualifications: [],
-    gallery: [],
+    gallery: [actionHousekeeping, actionHomeCleaning, US.laundry, US.cleaningKitchen],
   },
   {
     id: 'c5', name: 'Helena', specialty: 'Move-out Cleaner', rating: 4.9, hourlyRate: 27,
@@ -160,7 +214,7 @@ export const CLEANERS = [
     serviceLocation: 'Service provided at client\'s home',
     packages: [],
     qualifications: [],
-    gallery: [],
+    gallery: [actionMoveoutCleaning, actionDeepCleaning, US.cleaningSupplies, US.cleaningBathroom],
   },
   {
     id: 'c6', name: 'André', specialty: 'Window Cleaner', rating: 4.7, hourlyRate: 29,
@@ -173,7 +227,7 @@ export const CLEANERS = [
     serviceLocation: 'Service provided at client\'s location',
     packages: [],
     qualifications: [],
-    gallery: [],
+    gallery: [actionWindowCleaning, US.windowGlass, US.windowExterior, US.windowBright],
   },
 ]
 
@@ -195,7 +249,7 @@ export const HANDYMEN = [
       { icon: 'award', title: 'Guild-certified craftsman', desc: 'Certified by the Porto Woodworkers Guild for fine joinery and cabinet making.' },
       { icon: 'book', title: 'Apprenticeship trained', desc: '3-year apprenticeship under master furniture maker António Silva.' },
     ],
-    gallery: [],
+    gallery: [actionCarpentry, actionFurnitureAssembly, US.woodWorkshop, US.woodworking],
   },
   {
     id: 'h2', name: 'Miguel', specialty: 'Plumber', rating: 5.0, hourlyRate: 42,
@@ -214,7 +268,7 @@ export const HANDYMEN = [
       { icon: 'clock', title: '7 years of experience', desc: 'Licensed plumber specializing in residential and emergency work.' },
       { icon: 'shield', title: 'Fully licensed & insured', desc: 'Registered with the Portuguese plumbing authority. Full liability coverage.' },
     ],
-    gallery: [],
+    gallery: [actionPlumbing, actionPlumbing2, US.plumbingSink, US.plumbingPipes],
   },
   {
     id: 'h3', name: 'Rui', specialty: 'Carpenter', rating: 4.8, hourlyRate: 38,
@@ -224,7 +278,7 @@ export const HANDYMEN = [
     bio: 'Passionate woodworker specializing in bespoke furniture and restoration. From vintage chair repairs to building custom kitchen cabinets.',
     languages: ['Portuguese', 'German'], memberSince: '2020',
     serviceLocation: 'Service provided at client\'s home or my workshop',
-    packages: [], qualifications: [], gallery: [],
+    packages: [], qualifications: [], gallery: [actionFurnitureAssembly, actionCarpentry, US.woodworking, US.woodWorkshop],
   },
   {
     id: 'h4', name: 'Carlos', specialty: 'Electrician', rating: 4.9, hourlyRate: 40,
@@ -242,7 +296,7 @@ export const HANDYMEN = [
       { icon: 'shield', title: 'Nationally certified', desc: 'Certified by DGEG (Portuguese energy authority) for all electrical work.' },
       { icon: 'clock', title: '8 years of experience', desc: 'Residential and commercial electrical work since 2017.' },
     ],
-    gallery: [],
+    gallery: [actionElectrical, US.electricalPanel, US.electricianWork, US.lightFixture],
   },
   {
     id: 'h5', name: 'Clara', specialty: 'Painter', rating: 4.8, hourlyRate: 37,
@@ -252,7 +306,7 @@ export const HANDYMEN = [
     bio: 'Interior and exterior painting specialist. Clean lines, smooth finishes, and colour consultations included. I transform spaces with precision.',
     languages: ['Portuguese', 'English', 'Spanish'], memberSince: '2022',
     serviceLocation: 'Service provided at client\'s home',
-    packages: [], qualifications: [], gallery: [],
+    packages: [], qualifications: [], gallery: [actionPainting, US.paintingRoller, US.paintingWall, US.paintingInterior],
   },
   {
     id: 'h6', name: 'Bruno', specialty: 'Plumber', rating: 4.8, hourlyRate: 39,
@@ -262,7 +316,7 @@ export const HANDYMEN = [
     bio: 'Experienced plumber specializing in older buildings and heritage properties. Pipe repair, water heater installation, and drain unblocking.',
     languages: ['Portuguese'], memberSince: '2020',
     serviceLocation: 'Service provided at client\'s home',
-    packages: [], qualifications: [], gallery: [],
+    packages: [], qualifications: [], gallery: [actionPlumbing2, actionPlumbing, US.plumbingBathroom, US.plumbingPipes],
   },
 ]
 
@@ -285,7 +339,7 @@ export const SERVICES = [
       { icon: 'award', title: 'Published photographer', desc: 'Work featured in TimeOut Porto and several Portuguese lifestyle magazines.' },
       { icon: 'book', title: 'Fine arts graduate', desc: 'BA in Photography from the Porto School of Arts (FBAUP).' },
     ],
-    gallery: [],
+    gallery: [actionPhotography, US.photoCamera, US.photoShoot, US.photoStudio],
   },
   {
     id: 's2', name: 'Marta', specialty: 'Personal Trainer', rating: 4.8, hourlyRate: 30,
@@ -304,7 +358,7 @@ export const SERVICES = [
       { icon: 'shield', title: 'Nationally certified', desc: 'Certified personal trainer by the Portuguese Institute of Sport.' },
       { icon: 'clock', title: '5 years of experience', desc: 'Training clients in-home and outdoors since 2021.' },
     ],
-    gallery: [],
+    gallery: [actionPersonalTraining, US.fitnessGym, US.fitnessWorkout, US.fitnessDumbbells],
   },
   {
     id: 's3', name: 'Tiago', specialty: 'Chef', rating: 4.8, hourlyRate: 44,
@@ -322,7 +376,7 @@ export const SERVICES = [
       { icon: 'clock', title: '10 years of experience', desc: 'Professional chef since 2015. Portuguese and Mediterranean cuisine.' },
       { icon: 'book', title: 'Culinary school trained', desc: 'Graduate of the Escola de Hotelaria e Turismo do Porto.' },
     ],
-    gallery: [],
+    gallery: [actionChef, US.chefCooking, US.chefPlating, US.chefIngredients],
   },
   {
     id: 's4', name: 'Luis', specialty: 'Hair Stylist', rating: 5.0, hourlyRate: 52,
@@ -340,7 +394,7 @@ export const SERVICES = [
       { icon: 'clock', title: '8 years of experience', desc: 'Former senior stylist at a top Porto salon. Mobile since 2020.' },
       { icon: 'award', title: 'Colour specialist', desc: 'Advanced colour certification from L\'Oréal Professionnel.' },
     ],
-    gallery: [],
+    gallery: [actionHairStyling, US.hairSalon, US.hairCut, US.hairColour],
   },
   {
     id: 's5', name: 'Sofia', specialty: 'Massage Therapist', rating: 5.0, hourlyRate: 55,
@@ -360,7 +414,7 @@ export const SERVICES = [
       { icon: 'clock', title: '6 years of experience', desc: 'Trained in deep tissue, Swedish, sports, and prenatal massage.' },
       { icon: 'book', title: 'Anatomy & kinesiology', desc: 'Diploma in anatomy and kinesiology from ISAVE health sciences institute.' },
     ],
-    gallery: [],
+    gallery: [actionMassage, US.massageSpa, US.massageTable, US.massageStones],
   },
   {
     id: 's6', name: 'Ingrid', specialty: 'Babysitter', rating: 4.8, hourlyRate: 28,
@@ -374,7 +428,7 @@ export const SERVICES = [
     qualifications: [
       { icon: 'shield', title: 'CPR & first aid certified', desc: 'Pediatric CPR and first aid certification, renewed annually.' },
     ],
-    gallery: [],
+    gallery: [actionBabysitting, US.babysitterPlay, US.babysitterReading, US.babysitterCrafts],
   },
 ]
 
@@ -413,13 +467,6 @@ const MOCK_REVIEWS_BY_ID = {
   s6: [_r4, _r6],
 }
 
-/** Fallback portfolio when worker.gallery is empty — realistic job photos per vertical. */
-const MOCK_GALLERY_POOL = {
-  c: [actionHomeCleaning, actionDeepCleaning, actionOfficeCleaning, actionHousekeeping, actionMoveoutCleaning],
-  h: [actionCarpentry, actionPlumbing, actionElectrical, actionPainting, actionFurnitureAssembly],
-  s: [actionPhotography, actionPersonalTraining, actionChef, actionHairStyling, actionMassage],
-}
-
 ALL_WORKERS.forEach((w) => {
   w.clientReviews = MOCK_REVIEWS_BY_ID[w.id] || []
   if (w.clientReviews.length > 0) {
@@ -429,21 +476,6 @@ ALL_WORKERS.forEach((w) => {
     w.reviews = 0
     w.rating = null
   }
-})
-
-ALL_WORKERS.forEach((w) => {
-  if (w.gallery && w.gallery.length > 0) return
-  const prefix = String(w.id)[0]
-  const pool = MOCK_GALLERY_POOL[prefix] || [w.heroImage]
-  const n = parseInt(String(w.id).slice(1), 10) || 1
-  const picks = [
-    w.heroImage,
-    w.image,
-    pool[n % pool.length],
-    pool[(n + 1) % pool.length],
-    pool[(n + 2) % pool.length],
-  ].filter(Boolean)
-  w.gallery = [...new Set(picks)]
 })
 
 export const CATEGORIES = [
