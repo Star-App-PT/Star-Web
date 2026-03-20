@@ -196,11 +196,13 @@ export default function ProfileEdit() {
         <div className="profile-edit__hero">
           <div className="profile-edit__photo-col">
             <div className="profile-edit__photo-wrap">
-              {avatarUrl ? (
-                <img src={avatarUrl} alt="" className="profile-edit__photo-img" />
-              ) : (
-                <span className="profile-edit__photo-initial">{firstName.charAt(0).toUpperCase()}</span>
-              )}
+              <div className="profile-edit__photo-disk">
+                {avatarUrl ? (
+                  <img src={avatarUrl} alt="" className="profile-edit__photo-img" />
+                ) : (
+                  <span className="profile-edit__photo-initial">{firstName.charAt(0).toUpperCase()}</span>
+                )}
+              </div>
               <input
                 ref={fileRef}
                 type="file"
@@ -215,7 +217,7 @@ export default function ProfileEdit() {
                 className="profile-edit__photo-edit"
                 onClick={() => fileRef.current?.click()}
               >
-                <Camera strokeWidth={2} />
+                <Camera className="profile-edit__photo-edit-icon" strokeWidth={2} aria-hidden />
                 {t('profile.edit')}
               </button>
             </div>
