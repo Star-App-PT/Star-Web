@@ -201,7 +201,7 @@ export default function HamburgerMenu() {
                     <span className="hmenu__promo-title">{t('header.becomeAStar')}</span>
                     <span className="hmenu__promo-sub">{t('header.becomeAStarSubtitle')}</span>
                   </div>
-                  <img src="/assets/cleaner-illustration.png" alt="" className="hmenu__promo-img" />
+                  <img src="/assets/star-worker-illustration.png" alt="" className="hmenu__promo-img" />
                 </Link>
               )}
 
