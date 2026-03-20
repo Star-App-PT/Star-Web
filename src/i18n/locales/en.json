@@ -267,7 +267,7 @@
   },
   "workerSignupGate": {
     "authSubtitle": "Create an account or log in to continue as a Star professional.",
-    "categoryTitle": "What do you do?",
+    "categoryTitle": "What best describes you?",
     "categorySubtitle": "Choose the main category of services you offer.",
     "continue": "Continue"
   },

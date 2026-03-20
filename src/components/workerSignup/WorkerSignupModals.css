@@ -212,6 +212,78 @@
   font-size: 2.5rem;
 }
 
+/* Category gate only: ~20% smaller panel and contents */
+.ws-modal--category .ws-modal__panel {
+  max-width: 704px;
+  border-radius: 19px;
+  margin: 13px;
+  box-shadow: 0 13px 45px rgba(0, 0, 0, 0.14);
+}
+
+.ws-modal--category .ws-modal__close {
+  top: 22px;
+  right: 22px;
+  width: 45px;
+  height: 45px;
+}
+
+.ws-modal--category .ws-modal__scroll {
+  padding: 70px 38px 45px;
+}
+
+.ws-modal--category .ws-modal__title {
+  font-size: 2.4rem;
+  margin: 0 0 13px;
+  padding-right: 58px;
+}
+
+.ws-modal--category .ws-modal__sub {
+  font-size: 1.5rem;
+  margin: 0 0 35px;
+}
+
+.ws-modal--category .ws-modal__cat-grid {
+  gap: 19px;
+  margin-bottom: 32px;
+}
+
+.ws-modal--category .ws-modal__cat-card {
+  padding: 26px 13px 22px;
+  border-radius: 19px;
+  border-width: 2px;
+}
+
+.ws-modal--category .ws-modal__cat-card:hover,
+.ws-modal--category .ws-modal__cat-card--selected:hover {
+  transform: translateY(-6px);
+}
+
+.ws-modal--category .ws-modal__cat-icon-wrap {
+  width: 90px;
+  height: 90px;
+  margin-bottom: 16px;
+}
+
+.ws-modal--category .ws-modal__cat-icon {
+  width: 77px;
+  height: 77px;
+}
+
+.ws-modal--category .ws-modal__cat-label {
+  font-size: 1.3rem;
+}
+
+.ws-modal--category .ws-modal__btn-primary {
+  padding: 22px 26px;
+  font-size: 1.4rem;
+  border-radius: 13px;
+}
+
+.ws-modal--category .ws-modal__demo {
+  font-size: 0.8rem;
+  margin-top: 22px;
+}
+
 /* Category cards */
 .ws-modal__cat-grid {
   display: grid;
@@ -223,6 +295,10 @@
 @media (max-width: 720px) {
   .ws-modal__cat-grid {
     gap: 16px;
+  }
+
+  .ws-modal--category .ws-modal__cat-grid {
+    gap: 13px;
   }
 }
 
@@ -352,5 +428,33 @@
 
   .ws-modal__cat-label {
     font-size: clamp(0.95rem, 3.5vw, 1.2rem);
+  }
+
+  .ws-modal--category .ws-modal__scroll {
+    padding: 58px 19px max(32px, env(safe-area-inset-bottom));
+  }
+
+  .ws-modal--category .ws-modal__title {
+    padding-right: 45px;
+  }
+
+  .ws-modal--category .ws-modal__sub {
+    margin-bottom: 22px;
+  }
+
+  .ws-modal--category .ws-modal__cat-grid {
+    gap: 13px;
+    margin-bottom: 26px;
+  }
+
+  .ws-modal--category .ws-modal__cat-icon-wrap {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 10px;
+  }
+
+  .ws-modal--category .ws-modal__cat-icon {
+    width: 58px;
+    height: 58px;
   }
 }

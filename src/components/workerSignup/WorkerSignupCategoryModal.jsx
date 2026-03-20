@@ -43,7 +43,7 @@ export default function WorkerSignupCategoryModal({ open, onClose, onContinue })
   }
 
   return (
-    <div className={`ws-modal${visible ? ' ws-modal--open' : ''}`} role="presentation">
+    <div className={`ws-modal ws-modal--category${visible ? ' ws-modal--open' : ''}`} role="presentation">
       <button type="button" className="ws-modal__backdrop" aria-label={t('common.cancel')} onClick={onClose} />
       <div
         className="ws-modal__panel"
@@ -53,7 +53,7 @@ export default function WorkerSignupCategoryModal({ open, onClose, onContinue })
         onClick={(e) => e.stopPropagation()}
       >
         <button type="button" className="ws-modal__close" onClick={onClose} aria-label={t('common.cancel')}>
-          <X size={28} strokeWidth={2} />
+          <X size={22} strokeWidth={2} />
         </button>
 
         <div className="ws-modal__scroll">
