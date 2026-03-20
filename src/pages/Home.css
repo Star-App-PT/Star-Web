@@ -111,9 +111,14 @@
 }
 
 @media (min-width: 769px) {
+  /* Equal space above/below search between tab underline and divider; 36+36 = prior 48+24 so divider stays put */
+  .home {
+    padding-top: 36px;
+  }
+
   .home__header-bottom-rule {
     display: block;
-    margin-top: 24px;
+    margin-top: 36px;
     margin-bottom: 0;
     height: 0;
     border: 0;
