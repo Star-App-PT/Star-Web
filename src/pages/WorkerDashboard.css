@@ -1,0 +1,241 @@
+.worker-dash {
+  min-height: 50vh;
+  padding: 24px 0 48px;
+  background: #fafafa;
+}
+
+.worker-dash--loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  color: #717171;
+}
+
+.worker-dash__inner.container {
+  max-width: 1100px;
+}
+
+.worker-dash__topbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 8px;
+}
+
+.worker-dash__switch-client {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1b4fba;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.worker-dash__switch-client:hover {
+  color: #164a9e;
+}
+
+.worker-dash__hero {
+  text-align: center;
+  padding: 24px 16px 32px;
+  margin-bottom: 28px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.worker-dash__avatar-wrap {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid #1b4fba;
+}
+
+.worker-dash__avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.worker-dash__avatar-initial {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1b4fba;
+  background: #e8eef9;
+}
+
+.worker-dash__name {
+  margin: 0 0 8px;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #222;
+  line-height: 1.2;
+}
+
+.worker-dash__category {
+  margin: 0 0 12px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #1b4fba;
+}
+
+.worker-dash__rating-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 20px;
+  font-size: 1rem;
+  color: #222;
+}
+
+.worker-dash__rating-stars {
+  color: #1b4fba;
+  font-size: 1.1rem;
+}
+
+.worker-dash__rating-value {
+  font-weight: 700;
+}
+
+.worker-dash__rating-label {
+  color: #717171;
+  font-weight: 500;
+}
+
+.worker-dash__edit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 28px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fff;
+  background: #1b4fba;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+
+.worker-dash__edit:hover {
+  background: #164a9e;
+  color: #fff;
+}
+
+.worker-dash__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .worker-dash__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+}
+
+.worker-dash__card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 22px 20px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  border: 1px solid #ebebeb;
+  display: flex;
+  flex-direction: column;
+  min-height: 200px;
+}
+
+.worker-dash__card-title {
+  margin: 0 0 16px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #222;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #1b4fba;
+}
+
+.worker-dash__stats {
+  list-style: none;
+  margin: 0 0 12px;
+  padding: 0;
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.worker-dash__stats--compact {
+  flex-direction: row;
+  gap: 20px;
+}
+
+.worker-dash__stats li {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.worker-dash__stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1b4fba;
+}
+
+.worker-dash__stat-label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #717171;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.worker-dash__empty {
+  margin: 0 0 16px;
+  font-size: 0.9rem;
+  color: #717171;
+  line-height: 1.45;
+  flex: 1;
+}
+
+.worker-dash__schedule-list {
+  margin: 0 0 12px;
+  padding-left: 1.1rem;
+  color: #222;
+  font-size: 0.9rem;
+}
+
+.worker-dash__card-link {
+  margin-top: auto;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1b4fba;
+  text-decoration: none;
+}
+
+.worker-dash__card-link:hover {
+  text-decoration: underline;
+}
+
+.worker-dash__card-link--secondary {
+  font-weight: 500;
+  color: #555;
+}
+
+.worker-dash__card-link--secondary:hover {
+  color: #1b4fba;
+}
+
+.worker-dash__card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 8px;
+}

@@ -16,6 +16,7 @@ import Search from './pages/Search'
 import Workers from './pages/Workers'
 import WorkerDetail from './pages/WorkerDetail'
 import Dashboard from './pages/Dashboard'
+import WorkerDashboard from './pages/WorkerDashboard'
 import Profile from './pages/Profile'
 import ProfileEdit from './pages/ProfileEdit'
 import ProfilePlaceholder from './pages/ProfilePlaceholder'
@@ -39,6 +40,7 @@ import Privacy from './pages/Privacy'
 import Terms from './pages/Terms'
 import { AuthSessionProvider } from './contexts/AuthSessionContext'
 import { CurrencyProvider } from './contexts/CurrencyContext'
+import { AppModeProvider } from './contexts/AppModeContext'
 import { WORKER_SIGNUP_PENDING_KEY } from './constants/workerSignup'
 
 function WorkerPublicProfileRedirect() {
@@ -156,6 +158,10 @@ function AppShell() {
           <Route path="/worker/portfolio/:category" element={<WorkerPortfolio />} />
           <Route path="/worker/packages/:category" element={<WorkerPackages />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard/worker" element={<WorkerDashboard />} />
+          <Route path="/dashboard/worker/jobs" element={<ProfilePlaceholder />} />
+          <Route path="/dashboard/worker/messages" element={<ProfilePlaceholder />} />
+          <Route path="/dashboard/worker/schedule" element={<ProfilePlaceholder />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/profile/edit" element={<ProfileEdit />} />
           <Route path="/profile/bookings" element={<ProfilePlaceholder />} />
@@ -186,9 +192,11 @@ export default function App() {
     <BrowserRouter>
       <AuthSessionProvider>
         <CurrencyProvider>
-          <DemoModeProvider>
-            <AppShell />
-          </DemoModeProvider>
+          <AppModeProvider>
+            <DemoModeProvider>
+              <AppShell />
+            </DemoModeProvider>
+          </AppModeProvider>
         </CurrencyProvider>
       </AuthSessionProvider>
     </BrowserRouter>

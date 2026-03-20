@@ -70,6 +70,19 @@
   justify-self: end;
 }
 
+.star-header__mode-link {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1b4fba;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+
+.star-header__mode-link:hover {
+  color: #164a9e;
+}
+
 .star-header__avatar-link {
   width: 40px;
   height: 40px;

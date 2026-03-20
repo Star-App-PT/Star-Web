@@ -34,7 +34,14 @@ export default function WorkerSignup() {
 
   const handleClose = () => navigate('/')
 
-  const handleCategoryContinue = (categoryId) => {
+  const handleCategoryContinue = async (categoryId) => {
+    if (supabase) {
+      try {
+        await supabase.auth.updateUser({ data: { worker_category: categoryId } })
+      } catch {
+        /* continue navigation even if metadata update fails */
+      }
+    }
     navigate(`/worker/service-area/${categoryId}`)
   }
 

@@ -62,7 +62,9 @@
     "joinATeam": "Unirse a un equipo",
     "starLogin": "Ya soy Star",
     "signUp": "Regístrate",
-    "logInOrSignUp": "Iniciar sesión o registrarse"
+    "logInOrSignUp": "Iniciar sesión o registrarse",
+    "switchToWorker": "Cambiar a profesional",
+    "switchToClient": "Cambiar a cliente"
   },
   "hamburger": {
     "savedWorkers": "Profesionales guardados",
@@ -545,6 +547,27 @@
       "technology": "Tecnología",
       "gaming": "Videojuegos"
     }
+  },
+  "workerDashboard": {
+    "categoryNotSet": "Profesional",
+    "starRating": "Valoración",
+    "editProfile": "Editar perfil",
+    "jobsTitle": "Mis trabajos",
+    "activeBookings": "Reservas activas",
+    "completedJobs": "Trabajos completados",
+    "noBookingsYet": "Aún no hay reservas",
+    "viewAllJobs": "Ver todos los trabajos",
+    "messagesTitle": "Mensajes",
+    "noMessagesYet": "Aún no hay mensajes",
+    "openInbox": "Abrir bandeja de entrada",
+    "scheduleTitle": "Mi agenda",
+    "noUpcomingBookings": "Sin reservas próximas",
+    "viewCalendar": "Ver calendario completo",
+    "profileCardTitle": "Mi perfil",
+    "rating": "Valoración",
+    "reviews": "Reseñas",
+    "jobsDone": "Trabajos completados",
+    "managePackages": "Gestionar paquetes"
   },
   "dashboard": {
     "welcome": "¡Bienvenido, {{name}}!",

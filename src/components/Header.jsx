@@ -2,6 +2,8 @@ import { Link, useLocation, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import HamburgerMenu from './HamburgerMenu'
 import { useAuthSession } from '../contexts/AuthSessionContext'
+import { useAppMode } from '../contexts/AppModeContext'
+import { useDualProfile } from '../hooks/useDualProfile'
 import './Header.css'
 
 const CATEGORY_IDS = [
@@ -15,6 +17,8 @@ export default function Header() {
   const location = useLocation()
   const [searchParams] = useSearchParams()
   const { user } = useAuthSession()
+  const { mode, setMode } = useAppMode()
+  const { loading: dualLoading, hasClientProfile, hasWorkerProfile, hasBothProfiles } = useDualProfile(user)
 
   const activeCategory = location.pathname === '/' ? (searchParams.get('category') || 'cleaners') : null
 
@@ -66,6 +70,25 @@ export default function Header() {
           </div>
         )}
         <nav className="star-header__nav">
+          {user && !dualLoading && hasBothProfiles && mode === 'client' && (
+            <Link
+              to="/dashboard/worker"
+              className="star-header__mode-link"
+              onClick={() => setMode('worker')}
+            >
+              {t('header.switchToWorker')}
+            </Link>
+          )}
+          {user && !dualLoading && hasBothProfiles && mode === 'worker' && (
+            <Link to="/" className="star-header__mode-link" onClick={() => setMode('client')}>
+              {t('header.switchToClient')}
+            </Link>
+          )}
+          {user && !dualLoading && hasClientProfile && !hasWorkerProfile && (
+            <Link to="/worker/signup" className="star-header__mode-link">
+              {t('header.becomeAStar')}
+            </Link>
+          )}
           {user && (
             <Link to="/profile" className="star-header__avatar-link" aria-label="Go to profile">
               {avatarUrl ? (

@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { supabase } from '../supabase'
 import { useAuthSession } from '../contexts/AuthSessionContext'
+import { useAppMode } from '../contexts/AppModeContext'
+import { useDualProfile } from '../hooks/useDualProfile'
 import LanguageCurrencyModal from './LanguageCurrencyModal'
 import './HamburgerMenu.css'
 
@@ -76,6 +78,8 @@ export default function HamburgerMenu() {
   const [menuAnimIn, setMenuAnimIn] = useState(false)
   const [langModalOpen, setLangModalOpen] = useState(false)
   const { user } = useAuthSession()
+  const { mode, setMode } = useAppMode()
+  const { loading: dualLoading, hasClientProfile, hasWorkerProfile, hasBothProfiles } = useDualProfile(user)
   const isLoggedIn = !!user
   const ref = useRef(null)
 
@@ -131,6 +135,32 @@ export default function HamburgerMenu() {
         <div className={`hmenu__dropdown ${menuAnimIn ? 'hmenu__dropdown--enter' : ''}`}>
           {isLoggedIn ? (
             <>
+              {!dualLoading && hasBothProfiles && mode === 'client' && (
+                <Link
+                  to="/dashboard/worker"
+                  className="hmenu__item"
+                  onClick={() => {
+                    setMode('worker')
+                    setOpen(false)
+                  }}
+                >
+                  <span className="hmenu__item-text-only">{t('header.switchToWorker')}</span>
+                </Link>
+              )}
+              {!dualLoading && hasBothProfiles && mode === 'worker' && (
+                <Link
+                  to="/"
+                  className="hmenu__item"
+                  onClick={() => {
+                    setMode('client')
+                    setOpen(false)
+                  }}
+                >
+                  <span className="hmenu__item-text-only">{t('header.switchToClient')}</span>
+                </Link>
+              )}
+              {hasBothProfiles && !dualLoading && <div className="hmenu__sep" />}
+
               <Link to="/client/favourites" className="hmenu__item" onClick={() => setOpen(false)}>
                 <IconHeart />
                 <span>{t('hamburger.savedWorkers')}</span>
@@ -165,15 +195,17 @@ export default function HamburgerMenu() {
 
               <div className="hmenu__sep" />
 
-              <Link to="/worker/signup" className="hmenu__promo" onClick={() => setOpen(false)}>
-                <div className="hmenu__promo-text">
-                  <span className="hmenu__promo-title">{t('header.becomeAStar')}</span>
-                  <span className="hmenu__promo-sub">{t('header.becomeAStarSubtitle')}</span>
-                </div>
-                <img src="/assets/cleaner-illustration.png" alt="" className="hmenu__promo-img" />
-              </Link>
+              {!dualLoading && hasClientProfile && !hasWorkerProfile && (
+                <Link to="/worker/signup" className="hmenu__promo" onClick={() => setOpen(false)}>
+                  <div className="hmenu__promo-text">
+                    <span className="hmenu__promo-title">{t('header.becomeAStar')}</span>
+                    <span className="hmenu__promo-sub">{t('header.becomeAStarSubtitle')}</span>
+                  </div>
+                  <img src="/assets/cleaner-illustration.png" alt="" className="hmenu__promo-img" />
+                </Link>
+              )}
 
-              <div className="hmenu__sep" />
+              {!dualLoading && hasClientProfile && !hasWorkerProfile && <div className="hmenu__sep" />}
 
               <button type="button" className="hmenu__item hmenu__item--signout" onClick={handleSignOut}>
                 {t('dashboard.signOut')}

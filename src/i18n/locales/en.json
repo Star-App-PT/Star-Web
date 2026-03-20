@@ -62,7 +62,9 @@
     "joinATeam": "Join a team",
     "starLogin": "Star login",
     "signUp": "Sign up",
-    "logInOrSignUp": "Log in or sign up"
+    "logInOrSignUp": "Log in or sign up",
+    "switchToWorker": "Switch to Worker",
+    "switchToClient": "Switch to Client"
   },
   "hamburger": {
     "savedWorkers": "Saved Workers",
@@ -545,6 +547,27 @@
       "technology": "Technology",
       "gaming": "Gaming"
     }
+  },
+  "workerDashboard": {
+    "categoryNotSet": "Professional",
+    "starRating": "Star rating",
+    "editProfile": "Edit profile",
+    "jobsTitle": "My Jobs",
+    "activeBookings": "Active bookings",
+    "completedJobs": "Completed jobs",
+    "noBookingsYet": "No bookings yet",
+    "viewAllJobs": "View full jobs list",
+    "messagesTitle": "Messages",
+    "noMessagesYet": "No messages yet",
+    "openInbox": "Open messages inbox",
+    "scheduleTitle": "My Schedule",
+    "noUpcomingBookings": "No upcoming bookings",
+    "viewCalendar": "View full calendar",
+    "profileCardTitle": "My Profile",
+    "rating": "Rating",
+    "reviews": "Reviews",
+    "jobsDone": "Jobs completed",
+    "managePackages": "Manage packages"
   },
   "dashboard": {
     "welcome": "Welcome, {{name}}!",
