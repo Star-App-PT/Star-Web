@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useRef } from 'react'
-import { useSearchParams, useNavigate } from 'react-router-dom'
+import { useSearchParams, useNavigate, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { ALL_WORKERS, CATEGORIES, SUPPORTED_CITIES, DEFAULT_CITY } from '../data/workers'
 import useUserLocation from '../hooks/useUserLocation'
@@ -194,7 +194,7 @@ export default function Search() {
         ) : (
           <div className="search-page__grid">
             {filteredWorkers.map((w) => (
-              <a key={w.id} className="search-card" href={`/worker/${w.id}`} target="_blank" rel="noopener noreferrer">
+              <Link key={w.id} to={`/worker/${w.id}`} className="search-card">
                 <div className="search-card__img-wrap">
                   <img src={w.heroImage} alt="" className="search-card__img" />
                   {w.rating != null && (
@@ -224,7 +224,7 @@ export default function Search() {
                     <p className="search-card__rating search-card__rating--new">{t('common.new')}</p>
                   )}
                 </div>
-              </a>
+              </Link>
             ))}
           </div>
         )}
