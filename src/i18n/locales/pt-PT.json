@@ -64,6 +64,31 @@
     "signUp": "Registre-se",
     "logInOrSignUp": "Iniciar sessão ou registar"
   },
+  "hamburger": {
+    "savedWorkers": "Profissionais guardados",
+    "myBookings": "As minhas reservas",
+    "messages": "Mensagens",
+    "profile": "Perfil",
+    "accountSettings": "Definições da conta",
+    "languageCurrency": "Idioma e moeda",
+    "signUp": "Registre-se",
+    "logIn": "Iniciar sessão"
+  },
+  "languageModal": {
+    "heading": "Idioma e moeda",
+    "chooseLanguage": "Escolha um idioma",
+    "chooseCurrency": "Escolha uma moeda",
+    "closeAria": "Fechar",
+    "langPtPT": "Português — Portugal",
+    "langEn": "English",
+    "langEs": "Español",
+    "currency": {
+      "EUR": "€ Euro",
+      "GBP": "£ Libra esterlina",
+      "USD": "$ Dólar americano",
+      "BRL": "R$ Real brasileiro"
+    }
+  },
   "home": {
     "title": "A sua casa, limpa e arranjada.",
     "subtitle": "Marque uma visita grátis. Os profissionais vão até si, avaliam e enviam orçamento.",

@@ -38,6 +38,7 @@ import DemoLanding from './pages/DemoLanding'
 import Privacy from './pages/Privacy'
 import Terms from './pages/Terms'
 import { AuthSessionProvider } from './contexts/AuthSessionContext'
+import { CurrencyProvider } from './contexts/CurrencyContext'
 import { WORKER_SIGNUP_PENDING_KEY } from './constants/workerSignup'
 
 function WorkerPublicProfileRedirect() {
@@ -158,7 +159,9 @@ function AppShell() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/profile/edit" element={<ProfileEdit />} />
           <Route path="/profile/bookings" element={<ProfilePlaceholder />} />
+          <Route path="/profile/messages" element={<ProfilePlaceholder />} />
           <Route path="/profile/settings" element={<ProfilePlaceholder />} />
+          <Route path="/help" element={<ProfilePlaceholder />} />
           <Route path="/client/signup" element={<ClientSignupWelcome />} />
           <Route path="/client/signup/name" element={<ClientSignupName />} />
           <Route path="/client/signup/photo" element={<ClientSignupPhoto />} />
@@ -182,9 +185,11 @@ export default function App() {
   return (
     <BrowserRouter>
       <AuthSessionProvider>
-        <DemoModeProvider>
-          <AppShell />
-        </DemoModeProvider>
+        <CurrencyProvider>
+          <DemoModeProvider>
+            <AppShell />
+          </DemoModeProvider>
+        </CurrencyProvider>
       </AuthSessionProvider>
     </BrowserRouter>
   )

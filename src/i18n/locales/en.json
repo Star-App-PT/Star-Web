@@ -64,6 +64,31 @@
     "signUp": "Sign up",
     "logInOrSignUp": "Log in or sign up"
   },
+  "hamburger": {
+    "savedWorkers": "Saved Workers",
+    "myBookings": "My Bookings",
+    "messages": "Messages",
+    "profile": "Profile",
+    "accountSettings": "Account Settings",
+    "languageCurrency": "Language & Currency",
+    "signUp": "Sign up",
+    "logIn": "Log in"
+  },
+  "languageModal": {
+    "heading": "Language & currency",
+    "chooseLanguage": "Choose a language",
+    "chooseCurrency": "Choose a currency",
+    "closeAria": "Close",
+    "langPtPT": "Portuguese — Portugal",
+    "langEn": "English",
+    "langEs": "Spanish",
+    "currency": {
+      "EUR": "€ Euro",
+      "GBP": "£ British Pound",
+      "USD": "$ US Dollar",
+      "BRL": "R$ Brazilian Real"
+    }
+  },
   "home": {
     "title": "Your home, clean and fixed.",
     "subtitle": "Book a free visit. Workers come to you, assess the job, and send a quote.",

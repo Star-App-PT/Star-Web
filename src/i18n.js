@@ -14,8 +14,14 @@ i18n
       'pt-PT': { translation: ptPT },
       es: { translation: es },
     },
-    fallbackLng: 'en',
+    lng: 'pt-PT',
+    fallbackLng: ['pt-PT', 'en'],
     interpolation: { escapeValue: false },
+    detection: {
+      order: ['localStorage'],
+      caches: ['localStorage'],
+      lookupLocalStorage: 'i18nextLng',
+    },
   })
 
 export default i18n

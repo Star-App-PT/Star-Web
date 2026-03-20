@@ -1,6 +1,5 @@
 import { Link, useLocation, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import LanguageToggle from './LanguageToggle'
 import HamburgerMenu from './HamburgerMenu'
 import { useAuthSession } from '../contexts/AuthSessionContext'
 import './Header.css'
@@ -67,7 +66,6 @@ export default function Header() {
           </div>
         )}
         <nav className="star-header__nav">
-          <LanguageToggle />
           {user && (
             <Link to="/profile" className="star-header__avatar-link" aria-label="Go to profile">
               {avatarUrl ? (

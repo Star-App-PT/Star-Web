@@ -64,6 +64,31 @@
     "signUp": "Regístrate",
     "logInOrSignUp": "Iniciar sesión o registrarse"
   },
+  "hamburger": {
+    "savedWorkers": "Profesionales guardados",
+    "myBookings": "Mis reservas",
+    "messages": "Mensajes",
+    "profile": "Perfil",
+    "accountSettings": "Configuración de la cuenta",
+    "languageCurrency": "Idioma y moneda",
+    "signUp": "Regístrate",
+    "logIn": "Iniciar sesión"
+  },
+  "languageModal": {
+    "heading": "Idioma y moneda",
+    "chooseLanguage": "Elige un idioma",
+    "chooseCurrency": "Elige una moneda",
+    "closeAria": "Cerrar",
+    "langPtPT": "Portugués — Portugal",
+    "langEn": "English",
+    "langEs": "Español",
+    "currency": {
+      "EUR": "€ Euro",
+      "GBP": "£ Libra esterlina",
+      "USD": "$ Dólar estadounidense",
+      "BRL": "R$ Real brasileño"
+    }
+  },
   "home": {
     "title": "Tu hogar, limpio y arreglado.",
     "subtitle": "Reserva una visita gratis. Los profesionales van a ti, valoran y envían presupuesto.",
