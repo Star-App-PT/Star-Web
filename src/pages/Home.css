@@ -105,13 +105,28 @@
   opacity: 0.92;
 }
 
-/* Matches header active category underline (.star-header__category--active); spacing matches .home padding-top above search */
-.home__search-bar-underline {
-  margin-top: 48px;
-  width: 100%;
-  height: 0;
-  border: 0;
-  border-top: 2px solid #222;
+/* Relocated from .star-header border-bottom (desktop home only): full-bleed gray rule below search */
+.home__header-bottom-rule {
+  display: none;
+}
+
+@media (min-width: 769px) {
+  .home__header-bottom-rule {
+    display: block;
+    margin-top: 24px;
+    margin-bottom: 0;
+    height: 0;
+    border: 0;
+    border-bottom: 1px solid var(--star-gray-200);
+    width: 100vw;
+    max-width: none;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+  }
+
+  .home__hero.container {
+    padding-bottom: 24px;
+  }
 }
 
 /* Category tabs */

@@ -471,8 +471,6 @@ export default function Home() {
             </button>
           </form>
 
-          <div className="home__search-bar-underline" aria-hidden />
-
           {openDropdown && <div className="home__dd-backdrop" onClick={() => setOpenDropdown(null)} />}
 
           {openDropdown === 'where' && (
@@ -584,6 +582,8 @@ export default function Home() {
             </div>
           )}
         </div>
+
+        <div className="home__header-bottom-rule" aria-hidden />
       </div>
 
       {mobileSearchOpen && (

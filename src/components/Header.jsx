@@ -39,8 +39,10 @@ export default function Header() {
     ? (user.user_metadata?.full_name || user.user_metadata?.name || user.email || '?').charAt(0).toUpperCase()
     : null
 
+  const isHome = location.pathname === '/'
+
   return (
-    <header className="star-header">
+    <header className={`star-header${isHome ? ' star-header--home' : ''}`}>
       <div className="star-header__inner container">
         <Link to="/" className="star-header__logo">
           <img
