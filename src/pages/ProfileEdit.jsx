@@ -25,6 +25,7 @@ import {
   uploadProfileAvatar,
 } from '../lib/profileAbout'
 import { fetchClientPastWorkers } from '../lib/fetchClientPastWorkers'
+import { CLEANERS, HANDYMEN } from '../data/workers'
 import { PROFILE_INTEREST_OPTIONS } from '../data/profileInterestOptions'
 import ProfileEditInterestsModal from '../components/ProfileEditInterestsModal'
 import './ProfileEdit.css'
@@ -62,10 +63,11 @@ const FIELD_CONFIG = [
   { key: 'languages', Icon: Languages },
 ].map(({ key, Icon }) => ({ key, labelKey: ABOUT_FIELD_LABEL_KEYS[key], Icon }))
 
-const MOCK_HIRED = [
-  { nameKey: 'profileEdit.hiredMockName1', categoryKey: 'home.categoryClean', rating: '4.9', dateKey: 'profileEdit.hiredMockDate1' },
-  { nameKey: 'profileEdit.hiredMockName2', categoryKey: 'home.categoryRepair', rating: '4.8', dateKey: 'profileEdit.hiredMockDate2' },
-  { nameKey: 'profileEdit.hiredMockName3', categoryKey: 'home.categoryServices', rating: '5.0', dateKey: 'profileEdit.hiredMockDate3' },
+/** Suggested-worker mocks: copy stays i18n; avatars match catalogue workers (Maria, João, Ana). */
+const SUGGESTED_MOCK_REFS = [
+  { worker: CLEANERS[0], nameKey: 'profileEdit.hiredMockName1', categoryKey: 'home.categoryClean', rating: '4.9', dateKey: 'profileEdit.hiredMockDate1' },
+  { worker: HANDYMEN[0], nameKey: 'profileEdit.hiredMockName2', categoryKey: 'home.categoryRepair', rating: '4.8', dateKey: 'profileEdit.hiredMockDate2' },
+  { worker: CLEANERS[1], nameKey: 'profileEdit.hiredMockName3', categoryKey: 'home.categoryServices', rating: '5.0', dateKey: 'profileEdit.hiredMockDate3' },
 ]
 
 export default function ProfileEdit() {
@@ -257,13 +259,13 @@ export default function ProfileEdit() {
 
   const mockCardRows = useMemo(
     () =>
-      MOCK_HIRED.map((w, i) => ({
+      SUGGESTED_MOCK_REFS.map((w, i) => ({
         id: `mock-${i}`,
         name: t(w.nameKey),
         service: t(w.categoryKey),
         rating: w.rating,
         date: t(w.dateKey),
-        photoUrl: null,
+        photoUrl: w.worker?.image ?? null,
       })),
     [t],
   )
