@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { supabase } from '../supabase'
+import { ABOUT_FIELD_KEYS, ABOUT_FIELD_LABEL_KEYS, fetchProfileAbout } from '../lib/profileAbout'
 import './Profile.css'
 
 const BRAND_COLOR = '#1B4FBA'
@@ -13,7 +14,7 @@ export default function Profile() {
   const [loading, setLoading] = useState(true)
   const [jobsBooked, setJobsBooked] = useState(0)
   const [reviewsReceived, setReviewsReceived] = useState(0)
-  const [isClient, setIsClient] = useState(false)
+  const [aboutFields, setAboutFields] = useState({})
 
   useEffect(() => {
     if (!supabase) {
@@ -23,10 +24,8 @@ export default function Profile() {
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session?.user) {
         setUser(session.user)
+        fetchProfileAbout(session.user).then(({ fields }) => setAboutFields(fields))
         const uid = session.user.id
-        supabase.from('clients').select('id').eq('id', uid).maybeSingle().then(({ data: client }) => {
-          setIsClient(!!client)
-        })
         supabase.from('bookings').select('id', { count: 'exact', head: true }).eq('client_id', uid).then(({ count }) => {
           setJobsBooked(typeof count === 'number' ? count : 0)
         }).catch(() => setJobsBooked(0))
@@ -42,6 +41,7 @@ export default function Profile() {
         setUser(null)
       } else {
         setUser(session.user)
+        fetchProfileAbout(session.user).then(({ fields }) => setAboutFields(fields))
       }
     })
     return () => subscription?.unsubscribe()
@@ -71,7 +71,11 @@ export default function Profile() {
 
   if (!user) return null
 
-  const avatarUrl = user.user_metadata?.avatar_url || user.user_metadata?.picture || null
+  const avatarUrl =
+    user.user_metadata?.avatar_url ||
+    user.user_metadata?.picture ||
+    user.user_metadata?.profile_photo_url ||
+    null
   const fullName = user.user_metadata?.full_name || user.user_metadata?.name || ''
   const firstName = fullName.split(' ')[0] || user.email?.split('@')[0] || ''
   const city = user.user_metadata?.city || user.user_metadata?.location || ''
@@ -112,9 +116,9 @@ export default function Profile() {
           <div className="profile-page__card profile-page__card--about">
             <div className="profile-page__about-header">
               <h1 className="profile-page__about-title">{t('profile.aboutMe')}</h1>
-              <button type="button" className="profile-page__edit-btn" style={{ color: BRAND_COLOR }}>
+              <Link to="/profile/edit" className="profile-page__edit-btn" style={{ color: BRAND_COLOR }}>
                 {t('profile.edit')}
-              </button>
+              </Link>
             </div>
 
             <div className="profile-page__stats">
@@ -131,6 +135,20 @@ export default function Profile() {
                 <span className="profile-page__stat-label">{t('profile.memberSince')}</span>
               </div>
             </div>
+
+            {ABOUT_FIELD_KEYS.some((k) => aboutFields[k]?.trim()) && (
+              <div className="profile-page__about-extra">
+                <h2 className="profile-page__about-extra-title">{t('profile.getToKnowMe')}</h2>
+                <ul className="profile-page__about-list">
+                  {ABOUT_FIELD_KEYS.filter((k) => aboutFields[k]?.trim()).map((k) => (
+                    <li key={k} className="profile-page__about-item">
+                      <span className="profile-page__about-item-label">{t(ABOUT_FIELD_LABEL_KEYS[k])}</span>
+                      <span className="profile-page__about-item-value">{aboutFields[k]}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             <div className="profile-page__info">
               <div className="profile-page__info-row">

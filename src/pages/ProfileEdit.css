@@ -1,0 +1,269 @@
+.profile-edit {
+  min-height: 70vh;
+  background: #fff;
+  padding: 24px 16px 100px;
+}
+
+.profile-edit__inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.profile-edit__hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+@media (min-width: 768px) {
+  .profile-edit__hero {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 40px;
+  }
+}
+
+.profile-edit__photo-col {
+  flex-shrink: 0;
+}
+
+.profile-edit__photo-wrap {
+  position: relative;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #e5e7eb;
+}
+
+@media (min-width: 768px) {
+  .profile-edit__photo-wrap {
+    width: 192px;
+    height: 192px;
+  }
+}
+
+.profile-edit__photo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-edit__photo-initial {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.profile-edit__photo-edit {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: none;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #222;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.profile-edit__photo-edit:hover {
+  background: #fff;
+}
+
+.profile-edit__photo-edit svg {
+  width: 16px;
+  height: 16px;
+}
+
+.profile-edit__photo-input {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.profile-edit__intro {
+  flex: 1;
+  text-align: center;
+  min-width: 0;
+}
+
+@media (min-width: 768px) {
+  .profile-edit__intro {
+    text-align: left;
+    padding-top: 8px;
+  }
+}
+
+.profile-edit__title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #222;
+  margin: 0 0 12px;
+  letter-spacing: -0.02em;
+}
+
+.profile-edit__subtitle {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #717171;
+  margin: 0;
+  max-width: 520px;
+}
+
+@media (min-width: 768px) {
+  .profile-edit__subtitle {
+    margin-left: 0;
+    margin-right: auto;
+  }
+}
+
+.profile-edit__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  border-top: 1px solid #ebebeb;
+}
+
+@media (min-width: 768px) {
+  .profile-edit__grid {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 32px;
+  }
+}
+
+.profile-edit__row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 0;
+  border-bottom: 1px solid #ebebeb;
+  text-align: left;
+  width: 100%;
+  background: none;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  cursor: pointer;
+  font-family: inherit;
+  color: #222;
+  font-size: 0.95rem;
+}
+
+.profile-edit__row:focus-visible {
+  outline: 2px solid #1b4fba;
+  outline-offset: 2px;
+}
+
+.profile-edit__row-icon {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  color: #222;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-edit__row-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.profile-edit__row-label {
+  font-weight: 600;
+  color: #222;
+}
+
+.profile-edit__row-value {
+  font-size: 0.875rem;
+  color: #717171;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.profile-edit__row-chevron {
+  flex-shrink: 0;
+  color: #717171;
+  width: 20px;
+  height: 20px;
+}
+
+.profile-edit__row--editing {
+  flex-wrap: wrap;
+  cursor: default;
+  align-items: flex-start;
+}
+
+.profile-edit__row--editing .profile-edit__row-chevron {
+  display: none;
+}
+
+.profile-edit__input {
+  width: 100%;
+  margin-top: 8px;
+  padding: 10px 12px;
+  border: 1px solid #b0b0b0;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: #222;
+  box-sizing: border-box;
+}
+
+.profile-edit__input:focus {
+  outline: none;
+  border-color: #222;
+}
+
+.profile-edit__done {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 40;
+  padding: 14px 28px;
+  border-radius: 8px;
+  border: none;
+  background: #222;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+.profile-edit__done:hover {
+  background: #000;
+}
+
+.profile-edit__done:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.profile-edit__loading {
+  text-align: center;
+  padding: 48px;
+  color: #717171;
+}

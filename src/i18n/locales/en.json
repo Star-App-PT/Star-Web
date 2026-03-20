@@ -444,7 +444,23 @@
     "savedWorkers": "Saved Workers",
     "settings": "Settings",
     "comingSoon": "This page is coming soon.",
-    "backToProfile": "Back to profile"
+    "backToProfile": "Back to profile",
+    "getToKnowMe": "Get to know me"
+  },
+  "profileEdit": {
+    "title": "My profile",
+    "subtitle": "Workers and clients can see your profile. It helps build trust in our community.",
+    "school": "Where I went to school",
+    "dreamDestination": "Where I've always wanted to go",
+    "work": "My work",
+    "pets": "Pets",
+    "birthDecade": "Decade I was born",
+    "favSong": "My favourite song growing up",
+    "hobbies": "My hobbies",
+    "uselessSkill": "My most useless skill",
+    "funFact": "My fun fact",
+    "languages": "Languages I speak",
+    "add": "Add"
   },
   "dashboard": {
     "welcome": "Welcome, {{name}}!",

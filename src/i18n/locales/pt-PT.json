@@ -444,7 +444,23 @@
     "savedWorkers": "Profissionais guardados",
     "settings": "Definições",
     "comingSoon": "Esta página estará disponível em breve.",
-    "backToProfile": "Voltar ao perfil"
+    "backToProfile": "Voltar ao perfil",
+    "getToKnowMe": "Conheça-me melhor"
+  },
+  "profileEdit": {
+    "title": "O meu perfil",
+    "subtitle": "Profissionais e clientes podem ver o seu perfil. Ajuda a criar confiança na nossa comunidade.",
+    "school": "Onde estudei",
+    "dreamDestination": "Onde sempre quis ir",
+    "work": "O meu trabalho",
+    "pets": "Animais de estimação",
+    "birthDecade": "Década em que nasci",
+    "favSong": "A minha música favorita de criança",
+    "hobbies": "Os meus hobbies",
+    "uselessSkill": "A minha habilidade mais inútil",
+    "funFact": "Um facto divertido sobre mim",
+    "languages": "Línguas que falo",
+    "add": "Adicionar"
   },
   "dashboard": {
     "welcome": "Bem-vindo, {{name}}!",
