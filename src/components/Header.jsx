@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react'
 import { Link, useLocation, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import LanguageToggle from './LanguageToggle'
 import HamburgerMenu from './HamburgerMenu'
-import { supabase } from '../supabase'
+import { useAuthSession } from '../contexts/AuthSessionContext'
 import './Header.css'
 
 const CATEGORY_IDS = [
@@ -16,14 +15,9 @@ export default function Header() {
   const { t } = useTranslation()
   const location = useLocation()
   const [searchParams] = useSearchParams()
-  const [user, setUser] = useState(null)
+  const { user } = useAuthSession()
 
   const activeCategory = location.pathname === '/' ? (searchParams.get('category') || 'cleaners') : null
-
-  const avatarUrl = user?.user_metadata?.avatar_url || user?.user_metadata?.picture || null
-  const displayInitial = user
-    ? (user.user_metadata?.full_name || user.user_metadata?.name || user.email || '?').charAt(0).toUpperCase()
-    : null
 
   const isMinimalHeader =
     location.pathname === '/worker/signup' ||
@@ -40,19 +34,10 @@ export default function Header() {
     location.pathname === '/dashboard' ||
     location.pathname.startsWith('/client/signup')
 
-  useEffect(() => {
-    if (!supabase) return
-
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null)
-    })
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null)
-    })
-
-    return () => subscription?.unsubscribe()
-  }, [])
+  const avatarUrl = user?.user_metadata?.avatar_url || user?.user_metadata?.picture || null
+  const displayInitial = user
+    ? (user.user_metadata?.full_name || user.user_metadata?.name || user.email || '?').charAt(0).toUpperCase()
+    : null
 
   return (
     <header className="star-header">

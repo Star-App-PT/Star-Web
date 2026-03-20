@@ -2,14 +2,16 @@ import { useState, useRef, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { supabase } from '../supabase'
+import { useAuthSession } from '../contexts/AuthSessionContext'
 import './HamburgerMenu.css'
 
 export default function HamburgerMenu() {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const [open, setOpen] = useState(false)
-  const [isStarWorker, setIsStarWorker] = useState(false)
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const { user } = useAuthSession()
+  const isLoggedIn = !!user
+  const isStarWorker = !!user?.user_metadata?.is_worker
   const ref = useRef(null)
 
   useEffect(() => {
@@ -18,19 +20,6 @@ export default function HamburgerMenu() {
     }
     document.addEventListener('mousedown', handler)
     return () => document.removeEventListener('mousedown', handler)
-  }, [])
-
-  useEffect(() => {
-    if (!supabase) return
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setIsStarWorker(!!session?.user?.user_metadata?.is_worker)
-      setIsLoggedIn(!!session?.user)
-    })
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setIsStarWorker(!!session?.user?.user_metadata?.is_worker)
-      setIsLoggedIn(!!session?.user)
-    })
-    return () => subscription?.unsubscribe()
   }, [])
 
   const handleSignOut = async () => {

@@ -6,6 +6,7 @@ import { CATEGORIES, PICKED_DATES, CLEANERS, HANDYMEN, SERVICES, SUPPORTED_CITIE
 import useUserLocation from '../hooks/useUserLocation'
 import WorkerAvatar from '../components/WorkerAvatar'
 import { supabase } from '../supabase'
+import { hasCompletedOnboarding } from '../lib/onboarding'
 
 function shuffle(arr) {
   const a = [...arr]
@@ -96,20 +97,17 @@ export default function Home() {
   const [favorites, setFavorites] = useState(new Set())
   const { city: CITY, supported: citySupported, userCityName, isOutsidePortugal, hasPreciseLocation, coords, nearbyCities } = useUserLocation()
 
-  // After auth: new users (no profile) go to type selection (client vs worker)
+  // After auth: only users who have never finished onboarding go to client vs worker choice
   useEffect(() => {
     if (!supabase) return
     let cancelled = false
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    ;(async () => {
+      const { data: { session } } = await supabase.auth.getSession()
       if (cancelled || !session?.user) return
-      const profileComplete = session.user.user_metadata?.profile_complete === true
-      if (profileComplete) return
-      supabase.from('clients').select('id').eq('id', session.user.id).maybeSingle().then(({ data: client }) => {
-        if (cancelled) return
-        if (client) return
-        navigate('/signup/choose', { replace: true })
-      })
-    })
+      const done = await hasCompletedOnboarding(session.user)
+      if (cancelled || done) return
+      navigate('/signup/choose', { replace: true })
+    })()
     return () => { cancelled = true }
   }, [navigate])
 

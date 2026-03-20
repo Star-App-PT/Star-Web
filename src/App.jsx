@@ -36,6 +36,7 @@ import WorkerLogin from './pages/worker/WorkerLogin'
 import DemoLanding from './pages/DemoLanding'
 import Privacy from './pages/Privacy'
 import Terms from './pages/Terms'
+import { AuthSessionProvider } from './contexts/AuthSessionContext'
 
 function AppShell() {
   const location = useLocation()
@@ -44,6 +45,11 @@ function AppShell() {
 
   useEffect(() => {
     if (!supabase) return
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session && window.location.hash) {
+        navigate('/', { replace: true })
+      }
+    })
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (!session) return
       if (event === 'SIGNED_IN') {
@@ -146,9 +152,11 @@ function AppShell() {
 export default function App() {
   return (
     <BrowserRouter>
-      <DemoModeProvider>
-        <AppShell />
-      </DemoModeProvider>
+      <AuthSessionProvider>
+        <DemoModeProvider>
+          <AppShell />
+        </DemoModeProvider>
+      </AuthSessionProvider>
     </BrowserRouter>
   )
 }
