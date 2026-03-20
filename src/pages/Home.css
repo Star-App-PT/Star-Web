@@ -105,6 +105,15 @@
   opacity: 0.92;
 }
 
+/* Matches header active category underline (.star-header__category--active); spacing matches .home padding-top above search */
+.home__search-bar-underline {
+  margin-top: 48px;
+  width: 100%;
+  height: 0;
+  border: 0;
+  border-top: 2px solid #222;
+}
+
 /* Category tabs */
 .home__tabs-wrap {
   margin-top: 16px;
