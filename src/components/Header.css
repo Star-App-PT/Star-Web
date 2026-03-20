@@ -82,6 +82,14 @@
   color: #164a9e;
 }
 
+.star-header__mode-link--become {
+  color: #000;
+}
+
+.star-header__mode-link--become:hover {
+  color: #333;
+}
+
 .star-header__avatar-link {
   width: 40px;
   height: 40px;

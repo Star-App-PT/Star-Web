@@ -85,7 +85,7 @@ export default function Header() {
             </Link>
           )}
           {user && !dualLoading && !hasWorkerProfile && (
-            <Link to="/worker/signup" className="star-header__mode-link">
+            <Link to="/worker/signup" className="star-header__mode-link star-header__mode-link--become">
               {t('header.becomeAStar')}
             </Link>
           )}
