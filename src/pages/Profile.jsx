@@ -5,8 +5,6 @@ import { supabase } from '../supabase'
 import { ABOUT_FIELD_KEYS, ABOUT_FIELD_LABEL_KEYS, fetchProfileAbout } from '../lib/profileAbout'
 import './Profile.css'
 
-const BRAND_COLOR = '#1B4FBA'
-
 export default function Profile() {
   const { t, i18n } = useTranslation()
   const navigate = useNavigate()
@@ -116,7 +114,7 @@ export default function Profile() {
           <div className="profile-page__card profile-page__card--about">
             <div className="profile-page__about-header">
               <h1 className="profile-page__about-title">{t('profile.aboutMe')}</h1>
-              <Link to="/profile/edit" className="profile-page__edit-btn" style={{ color: BRAND_COLOR }}>
+              <Link to="/profile/edit" className="profile-page__edit-btn">
                 {t('profile.edit')}
               </Link>
             </div>
