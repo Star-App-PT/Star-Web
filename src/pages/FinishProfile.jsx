@@ -261,13 +261,15 @@ export default function FinishProfile() {
               <a href="/privacy" className="fp-card__terms-link">{t('finishProfile.privacyPolicy')}</a>.
             </p>
 
-            <button
-              type="submit"
-              className="fp-card__submit btn-primary"
-              disabled={!canSubmit || submitting}
-            >
-              {submitting ? t('common.submitting') : t('finishProfile.agreeAndContinue')}
-            </button>
+            <div className="fp-card__submit-wrap">
+              <button
+                type="submit"
+                className="fp-card__submit btn-primary"
+                disabled={!canSubmit || submitting}
+              >
+                {submitting ? t('common.submitting') : t('finishProfile.agreeAndContinue')}
+              </button>
+            </div>
 
             {/* DEMO ONLY — REMOVE BEFORE LAUNCH */}
             {isDemoMode && (

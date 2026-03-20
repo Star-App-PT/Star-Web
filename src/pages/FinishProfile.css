@@ -230,6 +230,11 @@
 }
 
 /* Submit */
+.fp-card__submit-wrap {
+  display: flex;
+  justify-content: center;
+}
+
 .fp-card__submit {
   /* visual styles via .btn-primary */
 }
