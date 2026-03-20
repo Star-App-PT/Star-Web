@@ -126,6 +126,12 @@
   },
   "workerDetail": {
     "workerNotFound": "Worker not found.",
+    "aboutTitle": "About",
+    "packagesTitle": "Packages",
+    "bookFreeVisit": "Book a free visit",
+    "freeVisitLabel": "Free visit",
+    "freeCancellationShort": "Free cancellation",
+    "priceOnRequest": "Price on request",
     "serviceAtHome": "Service provided at client's home",
     "message": "Message",
     "messageWorker": "Message {{name}}",

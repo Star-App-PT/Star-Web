@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { getWorkerById, getSimilarWorkers } from '../data/workers'
+import { getWorkerById, getSimilarWorkers, getWorkerServiceCategoryLabelKey } from '../data/workers'
 import { supabase } from '../supabase'
 import WorkerAvatar from '../components/WorkerAvatar'
 import './WorkerDetail.css'
@@ -48,6 +48,7 @@ export default function WorkerDetail() {
   const [selectedPkgIdx, setSelectedPkgIdx] = useState(null)
   const [selectedTime, setSelectedTime] = useState(null)
   const worker = getWorkerById(id)
+  const serviceCategoryLabelKey = worker ? getWorkerServiceCategoryLabelKey(worker) : 'home.categoryClean'
 
   useEffect(() => {
     if (showBookingModal) {
@@ -127,7 +128,8 @@ export default function WorkerDetail() {
   }
 
   const hasPackages = worker.packages && worker.packages.length > 0
-  const lowestPkg = hasPackages ? worker.packages.reduce((a, b) => a.price < b.price ? a : b) : null
+  const pricedPackages = hasPackages ? worker.packages.filter((p) => p.price != null && p.price !== '') : []
+  const lowestPkg = pricedPackages.length ? pricedPackages.reduce((a, b) => a.price < b.price ? a : b) : null
   const lowestPrice = lowestPkg ? lowestPkg.price : 0
   const lowestPriceType = lowestPkg?.priceType || 'visit'
 
@@ -152,7 +154,7 @@ export default function WorkerDetail() {
   const reviews = worker.clientReviews || []
   const hasReviews = reviews.length > 0
   const hasQualifications = worker.qualifications && worker.qualifications.length > 0
-  const hasGallery = worker.gallery && worker.gallery.length > 0
+  const galleryImages = worker.gallery && worker.gallery.length > 0 ? worker.gallery : [worker.heroImage]
   const visibleReviews = showAllReviews ? reviews : reviews.slice(0, 4)
 
   const toggleReviewExpand = (i) => {
@@ -184,16 +186,21 @@ export default function WorkerDetail() {
               <div className="wd__card-hero-wrap">
                 <img src={worker.heroImage} alt={`${worker.specialty} in action`} className="wd__card-hero" />
               </div>
-              <WorkerAvatar worker={worker} size={100} className="wd__card-avatar" />
+              <WorkerAvatar worker={worker} size={132} className="wd__card-avatar" />
               <div className="wd__card-info">
                 <h1 className="wd__card-name">{worker.name}</h1>
-                <p className="wd__card-tagline">{worker.tagline || worker.bio}</p>
-                <p className="wd__card-meta">{worker.specialty} in {worker.city}</p>
+                <p className="wd__card-category">{t(serviceCategoryLabelKey)}</p>
+                <p className="wd__card-tagline">{worker.tagline}</p>
+                <p className="wd__card-meta">{worker.specialty} · {worker.city}</p>
                 <p className="wd__card-location">{worker.serviceLocation || t('workerDetail.serviceAtHome')}</p>
-                {hasReviews && (
+                {hasReviews ? (
                   <a href="#wd-reviews" onClick={scrollToReviews} className="wd__card-rating">
                     ★ {worker.rating.toFixed(1)} · {reviews.length} {reviewWord}
                   </a>
+                ) : worker.rating != null ? (
+                  <p className="wd__card-rating wd__card-rating--static">★ {worker.rating.toFixed(1)}</p>
+                ) : (
+                  <p className="wd__card-rating wd__card-rating--static wd__card-rating--new">{t('common.new')}</p>
                 )}
                 <p className="wd__card-price" dangerouslySetInnerHTML={{ __html: t('common.fromPerHour', { price: worker.hourlyRate }) }} />
               </div>
@@ -208,19 +215,55 @@ export default function WorkerDetail() {
               <div className="wd__card-booking">
                 <div className="wd__card-booking-left">
                   <span className="wd__card-booking-price">
-                    {hasPackages ? `From €${lowestPrice} / ${lowestPriceType}` : 'Free visit'}
+                    {pricedPackages.length ? `From €${lowestPrice} / ${lowestPriceType}` : t('workerDetail.freeVisitLabel')}
                   </span>
-                  <span className="wd__card-booking-cancel">Free cancellation</span>
+                  <span className="wd__card-booking-cancel">{t('workerDetail.freeCancellationShort')}</span>
                 </div>
-                <button type="button" className="wd__card-booking-btn btn-primary" onClick={() => setShowBookingModal(true)}>
-                  Show dates
+                <button type="button" className="wd__card-booking-btn wd__book-free-visit" onClick={() => setShowBookingModal(true)}>
+                  {t('workerDetail.bookFreeVisit')}
                 </button>
               </div>
             </div>
           </aside>
 
           <main className="wd__right">
+            <header className="wd__mobile-profile">
+              <WorkerAvatar worker={worker} size={120} className="wd__mobile-profile-avatar" />
+              <div className="wd__mobile-profile-body">
+                <h1 className="wd__mobile-profile-title">{worker.name}</h1>
+                <p className="wd__mobile-profile-category">{t(serviceCategoryLabelKey)}</p>
+                {hasReviews ? (
+                  <a href="#wd-reviews" onClick={scrollToReviews} className="wd__mobile-profile-rating">
+                    ★ {worker.rating.toFixed(1)} · {reviews.length} {reviewWord}
+                  </a>
+                ) : worker.rating != null ? (
+                  <p className="wd__mobile-profile-rating wd__mobile-profile-rating--text">★ {worker.rating.toFixed(1)}</p>
+                ) : (
+                  <p className="wd__mobile-profile-new">{t('common.new')}</p>
+                )}
+                <p className="wd__mobile-profile-loc">{worker.city} · {worker.serviceLocation || t('workerDetail.serviceAtHome')}</p>
+                <button type="button" className="wd__book-free-visit" onClick={() => setShowBookingModal(true)}>
+                  {t('workerDetail.bookFreeVisit')}
+                </button>
+              </div>
+            </header>
+
             <section className="wd__section">
+              <h2 className="wd__section-title">{t('workerDetail.aboutTitle')}</h2>
+              <p className="wd__about-text">{worker.bio || worker.tagline || '—'}</p>
+            </section>
+
+            <section className="wd__section">
+              <h2 className="wd__section-title">{t('workerDetail.myGallery')}</h2>
+              <div className="wd__gallery-grid">
+                {galleryImages.map((img, i) => (
+                  <img key={i} src={img} alt="" className="wd__gallery-img" />
+                ))}
+              </div>
+            </section>
+
+            <section className="wd__section">
+              <h2 className="wd__section-title">{t('workerDetail.packagesTitle')}</h2>
               {hasPackages ? (
                 <>
                   {worker.packages.map((pkg, i) => (
@@ -230,7 +273,14 @@ export default function WorkerDetail() {
                       </div>
                       <div className="wd__pkg-info">
                         <h3 className="wd__pkg-name">{pkg.name}</h3>
-                        <p className="wd__pkg-price">€{pkg.price} <span>/ {pkg.priceType || 'visit'}</span></p>
+                        <p className="wd__pkg-price">
+                          {pkg.price != null && pkg.price !== '' ? (
+                            <>€{pkg.price} <span>/ {pkg.priceType || 'visit'}</span></>
+                          ) : (
+                            t('workerDetail.priceOnRequest')
+                          )}
+                        </p>
+                        {pkg.duration && <p className="wd__pkg-duration">{pkg.duration}</p>}
                         <p className="wd__pkg-desc">{pkg.desc}</p>
                       </div>
                     </div>
@@ -306,27 +356,6 @@ export default function WorkerDetail() {
                 </div>
               </section>
             )}
-
-            <section className="wd__section">
-              <h2 className="wd__section-title">{t('workerDetail.myGallery')}</h2>
-              {hasGallery ? (
-                <div className="wd__gallery-grid">
-                  {worker.gallery.map((img, i) => (
-                    <img key={i} src={img} alt="" className="wd__gallery-img" />
-                  ))}
-                </div>
-              ) : (
-                <div className="wd__gallery-grid wd__gallery-grid--placeholder">
-                  <div className="wd__gallery-main">
-                    <img src={worker.heroImage} alt="" />
-                  </div>
-                  <div className="wd__gallery-side">
-                    <img src={worker.heroImage} alt="" style={{ filter: 'brightness(0.92) saturate(0.9)' }} />
-                    <img src={worker.heroImage} alt="" style={{ filter: 'brightness(1.05) saturate(1.1)' }} />
-                  </div>
-                </div>
-              )}
-            </section>
 
             <section className="wd__section">
               <h2 className="wd__section-title">{t('workerDetail.whereIWork')}</h2>
@@ -435,12 +464,12 @@ export default function WorkerDetail() {
         <div className="wd__booking-bar-inner">
           <div className="wd__booking-bar-left">
             <span className="wd__booking-bar-price">
-              {hasPackages ? `From €${lowestPrice} / ${lowestPriceType}` : 'Free visit'}
+              {pricedPackages.length ? `From €${lowestPrice} / ${lowestPriceType}` : t('workerDetail.freeVisitLabel')}
             </span>
-            <span className="wd__booking-bar-cancel">Free cancellation</span>
+            <span className="wd__booking-bar-cancel">{t('workerDetail.freeCancellationShort')}</span>
           </div>
-          <button type="button" className="wd__booking-bar-btn btn-primary" onClick={() => setShowBookingModal(true)}>
-            Show dates
+          <button type="button" className="wd__booking-bar-btn wd__book-free-visit" onClick={() => setShowBookingModal(true)}>
+            {t('workerDetail.bookFreeVisit')}
           </button>
         </div>
       </div>
@@ -499,7 +528,11 @@ export default function WorkerDetail() {
                       </div>
                       <div className="wd__bm-pkg-info">
                         <p className="wd__bm-pkg-name">{pkg.name}</p>
-                        <p className="wd__bm-pkg-price">€{pkg.price} <span>/{pkg.priceType || 'visit'}</span> · {pkg.duration}</p>
+                        <p className="wd__bm-pkg-price">
+                          {pkg.price != null && pkg.price !== ''
+                            ? `€${pkg.price} /${pkg.priceType || 'visit'} · ${pkg.duration || ''}`
+                            : `${t('workerDetail.priceOnRequest')}${pkg.duration ? ` · ${pkg.duration}` : ''}`}
+                        </p>
                       </div>
                     </div>
                     <div className="wd__bm-times">

@@ -826,7 +826,7 @@ export default function Home() {
         <h3 className="home__section-title">{t('home.workersInLocation', { location: workersCity })}</h3>
         <div className="home__cards-scroll">
           {current.workers.map((w) => (
-            <a key={w.id} className="home__worker-card" href={`/worker/${w.id}`} target="_blank" rel="noopener noreferrer">
+            <Link key={w.id} to={`/worker/${w.id}`} className="home__worker-card">
               <div className="home__worker-card-img-wrap">
                 <img src={w.heroImage} alt="" className="home__worker-card-img" />
                 <span className="home__worker-card-pill">{t('home.topRated')}</span>
@@ -843,14 +843,14 @@ export default function Home() {
                 {w.rating != null && <p className="home__worker-card-rating">★ {w.rating.toFixed(1)}</p>}
                 {w.rating == null && <p className="home__worker-card-rating home__worker-card-rating--new">{t('common.new')}</p>}
               </div>
-            </a>
+            </Link>
           ))}
         </div>
 
         <h3 className="home__section-title home__section-title--discover">{t('home.otherWorkersInArea')}</h3>
         <div className="home__cards-scroll">
           {otherWorkersMixed.map((w) => (
-            <a key={w.id} className="home__worker-card" href={`/worker/${w.id}`} target="_blank" rel="noopener noreferrer">
+            <Link key={w.id} to={`/worker/${w.id}`} className="home__worker-card">
               <div className="home__worker-card-img-wrap">
                 <img src={w.heroImage} alt="" className="home__worker-card-img" />
                 <span className="home__worker-card-pill">{t('home.topRated')}</span>
@@ -867,7 +867,7 @@ export default function Home() {
                 {w.rating != null && <p className="home__worker-card-rating">★ {w.rating.toFixed(1)}</p>}
                 {w.rating == null && <p className="home__worker-card-rating home__worker-card-rating--new">{t('common.new')}</p>}
               </div>
-            </a>
+            </Link>
           ))}
           <div className="home__worker-card home__more-card" role="button" tabIndex={0} onClick={() => navigate(`/workers?category=${selectedCategory}`)}>
             <div className="home__more-imgs">

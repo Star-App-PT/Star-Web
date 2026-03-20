@@ -395,10 +395,15 @@ const _r6 = { author: 'Ana L.', image: clientAna, location: 'Porto', rating: 5, 
 const MOCK_REVIEWS_BY_ID = {
   c1: [_r1, _r2, _r3, _r4, _r5, _r6],
   c2: [_r1, _r2, _r4, _r5],
+  c3: [_r2, _r4, _r5],
+  c4: [_r1, _r3, _r6],
+  c5: [_r2, _r5, _r6],
   c6: [_r2, _r6],
   h1: [_r1, _r3, _r4, _r5, _r6],
   h2: [_r1, _r2, _r3, _r4, _r5, _r6],
+  h3: [_r1, _r2, _r4],
   h4: [_r1, _r3, _r5],
+  h5: [_r2, _r3, _r5],
   h6: [_r2, _r4],
   s1: [_r2, _r3, _r5, _r6],
   s2: [_r1, _r4, _r6],
@@ -406,6 +411,13 @@ const MOCK_REVIEWS_BY_ID = {
   s4: [_r1, _r2, _r3, _r4, _r5],
   s5: [_r1, _r2, _r3, _r4, _r5, _r6],
   s6: [_r4, _r6],
+}
+
+/** Fallback portfolio when worker.gallery is empty — realistic job photos per vertical. */
+const MOCK_GALLERY_POOL = {
+  c: [actionHomeCleaning, actionDeepCleaning, actionOfficeCleaning, actionHousekeeping, actionMoveoutCleaning],
+  h: [actionCarpentry, actionPlumbing, actionElectrical, actionPainting, actionFurnitureAssembly],
+  s: [actionPhotography, actionPersonalTraining, actionChef, actionHairStyling, actionMassage],
 }
 
 ALL_WORKERS.forEach((w) => {
@@ -419,6 +431,21 @@ ALL_WORKERS.forEach((w) => {
   }
 })
 
+ALL_WORKERS.forEach((w) => {
+  if (w.gallery && w.gallery.length > 0) return
+  const prefix = String(w.id)[0]
+  const pool = MOCK_GALLERY_POOL[prefix] || [w.heroImage]
+  const n = parseInt(String(w.id).slice(1), 10) || 1
+  const picks = [
+    w.heroImage,
+    w.image,
+    pool[n % pool.length],
+    pool[(n + 1) % pool.length],
+    pool[(n + 2) % pool.length],
+  ].filter(Boolean)
+  w.gallery = [...new Set(picks)]
+})
+
 export const CATEGORIES = [
   { id: 'cleaners', labelKey: 'home.categoryClean', workers: CLEANERS },
   { id: 'handymen', labelKey: 'home.categoryRepair', workers: HANDYMEN },
@@ -426,7 +453,18 @@ export const CATEGORIES = [
 ]
 
 export function getWorkerById(id) {
-  return ALL_WORKERS.find((w) => w.id === id) || null
+  if (id == null || id === '') return null
+  const sid = String(id)
+  return ALL_WORKERS.find((w) => String(w.id) === sid) || null
+}
+
+/** i18n key for top-level category: Cleaning / Repairs / Services (from worker id prefix c / h / s). */
+export function getWorkerServiceCategoryLabelKey(worker) {
+  if (!worker?.id) return 'home.categoryClean'
+  const p = String(worker.id)[0]
+  if (p === 'h') return 'home.categoryRepair'
+  if (p === 's') return 'home.categoryServices'
+  return 'home.categoryClean'
 }
 
 export function getSimilarWorkers(worker, limit = 4) {

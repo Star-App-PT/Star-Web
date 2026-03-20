@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation, useNavigate, Navigate, useParams } from 'react-router-dom'
 import { useEffect } from 'react'
 import { supabase } from './supabase'
 import Header from './components/Header'
@@ -39,6 +39,11 @@ import Privacy from './pages/Privacy'
 import Terms from './pages/Terms'
 import { AuthSessionProvider } from './contexts/AuthSessionContext'
 import { WORKER_SIGNUP_PENDING_KEY } from './constants/workerSignup'
+
+function WorkerPublicProfileRedirect() {
+  const { id } = useParams()
+  return <Navigate to={`/worker/${id}`} replace />
+}
 
 function AppShell() {
   const location = useLocation()
@@ -134,6 +139,7 @@ function AppShell() {
           <Route path="/demo" element={<DemoLanding />} />
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/workers/:id" element={<WorkerPublicProfileRedirect />} />
           <Route path="/workers" element={<Workers />} />
           <Route path="/worker/signup" element={<WorkerSignup />} />
           <Route path="/worker/signup/:category" element={<CategorySignup />} />

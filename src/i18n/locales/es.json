@@ -126,6 +126,12 @@
   },
   "workerDetail": {
     "workerNotFound": "Profesional no encontrado.",
+    "aboutTitle": "Sobre",
+    "packagesTitle": "Paquetes",
+    "bookFreeVisit": "Reservar visita gratuita",
+    "freeVisitLabel": "Visita gratuita",
+    "freeCancellationShort": "Cancelación gratuita",
+    "priceOnRequest": "Precio bajo consulta",
     "serviceAtHome": "Servicio prestado en el domicilio del cliente",
     "message": "Mensaje",
     "messageWorker": "Enviar mensaje a {{name}}",
