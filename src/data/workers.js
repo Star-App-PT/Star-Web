@@ -492,6 +492,7 @@ export function getWorkerById(id) {
 
 /** i18n key for top-level category: Cleaning / Repairs / Services (from worker id prefix c / h / s). */
 export function getWorkerServiceCategoryLabelKey(worker) {
+  if (worker?.serviceCategoryLabelKey) return worker.serviceCategoryLabelKey
   if (!worker?.id) return 'home.categoryClean'
   const p = String(worker.id)[0]
   if (p === 'h') return 'home.categoryRepair'
@@ -500,10 +501,13 @@ export function getWorkerServiceCategoryLabelKey(worker) {
 }
 
 export function getSimilarWorkers(worker, limit = 4) {
+  if (worker?.isFromDirectory === false) {
+    return ALL_WORKERS.filter((w) => String(w.id) !== String(worker.id)).slice(0, limit)
+  }
   return ALL_WORKERS
-    .filter((w) => w.id !== worker.id && w.city === worker.city && w.specialty === worker.specialty)
+    .filter((w) => w.id !== worker.id && w.city === worker.city && w.specialty !== worker.specialty)
     .concat(
-      ALL_WORKERS.filter((w) => w.id !== worker.id && w.city === worker.city && w.specialty !== worker.specialty)
+      ALL_WORKERS.filter((w) => w.id !== worker.id && w.city === worker.city && w.specialty === worker.specialty)
     )
     .slice(0, limit)
 }

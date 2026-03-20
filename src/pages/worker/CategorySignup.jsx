@@ -2,6 +2,7 @@ import { useState, useRef, useCallback, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { supabase } from '../../supabase'
+import { uploadWorkerAsset } from '../../lib/workerSupabase'
 import { useDemoMode } from '../../contexts/DemoModeContext'
 import actionHomeCleaning from '../../assets/workers/action/action-home-cleaning.jpg'
 import actionCarpentry from '../../assets/workers/action/action-carpentry.jpg'
@@ -22,6 +23,8 @@ export default function CategorySignup() {
   const meta = CATEGORY_META[category] || CATEGORY_META.cleaning
 
   const fileRef = useRef(null)
+  const coverInputRef = useRef(null)
+  const profileFileRef = useRef(null)
   const coverFileRef = useRef(null)
   const frameRef = useRef(null)
   const pickerOpen = useRef(false)
@@ -46,6 +49,7 @@ export default function CategorySignup() {
     pickerOpen.current = false
     const file = e.target.files?.[0]
     if (!file) return
+    profileFileRef.current = file
     setImgSrc(URL.createObjectURL(file))
     setConfirmed(false)
     setScale(1)
@@ -55,6 +59,7 @@ export default function CategorySignup() {
   const handleCoverFile = (e) => {
     const file = e.target.files?.[0]
     if (!file) return
+    coverFileRef.current = file
     setCoverSrc(URL.createObjectURL(file))
   }
 
@@ -63,6 +68,7 @@ export default function CategorySignup() {
     setConfirmed(false)
     setScale(1)
     setOffset({ x: 0, y: 0 })
+    profileFileRef.current = null
     if (fileRef.current) fileRef.current.value = ''
   }
 
@@ -108,7 +114,24 @@ export default function CategorySignup() {
       try {
         const { data: { session } } = await supabase.auth.getSession()
         if (session?.user) {
-          await supabase.auth.updateUser({ data: { profile_photo_confirmed: true } })
+          let profileUrl = session.user.user_metadata?.avatar_url || null
+          let coverUrl = session.user.user_metadata?.worker_cover_photo_url || null
+          if (profileFileRef.current) {
+            const { publicUrl } = await uploadWorkerAsset(session.user.id, 'profile', profileFileRef.current)
+            if (publicUrl) profileUrl = publicUrl
+          }
+          if (coverFileRef.current) {
+            const { publicUrl } = await uploadWorkerAsset(session.user.id, 'cover', coverFileRef.current)
+            if (publicUrl) coverUrl = publicUrl
+          }
+          await supabase.auth.updateUser({
+            data: {
+              ...session.user.user_metadata,
+              profile_photo_confirmed: true,
+              ...(profileUrl && { avatar_url: profileUrl, profile_photo_url: profileUrl }),
+              ...(coverUrl && { worker_cover_photo_url: coverUrl }),
+            },
+          })
         }
       } catch { /* continue */ }
     }
@@ -210,9 +233,9 @@ export default function CategorySignup() {
           </div>
 
           {/* ── Worker card preview ── */}
-          <input ref={coverFileRef} type="file" accept="image/*" className="cs__file" onChange={handleCoverFile} />
+            <input ref={coverInputRef} type="file" accept="image/*" className="cs__file" onChange={handleCoverFile} />
           <div className="cs__preview">
-            <div className="cs__preview-cover" onClick={() => coverFileRef.current?.click()}>
+            <div className="cs__preview-cover" onClick={() => coverInputRef.current?.click()}>
               <img
                 src={coverSrc || meta.defaultCover}
                 alt=""

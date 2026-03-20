@@ -129,6 +129,26 @@
   color: #fff;
 }
 
+.worker-dash__hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+}
+
+.worker-dash__public-profile {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1b4fba;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.worker-dash__public-profile:hover {
+  color: #164a9e;
+}
+
 .worker-dash__grid {
   display: grid;
   grid-template-columns: 1fr;

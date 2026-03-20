@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { supabase } from '../supabase'
 import { useDemoMode } from '../contexts/DemoModeContext'
+import { useAppMode } from '../contexts/AppModeContext'
+import { finalizeWorkerOnboarding } from '../lib/workerSupabase'
 import actionHomeCleaning from '../assets/workers/action/action-home-cleaning.jpg'
 import actionCarpentry from '../assets/workers/action/action-carpentry.jpg'
 import actionPhotography from '../assets/workers/action/action-photography.jpg'
@@ -12,12 +14,6 @@ const DEFAULT_THUMBS = {
   cleaning: actionHomeCleaning,
   repairs: actionCarpentry,
   services: actionPhotography,
-}
-
-const CATEGORY_PROFILE = {
-  cleaning: '/worker/c1',
-  repairs: '/worker/h1',
-  services: '/worker/s1',
 }
 
 const DURATION_OPTIONS = [
@@ -53,10 +49,12 @@ export default function WorkerPackages() {
   const { category } = useParams()
   const navigate = useNavigate()
   const { isDemoMode } = useDemoMode()
+  const { setMode } = useAppMode()
   const thumbRef = useRef(null)
 
   const [packages, setPackages] = useState([{ ...EMPTY_PKG, id: crypto.randomUUID() }])
   const [activeThumbId, setActiveThumbId] = useState(null)
+  const [finishing, setFinishing] = useState(false)
 
   if (!category) {
     navigate('/worker/signup', { replace: true })
@@ -103,25 +101,40 @@ export default function WorkerPackages() {
   )
 
   const handleNext = async () => {
-    if (!isValid) return
-    if (supabase) {
-      try {
-        const { data: { session } } = await supabase.auth.getSession()
-        if (session?.user) {
-          const pkgData = packages
-            .filter((p) => p.title.trim() && p.price)
-            .map((p) => ({
-              title: p.title.trim(),
-              price: parseFloat(p.price),
-              duration: p.duration,
-              priceType: p.priceType,
-              description: p.description.trim(),
-            }))
-          await supabase.auth.updateUser({ data: { worker_packages: pkgData, is_worker: true } })
-        }
-      } catch { /* continue */ }
+    if (!isValid || finishing) return
+    setFinishing(true)
+    try {
+      let session = null
+      if (supabase) {
+        const { data } = await supabase.auth.getSession()
+        session = data.session
+      }
+      if (!session?.user) {
+        navigate('/worker/signup', { replace: true })
+        return
+      }
+      const pkgList = packages
+        .filter((p) => p.title.trim() && p.price && parseFloat(p.price) > 0 && p.description.trim())
+        .map((p) => ({
+          title: p.title.trim(),
+          price: p.price,
+          duration: p.duration,
+          priceType: p.priceType,
+          description: p.description.trim(),
+          thumbFile: p.thumbFile instanceof File ? p.thumbFile : null,
+        }))
+      if (supabase && pkgList.length) {
+        await finalizeWorkerOnboarding(session.user, category, pkgList)
+      }
+      setMode('worker')
+      navigate('/dashboard/worker', { replace: true })
+    } catch (err) {
+      console.warn('[WorkerPackages] finish onboarding', err)
+      setMode('worker')
+      navigate('/dashboard/worker', { replace: true })
+    } finally {
+      setFinishing(false)
     }
-    navigate(CATEGORY_PROFILE[category] || '/worker/c1')
   }
 
   const durationLabel = (val) => {
@@ -306,15 +319,18 @@ export default function WorkerPackages() {
         <button
           type="button"
           className="pk__next btn-primary"
-          disabled={!isValid}
+          disabled={!isValid || finishing}
           onClick={handleNext}
         >
-          {t('packages.finish')}
+          {finishing ? t('common.submitting') : t('packages.finish')}
         </button>
         {/* DEMO ONLY — REMOVE BEFORE LAUNCH */}
         {isDemoMode && (
           <p
-            onClick={() => navigate(CATEGORY_PROFILE[category] || '/worker/c1')}
+            onClick={() => {
+              setMode('worker')
+              navigate('/dashboard/worker')
+            }}
             style={{
               textAlign: 'center',
               color: '#AAAAAA',

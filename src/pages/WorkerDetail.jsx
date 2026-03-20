@@ -2,6 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { getWorkerById, getSimilarWorkers, getWorkerServiceCategoryLabelKey } from '../data/workers'
+import { fetchWorkerProfileForDisplay, isUuidWorkerId } from '../lib/workerSupabase'
 import { supabase } from '../supabase'
 import WorkerAvatar from '../components/WorkerAvatar'
 import './WorkerDetail.css'
@@ -47,7 +48,35 @@ export default function WorkerDetail() {
   const [selectedDate, setSelectedDate] = useState(null)
   const [selectedPkgIdx, setSelectedPkgIdx] = useState(null)
   const [selectedTime, setSelectedTime] = useState(null)
-  const worker = getWorkerById(id)
+  const [worker, setWorker] = useState(null)
+  const [workerLoading, setWorkerLoading] = useState(true)
+
+  useEffect(() => {
+    let cancelled = false
+    async function load() {
+      setWorkerLoading(true)
+      const mock = getWorkerById(id)
+      if (mock) {
+        if (!cancelled) {
+          setWorker(mock)
+          setWorkerLoading(false)
+        }
+        return
+      }
+      if (isUuidWorkerId(id)) {
+        const live = await fetchWorkerProfileForDisplay(id)
+        if (!cancelled) setWorker(live)
+      } else if (!cancelled) {
+        setWorker(null)
+      }
+      if (!cancelled) setWorkerLoading(false)
+    }
+    load()
+    return () => {
+      cancelled = true
+    }
+  }, [id])
+
   const serviceCategoryLabelKey = worker ? getWorkerServiceCategoryLabelKey(worker) : 'home.categoryClean'
 
   useEffect(() => {
@@ -80,7 +109,11 @@ export default function WorkerDetail() {
   }
 
   useEffect(() => {
-    if (!worker || !mapRef.current || mapInstanceRef.current) return
+    if (!worker || !mapRef.current) return
+    if (mapInstanceRef.current) {
+      mapInstanceRef.current.remove()
+      mapInstanceRef.current = null
+    }
     let cancelled = false
 
     async function initMap() {
@@ -115,8 +148,24 @@ export default function WorkerDetail() {
       mapInstanceRef.current = map
     }
     initMap()
-    return () => { cancelled = true; if (mapInstanceRef.current) { mapInstanceRef.current.remove(); mapInstanceRef.current = null } }
+    return () => {
+      cancelled = true
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.remove()
+        mapInstanceRef.current = null
+      }
+    }
   }, [worker, navigate])
+
+  if (workerLoading) {
+    return (
+      <div className="wd">
+        <div className="wd__container">
+          <p className="wd__loading-text">{t('common.submitting')}</p>
+        </div>
+      </div>
+    )
+  }
 
   if (!worker) {
     return (
@@ -153,6 +202,12 @@ export default function WorkerDetail() {
 
   const reviews = worker.clientReviews || []
   const hasReviews = reviews.length > 0
+  const displayRating =
+    typeof worker.rating === 'number' && !Number.isNaN(worker.rating)
+      ? worker.rating
+      : hasReviews
+        ? +(reviews.reduce((s, r) => s + (r.rating || 0), 0) / reviews.length).toFixed(1)
+        : null
   const hasQualifications = worker.qualifications && worker.qualifications.length > 0
   const galleryImages = worker.gallery && worker.gallery.length > 0 ? worker.gallery : [worker.heroImage]
   const visibleReviews = showAllReviews ? reviews : reviews.slice(0, 4)
@@ -195,7 +250,7 @@ export default function WorkerDetail() {
                 <p className="wd__card-location">{worker.serviceLocation || t('workerDetail.serviceAtHome')}</p>
                 {hasReviews ? (
                   <a href="#wd-reviews" onClick={scrollToReviews} className="wd__card-rating">
-                    ★ {worker.rating.toFixed(1)} · {reviews.length} {reviewWord}
+                    {displayRating != null ? `★ ${displayRating.toFixed(1)} · ` : ''}{reviews.length} {reviewWord}
                   </a>
                 ) : worker.rating != null ? (
                   <p className="wd__card-rating wd__card-rating--static">★ {worker.rating.toFixed(1)}</p>
@@ -234,7 +289,7 @@ export default function WorkerDetail() {
                 <p className="wd__mobile-profile-category">{t(serviceCategoryLabelKey)}</p>
                 {hasReviews ? (
                   <a href="#wd-reviews" onClick={scrollToReviews} className="wd__mobile-profile-rating">
-                    ★ {worker.rating.toFixed(1)} · {reviews.length} {reviewWord}
+                    {displayRating != null ? `★ ${displayRating.toFixed(1)} · ` : ''}{reviews.length} {reviewWord}
                   </a>
                 ) : worker.rating != null ? (
                   <p className="wd__mobile-profile-rating wd__mobile-profile-rating--text">★ {worker.rating.toFixed(1)}</p>
@@ -269,7 +324,7 @@ export default function WorkerDetail() {
                   {worker.packages.map((pkg, i) => (
                     <div key={i} className="wd__pkg">
                       <div className="wd__pkg-img">
-                        <img src={worker.heroImage} alt="" />
+                        <img src={pkg.imageUrl || worker.heroImage} alt="" />
                       </div>
                       <div className="wd__pkg-info">
                         <h3 className="wd__pkg-name">{pkg.name}</h3>
@@ -299,7 +354,9 @@ export default function WorkerDetail() {
                 <p className="wd__empty-text">{t('workerDetail.noReviews')}</p>
               ) : (
                 <>
-                  <h2 className="wd__section-title">★ {worker.rating.toFixed(1)} · {reviews.length} {reviewWord}</h2>
+                  <h2 className="wd__section-title">
+                    {displayRating != null ? `★ ${displayRating.toFixed(1)} · ` : ''}{reviews.length} {reviewWord}
+                  </h2>
                   <div className="wd__reviews-grid">
                     {visibleReviews.map((r, i) => (
                       <div key={i} className="wd__review">
@@ -524,7 +581,7 @@ export default function WorkerDetail() {
                   <div key={i} className="wd__bm-pkg-group">
                     <div className="wd__bm-pkg">
                       <div className="wd__bm-pkg-thumb">
-                        <img src={worker.heroImage} alt="" />
+                        <img src={pkg.imageUrl || worker.heroImage} alt="" />
                       </div>
                       <div className="wd__bm-pkg-info">
                         <p className="wd__bm-pkg-name">{pkg.name}</p>

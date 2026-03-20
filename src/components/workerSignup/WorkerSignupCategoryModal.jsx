@@ -95,10 +95,10 @@ export default function WorkerSignupCategoryModal({ open, onClose, onContinue })
           {isDemoMode && (
             <p
               className="ws-modal__demo"
-              onClick={() => navigate('/worker/service-area/cleaning')}
+              onClick={() => navigate('/dashboard/worker')}
               role="button"
               tabIndex={0}
-              onKeyDown={(e) => e.key === 'Enter' && navigate('/worker/service-area/cleaning')}
+              onKeyDown={(e) => e.key === 'Enter' && navigate('/dashboard/worker')}
             >
               {t('common.demoSkip')}
             </p>

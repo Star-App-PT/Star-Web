@@ -567,7 +567,9 @@
     "rating": "Rating",
     "reviews": "Reviews",
     "jobsDone": "Jobs completed",
-    "managePackages": "Manage packages"
+    "managePackages": "Manage packages",
+    "viewPublicProfile": "View public profile",
+    "listedPackages": "Listed packages"
   },
   "dashboard": {
     "welcome": "Welcome, {{name}}!",

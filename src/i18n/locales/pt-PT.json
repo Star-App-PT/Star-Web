@@ -567,7 +567,9 @@
     "rating": "Classificação",
     "reviews": "Avaliações",
     "jobsDone": "Trabalhos concluídos",
-    "managePackages": "Gerir pacotes"
+    "managePackages": "Gerir pacotes",
+    "viewPublicProfile": "Ver perfil público",
+    "listedPackages": "Pacotes publicados"
   },
   "dashboard": {
     "welcome": "Bem-vindo, {{name}}!",

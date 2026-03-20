@@ -5,6 +5,7 @@ import { supabase } from '../supabase'
 import { useAuthSession } from '../contexts/AuthSessionContext'
 import { useAppMode } from '../contexts/AppModeContext'
 import { hasWorkerProfileFromMetadata, workerCategoryToLabelKey } from '../lib/clientWorkerMode'
+import { fetchWorkerDashboardPayload } from '../lib/workerSupabase'
 import './WorkerDashboard.css'
 
 export default function WorkerDashboard() {
@@ -14,6 +15,9 @@ export default function WorkerDashboard() {
   const { setMode } = useAppMode()
   const [sessionReady, setSessionReady] = useState(false)
   const [reviewsCount, setReviewsCount] = useState(0)
+  const [avgReviewRating, setAvgReviewRating] = useState(null)
+  const [dbWorker, setDbWorker] = useState(null)
+  const [dbPackages, setDbPackages] = useState([])
 
   const meta = user?.user_metadata
   const hasWorker = hasWorkerProfileFromMetadata(meta)
@@ -41,6 +45,28 @@ export default function WorkerDashboard() {
       .eq('reviewee_id', user.id)
       .then(({ count }) => setReviewsCount(typeof count === 'number' ? count : 0))
       .catch(() => setReviewsCount(0))
+    supabase
+      .from('reviews')
+      .select('rating')
+      .eq('reviewee_id', user.id)
+      .then(({ data }) => {
+        if (!data?.length) {
+          setAvgReviewRating(null)
+          return
+        }
+        const nums = data.map((r) => Number(r.rating)).filter((n) => !Number.isNaN(n))
+        if (!nums.length) setAvgReviewRating(null)
+        else setAvgReviewRating((nums.reduce((a, b) => a + b, 0) / nums.length).toFixed(1))
+      })
+      .catch(() => setAvgReviewRating(null))
+  }, [user?.id])
+
+  useEffect(() => {
+    if (!user?.id || !supabase) return
+    fetchWorkerDashboardPayload(user.id).then(({ workerRow, packages }) => {
+      setDbWorker(workerRow)
+      setDbPackages(packages || [])
+    })
   }, [user?.id])
 
   useEffect(() => {
@@ -49,23 +75,39 @@ export default function WorkerDashboard() {
   }, [sessionReady, hasWorker, user, navigate])
 
   const displayName = useMemo(
-    () => meta?.full_name || meta?.name || user?.email?.split('@')[0] || '',
-    [meta, user?.email],
+    () =>
+      dbWorker?.display_name ||
+      meta?.full_name ||
+      meta?.name ||
+      user?.email?.split('@')[0] ||
+      '',
+    [dbWorker?.display_name, meta, user?.email],
   )
 
-  const avatarUrl = meta?.avatar_url || meta?.picture || meta?.profile_photo_url || null
+  const avatarUrl =
+    dbWorker?.profile_photo_url ||
+    meta?.avatar_url ||
+    meta?.picture ||
+    meta?.profile_photo_url ||
+    null
   const initial = (displayName || '?').charAt(0).toUpperCase()
 
-  const categoryKey = workerCategoryToLabelKey(meta?.worker_category)
+  const categoryKey = workerCategoryToLabelKey(dbWorker?.category || meta?.worker_category)
   const categoryLabel = categoryKey ? t(categoryKey) : t('workerDashboard.categoryNotSet')
 
   const ratingRaw = meta?.worker_rating
   const ratingDisplay =
-    typeof ratingRaw === 'number' && !Number.isNaN(ratingRaw) ? ratingRaw.toFixed(1) : '—'
+    avgReviewRating ||
+    (typeof ratingRaw === 'number' && !Number.isNaN(ratingRaw) ? ratingRaw.toFixed(1) : null) ||
+    '—'
 
-  const pkgCategory = ['cleaning', 'repairs', 'services'].includes(String(meta?.worker_category || ''))
-    ? meta.worker_category
+  const pkgCategory = ['cleaning', 'repairs', 'services'].includes(
+    String(dbWorker?.category || meta?.worker_category || ''),
+  )
+    ? dbWorker?.category || meta.worker_category
     : 'cleaning'
+
+  const packageCount = dbPackages.length
 
   if (!sessionReady || !user) {
     return (
@@ -111,9 +153,14 @@ export default function WorkerDashboard() {
             <span className="worker-dash__rating-value">{ratingDisplay}</span>
             <span className="worker-dash__rating-label">{t('workerDashboard.starRating')}</span>
           </div>
-          <Link to="/profile/edit" className="worker-dash__edit">
-            {t('workerDashboard.editProfile')}
-          </Link>
+          <div className="worker-dash__hero-actions">
+            <Link to="/profile/edit" className="worker-dash__edit">
+              {t('workerDashboard.editProfile')}
+            </Link>
+            <Link to={`/worker/${user.id}`} className="worker-dash__public-profile">
+              {t('workerDashboard.viewPublicProfile')}
+            </Link>
+          </div>
         </header>
 
         <div className="worker-dash__grid">
@@ -173,8 +220,8 @@ export default function WorkerDashboard() {
                 <span className="worker-dash__stat-label">{t('workerDashboard.reviews')}</span>
               </li>
               <li>
-                <span className="worker-dash__stat-value">{completedJobs}</span>
-                <span className="worker-dash__stat-label">{t('workerDashboard.jobsDone')}</span>
+                <span className="worker-dash__stat-value">{packageCount}</span>
+                <span className="worker-dash__stat-label">{t('workerDashboard.listedPackages')}</span>
               </li>
             </ul>
             <div className="worker-dash__card-actions">

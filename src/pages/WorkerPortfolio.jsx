@@ -2,6 +2,7 @@ import { useState, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { supabase } from '../supabase'
+import { uploadWorkerAsset } from '../lib/workerSupabase'
 import { useDemoMode } from '../contexts/DemoModeContext'
 import './WorkerPortfolio.css'
 
@@ -47,8 +48,17 @@ export default function WorkerPortfolio() {
       try {
         const { data: { session } } = await supabase.auth.getSession()
         if (session?.user) {
+          const urls = []
+          for (let i = 0; i < photos.length; i++) {
+            const { publicUrl } = await uploadWorkerAsset(session.user.id, `gallery-${i}`, photos[i].file)
+            if (publicUrl) urls.push(publicUrl)
+          }
           await supabase.auth.updateUser({
-            data: { portfolio_count: photos.length },
+            data: {
+              ...session.user.user_metadata,
+              portfolio_count: photos.length,
+              worker_gallery_urls: urls,
+            },
           })
         }
       } catch { /* continue */ }
