@@ -6,6 +6,7 @@ import { useAuthSession } from '../contexts/AuthSessionContext'
 import { useAppMode } from '../contexts/AppModeContext'
 import { useDualProfile } from '../hooks/useDualProfile'
 import LanguageCurrencyModal from './LanguageCurrencyModal'
+import starWorkerIllustration from '../assets/star-worker-illustration.png'
 import './HamburgerMenu.css'
 
 function IconHeart() {
@@ -201,7 +202,7 @@ export default function HamburgerMenu() {
                     <span className="hmenu__promo-title">{t('header.becomeAStar')}</span>
                     <span className="hmenu__promo-sub">{t('header.becomeAStarSubtitle')}</span>
                   </div>
-                  <img src="/assets/star-worker-illustration.png" alt="" className="hmenu__promo-img" />
+                  <img src={starWorkerIllustration} alt="" className="hmenu__promo-img" />
                 </Link>
               )}
 
