@@ -114,6 +114,11 @@
   padding: 36px 24px;
 }
 
+/* Home: no bottom padding here — .home padding-top provides the middle gap alone (avoids doubling with header) */
+.star-header--home .star-header__inner.container {
+  padding-bottom: 0;
+}
+
 @media (max-width: 768px) {
   .star-header {
     display: none;
