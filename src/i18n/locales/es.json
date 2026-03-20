@@ -234,6 +234,12 @@
     "repairs": "Reparaciones",
     "services": "Servicios"
   },
+  "workerSignupGate": {
+    "authSubtitle": "Crea una cuenta o inicia sesión para continuar como profesional Star.",
+    "categoryTitle": "¿A qué te dedicas?",
+    "categorySubtitle": "Elige la categoría principal de los servicios que ofreces.",
+    "continue": "Continuar"
+  },
   "categorySignup": {
     "joinAs": "Únete a STAR como {{category}}",
     "createProfile": "Crea tu perfil de profesional",

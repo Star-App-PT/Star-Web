@@ -59,7 +59,7 @@ export default function WorkerPackages() {
   const [activeThumbId, setActiveThumbId] = useState(null)
 
   if (!category) {
-    navigate('/worker/choose-category', { replace: true })
+    navigate('/worker/signup', { replace: true })
     return null
   }
 

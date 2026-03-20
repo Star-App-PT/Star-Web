@@ -15,7 +15,7 @@ export default function SignupChoice() {
             {t('signupChoice.needService')}
           </Link>
           <div className="signup-choice__sep" />
-          <Link to="/worker/choose-category" className="signup-choice__option">
+          <Link to="/worker/signup" className="signup-choice__option">
             {t('signupChoice.wantToWork')}
           </Link>
           <div className="signup-choice__sep" />

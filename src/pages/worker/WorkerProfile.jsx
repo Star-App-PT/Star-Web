@@ -15,7 +15,7 @@ export default function WorkerProfile() {
       {/* DEMO ONLY — REMOVE BEFORE LAUNCH */}
       {isDemoMode && (
         <p
-          onClick={() => navigate('/worker/choose-category')}
+          onClick={() => navigate('/worker/signup')}
           style={{
             textAlign: 'center',
             color: '#AAAAAA',

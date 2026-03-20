@@ -104,7 +104,7 @@ export default function FinishProfile() {
     // TESTING MODE - remove direct skip before going live
     if (!user) {
       setSubmitting(false)
-      navigate('/worker/choose-category', { replace: true })
+      navigate('/worker/signup', { replace: true })
       return
     }
 
@@ -123,7 +123,7 @@ export default function FinishProfile() {
     if (updateErr) {
       setError(updateErr.message)
     } else {
-      navigate('/worker/choose-category', { replace: true })
+      navigate('/worker/signup', { replace: true })
     }
   }
 
@@ -272,7 +272,7 @@ export default function FinishProfile() {
             {/* DEMO ONLY — REMOVE BEFORE LAUNCH */}
             {isDemoMode && (
               <p
-                onClick={() => navigate('/worker/choose-category', { replace: true })}
+                onClick={() => navigate('/worker/signup', { replace: true })}
                 style={{
                   textAlign: 'center',
                   color: '#AAAAAA',

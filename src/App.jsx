@@ -38,6 +38,7 @@ import DemoLanding from './pages/DemoLanding'
 import Privacy from './pages/Privacy'
 import Terms from './pages/Terms'
 import { AuthSessionProvider } from './contexts/AuthSessionContext'
+import { WORKER_SIGNUP_PENDING_KEY } from './constants/workerSignup'
 
 function AppShell() {
   const location = useLocation()
@@ -49,7 +50,7 @@ function AppShell() {
     const stripHashPreservePath = () => {
       const path = location.pathname
       const search = location.search
-      if (path === '/profile/edit') {
+      if (path === '/profile/edit' || path === '/worker/signup') {
         navigate(`${path}${search}`, { replace: true })
       } else {
         navigate('/', { replace: true })
@@ -62,8 +63,19 @@ function AppShell() {
     })
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (!session) return
-      if (event === 'SIGNED_IN' && location.pathname !== '/profile/edit') {
-        navigate('/', { replace: true })
+      if (event === 'SIGNED_IN') {
+        try {
+          if (sessionStorage.getItem(WORKER_SIGNUP_PENDING_KEY)) {
+            sessionStorage.removeItem(WORKER_SIGNUP_PENDING_KEY)
+            navigate('/worker/signup', { replace: true })
+            return
+          }
+        } catch {
+          /* ignore */
+        }
+        if (location.pathname !== '/profile/edit' && location.pathname !== '/worker/signup') {
+          navigate('/', { replace: true })
+        }
       }
       if (event === 'INITIAL_SESSION' && window.location.hash) {
         stripHashPreservePath()

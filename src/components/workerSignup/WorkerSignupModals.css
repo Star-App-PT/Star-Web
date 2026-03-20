@@ -1,0 +1,320 @@
+/* Shared worker signup gate modals */
+.ws-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.22s ease;
+}
+
+.ws-modal--open {
+  pointer-events: auto;
+  opacity: 1;
+}
+
+.ws-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.ws-modal__panel {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  max-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  margin: 16px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+  transform: translateY(12px) scale(0.98);
+  opacity: 0;
+  transition:
+    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.22s ease;
+}
+
+.ws-modal--open .ws-modal__panel {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.ws-modal__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 2;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: #f3f3f3;
+  color: #222;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.ws-modal__close:hover {
+  background: #ebebeb;
+}
+
+.ws-modal__scroll {
+  overflow-y: auto;
+  padding: 52px 24px 28px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ws-modal__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #222;
+  margin: 0 0 8px;
+  letter-spacing: -0.02em;
+  padding-right: 36px;
+}
+
+.ws-modal__sub {
+  font-size: 0.9375rem;
+  color: #717171;
+  line-height: 1.45;
+  margin: 0 0 22px;
+}
+
+/* Auth: match SignupLogin social rows */
+.ws-modal__socials {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ws-modal__social {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: #222;
+  background: #fff;
+  border: 1.5px solid #b0b0b0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+
+.ws-modal__social:hover:not(:disabled) {
+  border-color: #222;
+  background: #fafafa;
+}
+
+.ws-modal__social:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.ws-modal__social-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.ws-modal__form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ws-modal__label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #222;
+}
+
+.ws-modal__input {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 1rem;
+  font-family: inherit;
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.ws-modal__input:focus {
+  outline: none;
+  border-color: #222;
+}
+
+.ws-modal__error {
+  font-size: 0.875rem;
+  color: #c13515;
+  margin: 0;
+}
+
+.ws-modal__btn-primary {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: #fff;
+  background: #1b4fba;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.ws-modal__btn-primary:hover:not(:disabled) {
+  background: #164a9e;
+}
+
+.ws-modal__btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ws-modal__btn-text {
+  width: 100%;
+  padding: 10px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  color: #222;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.ws-modal__code {
+  text-align: center;
+  letter-spacing: 0.4em;
+  font-size: 1.25rem;
+}
+
+/* Category cards */
+.ws-modal__cat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 400px) {
+  .ws-modal__cat-grid {
+    gap: 8px;
+  }
+}
+
+.ws-modal__cat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 16px 8px 14px;
+  background: #fff;
+  border: 2px solid #ebebeb;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  font-family: inherit;
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.18s ease;
+}
+
+.ws-modal__cat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.ws-modal__cat-card--selected {
+  border-color: #1b4fba;
+  box-shadow: 0 4px 16px rgba(27, 79, 186, 0.2);
+}
+
+.ws-modal__cat-card--selected:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 22px rgba(27, 79, 186, 0.22);
+}
+
+.ws-modal__cat-icon-wrap {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.ws-modal__cat-icon {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.ws-modal__cat-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #222;
+  line-height: 1.25;
+}
+
+.ws-modal__continue {
+  width: 100%;
+  margin-top: 4px;
+}
+
+.ws-modal__demo {
+  text-align: center;
+  color: #aaa;
+  font-size: 13px;
+  margin-top: 14px;
+  cursor: pointer;
+}
+
+/* Mobile: full-screen panel */
+@media (max-width: 640px) {
+  .ws-modal {
+    align-items: stretch;
+  }
+
+  .ws-modal__panel {
+    max-width: none;
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    border-radius: 0;
+    transform: translateY(100%);
+  }
+
+  .ws-modal--open .ws-modal__panel {
+    transform: translateY(0);
+  }
+
+  .ws-modal__scroll {
+    flex: 1;
+    padding-bottom: max(28px, env(safe-area-inset-bottom));
+  }
+}

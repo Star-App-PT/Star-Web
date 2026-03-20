@@ -18,6 +18,28 @@
   max-width: 540px;
 }
 
+.signup-page--gate {
+  min-height: calc(100vh - 80px);
+  padding: 24px 16px;
+}
+
+.signup-page__content--gate {
+  min-height: 0;
+}
+
+.signup-page__content--loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40vh;
+}
+
+.signup-page__loading-text {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #717171;
+}
+
 .signup--picker {
   display: flex;
   align-items: center;

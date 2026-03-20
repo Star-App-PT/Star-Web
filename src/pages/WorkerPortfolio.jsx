@@ -17,7 +17,7 @@ export default function WorkerPortfolio() {
   const [photos, setPhotos] = useState([])
 
   if (!category) {
-    navigate('/worker/choose-category', { replace: true })
+    navigate('/worker/signup', { replace: true })
     return null
   }
 

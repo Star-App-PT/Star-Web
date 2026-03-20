@@ -224,7 +224,7 @@ export default function ServiceArea() {
   }
 
   if (!category || !CATEGORY_META[category]) {
-    navigate('/worker/choose-category', { replace: true })
+    navigate('/worker/signup', { replace: true })
     return null
   }
 
