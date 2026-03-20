@@ -100,6 +100,7 @@ export default function Home() {
   // After auth: only users who have never finished onboarding go to client vs worker choice
   useEffect(() => {
     if (!supabase) return
+    if (location.pathname === '/profile/edit') return
     let cancelled = false
     ;(async () => {
       const { data: { session } } = await supabase.auth.getSession()
@@ -109,7 +110,7 @@ export default function Home() {
       navigate('/signup/choose', { replace: true })
     })()
     return () => { cancelled = true }
-  }, [navigate])
+  }, [navigate, location.pathname])
 
   const [openDropdown, setOpenDropdown] = useState(null)
   const [whereValue, setWhereValue] = useState('')

@@ -46,22 +46,31 @@ function AppShell() {
 
   useEffect(() => {
     if (!supabase) return
+    const stripHashPreservePath = () => {
+      const path = location.pathname
+      const search = location.search
+      if (path === '/profile/edit') {
+        navigate(`${path}${search}`, { replace: true })
+      } else {
+        navigate('/', { replace: true })
+      }
+    }
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session && window.location.hash) {
-        navigate('/', { replace: true })
+        stripHashPreservePath()
       }
     })
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (!session) return
-      if (event === 'SIGNED_IN') {
+      if (event === 'SIGNED_IN' && location.pathname !== '/profile/edit') {
         navigate('/', { replace: true })
       }
       if (event === 'INITIAL_SESSION' && window.location.hash) {
-        navigate('/', { replace: true })
+        stripHashPreservePath()
       }
     })
     return () => subscription?.unsubscribe()
-  }, [navigate])
+  }, [navigate, location.pathname, location.search])
 
   useEffect(() => {
     const params = new URLSearchParams(location.search)

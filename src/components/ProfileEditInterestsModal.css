@@ -1,0 +1,200 @@
+.pe-imodal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0;
+  font-family: inherit;
+}
+
+@media (min-width: 600px) {
+  .pe-imodal {
+    align-items: center;
+    padding: 24px;
+  }
+}
+
+.pe-imodal__backdrop {
+  position: absolute;
+  inset: 0;
+  border: none;
+  padding: 0;
+  margin: 0;
+  background: rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+}
+
+.pe-imodal__panel {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 520px;
+  max-height: min(92vh, 720px);
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 16px 16px 0 0;
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.12);
+}
+
+@media (min-width: 600px) {
+  .pe-imodal__panel {
+    border-radius: 16px;
+    max-height: min(88vh, 680px);
+  }
+}
+
+.pe-imodal__close {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: #222;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.pe-imodal__close:hover {
+  background: #f3f3f3;
+}
+
+.pe-imodal__scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 56px 20px 16px;
+}
+
+@media (min-width: 600px) {
+  .pe-imodal__scroll {
+    padding: 52px 28px 20px;
+  }
+}
+
+.pe-imodal__title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #222;
+  margin: 0 0 10px;
+  letter-spacing: -0.02em;
+}
+
+.pe-imodal__subtitle {
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: #717171;
+  margin: 0 0 22px;
+}
+
+.pe-imodal__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+@media (min-width: 480px) {
+  .pe-imodal__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.pe-imodal__pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 72px;
+  padding: 10px 8px;
+  border-radius: 12px;
+  border: 1.5px solid #ebebeb;
+  background: #fff;
+  color: #222;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.2;
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+}
+
+.pe-imodal__pill:hover {
+  border-color: #222;
+}
+
+.pe-imodal__pill--selected {
+  border-color: #222;
+  background: #f7f7f7;
+  box-shadow: inset 0 0 0 1px #222;
+}
+
+.pe-imodal__pill-icon {
+  flex-shrink: 0;
+  color: #222;
+}
+
+.pe-imodal__show-all {
+  display: block;
+  margin: 18px auto 0;
+  padding: 8px 12px;
+  border: none;
+  background: none;
+  color: #222;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.pe-imodal__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 20px;
+  padding-bottom: calc(16px + env(safe-area-inset-bottom));
+  border-top: 1px solid #ebebeb;
+  background: #fff;
+  flex-shrink: 0;
+}
+
+@media (min-width: 600px) {
+  .pe-imodal__footer {
+    padding: 18px 28px;
+    padding-bottom: 18px;
+  }
+}
+
+.pe-imodal__count {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #222;
+}
+
+.pe-imodal__save {
+  padding: 12px 28px;
+  border-radius: 8px;
+  border: none;
+  background: #222;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.pe-imodal__save:hover {
+  background: #000;
+}

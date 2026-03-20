@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
@@ -24,7 +24,30 @@ import {
   persistProfileAbout,
   uploadProfileAvatar,
 } from '../lib/profileAbout'
+import { fetchClientPastWorkers } from '../lib/fetchClientPastWorkers'
+import { PROFILE_INTEREST_OPTIONS } from '../data/profileInterestOptions'
+import ProfileEditInterestsModal from '../components/ProfileEditInterestsModal'
 import './ProfileEdit.css'
+
+const VALID_INTEREST_IDS = new Set(PROFILE_INTEREST_OPTIONS.map((o) => o.id))
+const INTEREST_ICON_BY_ID = Object.fromEntries(
+  PROFILE_INTEREST_OPTIONS.map((o) => [o.id, o.Icon]),
+)
+
+function parseProfileInterests(meta) {
+  const raw = meta?.profile_interests
+  let arr = []
+  if (Array.isArray(raw)) arr = raw
+  else if (typeof raw === 'string') {
+    try {
+      const p = JSON.parse(raw)
+      if (Array.isArray(p)) arr = p
+    } catch {
+      /* ignore */
+    }
+  }
+  return arr.map(String).filter((id) => VALID_INTEREST_IDS.has(id)).slice(0, 20)
+}
 
 const FIELD_CONFIG = [
   { key: 'school', Icon: GraduationCap },
@@ -46,7 +69,7 @@ const MOCK_HIRED = [
 ]
 
 export default function ProfileEdit() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const navigate = useNavigate()
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -56,6 +79,9 @@ export default function ProfileEdit() {
   const [saving, setSaving] = useState(false)
   const [avatarUrl, setAvatarUrl] = useState(null)
   const [showHiredOnProfile, setShowHiredOnProfile] = useState(true)
+  const [pastWorkers, setPastWorkers] = useState([])
+  const [interestsModalOpen, setInterestsModalOpen] = useState(false)
+  const [selectedInterestIds, setSelectedInterestIds] = useState([])
   const fileRef = useRef(null)
   const inputRef = useRef(null)
   const skipBlurSave = useRef(false)
@@ -71,6 +97,7 @@ export default function ProfileEdit() {
         return
       }
       setUser(session.user)
+      setSelectedInterestIds(parseProfileInterests(session.user.user_metadata))
       setShowHiredOnProfile(session.user.user_metadata?.profile_show_hired_workers !== false)
       const url =
         session.user.user_metadata?.avatar_url ||
@@ -86,6 +113,7 @@ export default function ProfileEdit() {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session?.user) {
         setUser(session.user)
+        setSelectedInterestIds(parseProfileInterests(session.user.user_metadata))
         setShowHiredOnProfile(session.user.user_metadata?.profile_show_hired_workers !== false)
         const url =
           session.user.user_metadata?.avatar_url ||
@@ -97,6 +125,17 @@ export default function ProfileEdit() {
     })
     return () => subscription?.unsubscribe()
   }, [navigate])
+
+  useEffect(() => {
+    if (!user?.id) return
+    let cancelled = false
+    fetchClientPastWorkers(user.id, t, i18n.language).then((rows) => {
+      if (!cancelled) setPastWorkers(rows)
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [user?.id, t, i18n.language])
 
   useEffect(() => {
     if (editingKey && inputRef.current) {
@@ -173,6 +212,21 @@ export default function ProfileEdit() {
     if (!error) await refreshUser()
   }
 
+  const handleInterestsSave = useCallback(
+    async (ids) => {
+      const cleaned = ids.filter((id) => VALID_INTEREST_IDS.has(id)).slice(0, 20)
+      setSelectedInterestIds(cleaned)
+      if (!supabase || !user) return
+      const { data: { session } } = await supabase.auth.getSession()
+      const u = session?.user || user
+      await supabase.auth.updateUser({
+        data: { ...u.user_metadata, profile_interests: cleaned },
+      })
+      await refreshUser()
+    },
+    [user, refreshUser],
+  )
+
   const toggleHiredVisibility = async () => {
     const next = !showHiredOnProfile
     setShowHiredOnProfile(next)
@@ -211,6 +265,31 @@ export default function ProfileEdit() {
 
   const fullName = user.user_metadata?.full_name || user.user_metadata?.name || ''
   const firstName = fullName.split(' ')[0] || user.email?.split('@')[0] || '?'
+
+  const mockCardRows = useMemo(
+    () =>
+      MOCK_HIRED.map((w, i) => ({
+        id: `mock-${i}`,
+        name: t(w.nameKey),
+        service: t(w.categoryKey),
+        rating: w.rating,
+        date: t(w.dateKey),
+        photoUrl: null,
+      })),
+    [t],
+  )
+
+  const hasBookingHistory = pastWorkers.length > 0
+  const displayHiredCards = hasBookingHistory ? pastWorkers : mockCardRows
+
+  const orderedInterestIds = useMemo(() => {
+    const order = PROFILE_INTEREST_OPTIONS.map((o) => o.id)
+    const sel = new Set(selectedInterestIds)
+    return [
+      ...order.filter((id) => sel.has(id)),
+      ...selectedInterestIds.filter((id) => !order.includes(id)),
+    ]
+  }, [selectedInterestIds])
 
   return (
     <div className="profile-edit">
@@ -313,9 +392,11 @@ export default function ProfileEdit() {
           <div className="profile-edit__section-head">
             <div className="profile-edit__section-head-text">
               <h2 id="profile-edit-hired-heading" className="profile-edit__section-title">
-                {t('profileEdit.hiredTitle')}
+                {hasBookingHistory ? t('profileEdit.hiredTitle') : t('profileEdit.suggestedWorkersTitle')}
               </h2>
-              <p className="profile-edit__section-subtitle">{t('profileEdit.hiredSubtitle')}</p>
+              <p className="profile-edit__section-subtitle">
+                {hasBookingHistory ? t('profileEdit.hiredSubtitle') : t('profileEdit.suggestedWorkersSubtitle')}
+              </p>
             </div>
             <button
               type="button"
@@ -328,14 +409,25 @@ export default function ProfileEdit() {
               <span className="profile-edit__toggle-knob" />
             </button>
           </div>
-          <div className="profile-edit__hired-cards">
-            {MOCK_HIRED.map((w) => (
-              <div key={w.nameKey} className="profile-edit__hired-card">
-                <div className="profile-edit__hired-avatar" aria-hidden />
-                <p className="profile-edit__hired-name">{t(w.nameKey)}</p>
-                <p className="profile-edit__hired-service">{t(w.categoryKey)}</p>
+          {!showHiredOnProfile && (
+            <p className="profile-edit__hired-hidden-banner" role="status">
+              {t('profileEdit.hiredHiddenNote')}
+            </p>
+          )}
+          <div
+            className={`profile-edit__hired-cards${!showHiredOnProfile ? ' profile-edit__hired-cards--dimmed' : ''}`}
+          >
+            {displayHiredCards.map((w) => (
+              <div key={w.id} className="profile-edit__hired-card">
+                {w.photoUrl ? (
+                  <img src={w.photoUrl} alt="" className="profile-edit__hired-avatar-img" />
+                ) : (
+                  <div className="profile-edit__hired-avatar" aria-hidden />
+                )}
+                <p className="profile-edit__hired-name">{w.name}</p>
+                <p className="profile-edit__hired-service">{w.service}</p>
                 <p className="profile-edit__hired-rating">★ {w.rating}</p>
-                <p className="profile-edit__hired-date">{t(w.dateKey)}</p>
+                <p className="profile-edit__hired-date">{w.date}</p>
               </div>
             ))}
           </div>
@@ -349,13 +441,31 @@ export default function ProfileEdit() {
           </h2>
           <p className="profile-edit__section-subtitle">{t('profileEdit.interestsSubtitle')}</p>
           <div className="profile-edit__interest-pills">
-            {[0, 1, 2].map((i) => (
-              <button key={i} type="button" className="profile-edit__interest-pill" aria-label={t('profileEdit.addInterests')}>
+            {orderedInterestIds.map((id) => {
+              const Icon = INTEREST_ICON_BY_ID[id]
+              return (
+                <span key={id} className="profile-edit__interest-pill-filled">
+                  {Icon ? <Icon className="profile-edit__interest-pill-filled-icon" size={18} strokeWidth={1.75} aria-hidden /> : null}
+                  {t(`profileEdit.interestOpt.${id}`)}
+                </span>
+              )
+            })}
+            {orderedInterestIds.length < 20 && (
+              <button
+                type="button"
+                className="profile-edit__interest-pill"
+                aria-label={t('profileEdit.addInterests')}
+                onClick={() => setInterestsModalOpen(true)}
+              >
                 <Plus className="profile-edit__interest-pill-icon" strokeWidth={2} aria-hidden />
               </button>
-            ))}
+            )}
           </div>
-          <button type="button" className="profile-edit__add-interests-btn">
+          <button
+            type="button"
+            className="profile-edit__add-interests-btn"
+            onClick={() => setInterestsModalOpen(true)}
+          >
             {t('profileEdit.addInterests')}
           </button>
         </section>
@@ -366,6 +476,14 @@ export default function ProfileEdit() {
       <button type="button" className="profile-edit__done" onClick={handleDone} disabled={saving}>
         {t('common.done')}
       </button>
+
+      <ProfileEditInterestsModal
+        open={interestsModalOpen}
+        onClose={() => setInterestsModalOpen(false)}
+        onSave={handleInterestsSave}
+        initialSelected={selectedInterestIds}
+        t={t}
+      />
     </div>
   )
 }

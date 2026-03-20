@@ -356,10 +356,28 @@
   outline-offset: 2px;
 }
 
+.profile-edit__hired-hidden-banner {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #717171;
+  text-align: center;
+  margin: 0 0 16px;
+  padding: 10px 14px;
+  background: #f7f7f7;
+  border-radius: 8px;
+  border: 1px solid #ebebeb;
+}
+
 .profile-edit__hired-cards {
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+
+.profile-edit__hired-cards--dimmed {
+  opacity: 0.4;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
 }
 
 @media (min-width: 768px) {
@@ -396,6 +414,15 @@
   flex-shrink: 0;
 }
 
+.profile-edit__hired-avatar-img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 12px;
+  flex-shrink: 0;
+}
+
 .profile-edit__hired-name {
   font-size: 0.95rem;
   font-weight: 600;
@@ -425,8 +452,27 @@
 .profile-edit__interest-pills {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 12px;
   margin: 20px 0 16px;
+}
+
+.profile-edit__interest-pill-filled {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1.5px solid #222;
+  background: #f7f7f7;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #222;
+}
+
+.profile-edit__interest-pill-filled-icon {
+  flex-shrink: 0;
+  color: #222;
 }
 
 .profile-edit__interest-pill {
