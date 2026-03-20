@@ -13,6 +13,7 @@ import {
   Palette,
   PartyPopper,
   PawPrint,
+  Plus,
   Sparkles,
 } from 'lucide-react'
 import { supabase } from '../supabase'
@@ -38,6 +39,12 @@ const FIELD_CONFIG = [
   { key: 'languages', Icon: Languages },
 ].map(({ key, Icon }) => ({ key, labelKey: ABOUT_FIELD_LABEL_KEYS[key], Icon }))
 
+const MOCK_HIRED = [
+  { nameKey: 'profileEdit.hiredMockName1', categoryKey: 'home.categoryClean', rating: '4.9', dateKey: 'profileEdit.hiredMockDate1' },
+  { nameKey: 'profileEdit.hiredMockName2', categoryKey: 'home.categoryRepair', rating: '4.8', dateKey: 'profileEdit.hiredMockDate2' },
+  { nameKey: 'profileEdit.hiredMockName3', categoryKey: 'home.categoryServices', rating: '5.0', dateKey: 'profileEdit.hiredMockDate3' },
+]
+
 export default function ProfileEdit() {
   const { t } = useTranslation()
   const navigate = useNavigate()
@@ -48,6 +55,7 @@ export default function ProfileEdit() {
   const [draft, setDraft] = useState('')
   const [saving, setSaving] = useState(false)
   const [avatarUrl, setAvatarUrl] = useState(null)
+  const [showHiredOnProfile, setShowHiredOnProfile] = useState(true)
   const fileRef = useRef(null)
   const inputRef = useRef(null)
   const skipBlurSave = useRef(false)
@@ -63,6 +71,7 @@ export default function ProfileEdit() {
         return
       }
       setUser(session.user)
+      setShowHiredOnProfile(session.user.user_metadata?.profile_show_hired_workers !== false)
       const url =
         session.user.user_metadata?.avatar_url ||
         session.user.user_metadata?.picture ||
@@ -77,6 +86,7 @@ export default function ProfileEdit() {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session?.user) {
         setUser(session.user)
+        setShowHiredOnProfile(session.user.user_metadata?.profile_show_hired_workers !== false)
         const url =
           session.user.user_metadata?.avatar_url ||
           session.user.user_metadata?.picture ||
@@ -161,6 +171,18 @@ export default function ProfileEdit() {
     })
     setSaving(false)
     if (!error) await refreshUser()
+  }
+
+  const toggleHiredVisibility = async () => {
+    const next = !showHiredOnProfile
+    setShowHiredOnProfile(next)
+    if (!supabase || !user) return
+    const { data: { session } } = await supabase.auth.getSession()
+    const u = session?.user || user
+    await supabase.auth.updateUser({
+      data: { ...u.user_metadata, profile_show_hired_workers: next },
+    })
+    await refreshUser()
   }
 
   const handleDone = async () => {
@@ -284,6 +306,61 @@ export default function ProfileEdit() {
             )
           })}
         </div>
+
+        <div className="profile-edit__section-divider" aria-hidden />
+
+        <section className="profile-edit__section" aria-labelledby="profile-edit-hired-heading">
+          <div className="profile-edit__section-head">
+            <div className="profile-edit__section-head-text">
+              <h2 id="profile-edit-hired-heading" className="profile-edit__section-title">
+                {t('profileEdit.hiredTitle')}
+              </h2>
+              <p className="profile-edit__section-subtitle">{t('profileEdit.hiredSubtitle')}</p>
+            </div>
+            <button
+              type="button"
+              className={`profile-edit__toggle${showHiredOnProfile ? ' profile-edit__toggle--on' : ''}`}
+              role="switch"
+              aria-checked={showHiredOnProfile}
+              aria-label={t('profileEdit.hiredToggleAria')}
+              onClick={toggleHiredVisibility}
+            >
+              <span className="profile-edit__toggle-knob" />
+            </button>
+          </div>
+          <div className="profile-edit__hired-cards">
+            {MOCK_HIRED.map((w) => (
+              <div key={w.nameKey} className="profile-edit__hired-card">
+                <div className="profile-edit__hired-avatar" aria-hidden />
+                <p className="profile-edit__hired-name">{t(w.nameKey)}</p>
+                <p className="profile-edit__hired-service">{t(w.categoryKey)}</p>
+                <p className="profile-edit__hired-rating">★ {w.rating}</p>
+                <p className="profile-edit__hired-date">{t(w.dateKey)}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <div className="profile-edit__section-divider" aria-hidden />
+
+        <section className="profile-edit__section" aria-labelledby="profile-edit-interests-heading">
+          <h2 id="profile-edit-interests-heading" className="profile-edit__section-title">
+            {t('profileEdit.interestsTitle')}
+          </h2>
+          <p className="profile-edit__section-subtitle">{t('profileEdit.interestsSubtitle')}</p>
+          <div className="profile-edit__interest-pills">
+            {[0, 1, 2].map((i) => (
+              <button key={i} type="button" className="profile-edit__interest-pill" aria-label={t('profileEdit.addInterests')}>
+                <Plus className="profile-edit__interest-pill-icon" strokeWidth={2} aria-hidden />
+              </button>
+            ))}
+          </div>
+          <button type="button" className="profile-edit__add-interests-btn">
+            {t('profileEdit.addInterests')}
+          </button>
+        </section>
+
+        <div className="profile-edit__section-divider" aria-hidden />
       </div>
 
       <button type="button" className="profile-edit__done" onClick={handleDone} disabled={saving}>

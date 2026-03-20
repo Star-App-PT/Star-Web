@@ -460,7 +460,19 @@
     "uselessSkill": "Mi habilidad más inútil",
     "funFact": "Mi dato curioso",
     "languages": "Idiomas que hablo",
-    "add": "Añadir"
+    "add": "Añadir",
+    "hiredTitle": "Servicios que contraté",
+    "hiredSubtitle": "Tu historial de reservas con profesionales Star.",
+    "hiredToggleAria": "Mostrar historial de reservas en tu perfil público",
+    "interestsTitle": "Mis intereses",
+    "interestsSubtitle": "Encuentra afinidad con profesionales y clientes añadiendo intereses a tu perfil.",
+    "addInterests": "Añadir intereses",
+    "hiredMockName1": "María S.",
+    "hiredMockName2": "João M.",
+    "hiredMockName3": "Ana P.",
+    "hiredMockDate1": "Marzo 2025",
+    "hiredMockDate2": "Febrero 2025",
+    "hiredMockDate3": "Enero 2025"
   },
   "dashboard": {
     "welcome": "¡Bienvenido, {{name}}!",

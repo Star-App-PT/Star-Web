@@ -460,7 +460,19 @@
     "uselessSkill": "My most useless skill",
     "funFact": "My fun fact",
     "languages": "Languages I speak",
-    "add": "Add"
+    "add": "Add",
+    "hiredTitle": "Services I've hired",
+    "hiredSubtitle": "Your booking history with Star workers.",
+    "hiredToggleAria": "Show booking history on your public profile",
+    "interestsTitle": "My interests",
+    "interestsSubtitle": "Find common ground with workers and clients by adding interests to your profile.",
+    "addInterests": "Add interests",
+    "hiredMockName1": "Maria S.",
+    "hiredMockName2": "João M.",
+    "hiredMockName3": "Ana P.",
+    "hiredMockDate1": "March 2025",
+    "hiredMockDate2": "February 2025",
+    "hiredMockDate3": "January 2025"
   },
   "dashboard": {
     "welcome": "Welcome, {{name}}!",
