@@ -102,14 +102,16 @@
 .cs__frame-wrap {
   position: relative;
   display: inline-block;
-  padding-bottom: 22px;
+  /* Room for half the camera sitting below the circle (button is position:absolute) */
+  margin-bottom: 22px;
 }
 
 .cs__frame-cam {
   position: absolute;
   left: 50%;
   bottom: 0;
-  transform: translate(-50%, 45%);
+  /* Half inside / half outside the circle — same overlap logic as inset cover cam on photo */
+  transform: translate(-50%, 50%);
   z-index: 2;
   width: 40px;
   height: 40px;
