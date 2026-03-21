@@ -1,9 +1,12 @@
-import { Link, useLocation, useSearchParams } from 'react-router-dom'
+import { useState } from 'react'
+import { Link, useLocation, useSearchParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import HamburgerMenu from './HamburgerMenu'
+import WorkerSignupCategoryModal from './workerSignup/WorkerSignupCategoryModal'
 import { useAuthSession } from '../contexts/AuthSessionContext'
 import { useAppMode } from '../contexts/AppModeContext'
 import { useDualProfile } from '../hooks/useDualProfile'
+import { continueWorkerCategorySignup } from '../lib/workerCategoryContinue'
 import './Header.css'
 
 const CATEGORY_IDS = [
@@ -15,10 +18,16 @@ const CATEGORY_IDS = [
 export default function Header() {
   const { t } = useTranslation()
   const location = useLocation()
+  const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const { user } = useAuthSession()
   const { mode, setMode } = useAppMode()
   const { loading: dualLoading, hasClientProfile, hasWorkerProfile } = useDualProfile(user)
+  const [becomeStarOpen, setBecomeStarOpen] = useState(false)
+
+  if (location.pathname.startsWith('/dashboard/worker')) {
+    return null
+  }
 
   const activeCategory = location.pathname === '/' ? (searchParams.get('category') || 'cleaners') : null
 
@@ -37,12 +46,17 @@ export default function Header() {
     location.pathname === '/dashboard' ||
     location.pathname.startsWith('/client/signup')
 
-  const avatarUrl = user?.user_metadata?.avatar_url || user?.user_metadata?.picture || null
+  const avatarUrl =
+    user?.user_metadata?.avatar_url ||
+    user?.user_metadata?.profile_photo_url ||
+    user?.user_metadata?.picture ||
+    null
   const displayInitial = user
     ? (user.user_metadata?.full_name || user.user_metadata?.name || user.email || '?').charAt(0).toUpperCase()
     : null
 
   const isHome = location.pathname === '/'
+  const profileHref = user && hasWorkerProfile ? `/worker/${user.id}` : '/profile'
 
   return (
     <header className={`star-header${isHome ? ' star-header--home' : ''}`}>
@@ -50,7 +64,10 @@ export default function Header() {
         <Link to="/" className="star-header__logo">
           <img
             src="/star-logolblue.svg"
-            onError={(e) => { e.target.onerror = null; e.target.src = '/star-logo-blue.svg' }}
+            onError={(e) => {
+              e.target.onerror = null
+              e.target.src = '/star-logo-blue.svg'
+            }}
             alt="Star"
             className="star-header__logo-img"
           />
@@ -85,12 +102,16 @@ export default function Header() {
             </Link>
           )}
           {user && !dualLoading && !hasWorkerProfile && (
-            <Link to="/worker/signup" className="star-header__mode-link star-header__mode-link--become">
+            <button
+              type="button"
+              className="star-header__mode-link star-header__mode-link--btn"
+              onClick={() => setBecomeStarOpen(true)}
+            >
               {t('header.becomeAStar')}
-            </Link>
+            </button>
           )}
           {user && (
-            <Link to="/profile" className="star-header__avatar-link" aria-label="Go to profile">
+            <Link to={profileHref} className="star-header__avatar-link" aria-label={t('workerHost.viewProfile')}>
               {avatarUrl ? (
                 <img src={avatarUrl} alt="" className="star-header__avatar-img" />
               ) : (
@@ -101,6 +122,15 @@ export default function Header() {
           <HamburgerMenu />
         </nav>
       </div>
+
+      <WorkerSignupCategoryModal
+        open={becomeStarOpen}
+        onClose={() => setBecomeStarOpen(false)}
+        onContinue={async (categoryId) => {
+          setBecomeStarOpen(false)
+          await continueWorkerCategorySignup(categoryId, navigate)
+        }}
+      />
     </header>
   )
 }

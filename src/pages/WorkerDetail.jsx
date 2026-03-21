@@ -1,9 +1,10 @@
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, Link } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { getWorkerById, getSimilarWorkers, getWorkerServiceCategoryLabelKey } from '../data/workers'
 import { fetchWorkerProfileForDisplay, isUuidWorkerId } from '../lib/workerSupabase'
 import { supabase } from '../supabase'
+import { useAuthSession } from '../contexts/AuthSessionContext'
 import WorkerAvatar from '../components/WorkerAvatar'
 import './WorkerDetail.css'
 
@@ -31,6 +32,7 @@ export default function WorkerDetail() {
   const { t } = useTranslation()
   const { id } = useParams()
   const navigate = useNavigate()
+  const { user } = useAuthSession()
   const mapRef = useRef(null)
   const mapInstanceRef = useRef(null)
   const [expandedReviews, setExpandedReviews] = useState(new Set())
@@ -199,6 +201,7 @@ export default function WorkerDetail() {
   const isSameDay = (a, b) => a && b && a.getTime() === b.getTime()
 
   const firstName = worker.name.split(' ')[0]
+  const isOwnProfile = !!(user?.id && id === user.id)
 
   const reviews = worker.clientReviews || []
   const hasReviews = reviews.length > 0
@@ -234,6 +237,17 @@ export default function WorkerDetail() {
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
           {t('common.back')}
         </button>
+
+        {isOwnProfile && (
+          <div className="wd__owner-bar">
+            <Link to="/profile/edit" className="wd__owner-btn">
+              {t('workerDetail.editProfile')}
+            </Link>
+            <Link to="/dashboard/worker" className="wd__owner-btn wd__owner-btn--secondary">
+              {t('workerDetail.ownerDashboard')}
+            </Link>
+          </div>
+        )}
 
         <div className="wd__layout">
           <aside className="wd__left">

@@ -150,6 +150,27 @@
   font-weight: 500;
 }
 
+.wp__skip-block {
+  margin-top: 28px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.wp__skip {
+  margin: 0;
+}
+
+.wp__skip-hint {
+  margin: 0;
+  max-width: 420px;
+  font-size: 0.8125rem;
+  color: #717171;
+  line-height: 1.5;
+}
+
 /* ── Footer ── */
 
 .wp__footer {

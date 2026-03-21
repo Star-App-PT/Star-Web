@@ -71,6 +71,7 @@ export default function Profile() {
 
   const avatarUrl =
     user.user_metadata?.avatar_url ||
+    user.user_metadata?.profile_photo_url ||
     user.user_metadata?.picture ||
     user.user_metadata?.profile_photo_url ||
     null

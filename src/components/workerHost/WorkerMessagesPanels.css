@@ -1,0 +1,195 @@
+.wmsg {
+  display: flex;
+  flex-direction: column;
+  min-height: 520px;
+  background: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.wmsg__toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-bottom: 1px solid #dddddd;
+}
+
+.wmsg__icon-btn {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: #222222;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wmsg__icon-btn:hover {
+  background: #f7f7f7;
+}
+
+.wmsg__layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 360px) 1fr;
+  flex: 1;
+  min-height: 460px;
+}
+
+@media (max-width: 768px) {
+  .wmsg__layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.wmsg__list-col {
+  border-right: 1px solid #dddddd;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.wmsg__filters {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  border-bottom: 1px solid #ebebeb;
+}
+
+.wmsg__filter {
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid #dddddd;
+  background: #fff;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #222222;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.wmsg__filter--on {
+  background: #222222;
+  color: #ffffff;
+  border-color: #222222;
+}
+
+.wmsg__empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 20px;
+  text-align: center;
+}
+
+.wmsg__empty-icon {
+  margin-bottom: 16px;
+}
+
+.wmsg__empty-title {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #222222;
+}
+
+.wmsg__empty-sub {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #717171;
+  line-height: 1.5;
+  max-width: 260px;
+}
+
+.wmsg__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+}
+
+.wmsg__thread {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  padding: 14px 16px;
+  border: none;
+  border-bottom: 1px solid #f0f0f0;
+  background: #fff;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.wmsg__thread:hover {
+  background: #fafafa;
+}
+
+.wmsg__thread--active {
+  background: #f7f7f7;
+}
+
+.wmsg__thread-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #ebebeb;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 3px #dddddd;
+}
+
+.wmsg__thread-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.wmsg__thread-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #222222;
+}
+
+.wmsg__thread-preview {
+  font-size: 0.8125rem;
+  color: #717171;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.wmsg__thread-time {
+  font-size: 0.75rem;
+  color: #b0b0b0;
+  flex-shrink: 0;
+}
+
+.wmsg__thread-col {
+  display: flex;
+  flex-direction: column;
+  background: #fafafa;
+  min-height: 280px;
+}
+
+.wmsg__placeholder {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.wmsg__placeholder-text {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: #717171;
+}

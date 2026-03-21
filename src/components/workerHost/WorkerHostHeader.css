@@ -1,0 +1,135 @@
+.wh-host {
+  border-bottom: 1px solid #dddddd;
+  background: #ffffff;
+}
+
+.wh-host__inner {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 24px;
+  padding: 16px 24px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.wh-host__logo-img {
+  height: 40px;
+  width: auto;
+  display: block;
+}
+
+.wh-host__nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.wh-host__link {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #222222;
+  text-decoration: none;
+  padding: 10px 14px;
+  border-radius: 999px;
+  white-space: nowrap;
+  transition: background 0.15s ease;
+}
+
+.wh-host__link:hover {
+  background: #f7f7f7;
+}
+
+.wh-host__link--active {
+  font-weight: 600;
+  background: #f0f0f0;
+}
+
+.wh-host__right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.wh-host__switch {
+  border: none;
+  background: none;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #222222;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 8px 14px;
+  border-radius: 999px;
+  white-space: nowrap;
+  transition: background 0.15s ease;
+}
+
+.wh-host__switch:hover {
+  background: #ebebeb;
+}
+
+.wh-host__avatar-link {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 3px #dddddd;
+}
+
+.wh-host__avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.wh-host__avatar-initial {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #717171;
+  background: #f7f7f7;
+}
+
+@media (max-width: 1024px) {
+  .wh-host__inner {
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+  }
+
+  .wh-host__nav {
+    grid-column: 1 / -1;
+    order: 3;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .wh-host__logo {
+    order: 1;
+  }
+
+  .wh-host__right {
+    order: 2;
+    justify-self: end;
+  }
+}
+
+@media (max-width: 768px) {
+  .wh-host {
+    display: none;
+  }
+}

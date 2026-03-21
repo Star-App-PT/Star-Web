@@ -136,7 +136,7 @@ export default function WorkerPackages() {
         return
       }
       setMode('worker')
-      navigate('/dashboard/worker', { replace: true })
+      navigate(`/worker/${session.user.id}`, { replace: true })
     } catch (err) {
       console.warn('[WorkerPackages] finish onboarding', err)
       setFinishError(t('common.somethingWentWrong'))

@@ -4,15 +4,22 @@ import { useTranslation } from 'react-i18next'
 import { supabase } from '../supabase'
 import { useAuthSession } from '../contexts/AuthSessionContext'
 import { useAppMode } from '../contexts/AppModeContext'
-import { hasWorkerProfileFromMetadata, workerCategoryToLabelKey } from '../lib/clientWorkerMode'
+import { workerCategoryToLabelKey } from '../lib/clientWorkerMode'
+import { useDualProfile } from '../hooks/useDualProfile'
 import { fetchWorkerDashboardPayload } from '../lib/workerSupabase'
 import './WorkerDashboard.css'
+
+function normalizeGalleryUrls(raw) {
+  if (Array.isArray(raw)) return raw.filter(Boolean)
+  return []
+}
 
 export default function WorkerDashboard() {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { user } = useAuthSession()
   const { setMode } = useAppMode()
+  const { hasWorkerProfile: hasWorkerFromDual, loading: dualLoading } = useDualProfile(user)
   const [sessionReady, setSessionReady] = useState(false)
   const [reviewsCount, setReviewsCount] = useState(0)
   const [avgReviewRating, setAvgReviewRating] = useState(null)
@@ -20,7 +27,7 @@ export default function WorkerDashboard() {
   const [dbPackages, setDbPackages] = useState([])
 
   const meta = user?.user_metadata
-  const hasWorker = hasWorkerProfileFromMetadata(meta)
+  const hasWorker = hasWorkerFromDual
 
   useEffect(() => {
     if (!supabase) {
@@ -70,9 +77,9 @@ export default function WorkerDashboard() {
   }, [user?.id])
 
   useEffect(() => {
-    if (!sessionReady || !user) return
+    if (!sessionReady || !user || dualLoading) return
     if (!hasWorker) navigate('/', { replace: true })
-  }, [sessionReady, hasWorker, user, navigate])
+  }, [sessionReady, hasWorker, user, navigate, dualLoading])
 
   const displayName = useMemo(
     () =>
@@ -84,32 +91,38 @@ export default function WorkerDashboard() {
     [dbWorker?.display_name, meta, user?.email],
   )
 
-  const avatarUrl =
-    dbWorker?.profile_photo_url ||
-    meta?.avatar_url ||
-    meta?.picture ||
-    meta?.profile_photo_url ||
-    null
-  const initial = (displayName || '?').charAt(0).toUpperCase()
-
   const categoryKey = workerCategoryToLabelKey(dbWorker?.category || meta?.worker_category)
   const categoryLabel = categoryKey ? t(categoryKey) : t('workerDashboard.categoryNotSet')
 
-  const ratingRaw = meta?.worker_rating
+  const galleryUrls = normalizeGalleryUrls(dbWorker?.gallery_urls || meta?.worker_gallery_urls)
+  const jobsCompleted = 0
+  const earningsMonth = 0
+  const earningsAll = 0
+
+  const completion = useMemo(() => {
+    let score = 0
+    const missing = []
+    const checks = [
+      { ok: !!(dbWorker?.profile_photo_url || meta?.avatar_url), label: t('workerHost.missingPhoto') },
+      { ok: !!(dbWorker?.bio || meta?.worker_notable), label: t('workerHost.missingBio') },
+      { ok: galleryUrls.length > 0, label: t('workerHost.missingPortfolio') },
+      { ok: dbPackages.length > 0, label: t('workerHost.missingPackages') },
+      { ok: !!dbWorker?.service_area_address || !!meta?.service_area_address, label: t('workerHost.missingArea') },
+    ]
+    checks.forEach((c) => {
+      if (c.ok) score += 20
+      else missing.push(c.label)
+    })
+    return { pct: Math.min(100, score), missing }
+  }, [dbWorker, meta, galleryUrls.length, dbPackages.length, t])
+
   const ratingDisplay =
     avgReviewRating ||
-    (typeof ratingRaw === 'number' && !Number.isNaN(ratingRaw) ? ratingRaw.toFixed(1) : null) ||
-    '—'
+    (typeof meta?.worker_rating === 'number' && !Number.isNaN(meta.worker_rating)
+      ? meta.worker_rating.toFixed(1)
+      : '—')
 
-  const pkgCategory = ['cleaning', 'repairs', 'services'].includes(
-    String(dbWorker?.category || meta?.worker_category || ''),
-  )
-    ? dbWorker?.category || meta.worker_category
-    : 'cleaning'
-
-  const packageCount = dbPackages.length
-
-  if (!sessionReady || !user) {
+  if (!sessionReady || !user || dualLoading) {
     return (
       <div className="worker-dash worker-dash--loading">
         <p>{t('common.submitting')}</p>
@@ -119,124 +132,65 @@ export default function WorkerDashboard() {
 
   if (!hasWorker) return null
 
-  const activeBookings = 0
-  const completedJobs = 0
-  const upcomingSchedule = []
-
   return (
-    <div className="worker-dash">
+    <div className="worker-dash worker-dash--host">
       <div className="worker-dash__inner container">
-        <div className="worker-dash__topbar">
-          <Link
-            to="/"
-            className="worker-dash__switch-client"
-            onClick={() => setMode('client')}
-          >
-            {t('header.switchToClient')}
-          </Link>
-        </div>
-
-        <header className="worker-dash__hero">
-          <div className="worker-dash__avatar-wrap">
-            {avatarUrl ? (
-              <img src={avatarUrl} alt="" className="worker-dash__avatar" />
-            ) : (
-              <span className="worker-dash__avatar-initial">{initial}</span>
-            )}
-          </div>
-          <h1 className="worker-dash__name">{displayName}</h1>
-          <p className="worker-dash__category">{categoryLabel}</p>
-          <div className="worker-dash__rating-row">
-            <span className="worker-dash__rating-stars" aria-hidden>
-              ★
-            </span>
-            <span className="worker-dash__rating-value">{ratingDisplay}</span>
-            <span className="worker-dash__rating-label">{t('workerDashboard.starRating')}</span>
-          </div>
-          <div className="worker-dash__hero-actions">
-            <Link to="/profile/edit" className="worker-dash__edit">
-              {t('workerDashboard.editProfile')}
-            </Link>
-            <Link to={`/worker/${user.id}`} className="worker-dash__public-profile">
-              {t('workerDashboard.viewPublicProfile')}
-            </Link>
-          </div>
+        <header className="worker-dash__welcome">
+          <h1 className="worker-dash__welcome-title">{t('workerHost.dashWelcome', { name: displayName })}</h1>
+          <p className="worker-dash__welcome-sub">{categoryLabel}</p>
         </header>
 
-        <div className="worker-dash__grid">
-          <section className="worker-dash__card">
-            <h2 className="worker-dash__card-title">{t('workerDashboard.jobsTitle')}</h2>
-            <ul className="worker-dash__stats">
-              <li>
-                <span className="worker-dash__stat-value">{activeBookings}</span>
-                <span className="worker-dash__stat-label">{t('workerDashboard.activeBookings')}</span>
-              </li>
-              <li>
-                <span className="worker-dash__stat-value">{completedJobs}</span>
-                <span className="worker-dash__stat-label">{t('workerDashboard.completedJobs')}</span>
-              </li>
-            </ul>
-            {activeBookings === 0 && completedJobs === 0 ? (
-              <p className="worker-dash__empty">{t('workerDashboard.noBookingsYet')}</p>
-            ) : null}
-            <Link to="/dashboard/worker/jobs" className="worker-dash__card-link">
-              {t('workerDashboard.viewAllJobs')}
-            </Link>
-          </section>
-
-          <section className="worker-dash__card">
-            <h2 className="worker-dash__card-title">{t('workerDashboard.messagesTitle')}</h2>
-            <p className="worker-dash__empty">{t('workerDashboard.noMessagesYet')}</p>
-            <Link to="/dashboard/worker/messages" className="worker-dash__card-link">
-              {t('workerDashboard.openInbox')}
-            </Link>
-          </section>
-
-          <section className="worker-dash__card">
-            <h2 className="worker-dash__card-title">{t('workerDashboard.scheduleTitle')}</h2>
-            {upcomingSchedule.length === 0 ? (
-              <p className="worker-dash__empty">{t('workerDashboard.noUpcomingBookings')}</p>
-            ) : (
-              <ul className="worker-dash__schedule-list">
-                {upcomingSchedule.map((row) => (
-                  <li key={row.id}>{row.label}</li>
-                ))}
-              </ul>
+        <section className="worker-dash__stat-grid" aria-label={t('workerHost.summaryStats')}>
+          <div className="worker-dash__stat-card">
+            <span className="worker-dash__stat-label">{t('workerHost.statJobsDone')}</span>
+            <span className="worker-dash__stat-value">{jobsCompleted}</span>
+          </div>
+          <div className="worker-dash__stat-card">
+            <span className="worker-dash__stat-label">{t('workerHost.statEarningsMonth')}</span>
+            <span className="worker-dash__stat-value">€{earningsMonth.toFixed(0)}</span>
+          </div>
+          <div className="worker-dash__stat-card">
+            <span className="worker-dash__stat-label">{t('workerHost.statEarningsAll')}</span>
+            <span className="worker-dash__stat-value">€{earningsAll.toFixed(0)}</span>
+          </div>
+          <div className="worker-dash__stat-card">
+            <span className="worker-dash__stat-label">{t('workerHost.statRating')}</span>
+            <span className="worker-dash__stat-value">{ratingDisplay}</span>
+          </div>
+          <div className="worker-dash__stat-card">
+            <span className="worker-dash__stat-label">{t('workerHost.statReviews')}</span>
+            <span className="worker-dash__stat-value">{reviewsCount}</span>
+          </div>
+          <div className="worker-dash__stat-card">
+            <span className="worker-dash__stat-label">{t('workerHost.statProfile')}</span>
+            <span className="worker-dash__stat-value">{completion.pct}%</span>
+            {completion.missing.length > 0 && (
+              <p className="worker-dash__stat-hint">{completion.missing.join(' · ')}</p>
             )}
-            <Link to="/dashboard/worker/schedule" className="worker-dash__card-link">
-              {t('workerDashboard.viewCalendar')}
-            </Link>
-          </section>
+          </div>
+        </section>
 
-          <section className="worker-dash__card">
-            <h2 className="worker-dash__card-title">{t('workerDashboard.profileCardTitle')}</h2>
-            <ul className="worker-dash__stats worker-dash__stats--compact">
-              <li>
-                <span className="worker-dash__stat-value">{ratingDisplay}</span>
-                <span className="worker-dash__stat-label">{t('workerDashboard.rating')}</span>
-              </li>
-              <li>
-                <span className="worker-dash__stat-value">{reviewsCount}</span>
-                <span className="worker-dash__stat-label">{t('workerDashboard.reviews')}</span>
-              </li>
-              <li>
-                <span className="worker-dash__stat-value">{packageCount}</span>
-                <span className="worker-dash__stat-label">{t('workerDashboard.listedPackages')}</span>
-              </li>
-            </ul>
-            <div className="worker-dash__card-actions">
-              <Link to="/profile/edit" className="worker-dash__card-link">
-                {t('workerDashboard.editProfile')}
-              </Link>
-              <Link
-                to={`/worker/packages/${pkgCategory}`}
-                className="worker-dash__card-link worker-dash__card-link--secondary"
-              >
-                {t('workerDashboard.managePackages')}
-              </Link>
-            </div>
-          </section>
-        </div>
+        <section className="worker-dash__quick">
+          <h2 className="worker-dash__section-h">{t('workerHost.quickActions')}</h2>
+          <div className="worker-dash__quick-links">
+            <Link to="/dashboard/worker/today" className="worker-dash__quick-link">
+              {t('workerHost.goToday')}
+            </Link>
+            <Link to="/dashboard/worker/calendar" className="worker-dash__quick-link">
+              {t('workerHost.goCalendar')}
+            </Link>
+            <Link to="/dashboard/worker/packages" className="worker-dash__quick-link">
+              {t('workerHost.goPackages')}
+            </Link>
+          </div>
+        </section>
+
+        <section className="worker-dash__activity">
+          <h2 className="worker-dash__section-h">{t('workerHost.recentActivity')}</h2>
+          <div className="worker-dash__activity-box">
+            <p className="worker-dash__empty">{t('workerHost.activityEmpty')}</p>
+          </div>
+        </section>
       </div>
     </div>
   )

@@ -17,6 +17,11 @@ import Workers from './pages/Workers'
 import WorkerDetail from './pages/WorkerDetail'
 import Dashboard from './pages/Dashboard'
 import WorkerDashboard from './pages/WorkerDashboard'
+import WorkerHostLayout from './layouts/WorkerHostLayout'
+import WorkerToday from './pages/worker/WorkerToday'
+import WorkerCalendar from './pages/worker/WorkerCalendar'
+import WorkerPackagesManage from './pages/worker/WorkerPackagesManage'
+import WorkerMessagesHost from './pages/worker/WorkerMessagesHost'
 import Profile from './pages/Profile'
 import ProfileEdit from './pages/ProfileEdit'
 import ProfilePlaceholder from './pages/ProfilePlaceholder'
@@ -158,10 +163,13 @@ function AppShell() {
           <Route path="/worker/portfolio/:category" element={<WorkerPortfolio />} />
           <Route path="/worker/packages/:category" element={<WorkerPackages />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/dashboard/worker" element={<WorkerDashboard />} />
-          <Route path="/dashboard/worker/jobs" element={<ProfilePlaceholder />} />
-          <Route path="/dashboard/worker/messages" element={<ProfilePlaceholder />} />
-          <Route path="/dashboard/worker/schedule" element={<ProfilePlaceholder />} />
+          <Route path="/dashboard/worker" element={<WorkerHostLayout />}>
+            <Route index element={<WorkerDashboard />} />
+            <Route path="today" element={<WorkerToday />} />
+            <Route path="calendar" element={<WorkerCalendar />} />
+            <Route path="packages" element={<WorkerPackagesManage />} />
+            <Route path="messages" element={<WorkerMessagesHost />} />
+          </Route>
           <Route path="/profile" element={<Profile />} />
           <Route path="/profile/edit" element={<ProfileEdit />} />
           <Route path="/profile/bookings" element={<ProfilePlaceholder />} />

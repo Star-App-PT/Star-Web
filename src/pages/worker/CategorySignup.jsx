@@ -38,6 +38,26 @@ export default function CategorySignup() {
   const offsetStart = useRef({ x: 0, y: 0 })
 
   const [coverSrc, setCoverSrc] = useState(null)
+  const [uploadingProfile, setUploadingProfile] = useState(false)
+
+  useEffect(() => {
+    let cancelled = false
+    if (!supabase) return undefined
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (cancelled || !session?.user) return
+      const m = session.user.user_metadata || {}
+      const av = m.avatar_url || m.profile_photo_url
+      const cv = m.worker_cover_photo_url
+      if (av) {
+        setImgSrc(av)
+        if (m.profile_photo_confirmed) setConfirmed(true)
+      }
+      if (cv) setCoverSrc(cv)
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   const openPicker = () => {
     if (pickerOpen.current || imgSrc) return
@@ -56,11 +76,33 @@ export default function CategorySignup() {
     setOffset({ x: 0, y: 0 })
   }
 
-  const handleCoverFile = (e) => {
+  const handleCoverFile = async (e) => {
     const file = e.target.files?.[0]
     if (!file) return
     coverFileRef.current = file
-    setCoverSrc(URL.createObjectURL(file))
+    const local = URL.createObjectURL(file)
+    setCoverSrc(local)
+    if (!supabase) return
+    try {
+      const { data: { session } } = await supabase.auth.getSession()
+      if (!session?.user) return
+      const { publicUrl } = await uploadWorkerAsset(session.user.id, 'cover', file)
+      if (!publicUrl) return
+      const { data: authData } = await supabase.auth.updateUser({
+        data: {
+          ...session.user.user_metadata,
+          worker_cover_photo_url: publicUrl,
+        },
+      })
+      if (authData?.user) {
+        await persistWorkerRowDraft(authData.user, category)
+      }
+      URL.revokeObjectURL(local)
+      setCoverSrc(publicUrl)
+      coverFileRef.current = null
+    } catch {
+      /* keep local preview */
+    }
   }
 
   const handleCancel = () => {
@@ -72,7 +114,38 @@ export default function CategorySignup() {
     if (fileRef.current) fileRef.current.value = ''
   }
 
-  const handleDone = () => setConfirmed(true)
+  const handleDone = async () => {
+    setConfirmed(true)
+    const file = profileFileRef.current
+    if (!file || !supabase) return
+    setUploadingProfile(true)
+    try {
+      const { data: { session } } = await supabase.auth.getSession()
+      if (!session?.user) return
+      const { publicUrl } = await uploadWorkerAsset(session.user.id, 'profile', file)
+      if (!publicUrl) return
+      const { data: authData } = await supabase.auth.updateUser({
+        data: {
+          ...session.user.user_metadata,
+          profile_photo_confirmed: true,
+          avatar_url: publicUrl,
+          profile_photo_url: publicUrl,
+        },
+      })
+      if (authData?.user) {
+        await persistWorkerRowDraft(authData.user, category)
+      }
+      setImgSrc(publicUrl)
+      profileFileRef.current = null
+    } finally {
+      setUploadingProfile(false)
+    }
+  }
+
+  const openProfileReplace = () => {
+    pickerOpen.current = true
+    fileRef.current?.click()
+  }
 
   const onPointerDown = useCallback((e) => {
     if (!imgSrc || confirmed) return
@@ -114,8 +187,12 @@ export default function CategorySignup() {
       try {
         const { data: { session } } = await supabase.auth.getSession()
         if (session?.user) {
-          let profileUrl = session.user.user_metadata?.avatar_url || null
-          let coverUrl = session.user.user_metadata?.worker_cover_photo_url || null
+          let profileUrl =
+            typeof imgSrc === 'string' && imgSrc.startsWith('http') ? imgSrc : session.user.user_metadata?.avatar_url || null
+          let coverUrl =
+            typeof coverSrc === 'string' && coverSrc.startsWith('http')
+              ? coverSrc
+              : session.user.user_metadata?.worker_cover_photo_url || null
           if (profileFileRef.current) {
             const { publicUrl } = await uploadWorkerAsset(session.user.id, 'profile', profileFileRef.current)
             if (publicUrl) profileUrl = publicUrl
@@ -167,10 +244,11 @@ export default function CategorySignup() {
             <p className="cs__hint">{t('profilePhoto.hint')}</p>
 
             <input ref={fileRef} type="file" accept="image/*" className="cs__file" onChange={handleFile} />
+            <div className="cs__frame-wrap">
             <div
               ref={frameRef}
               className={`cs__frame${imgSrc ? '' : ' cs__frame--empty'}`}
-              onClick={!imgSrc ? openPicker : undefined}
+              onClick={!imgSrc ? openPicker : confirmed ? openProfileReplace : undefined}
               onPointerDown={imgSrc && !confirmed ? onPointerDown : undefined}
               onWheel={imgSrc && !confirmed ? onWheel : undefined}
               style={{ cursor: imgSrc && !confirmed ? (dragging ? 'grabbing' : 'grab') : 'pointer' }}
@@ -192,6 +270,23 @@ export default function CategorySignup() {
                   <span>{t('profilePhoto.uploadLabel')}</span>
                 </div>
               )}
+            </div>
+            {imgSrc && confirmed && (
+              <button
+                type="button"
+                className="cs__frame-cam"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  openProfileReplace()
+                }}
+                aria-label={t('profilePhoto.changePhoto')}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                  <circle cx="12" cy="13" r="4"/>
+                </svg>
+              </button>
+            )}
             </div>
 
             {imgSrc && !confirmed && (
@@ -218,8 +313,8 @@ export default function CategorySignup() {
                 <button type="button" className="cs__action cs__action--cancel" onClick={handleCancel}>
                   {t('common.cancel')}
                 </button>
-                <button type="button" className="cs__action cs__action--done" onClick={handleDone}>
-                  {t('common.done')}
+                <button type="button" className="cs__action cs__action--done" onClick={handleDone} disabled={uploadingProfile}>
+                  {uploadingProfile ? t('common.submitting') : t('common.done')}
                 </button>
               </div>
             )}
@@ -238,7 +333,13 @@ export default function CategorySignup() {
           {/* ── Worker card preview ── */}
             <input ref={coverInputRef} type="file" accept="image/*" className="cs__file" onChange={handleCoverFile} />
           <div className="cs__preview">
-            <div className="cs__preview-cover" onClick={() => coverInputRef.current?.click()}>
+            <div
+              className="cs__preview-cover"
+              onClick={() => coverInputRef.current?.click()}
+              onKeyDown={(e) => e.key === 'Enter' && coverInputRef.current?.click()}
+              role="button"
+              tabIndex={0}
+            >
               <img
                 src={coverSrc || meta.defaultCover}
                 alt=""
@@ -250,12 +351,20 @@ export default function CategorySignup() {
                   <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
                 </svg>
               </span>
-              <div className="cs__preview-cam">
+              <button
+                type="button"
+                className="cs__preview-cam"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  coverInputRef.current?.click()
+                }}
+                aria-label={t('profilePhoto.changeCover')}
+              >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
                   <circle cx="12" cy="13" r="4"/>
                 </svg>
-              </div>
+              </button>
             </div>
 
             <div className="cs__preview-avatar-wrap">

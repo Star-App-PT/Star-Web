@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { supabase } from '../supabase'
 import { uploadWorkerAsset, persistWorkerRowDraft } from '../lib/workerSupabase'
+import { getDefaultGalleryUrlsForCategory } from '../lib/workerGalleryDefaults'
 import { useDemoMode } from '../contexts/DemoModeContext'
 import './WorkerPortfolio.css'
 
@@ -42,6 +43,33 @@ export default function WorkerPortfolio() {
     })
   }
 
+  const persistGalleryAndGo = async (urls) => {
+    if (!urls.length) {
+      navigate(`/worker/packages/${category}`)
+      return
+    }
+    if (!supabase) {
+      navigate(`/worker/packages/${category}`)
+      return
+    }
+    try {
+      const { data: { session } } = await supabase.auth.getSession()
+      if (session?.user) {
+        const { data: authData } = await supabase.auth.updateUser({
+          data: {
+            ...session.user.user_metadata,
+            portfolio_count: urls.length,
+            worker_gallery_urls: urls,
+          },
+        })
+        if (authData?.user) {
+          await persistWorkerRowDraft(authData.user, category, urls)
+        }
+      }
+    } catch { /* continue */ }
+    navigate(`/worker/packages/${category}`)
+  }
+
   const handleNext = async () => {
     if (photos.length === 0) return
     if (supabase) {
@@ -53,20 +81,19 @@ export default function WorkerPortfolio() {
             const { publicUrl } = await uploadWorkerAsset(session.user.id, `gallery-${i}`, photos[i].file)
             if (publicUrl) urls.push(publicUrl)
           }
-          const { data: authData } = await supabase.auth.updateUser({
-            data: {
-              ...session.user.user_metadata,
-              portfolio_count: photos.length,
-              worker_gallery_urls: urls,
-            },
-          })
-          if (authData?.user) {
-            await persistWorkerRowDraft(authData.user, category, urls)
-          }
+          await persistGalleryAndGo(urls)
+          return
         }
       } catch { /* continue */ }
     }
     navigate(`/worker/packages/${category}`)
+  }
+
+  const handleSkip = async () => {
+    const { data: { session } } = (await supabase?.auth.getSession()) || { data: { session: null } }
+    const specialty = session?.user?.user_metadata?.worker_specialty
+    const defaults = getDefaultGalleryUrlsForCategory(category, specialty)
+    await persistGalleryAndGo(defaults)
   }
 
   return (
@@ -130,6 +157,13 @@ export default function WorkerPortfolio() {
           </div>
 
           <p className="wp__counter">{photos.length} / {MAX_PHOTOS} {t('portfolio.photos')}</p>
+
+          <div className="wp__skip-block">
+            <button type="button" className="wp__skip btn-back" onClick={handleSkip}>
+              {t('portfolio.skipForNow')}
+            </button>
+            <p className="wp__skip-hint">{t('portfolio.skipHint')}</p>
+          </div>
         </div>
       </div>
 

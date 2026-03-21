@@ -37,9 +37,9 @@ export default function WorkerSignupCategoryModal({ open, onClose, onContinue })
 
   if (!open) return null
 
-  const handleContinue = () => {
+  const handleContinue = async () => {
     if (!selected) return
-    onContinue(selected)
+    await onContinue(selected)
   }
 
   return (
