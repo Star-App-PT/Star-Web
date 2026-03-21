@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { supabase } from '../../supabase'
 import { uploadWorkerAsset, persistWorkerRowDraft } from '../../lib/workerSupabase'
 import { useDemoMode } from '../../contexts/DemoModeContext'
+import { Camera } from 'lucide-react'
 import actionHomeCleaning from '../../assets/workers/action/action-home-cleaning.jpg'
 import actionCarpentry from '../../assets/workers/action/action-carpentry.jpg'
 import actionPhotography from '../../assets/workers/action/action-photography.jpg'
@@ -28,6 +29,7 @@ export default function CategorySignup() {
   const coverFileRef = useRef(null)
   const frameRef = useRef(null)
   const pickerOpen = useRef(false)
+  const suppressFrameClickRef = useRef(false)
 
   const [imgSrc, setImgSrc] = useState(null)
   const [confirmed, setConfirmed] = useState(false)
@@ -147,9 +149,19 @@ export default function CategorySignup() {
     fileRef.current?.click()
   }
 
+  const handleFrameClick = () => {
+    if (suppressFrameClickRef.current) {
+      suppressFrameClickRef.current = false
+      return
+    }
+    if (!imgSrc) openPicker()
+    else openProfileReplace()
+  }
+
   const onPointerDown = useCallback((e) => {
     if (!imgSrc || confirmed) return
     e.preventDefault()
+    suppressFrameClickRef.current = false
     setDragging(true)
     dragStart.current = { x: e.clientX, y: e.clientY }
     offsetStart.current = { ...offset }
@@ -157,6 +169,9 @@ export default function CategorySignup() {
 
   const onPointerMove = useCallback((e) => {
     if (!dragging) return
+    const dx = e.clientX - dragStart.current.x
+    const dy = e.clientY - dragStart.current.y
+    if (dx * dx + dy * dy > 64) suppressFrameClickRef.current = true
     setOffset({
       x: offsetStart.current.x + (e.clientX - dragStart.current.x),
       y: offsetStart.current.y + (e.clientY - dragStart.current.y),
@@ -248,7 +263,7 @@ export default function CategorySignup() {
             <div
               ref={frameRef}
               className={`cs__frame${imgSrc ? '' : ' cs__frame--empty'}`}
-              onClick={!imgSrc ? openPicker : confirmed ? openProfileReplace : undefined}
+              onClick={handleFrameClick}
               onPointerDown={imgSrc && !confirmed ? onPointerDown : undefined}
               onWheel={imgSrc && !confirmed ? onWheel : undefined}
               style={{ cursor: imgSrc && !confirmed ? (dragging ? 'grabbing' : 'grab') : 'pointer' }}
@@ -271,22 +286,18 @@ export default function CategorySignup() {
                 </div>
               )}
             </div>
-            {imgSrc && confirmed && (
-              <button
-                type="button"
-                className="cs__frame-cam"
-                onClick={(e) => {
-                  e.stopPropagation()
-                  openProfileReplace()
-                }}
-                aria-label={t('profilePhoto.changePhoto')}
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-                  <circle cx="12" cy="13" r="4"/>
-                </svg>
-              </button>
-            )}
+            <button
+              type="button"
+              className="cs__frame-cam"
+              onClick={(e) => {
+                e.stopPropagation()
+                if (!imgSrc) openPicker()
+                else openProfileReplace()
+              }}
+              aria-label={t('profilePhoto.changePhoto')}
+            >
+              <Camera className="cs__frame-cam-icon" strokeWidth={2} aria-hidden />
+            </button>
             </div>
 
             {imgSrc && !confirmed && (
