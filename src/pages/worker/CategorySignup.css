@@ -109,9 +109,9 @@
 .cs__frame-cam {
   position: absolute;
   left: 50%;
-  bottom: 0;
-  /* Half inside / half outside the circle — same overlap logic as inset cover cam on photo */
-  transform: translate(-50%, 50%);
+  /* Sit just inside the inner edge of the photo (clear of the 3px white ring), overlapping image only */
+  bottom: 10px;
+  transform: translateX(-50%);
   z-index: 2;
   width: 40px;
   height: 40px;
