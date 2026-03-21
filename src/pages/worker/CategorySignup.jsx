@@ -296,7 +296,7 @@ export default function CategorySignup() {
               }}
               aria-label={t('profilePhoto.changePhoto')}
             >
-              <Camera className="cs__frame-cam-icon" strokeWidth={2} aria-hidden />
+              <Camera className="cs__frame-cam-icon" strokeWidth={1.5} aria-hidden />
             </button>
             </div>
 
