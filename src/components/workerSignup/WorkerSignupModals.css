@@ -212,6 +212,123 @@
   font-size: 2.5rem;
 }
 
+/* Auth modal (Be a Star): match SignupLogin /sign-in card footprint */
+.ws-modal--auth .ws-modal__panel {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 16px;
+  margin: 16px;
+  border: 1px solid #e8e8e8;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+}
+
+.ws-modal--auth .ws-modal__close {
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  background: #f3f3f3;
+}
+
+.ws-modal--auth .ws-modal__scroll {
+  padding: 52px 24px 32px;
+}
+
+.ws-modal--auth .ws-modal__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 8px;
+  padding-right: 40px;
+  line-height: 1.25;
+  letter-spacing: normal;
+}
+
+.ws-modal--auth .ws-modal__sub {
+  font-size: 0.9rem;
+  margin: 0 0 20px;
+  line-height: 1.45;
+}
+
+.ws-modal--auth .ws-modal__socials {
+  gap: 12px;
+}
+
+.ws-modal--auth .ws-modal__social {
+  gap: 12px;
+  padding: 14px 24px;
+  font-size: 1rem;
+  font-weight: 500;
+  border-width: 1.5px;
+  border-color: #222;
+  border-radius: 8px;
+}
+
+.ws-modal--auth .ws-modal__social:hover:not(:disabled) {
+  background: #f7f7f7;
+  border-color: #222;
+}
+
+.ws-modal--auth .ws-modal__social-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.ws-modal--auth .ws-modal__form {
+  gap: 12px;
+}
+
+.ws-modal--auth .ws-modal__label {
+  font-size: 0.75rem;
+  margin-bottom: 4px;
+}
+
+.ws-modal--auth .ws-modal__input {
+  padding: 14px 16px;
+  font-size: 1rem;
+  border-width: 1.5px;
+  border-color: #ccc;
+  border-radius: 8px;
+}
+
+.ws-modal--auth .ws-modal__input:focus {
+  box-shadow: 0 0 0 1px #222;
+}
+
+.ws-modal--auth .ws-modal__error {
+  font-size: 0.85rem;
+}
+
+.ws-modal--auth .ws-modal__btn-primary {
+  padding: 14px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  margin-top: 4px;
+}
+
+.ws-modal--auth .ws-modal__btn-text {
+  padding: 8px 0;
+  margin-top: 8px;
+  font-size: 0.9rem;
+  color: #717171;
+  text-decoration: none;
+}
+
+.ws-modal--auth .ws-modal__btn-text:hover {
+  color: #222;
+  text-decoration: underline;
+}
+
+.ws-modal--auth .ws-modal__code {
+  letter-spacing: 0.5em;
+  font-size: 1.25rem;
+}
+
+.ws-modal--auth .ws-modal__demo {
+  font-size: 0.85rem;
+  margin-top: 20px;
+}
+
 /* Category gate only: ~20% smaller panel and contents */
 .ws-modal--category .ws-modal__panel {
   max-width: 704px;
@@ -456,5 +573,53 @@
   .ws-modal--category .ws-modal__cat-icon {
     width: 58px;
     height: 58px;
+  }
+
+  /* Auth modal: keep compact card like /signup on small screens */
+  .ws-modal--auth {
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .ws-modal--auth .ws-modal__panel {
+    max-width: 400px;
+    width: 100%;
+    height: auto;
+    max-height: calc(100vh - 48px);
+    margin: 0;
+    border-radius: 16px;
+    border: 1px solid #e8e8e8;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    transform: translateY(12px) scale(0.98);
+  }
+
+  .ws-modal--auth.ws-modal--open .ws-modal__panel {
+    transform: translateY(0) scale(1);
+  }
+
+  .ws-modal--auth .ws-modal__scroll {
+    flex: 0 1 auto;
+    padding: 52px 20px max(28px, env(safe-area-inset-bottom));
+  }
+
+  .ws-modal--auth .ws-modal__title {
+    font-size: 1.5rem;
+    padding-right: 40px;
+  }
+
+  .ws-modal--auth .ws-modal__sub {
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+  }
+
+  .ws-modal--auth .ws-modal__social {
+    font-size: 1rem;
+    padding: 14px 20px;
+  }
+
+  .ws-modal--auth .ws-modal__btn-primary {
+    font-size: 1rem;
+    padding: 14px 24px;
   }
 }

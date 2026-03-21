@@ -133,7 +133,7 @@ export default function WorkerSignupAuthModal({ open, onClose }) {
   const showEmail = view === 'email'
 
   return (
-    <div className={`ws-modal${visible ? ' ws-modal--open' : ''}`} role="presentation">
+    <div className={`ws-modal ws-modal--auth${visible ? ' ws-modal--open' : ''}`} role="presentation">
       <button type="button" className="ws-modal__backdrop" aria-label={t('common.cancel')} onClick={onClose} />
       <div
         className="ws-modal__panel"
@@ -143,7 +143,7 @@ export default function WorkerSignupAuthModal({ open, onClose }) {
         onClick={(e) => e.stopPropagation()}
       >
         <button type="button" className="ws-modal__close" onClick={onClose} aria-label={t('common.cancel')}>
-          <X size={28} strokeWidth={2} />
+          <X size={20} strokeWidth={2} />
         </button>
 
         <div className="ws-modal__scroll">
