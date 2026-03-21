@@ -2,7 +2,7 @@ import { useState, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { supabase } from '../supabase'
-import { uploadWorkerAsset } from '../lib/workerSupabase'
+import { uploadWorkerAsset, persistWorkerRowDraft } from '../lib/workerSupabase'
 import { useDemoMode } from '../contexts/DemoModeContext'
 import './WorkerPortfolio.css'
 
@@ -53,13 +53,16 @@ export default function WorkerPortfolio() {
             const { publicUrl } = await uploadWorkerAsset(session.user.id, `gallery-${i}`, photos[i].file)
             if (publicUrl) urls.push(publicUrl)
           }
-          await supabase.auth.updateUser({
+          const { data: authData } = await supabase.auth.updateUser({
             data: {
               ...session.user.user_metadata,
               portfolio_count: photos.length,
               worker_gallery_urls: urls,
             },
           })
+          if (authData?.user) {
+            await persistWorkerRowDraft(authData.user, category, urls)
+          }
         }
       } catch { /* continue */ }
     }

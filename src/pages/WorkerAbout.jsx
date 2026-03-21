@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { supabase } from '../supabase'
+import { persistWorkerRowDraft } from '../lib/workerSupabase'
 import { useDemoMode } from '../contexts/DemoModeContext'
 import './WorkerAbout.css'
 
@@ -34,7 +35,7 @@ export default function WorkerAbout() {
       try {
         const { data: { session } } = await supabase.auth.getSession()
         if (session?.user) {
-          await supabase.auth.updateUser({
+          const { data: authData } = await supabase.auth.updateUser({
             data: {
               worker_years: years,
               worker_notable: notable.trim(),
@@ -42,6 +43,9 @@ export default function WorkerAbout() {
               worker_honours: honours.trim(),
             },
           })
+          if (authData?.user) {
+            await persistWorkerRowDraft(authData.user, placeholderCategory)
+          }
         }
       } catch { /* continue even if save fails */ }
     }

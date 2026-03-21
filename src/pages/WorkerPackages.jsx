@@ -55,6 +55,7 @@ export default function WorkerPackages() {
   const [packages, setPackages] = useState([{ ...EMPTY_PKG, id: crypto.randomUUID() }])
   const [activeThumbId, setActiveThumbId] = useState(null)
   const [finishing, setFinishing] = useState(false)
+  const [finishError, setFinishError] = useState('')
 
   if (!category) {
     navigate('/worker/signup', { replace: true })
@@ -102,6 +103,7 @@ export default function WorkerPackages() {
 
   const handleNext = async () => {
     if (!isValid || finishing) return
+    setFinishError('')
     setFinishing(true)
     try {
       let session = null
@@ -123,15 +125,21 @@ export default function WorkerPackages() {
           description: p.description.trim(),
           thumbFile: p.thumbFile instanceof File ? p.thumbFile : null,
         }))
-      if (supabase && pkgList.length) {
-        await finalizeWorkerOnboarding(session.user, category, pkgList)
+      if (!supabase || !pkgList.length) {
+        setFinishError(t('common.somethingWentWrong'))
+        return
+      }
+      const { error: finErr } = await finalizeWorkerOnboarding(session.user, category, pkgList)
+      if (finErr) {
+        console.warn('[WorkerPackages] finish onboarding', finErr)
+        setFinishError(finErr.message || t('common.somethingWentWrong'))
+        return
       }
       setMode('worker')
       navigate('/dashboard/worker', { replace: true })
     } catch (err) {
       console.warn('[WorkerPackages] finish onboarding', err)
-      setMode('worker')
-      navigate('/dashboard/worker', { replace: true })
+      setFinishError(t('common.somethingWentWrong'))
     } finally {
       setFinishing(false)
     }
@@ -316,6 +324,11 @@ export default function WorkerPackages() {
       </div>
 
       <div className="pk__footer">
+        {finishError && (
+          <p className="pk__error" role="alert">
+            {finishError}
+          </p>
+        )}
         <button
           type="button"
           className="pk__next btn-primary"

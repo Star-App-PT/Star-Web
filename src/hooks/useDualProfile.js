@@ -4,20 +4,24 @@ import { hasWorkerProfileFromMetadata } from '../lib/clientWorkerMode'
 
 /**
  * Client profile = row in `clients` (post client signup).
- * Worker profile = auth metadata (see hasWorkerProfileFromMetadata).
+ * Worker profile = workers row for auth user id, and/or auth metadata (is_worker, worker_packages).
  */
 export function useDualProfile(user) {
   const [hasClientProfile, setHasClientProfile] = useState(false)
+  const [hasWorkerRow, setHasWorkerRow] = useState(false)
   const [loading, setLoading] = useState(!!user?.id)
 
-  const hasWorkerProfile = useMemo(
+  const hasWorkerFromMeta = useMemo(
     () => hasWorkerProfileFromMetadata(user?.user_metadata),
     [user?.user_metadata],
   )
 
+  const hasWorkerProfile = hasWorkerFromMeta || hasWorkerRow
+
   useEffect(() => {
     if (!user?.id || !supabase) {
       setHasClientProfile(false)
+      setHasWorkerRow(false)
       setLoading(false)
       return
     }
@@ -25,20 +29,23 @@ export function useDualProfile(user) {
     let cancelled = false
     setLoading(true)
 
-    supabase
-      .from('clients')
-      .select('id')
-      .eq('id', user.id)
-      .maybeSingle()
-      .then(({ data, error }) => {
-        if (cancelled) return
-        if (error) {
-          setHasClientProfile(false)
-        } else {
-          setHasClientProfile(!!data)
-        }
-        setLoading(false)
-      })
+    Promise.all([
+      supabase.from('clients').select('id').eq('id', user.id).maybeSingle(),
+      supabase.from('workers').select('id').eq('id', user.id).maybeSingle(),
+    ]).then(([clientRes, workerRes]) => {
+      if (cancelled) return
+      if (clientRes.error) {
+        setHasClientProfile(false)
+      } else {
+        setHasClientProfile(!!clientRes.data)
+      }
+      if (workerRes.error) {
+        setHasWorkerRow(false)
+      } else {
+        setHasWorkerRow(!!workerRes.data)
+      }
+      setLoading(false)
+    })
 
     return () => {
       cancelled = true

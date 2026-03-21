@@ -37,30 +37,43 @@ export async function upsertWorkerRow(row) {
   }
   const { error } = await supabase.from('workers').upsert(payload, { onConflict: 'id' })
   if (error) {
+    console.warn('[workerSupabase] workers upsert', error)
     const msg = String(error.message || '')
     if (error.code === '42P01' || msg.includes('does not exist')) {
-      return { error: null }
+      return { error: new Error('Database table `workers` is missing. Run supabase/migrations in the Supabase SQL editor.') }
     }
-    console.warn('[workerSupabase] workers upsert', error)
+    return { error }
   }
-  return { error: error && error.code !== '42P01' ? error : null }
+  return { error: null }
 }
 
 export async function replaceWorkerServicePackages(workerId, packageRows) {
-  if (!supabase) return { error: null }
+  if (!supabase) return { error: new Error('no supabase') }
   const { error: delErr } = await supabase.from('worker_service_packages').delete().eq('worker_id', workerId)
-  if (delErr && delErr.code !== '42P01' && !String(delErr.message || '').includes('does not exist')) {
+  if (delErr) {
+    const msg = String(delErr.message || '')
+    if (delErr.code === '42P01' || msg.includes('does not exist')) {
+      return { error: new Error('Database table `worker_service_packages` is missing. Run supabase/migrations.') }
+    }
     console.warn('[workerSupabase] packages delete', delErr)
+    return { error: delErr }
   }
   if (!packageRows.length) return { error: null }
   const { error } = await supabase.from('worker_service_packages').insert(packageRows)
-  if (error && error.code !== '42P01') {
+  if (error) {
     console.warn('[workerSupabase] packages insert', error)
+    if (error.code === '42P01' || String(error.message || '').includes('does not exist')) {
+      return { error: new Error('Database table `worker_service_packages` is missing. Run supabase/migrations.') }
+    }
+    return { error }
   }
-  return { error: error && error.code !== '42P01' ? error : null }
+  return { error: null }
 }
 
-export function buildWorkerRowFromMeta(user, categoryFromRoute, galleryUrlsOverride) {
+/**
+ * @param {{ complete?: boolean }} [options] — when false (default), onboarding/profile_complete stay false unless already finished (handled in persistWorkerRowDraft).
+ */
+export function buildWorkerRowFromMeta(user, categoryFromRoute, galleryUrlsOverride, options = {}) {
   const m = user.user_metadata || {}
   const parts = [m.worker_notable, m.worker_training, m.worker_honours].filter((x) => String(x || '').trim())
   const bio = parts.join('\n\n').trim() || String(m.worker_bio || '').trim()
@@ -71,6 +84,7 @@ export function buildWorkerRowFromMeta(user, categoryFromRoute, galleryUrlsOverr
   } else if (Array.isArray(m.worker_gallery_urls)) {
     gl = m.worker_gallery_urls
   }
+  const complete = options.complete === true
   return {
     id: user.id,
     display_name: m.full_name || m.name || user.email?.split('@')[0] || 'Star professional',
@@ -89,8 +103,32 @@ export function buildWorkerRowFromMeta(user, categoryFromRoute, galleryUrlsOverr
     metadata_notable: m.worker_notable || null,
     metadata_training: m.worker_training || null,
     metadata_honours: m.worker_honours || null,
-    onboarding_complete: true,
+    onboarding_complete: complete,
+    profile_complete: complete,
   }
+}
+
+/** Upsert workers row from current session user metadata (draft = not finished onboarding). */
+export async function persistWorkerRowDraft(user, categoryFromRoute, galleryUrlsOverride) {
+  if (!supabase || !user?.id) return { error: new Error('Not signed in') }
+
+  const { data: existing, error: readErr } = await supabase
+    .from('workers')
+    .select('onboarding_complete,profile_complete')
+    .eq('id', user.id)
+    .maybeSingle()
+
+  if (readErr && readErr.code !== '42P01' && !String(readErr.message || '').includes('does not exist')) {
+    console.warn('[workerSupabase] workers read for draft', readErr)
+  }
+
+  const preserveComplete =
+    existing?.onboarding_complete === true || existing?.profile_complete === true
+
+  const row = buildWorkerRowFromMeta(user, categoryFromRoute, galleryUrlsOverride, {
+    complete: preserveComplete,
+  })
+  return upsertWorkerRow(row)
 }
 
 /**
@@ -101,8 +139,9 @@ export function buildWorkerRowFromMeta(user, categoryFromRoute, galleryUrlsOverr
 export async function finalizeWorkerOnboarding(user, categoryFromRoute, pkgList) {
   if (!supabase || !user?.id) return { error: new Error('Not signed in') }
 
-  const row = buildWorkerRowFromMeta(user, categoryFromRoute)
-  await upsertWorkerRow(row)
+  const row = buildWorkerRowFromMeta(user, categoryFromRoute, undefined, { complete: true })
+  const { error: rowErr } = await upsertWorkerRow(row)
+  if (rowErr) return { error: rowErr }
 
   const pkgRows = []
   for (let i = 0; i < pkgList.length; i++) {
@@ -127,7 +166,8 @@ export async function finalizeWorkerOnboarding(user, categoryFromRoute, pkgList)
     })
   }
 
-  await replaceWorkerServicePackages(user.id, pkgRows)
+  const { error: pkgErr } = await replaceWorkerServicePackages(user.id, pkgRows)
+  if (pkgErr) return { error: pkgErr }
 
   const pkgMeta = pkgRows.map((r) => ({
     title: r.title,
@@ -145,6 +185,7 @@ export async function finalizeWorkerOnboarding(user, categoryFromRoute, pkgList)
       ...meta,
       worker_packages: pkgMeta,
       is_worker: true,
+      worker_profile_complete: true,
       profile_complete: true,
     },
   })

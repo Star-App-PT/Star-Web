@@ -5,6 +5,7 @@ import { useState, useRef, useCallback, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { supabase } from '../supabase'
+import { persistWorkerRowDraft } from '../lib/workerSupabase'
 import 'leaflet/dist/leaflet.css'
 import cleanerImg from '../assets/workers/cleaners/cleaner-4.jpg'
 import handymanImg from '../assets/workers/handymen/handyman-1.jpg'
@@ -209,7 +210,7 @@ export default function ServiceArea() {
       try {
         const { data: { session } } = await supabase.auth.getSession()
         if (session?.user) {
-          await supabase.auth.updateUser({
+          const { data: authData } = await supabase.auth.updateUser({
             data: {
               service_area_address: address.display,
               service_area_lat: address.lat,
@@ -217,6 +218,9 @@ export default function ServiceArea() {
               service_area_drive_time: driveTime,
             },
           })
+          if (authData?.user) {
+            await persistWorkerRowDraft(authData.user, category)
+          }
         }
       } catch { /* continue */ }
     }

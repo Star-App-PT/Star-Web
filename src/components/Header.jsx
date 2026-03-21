@@ -18,7 +18,7 @@ export default function Header() {
   const [searchParams] = useSearchParams()
   const { user } = useAuthSession()
   const { mode, setMode } = useAppMode()
-  const { loading: dualLoading, hasWorkerProfile, hasBothProfiles } = useDualProfile(user)
+  const { loading: dualLoading, hasClientProfile, hasWorkerProfile } = useDualProfile(user)
 
   const activeCategory = location.pathname === '/' ? (searchParams.get('category') || 'cleaners') : null
 
@@ -70,7 +70,7 @@ export default function Header() {
           </div>
         )}
         <nav className="star-header__nav">
-          {user && !dualLoading && hasBothProfiles && mode === 'client' && (
+          {user && !dualLoading && hasWorkerProfile && mode === 'client' && (
             <Link
               to="/dashboard/worker"
               className="star-header__mode-link"
@@ -79,7 +79,7 @@ export default function Header() {
               {t('header.switchToWorker')}
             </Link>
           )}
-          {user && !dualLoading && hasBothProfiles && mode === 'worker' && (
+          {user && !dualLoading && hasClientProfile && mode === 'worker' && (
             <Link to="/" className="star-header__mode-link" onClick={() => setMode('client')}>
               {t('header.switchToClient')}
             </Link>

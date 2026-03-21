@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { supabase } from '../../supabase'
+import { persistWorkerRowDraft } from '../../lib/workerSupabase'
 import { useAuthSession } from '../../contexts/AuthSessionContext'
 import WorkerSignupAuthModal from '../../components/workerSignup/WorkerSignupAuthModal'
 import WorkerSignupCategoryModal from '../../components/workerSignup/WorkerSignupCategoryModal'
@@ -37,7 +38,12 @@ export default function WorkerSignup() {
   const handleCategoryContinue = async (categoryId) => {
     if (supabase) {
       try {
-        await supabase.auth.updateUser({ data: { worker_category: categoryId } })
+        const { data: authData } = await supabase.auth.updateUser({
+          data: { worker_category: categoryId },
+        })
+        if (authData?.user) {
+          await persistWorkerRowDraft(authData.user, categoryId)
+        }
       } catch {
         /* continue navigation even if metadata update fails */
       }

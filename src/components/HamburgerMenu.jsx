@@ -71,6 +71,18 @@ function IconHelp() {
   )
 }
 
+function BecomeStarPromo({ onNavigate, t }) {
+  return (
+    <Link to="/worker/signup" className="hmenu__promo" onClick={onNavigate}>
+      <div className="hmenu__promo-text">
+        <span className="hmenu__promo-title">{t('header.becomeAStar')}</span>
+        <span className="hmenu__promo-sub">{t('header.becomeAStarSubtitle')}</span>
+      </div>
+      <img src={starWorkerIllustration} alt="" className="hmenu__promo-img" />
+    </Link>
+  )
+}
+
 export default function HamburgerMenu() {
   const { t } = useTranslation()
   const navigate = useNavigate()
@@ -80,7 +92,7 @@ export default function HamburgerMenu() {
   const [langModalOpen, setLangModalOpen] = useState(false)
   const { user } = useAuthSession()
   const { mode, setMode } = useAppMode()
-  const { loading: dualLoading, hasWorkerProfile, hasBothProfiles } = useDualProfile(user)
+  const { loading: dualLoading, hasClientProfile, hasWorkerProfile } = useDualProfile(user)
   const isLoggedIn = !!user
   const ref = useRef(null)
 
@@ -136,7 +148,7 @@ export default function HamburgerMenu() {
         <div className={`hmenu__dropdown ${menuAnimIn ? 'hmenu__dropdown--enter' : ''}`}>
           {isLoggedIn ? (
             <>
-              {!dualLoading && hasBothProfiles && mode === 'client' && (
+              {!dualLoading && hasWorkerProfile && mode === 'client' && (
                 <Link
                   to="/dashboard/worker"
                   className="hmenu__item"
@@ -148,7 +160,7 @@ export default function HamburgerMenu() {
                   <span className="hmenu__item-text-only">{t('header.switchToWorker')}</span>
                 </Link>
               )}
-              {!dualLoading && hasBothProfiles && mode === 'worker' && (
+              {!dualLoading && hasClientProfile && mode === 'worker' && (
                 <Link
                   to="/"
                   className="hmenu__item"
@@ -160,7 +172,10 @@ export default function HamburgerMenu() {
                   <span className="hmenu__item-text-only">{t('header.switchToClient')}</span>
                 </Link>
               )}
-              {hasBothProfiles && !dualLoading && <div className="hmenu__sep" />}
+              {!dualLoading &&
+                ((hasWorkerProfile && mode === 'client') || (hasClientProfile && mode === 'worker')) && (
+                  <div className="hmenu__sep" />
+                )}
 
               <Link to="/client/favourites" className="hmenu__item" onClick={() => setOpen(false)}>
                 <IconHeart />
@@ -196,17 +211,9 @@ export default function HamburgerMenu() {
 
               <div className="hmenu__sep" />
 
-              {!dualLoading && !hasWorkerProfile && (
-                <Link to="/worker/signup" className="hmenu__promo" onClick={() => setOpen(false)}>
-                  <div className="hmenu__promo-text">
-                    <span className="hmenu__promo-title">{t('header.becomeAStar')}</span>
-                    <span className="hmenu__promo-sub">{t('header.becomeAStarSubtitle')}</span>
-                  </div>
-                  <img src={starWorkerIllustration} alt="" className="hmenu__promo-img" />
-                </Link>
-              )}
+              <BecomeStarPromo onNavigate={() => setOpen(false)} t={t} />
 
-              {!dualLoading && !hasWorkerProfile && <div className="hmenu__sep" />}
+              <div className="hmenu__sep" />
 
               <button type="button" className="hmenu__item hmenu__item--signout" onClick={handleSignOut}>
                 {t('dashboard.signOut')}
@@ -223,14 +230,20 @@ export default function HamburgerMenu() {
 
               <div className="hmenu__sep" />
 
-              <Link to="/worker/signup" className="hmenu__item hmenu__item--plain" onClick={() => setOpen(false)}>
-                {t('header.becomeAStar')}
+              <Link to="/help" className="hmenu__item" onClick={() => setOpen(false)}>
+                <IconHelp />
+                <span>{t('header.helpCentre')}</span>
               </Link>
-              <Link to="/help" className="hmenu__item hmenu__item--plain" onClick={() => setOpen(false)}>
-                {t('header.helpCentre')}
-              </Link>
-              <button type="button" className="hmenu__item hmenu__item--plain" onClick={openLanguageModal}>
-                {t('hamburger.languageCurrency')}
+
+              <div className="hmenu__sep" />
+
+              <BecomeStarPromo onNavigate={() => setOpen(false)} t={t} />
+
+              <div className="hmenu__sep" />
+
+              <button type="button" className="hmenu__item" onClick={openLanguageModal}>
+                <IconGlobe />
+                <span>{t('hamburger.languageCurrency')}</span>
               </button>
             </>
           )}

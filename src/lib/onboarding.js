@@ -25,15 +25,21 @@ export async function hasCompletedOnboarding(user) {
 
   const { data: worker, error: workerErr } = await supabase
     .from('workers')
-    .select('id')
+    .select('onboarding_complete,profile_complete')
     .eq('id', user.id)
     .maybeSingle()
 
-  if (!workerErr && worker) return true
+  if (
+    !workerErr &&
+    worker &&
+    (worker.onboarding_complete === true || worker.profile_complete === true)
+  ) {
+    return true
+  }
 
   if (meta.is_worker === true) return true
+  if (meta.worker_profile_complete === true) return true
   if (Array.isArray(meta.worker_packages) && meta.worker_packages.length > 0) return true
-  if (meta.profile_complete === true) return true
 
   return false
 }

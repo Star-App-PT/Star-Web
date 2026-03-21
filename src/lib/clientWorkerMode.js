@@ -8,8 +8,9 @@ export const APP_MODE_STORAGE_KEY = 'star_active_mode'
  */
 export function hasWorkerProfileFromMetadata(meta) {
   if (!meta || typeof meta !== 'object') return false
-  if (meta.profile_complete === true) return true
+  // Do not use profile_complete — FinishProfile sets that for legal/client signup, not worker onboarding.
   if (meta.is_worker === true) return true
+  if (meta.worker_profile_complete === true) return true
   if (Array.isArray(meta.worker_packages) && meta.worker_packages.length > 0) return true
   return false
 }

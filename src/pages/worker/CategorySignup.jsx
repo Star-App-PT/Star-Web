@@ -2,7 +2,7 @@ import { useState, useRef, useCallback, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { supabase } from '../../supabase'
-import { uploadWorkerAsset } from '../../lib/workerSupabase'
+import { uploadWorkerAsset, persistWorkerRowDraft } from '../../lib/workerSupabase'
 import { useDemoMode } from '../../contexts/DemoModeContext'
 import actionHomeCleaning from '../../assets/workers/action/action-home-cleaning.jpg'
 import actionCarpentry from '../../assets/workers/action/action-carpentry.jpg'
@@ -124,7 +124,7 @@ export default function CategorySignup() {
             const { publicUrl } = await uploadWorkerAsset(session.user.id, 'cover', coverFileRef.current)
             if (publicUrl) coverUrl = publicUrl
           }
-          await supabase.auth.updateUser({
+          const { data: authData } = await supabase.auth.updateUser({
             data: {
               ...session.user.user_metadata,
               profile_photo_confirmed: true,
@@ -132,6 +132,9 @@ export default function CategorySignup() {
               ...(coverUrl && { worker_cover_photo_url: coverUrl }),
             },
           })
+          if (authData?.user) {
+            await persistWorkerRowDraft(authData.user, category)
+          }
         }
       } catch { /* continue */ }
     }
