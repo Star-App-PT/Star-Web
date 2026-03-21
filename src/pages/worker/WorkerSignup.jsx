@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { supabase } from '../../supabase'
+import { fetchWorkerDraftRow } from '../../lib/workerSupabase'
+import { inferWorkerOnboardingStep, pathForWorkerOnboardingStep } from '../../lib/workerOnboardingResume'
 import { continueWorkerCategorySignup } from '../../lib/workerCategoryContinue'
 import { useAuthSession } from '../../contexts/AuthSessionContext'
 import WorkerSignupAuthModal from '../../components/workerSignup/WorkerSignupAuthModal'
@@ -26,6 +28,27 @@ export default function WorkerSignup() {
     if (!bootstrapped) return
     if (user && user.user_metadata?.profile_complete !== true) {
       navigate('/worker/finish-profile', { replace: true })
+    }
+  }, [bootstrapped, user, navigate])
+
+  useEffect(() => {
+    if (!bootstrapped || !user || user.user_metadata?.profile_complete !== true) return
+    if (!supabase) return
+    let cancelled = false
+    ;(async () => {
+      const row = await fetchWorkerDraftRow(user.id)
+      if (cancelled) return
+      if (row?.onboarding_complete === true || row?.profile_complete === true) {
+        navigate(`/worker/${user.id}`, { replace: true })
+        return
+      }
+      const cat = row?.category || user.user_metadata?.worker_category
+      if (!cat || !['cleaning', 'repairs', 'services'].includes(cat)) return
+      const step = row?.onboarding_step || inferWorkerOnboardingStep(user, row)
+      navigate(pathForWorkerOnboardingStep(step, cat), { replace: true })
+    })()
+    return () => {
+      cancelled = true
     }
   }, [bootstrapped, user, navigate])
 

@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { supabase } from '../../supabase'
 import { uploadWorkerAsset, persistWorkerRowDraft } from '../../lib/workerSupabase'
+import { useWorkerOnboardingResume } from '../../hooks/useWorkerOnboardingResume'
 import { useDemoMode } from '../../contexts/DemoModeContext'
 import { Camera } from 'lucide-react'
 import actionHomeCleaning from '../../assets/workers/action/action-home-cleaning.jpg'
@@ -22,6 +23,8 @@ export default function CategorySignup() {
   const navigate = useNavigate()
   const { isDemoMode } = useDemoMode()
   const meta = CATEGORY_META[category] || CATEGORY_META.cleaning
+
+  useWorkerOnboardingResume('profile_photos', category)
 
   const fileRef = useRef(null)
   const coverInputRef = useRef(null)
@@ -97,7 +100,7 @@ export default function CategorySignup() {
         },
       })
       if (authData?.user) {
-        await persistWorkerRowDraft(authData.user, category)
+        await persistWorkerRowDraft(authData.user, category, undefined, { onboardingStep: 'profile_photos' })
       }
       URL.revokeObjectURL(local)
       setCoverSrc(publicUrl)
@@ -135,7 +138,7 @@ export default function CategorySignup() {
         },
       })
       if (authData?.user) {
-        await persistWorkerRowDraft(authData.user, category)
+        await persistWorkerRowDraft(authData.user, category, undefined, { onboardingStep: 'profile_photos' })
       }
       setImgSrc(publicUrl)
       profileFileRef.current = null
@@ -225,7 +228,7 @@ export default function CategorySignup() {
             },
           })
           if (authData?.user) {
-            await persistWorkerRowDraft(authData.user, category)
+            await persistWorkerRowDraft(authData.user, category, undefined, { onboardingStep: 'portfolio' })
           }
         }
       } catch { /* continue */ }

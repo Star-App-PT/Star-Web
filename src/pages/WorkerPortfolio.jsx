@@ -1,8 +1,14 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { supabase } from '../supabase'
-import { uploadWorkerAsset, persistWorkerRowDraft } from '../lib/workerSupabase'
+import {
+  uploadWorkerAsset,
+  persistWorkerRowDraft,
+  fetchWorkerDraftRow,
+  normalizeGalleryUrls,
+} from '../lib/workerSupabase'
+import { useWorkerOnboardingResume } from '../hooks/useWorkerOnboardingResume'
 import { getDefaultGalleryUrlsForCategory } from '../lib/workerGalleryDefaults'
 import { useDemoMode } from '../contexts/DemoModeContext'
 import './WorkerPortfolio.css'
@@ -18,8 +24,42 @@ export default function WorkerPortfolio() {
 
   const [photos, setPhotos] = useState([])
 
+  useWorkerOnboardingResume('portfolio', category)
+
+  useEffect(() => {
+    if (!category) {
+      navigate('/worker/signup', { replace: true })
+    }
+  }, [category, navigate])
+
+  useEffect(() => {
+    if (!supabase) return undefined
+    let cancelled = false
+    ;(async () => {
+      const { data: { session } } = await supabase.auth.getSession()
+      if (cancelled || !session?.user) return
+      const m = session.user.user_metadata || {}
+      let urls = normalizeGalleryUrls(m.worker_gallery_urls)
+      if (!urls.length) {
+        const row = await fetchWorkerDraftRow(session.user.id)
+        urls = normalizeGalleryUrls(row?.gallery_urls)
+      }
+      if (urls.length) {
+        setPhotos(
+          urls.map((url) => ({
+            id: crypto.randomUUID(),
+            url,
+            file: null,
+          }))
+        )
+      }
+    })()
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
   if (!category) {
-    navigate('/worker/signup', { replace: true })
     return null
   }
 
@@ -63,7 +103,7 @@ export default function WorkerPortfolio() {
           },
         })
         if (authData?.user) {
-          await persistWorkerRowDraft(authData.user, category, urls)
+          await persistWorkerRowDraft(authData.user, category, urls, { onboardingStep: 'packages' })
         }
       }
     } catch { /* continue */ }
@@ -78,8 +118,13 @@ export default function WorkerPortfolio() {
         if (session?.user) {
           const urls = []
           for (let i = 0; i < photos.length; i++) {
-            const { publicUrl } = await uploadWorkerAsset(session.user.id, `gallery-${i}`, photos[i].file)
-            if (publicUrl) urls.push(publicUrl)
+            const p = photos[i]
+            if (p.file) {
+              const { publicUrl } = await uploadWorkerAsset(session.user.id, `gallery-${i}`, p.file)
+              if (publicUrl) urls.push(publicUrl)
+            } else if (typeof p.url === 'string' && p.url.startsWith('http')) {
+              urls.push(p.url)
+            }
           }
           await persistGalleryAndGo(urls)
           return

@@ -109,12 +109,12 @@ export function buildWorkerRowFromMeta(user, categoryFromRoute, galleryUrlsOverr
 }
 
 /** Upsert workers row from current session user metadata (draft = not finished onboarding). */
-export async function persistWorkerRowDraft(user, categoryFromRoute, galleryUrlsOverride) {
+export async function persistWorkerRowDraft(user, categoryFromRoute, galleryUrlsOverride, options = {}) {
   if (!supabase || !user?.id) return { error: new Error('Not signed in') }
 
   const { data: existing, error: readErr } = await supabase
     .from('workers')
-    .select('onboarding_complete,profile_complete')
+    .select('*')
     .eq('id', user.id)
     .maybeSingle()
 
@@ -125,10 +125,49 @@ export async function persistWorkerRowDraft(user, categoryFromRoute, galleryUrls
   const preserveComplete =
     existing?.onboarding_complete === true || existing?.profile_complete === true
 
-  const row = buildWorkerRowFromMeta(user, categoryFromRoute, galleryUrlsOverride, {
+  const built = buildWorkerRowFromMeta(user, categoryFromRoute, galleryUrlsOverride, {
     complete: preserveComplete,
   })
-  return upsertWorkerRow(row)
+
+  const merged = {
+    ...(existing || {}),
+    ...built,
+    id: user.id,
+  }
+
+  if (existing) {
+    for (const k of Object.keys(built)) {
+      if (built[k] == null && existing[k] != null) merged[k] = existing[k]
+    }
+  }
+
+  if (preserveComplete) {
+    merged.onboarding_complete = true
+    merged.profile_complete = true
+  }
+
+  if (options.onboardingStep != null && options.onboardingStep !== '') {
+    merged.onboarding_step = options.onboardingStep
+  }
+
+  const builtGallery = built.gallery_urls
+  const existingGallery = existing?.gallery_urls
+  if (
+    galleryUrlsOverride === undefined &&
+    (!builtGallery || (Array.isArray(builtGallery) && builtGallery.length === 0)) &&
+    existingGallery != null &&
+    normalizeGalleryUrls(existingGallery).length > 0
+  ) {
+    merged.gallery_urls = existingGallery
+  }
+
+  if (options.packagesDraft !== undefined) {
+    merged.onboarding_packages_draft = options.packagesDraft
+  } else if (existing?.onboarding_packages_draft != null) {
+    merged.onboarding_packages_draft = existing.onboarding_packages_draft
+  }
+
+  return upsertWorkerRow(merged)
 }
 
 /**
@@ -140,6 +179,8 @@ export async function finalizeWorkerOnboarding(user, categoryFromRoute, pkgList)
   if (!supabase || !user?.id) return { error: new Error('Not signed in') }
 
   const row = buildWorkerRowFromMeta(user, categoryFromRoute, undefined, { complete: true })
+  row.onboarding_step = null
+  row.onboarding_packages_draft = null
   const { error: rowErr } = await upsertWorkerRow(row)
   if (rowErr) return { error: rowErr }
 
@@ -153,6 +194,8 @@ export async function finalizeWorkerOnboarding(user, categoryFromRoute, pkgList)
     if (p.thumbFile instanceof File) {
       const { publicUrl } = await uploadWorkerAsset(user.id, `package-${i}`, p.thumbFile)
       imageUrl = publicUrl
+    } else if (typeof p.thumbUrl === 'string' && p.thumbUrl.startsWith('http')) {
+      imageUrl = p.thumbUrl
     }
     pkgRows.push({
       worker_id: user.id,
@@ -200,7 +243,7 @@ function extractCity(address) {
   return parts[0].trim() || 'Porto'
 }
 
-function normalizeGalleryUrls(raw) {
+export function normalizeGalleryUrls(raw) {
   if (Array.isArray(raw)) return raw.filter(Boolean)
   if (raw && typeof raw === 'string') {
     try {
@@ -211,6 +254,35 @@ function normalizeGalleryUrls(raw) {
     }
   }
   return []
+}
+
+export async function fetchWorkerDraftRow(userId) {
+  if (!supabase || !userId) return null
+  const { data, error } = await supabase.from('workers').select('*').eq('id', userId).maybeSingle()
+  if (error && error.code !== '42P01' && !String(error.message || '').includes('does not exist')) {
+    console.warn('[workerSupabase] fetchWorkerDraftRow', error)
+  }
+  return data || null
+}
+
+/**
+ * @param {string} userId
+ * @param {Array<{ title?: string, price?: string|number, duration?: string, priceType?: string, description?: string, thumbUrl?: string|null }>} draft
+ */
+export async function persistWorkerPackagesDraft(userId, draft) {
+  if (!supabase || !userId) return { error: new Error('no supabase') }
+  const { error } = await supabase
+    .from('workers')
+    .update({
+      onboarding_packages_draft: draft,
+      updated_at: new Date().toISOString(),
+    })
+    .eq('id', userId)
+  if (error) {
+    console.warn('[workerSupabase] persistWorkerPackagesDraft', error)
+    return { error }
+  }
+  return { error: null }
 }
 
 /**

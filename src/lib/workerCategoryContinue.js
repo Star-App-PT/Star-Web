@@ -13,7 +13,7 @@ export async function continueWorkerCategorySignup(categoryId, navigate) {
         data: { worker_category: categoryId },
       })
       if (authData?.user) {
-        await persistWorkerRowDraft(authData.user, categoryId)
+        await persistWorkerRowDraft(authData.user, categoryId, undefined, { onboardingStep: 'service_area' })
       }
     } catch {
       /* still navigate */

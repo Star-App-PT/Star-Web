@@ -1,10 +1,16 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { supabase } from '../supabase'
 import { useDemoMode } from '../contexts/DemoModeContext'
 import { useAppMode } from '../contexts/AppModeContext'
-import { finalizeWorkerOnboarding } from '../lib/workerSupabase'
+import { useAuthSession } from '../contexts/AuthSessionContext'
+import {
+  finalizeWorkerOnboarding,
+  fetchWorkerDraftRow,
+  persistWorkerPackagesDraft,
+} from '../lib/workerSupabase'
+import { useWorkerOnboardingResume } from '../hooks/useWorkerOnboardingResume'
 import actionHomeCleaning from '../assets/workers/action/action-home-cleaning.jpg'
 import actionCarpentry from '../assets/workers/action/action-carpentry.jpg'
 import actionPhotography from '../assets/workers/action/action-photography.jpg'
@@ -50,6 +56,7 @@ export default function WorkerPackages() {
   const navigate = useNavigate()
   const { isDemoMode } = useDemoMode()
   const { setMode } = useAppMode()
+  const { user } = useAuthSession()
   const thumbRef = useRef(null)
 
   const [packages, setPackages] = useState([{ ...EMPTY_PKG, id: crypto.randomUUID() }])
@@ -57,10 +64,64 @@ export default function WorkerPackages() {
   const [finishing, setFinishing] = useState(false)
   const [finishError, setFinishError] = useState('')
 
-  if (!category) {
-    navigate('/worker/signup', { replace: true })
-    return null
-  }
+  useWorkerOnboardingResume('packages', category)
+
+  useEffect(() => {
+    if (!category) {
+      navigate('/worker/signup', { replace: true })
+    }
+  }, [category, navigate])
+
+  useEffect(() => {
+    if (!supabase || !user?.id) return undefined
+    let cancelled = false
+    ;(async () => {
+      const row = await fetchWorkerDraftRow(user.id)
+      if (cancelled || !row?.onboarding_packages_draft) return
+      const draft = row.onboarding_packages_draft
+      if (!Array.isArray(draft) || draft.length === 0) return
+      const meaningful = draft.some(
+        (p) => String(p?.title || '').trim() || String(p?.price || '').trim() || String(p?.description || '').trim()
+      )
+      if (!meaningful) return
+      setPackages(
+        draft.map((p) => ({
+          ...EMPTY_PKG,
+          title: p.title ?? '',
+          price: p.price != null ? String(p.price) : '',
+          duration: p.duration || '1hr',
+          priceType: p.priceType || 'visit',
+          description: p.description ?? '',
+          thumbUrl: typeof p.thumbUrl === 'string' && p.thumbUrl.startsWith('http') ? p.thumbUrl : null,
+          thumbFile: null,
+          id: crypto.randomUUID(),
+        }))
+      )
+    })()
+    return () => {
+      cancelled = true
+    }
+  }, [user?.id])
+
+  useEffect(() => {
+    if (!supabase || !user?.id) return undefined
+    const meaningful = packages.some(
+      (p) => p.title?.trim() || p.price || p.description?.trim() || (p.thumbUrl && p.thumbUrl.startsWith('http'))
+    )
+    if (!meaningful) return undefined
+    const handle = setTimeout(() => {
+      const serial = packages.map((p) => ({
+        title: p.title,
+        price: p.price,
+        duration: p.duration,
+        priceType: p.priceType,
+        description: p.description,
+        thumbUrl: typeof p.thumbUrl === 'string' && p.thumbUrl.startsWith('http') ? p.thumbUrl : null,
+      }))
+      persistWorkerPackagesDraft(user.id, serial)
+    }, 650)
+    return () => clearTimeout(handle)
+  }, [packages, user?.id])
 
   const updatePkg = (id, field, value) => {
     setPackages((prev) =>
@@ -77,7 +138,9 @@ export default function WorkerPackages() {
     if (packages.length <= 1) return
     setPackages((prev) => {
       const removed = prev.find((p) => p.id === id)
-      if (removed?.thumbUrl) URL.revokeObjectURL(removed.thumbUrl)
+      if (removed?.thumbUrl && String(removed.thumbUrl).startsWith('blob:')) {
+        URL.revokeObjectURL(removed.thumbUrl)
+      }
       return prev.filter((p) => p.id !== id)
     })
   }
@@ -124,6 +187,7 @@ export default function WorkerPackages() {
           priceType: p.priceType,
           description: p.description.trim(),
           thumbFile: p.thumbFile instanceof File ? p.thumbFile : null,
+          thumbUrl: typeof p.thumbUrl === 'string' && p.thumbUrl.startsWith('http') ? p.thumbUrl : null,
         }))
       if (!supabase || !pkgList.length) {
         setFinishError(t('common.somethingWentWrong'))
@@ -148,6 +212,10 @@ export default function WorkerPackages() {
   const durationLabel = (val) => {
     const option = DURATION_OPTIONS.find((o) => o.value === val)
     return option ? t(option.labelKey) : val
+  }
+
+  if (!category) {
+    return null
   }
 
   return (

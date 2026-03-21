@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { supabase } from '../supabase'
 import { persistWorkerRowDraft } from '../lib/workerSupabase'
+import { useWorkerOnboardingResume } from '../hooks/useWorkerOnboardingResume'
 import { useDemoMode } from '../contexts/DemoModeContext'
 import './WorkerAbout.css'
 
@@ -15,10 +16,28 @@ export default function WorkerAbout() {
   const { isDemoMode } = useDemoMode()
   const placeholderCategory = ['cleaning', 'repairs', 'services'].includes(category) ? category : 'cleaning'
 
+  useWorkerOnboardingResume('about', placeholderCategory)
+
   const [years, setYears] = useState(null)
   const [notable, setNotable] = useState('')
   const [training, setTraining] = useState('')
   const [honours, setHonours] = useState('')
+
+  useEffect(() => {
+    if (!supabase) return undefined
+    let cancelled = false
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (cancelled || !session?.user) return
+      const m = session.user.user_metadata || {}
+      if (typeof m.worker_years === 'number') setYears(m.worker_years)
+      if (m.worker_notable) setNotable(String(m.worker_notable))
+      if (m.worker_training) setTraining(String(m.worker_training))
+      if (m.worker_honours) setHonours(String(m.worker_honours))
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   const categoryLabel = t(`workerSignup.${category}`) || category
 
@@ -44,7 +63,9 @@ export default function WorkerAbout() {
             },
           })
           if (authData?.user) {
-            await persistWorkerRowDraft(authData.user, placeholderCategory)
+            await persistWorkerRowDraft(authData.user, placeholderCategory, undefined, {
+              onboardingStep: 'profile_photos',
+            })
           }
         }
       } catch { /* continue even if save fails */ }

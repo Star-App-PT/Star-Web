@@ -6,6 +6,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { supabase } from '../supabase'
 import { persistWorkerRowDraft } from '../lib/workerSupabase'
+import { useWorkerOnboardingResume } from '../hooks/useWorkerOnboardingResume'
 import 'leaflet/dist/leaflet.css'
 import cleanerImg from '../assets/workers/cleaners/cleaner-4.jpg'
 import handymanImg from '../assets/workers/handymen/handyman-1.jpg'
@@ -35,6 +36,8 @@ export default function ServiceArea() {
   const { isDemoMode } = useDemoMode()
   const meta = CATEGORY_META[category] || CATEGORY_META.cleaning
 
+  useWorkerOnboardingResume('service_area', category)
+
   const [query, setQuery] = useState('')
   const [suggestions, setSuggestions] = useState([])
   const [loading, setLoading] = useState(false)
@@ -52,28 +55,52 @@ export default function ServiceArea() {
   const markerRef = useRef(null)
   const geoAttempted = useRef(false)
 
-  // Auto-detect location on mount
+  // Restore service area from Supabase Auth, or auto-detect only when no saved draft
   useEffect(() => {
-    if (geoAttempted.current) return
-    geoAttempted.current = true
-    if (!navigator.geolocation) return
-    navigator.geolocation.getCurrentPosition(
-      async (pos) => {
-        const { latitude, longitude } = pos.coords
-        try {
-          const res = await fetch(
-            `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&accept-language=en`
-          )
-          const data = await res.json()
-          if (data?.display_name) {
-            setQuery(data.display_name)
-            setAddress({ display: data.display_name, lat: latitude, lng: longitude })
-          }
-        } catch { /* fallback: worker types manually */ }
-      },
-      () => { /* permission denied or error — worker types manually */ },
-      { timeout: 8000 }
-    )
+    if (!supabase) return undefined
+    let cancelled = false
+    ;(async () => {
+      const { data: { session } } = await supabase.auth.getSession()
+      if (cancelled || !session?.user) return
+      const m = session.user.user_metadata || {}
+      if (m.service_area_address) {
+        setQuery(m.service_area_address)
+        if (typeof m.service_area_lat === 'number' && typeof m.service_area_lng === 'number') {
+          setAddress({
+            display: m.service_area_address,
+            lat: m.service_area_lat,
+            lng: m.service_area_lng,
+          })
+        }
+        if (typeof m.service_area_drive_time === 'number') setDriveTime(m.service_area_drive_time)
+        geoAttempted.current = true
+        return
+      }
+      if (geoAttempted.current) return
+      geoAttempted.current = true
+      if (!navigator.geolocation) return
+      navigator.geolocation.getCurrentPosition(
+        async (pos) => {
+          if (cancelled) return
+          const { latitude, longitude } = pos.coords
+          try {
+            const res = await fetch(
+              `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&accept-language=en`
+            )
+            const data = await res.json()
+            if (data?.display_name) {
+              setQuery(data.display_name)
+              setAddress({ display: data.display_name, lat: latitude, lng: longitude })
+            }
+          } catch { /* fallback: worker types manually */ }
+        },
+        () => { /* permission denied or error — worker types manually */ },
+        { timeout: 8000 }
+      )
+    })()
+    return () => {
+      cancelled = true
+    }
   }, [])
 
   // Close dropdown on outside click
@@ -219,7 +246,7 @@ export default function ServiceArea() {
             },
           })
           if (authData?.user) {
-            await persistWorkerRowDraft(authData.user, category)
+            await persistWorkerRowDraft(authData.user, category, undefined, { onboardingStep: 'about' })
           }
         }
       } catch { /* continue */ }
