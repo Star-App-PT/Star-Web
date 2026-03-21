@@ -242,10 +242,11 @@ export default function ServiceArea() {
 
       <div className="sa__body">
         <div className="sa__left">
-          <h1 className="sa__title">{t('serviceArea.title')}</h1>
-          <p className="sa__subtitle">{t('serviceArea.subtitle')}</p>
+          <div className="sa__intro">
+            <h1 className="sa__title">{t('serviceArea.title')}</h1>
+            <p className="sa__subtitle">{t('serviceArea.subtitle')}</p>
 
-          <div className="sa__search-wrap" ref={wrapRef}>
+            <div className="sa__search-wrap" ref={wrapRef}>
             <div className="sa__search">
               <svg className="sa__search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#717171" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="11" cy="11" r="8"/>
@@ -290,23 +291,34 @@ export default function ServiceArea() {
               </div>
             )}
           </div>
+          </div>
 
           {address && (
-            <div className="sa__map-wrap">
-              <div ref={mapRef} className="sa__map" />
-              <button type="button" className="sa__drive-pill" onClick={openModal}>
-                <span className="sa__drive-emoji">🚗</span> {driveLabelText}
-              </button>
+            <div className="sa__map-row">
+              <div className="sa__map-wrap">
+                <div ref={mapRef} className="sa__map" />
+                <button type="button" className="sa__drive-pill" onClick={openModal}>
+                  <span className="sa__drive-emoji">🚗</span> {driveLabelText}
+                </button>
+              </div>
+              <div className="sa__right sa__right--beside-map">
+                <div className="sa__cat-card">
+                  <img src={meta.image} alt={t(meta.labelKey)} className="sa__cat-card-img" />
+                  <p className="sa__cat-card-label">{t(meta.labelKey)}</p>
+                </div>
+              </div>
             </div>
           )}
         </div>
 
-        <div className="sa__right">
-          <div className="sa__cat-card">
-            <img src={meta.image} alt={t(meta.labelKey)} className="sa__cat-card-img" />
-            <p className="sa__cat-card-label">{t(meta.labelKey)}</p>
+        {!address && (
+          <div className="sa__right">
+            <div className="sa__cat-card">
+              <img src={meta.image} alt={t(meta.labelKey)} className="sa__cat-card-img" />
+              <p className="sa__cat-card-label">{t(meta.labelKey)}</p>
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       <div className="sa__footer">
