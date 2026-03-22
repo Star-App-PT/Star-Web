@@ -25,6 +25,9 @@ dist-ssr
 *.sln
 *.sw?
 
+# Apple Sign In (never commit)
+AuthKey_*.p8
+
 # Env
 .env
 .env.local
