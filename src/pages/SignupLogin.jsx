@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { supabase, AUTH_REDIRECT_URL } from '../supabase'
+import { supabase, AUTH_REDIRECT_URL, AUTH_OAUTH_CALLBACK_URL } from '../supabase'
 import './SignupLogin.css'
 
 const CONTINUE_BLUE = '#1B4FBA'
@@ -64,7 +64,7 @@ export default function SignupLogin({ titleKey = 'signupLogin.title' }) {
     setError('')
     supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: AUTH_REDIRECT_URL },
+      options: { redirectTo: AUTH_OAUTH_CALLBACK_URL },
     })
   }
 
@@ -72,7 +72,7 @@ export default function SignupLogin({ titleKey = 'signupLogin.title' }) {
     setError('')
     supabase.auth.signInWithOAuth({
       provider: 'apple',
-      options: { redirectTo: AUTH_REDIRECT_URL },
+      options: { redirectTo: AUTH_OAUTH_CALLBACK_URL },
     })
   }
 

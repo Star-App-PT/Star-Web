@@ -43,6 +43,7 @@ import WorkerLogin from './pages/worker/WorkerLogin'
 import DemoLanding from './pages/DemoLanding'
 import Privacy from './pages/Privacy'
 import Terms from './pages/Terms'
+import AuthCallback from './pages/AuthCallback'
 import { AuthSessionProvider } from './contexts/AuthSessionContext'
 import { CurrencyProvider } from './contexts/CurrencyContext'
 import { AppModeProvider } from './contexts/AppModeContext'
@@ -86,7 +87,11 @@ function AppShell() {
         } catch {
           /* ignore */
         }
-        if (location.pathname !== '/profile/edit' && location.pathname !== '/worker/signup') {
+        if (
+          location.pathname !== '/profile/edit' &&
+          location.pathname !== '/worker/signup' &&
+          location.pathname !== '/auth/callback'
+        ) {
           navigate('/', { replace: true })
         }
       }
@@ -145,6 +150,7 @@ function AppShell() {
       <main className="app-main">
         <Routes>
           <Route path="/demo" element={<DemoLanding />} />
+          <Route path="/auth/callback" element={<AuthCallback />} />
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<Search />} />
           <Route path="/workers/:id" element={<WorkerPublicProfileRedirect />} />
