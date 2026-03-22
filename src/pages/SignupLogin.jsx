@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { supabase, getAuthSiteOrigin, getAuthOAuthCallbackUrl } from '../supabase'
+import { supabase, AUTH_REDIRECT_URL, getAuthSiteOrigin, getAuthOAuthCallbackUrl } from '../supabase'
 import './SignupLogin.css'
 
 const CONTINUE_BLUE = '#1B4FBA'
@@ -72,7 +72,7 @@ export default function SignupLogin({ titleKey = 'signupLogin.title' }) {
     setError('')
     supabase.auth.signInWithOAuth({
       provider: 'apple',
-      options: { redirectTo: getAuthOAuthCallbackUrl() },
+      options: { redirectTo: `${AUTH_REDIRECT_URL}/auth/callback` },
     })
   }
 

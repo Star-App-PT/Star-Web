@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { supabase, getAuthSiteOrigin, getAuthOAuthCallbackUrl } from '../supabase'
+import { supabase, AUTH_REDIRECT_URL, getAuthSiteOrigin, getAuthOAuthCallbackUrl } from '../supabase'
 import { useDemoMode } from '../contexts/DemoModeContext'
 import CountryCodePicker from './CountryCodePicker'
 import './SignupForm.css'
@@ -39,7 +39,7 @@ export default function SignupForm({ category, onBack }) {
     setLoading(true)
     const { error: err } = await supabase.auth.signInWithOAuth({
       provider: 'apple',
-      options: { redirectTo: getAuthOAuthCallbackUrl() },
+      options: { redirectTo: `${AUTH_REDIRECT_URL}/auth/callback` },
     })
     if (err) {
       setError(err.message)

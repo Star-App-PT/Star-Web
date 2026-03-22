@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { X } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { supabase, getAuthSiteOrigin, getAuthOAuthCallbackUrl } from '../../supabase'
+import { supabase, AUTH_REDIRECT_URL, getAuthSiteOrigin, getAuthOAuthCallbackUrl } from '../../supabase'
 import { WORKER_SIGNUP_PENDING_KEY } from '../../constants/workerSignup'
 import { useDemoMode } from '../../contexts/DemoModeContext'
 import { useNavigate } from 'react-router-dom'
@@ -73,7 +73,7 @@ export default function WorkerSignupAuthModal({ open, onClose }) {
     markWorkerSignupPending()
     supabase.auth.signInWithOAuth({
       provider: 'apple',
-      options: { redirectTo: getAuthOAuthCallbackUrl() },
+      options: { redirectTo: `${AUTH_REDIRECT_URL}/auth/callback` },
     })
   }, [])
 
