@@ -9,7 +9,14 @@
 
 .wa__top {
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wa__step {
+  font-size: 0.8rem;
+  color: #717171;
+  font-weight: 500;
 }
 
 .wa__back {

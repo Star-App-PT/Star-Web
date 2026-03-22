@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { supabase } from '../supabase'
-import { persistWorkerRowDraft } from '../lib/workerSupabase'
+import { persistWorkerRowDraft, fetchWorkerDraftRow } from '../lib/workerSupabase'
 import { useWorkerOnboardingResume } from '../hooks/useWorkerOnboardingResume'
 import { useDemoMode } from '../contexts/DemoModeContext'
 import './WorkerAbout.css'
@@ -26,14 +26,21 @@ export default function WorkerAbout() {
   useEffect(() => {
     if (!supabase) return undefined
     let cancelled = false
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    ;(async () => {
+      const { data: { session } } = await supabase.auth.getSession()
       if (cancelled || !session?.user) return
       const m = session.user.user_metadata || {}
+      const row = await fetchWorkerDraftRow(session.user.id)
+      if (cancelled) return
       if (typeof m.worker_years === 'number') setYears(m.worker_years)
+      else if (typeof row?.years_experience === 'number') setYears(row.years_experience)
       if (m.worker_notable) setNotable(String(m.worker_notable))
+      else if (row?.metadata_notable) setNotable(String(row.metadata_notable))
       if (m.worker_training) setTraining(String(m.worker_training))
+      else if (row?.metadata_training) setTraining(String(row.metadata_training))
       if (m.worker_honours) setHonours(String(m.worker_honours))
-    })
+      else if (row?.metadata_honours) setHonours(String(row.metadata_honours))
+    })()
     return () => {
       cancelled = true
     }
@@ -56,6 +63,7 @@ export default function WorkerAbout() {
         if (session?.user) {
           const { data: authData } = await supabase.auth.updateUser({
             data: {
+              ...session.user.user_metadata,
               worker_years: years,
               worker_notable: notable.trim(),
               worker_training: training.trim(),
@@ -73,13 +81,33 @@ export default function WorkerAbout() {
     navigate(`/worker/signup/${category}`)
   }
 
+  const handleBack = async () => {
+    if (supabase && ['cleaning', 'repairs', 'services'].includes(category)) {
+      try {
+        const { data: { session } } = await supabase.auth.getSession()
+        if (session?.user) {
+          const nextMeta = { ...session.user.user_metadata }
+          if (years !== null) nextMeta.worker_years = years
+          nextMeta.worker_notable = notable
+          nextMeta.worker_training = training
+          nextMeta.worker_honours = honours
+          const { data: authData } = await supabase.auth.updateUser({ data: nextMeta })
+          const u = authData?.user || session.user
+          await persistWorkerRowDraft(u, placeholderCategory, undefined, { onboardingStep: 'service_area' })
+        }
+      } catch { /* continue */ }
+    }
+    navigate(`/worker/service-area/${category}`)
+  }
+
   return (
     <div className="wa">
       <div className="wa__top">
+        <span className="wa__step">{t('workerAbout.step')}</span>
         <button
           type="button"
           className="wa__back btn-back"
-          onClick={() => navigate(`/worker/service-area/${category}`)}
+          onClick={handleBack}
         >
           {t('common.back')}
         </button>

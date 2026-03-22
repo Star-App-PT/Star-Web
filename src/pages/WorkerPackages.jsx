@@ -9,6 +9,7 @@ import {
   finalizeWorkerOnboarding,
   fetchWorkerDraftRow,
   persistWorkerPackagesDraft,
+  persistWorkerRowDraft,
 } from '../lib/workerSupabase'
 import { useWorkerOnboardingResume } from '../hooks/useWorkerOnboardingResume'
 import actionHomeCleaning from '../assets/workers/action/action-home-cleaning.jpg'
@@ -214,6 +215,25 @@ export default function WorkerPackages() {
     return option ? t(option.labelKey) : val
   }
 
+  const handleBack = async () => {
+    if (!category) return
+    if (user?.id && supabase) {
+      try {
+        const serial = packages.map((p) => ({
+          title: p.title,
+          price: p.price,
+          duration: p.duration,
+          priceType: p.priceType,
+          description: p.description,
+          thumbUrl: typeof p.thumbUrl === 'string' && p.thumbUrl.startsWith('http') ? p.thumbUrl : null,
+        }))
+        await persistWorkerPackagesDraft(user.id, serial)
+        await persistWorkerRowDraft(user, category, undefined, { onboardingStep: 'portfolio' })
+      } catch { /* continue */ }
+    }
+    navigate(`/worker/portfolio/${category}`)
+  }
+
   if (!category) {
     return null
   }
@@ -222,7 +242,7 @@ export default function WorkerPackages() {
     <div className="pk">
       <div className="pk__top">
         <span className="pk__step">{t('packages.step')}</span>
-        <button type="button" className="pk__back btn-back" onClick={() => navigate(`/worker/portfolio/${category}`)}>
+        <button type="button" className="pk__back btn-back" onClick={handleBack}>
           {t('common.back')}
         </button>
       </div>

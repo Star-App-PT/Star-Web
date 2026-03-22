@@ -352,6 +352,7 @@
     "agreeAndContinue": "Agree and continue"
   },
   "workerAbout": {
+    "step": "Step 8 of 12",
     "title": "Tell us a bit more about you",
     "subtitle": "Help clients understand who you are before they book.",
     "yearsLabel": "How many years have you been in {{category}}?",
@@ -379,6 +380,7 @@
     }
   },
   "serviceArea": {
+    "step": "Step 7 of 12",
     "title": "Where will you work?",
     "subtitle": "Enter your starting location and set your maximum drive time.",
     "placeholder": "Enter your starting location",

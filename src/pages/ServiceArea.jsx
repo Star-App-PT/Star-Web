@@ -239,6 +239,7 @@ export default function ServiceArea() {
         if (session?.user) {
           const { data: authData } = await supabase.auth.updateUser({
             data: {
+              ...session.user.user_metadata,
               service_area_address: address.display,
               service_area_lat: address.lat,
               service_area_lng: address.lng,
@@ -254,6 +255,27 @@ export default function ServiceArea() {
     navigate(`/worker/about/${category}`)
   }
 
+  const handleBack = async () => {
+    if (supabase && category && CATEGORY_META[category]) {
+      try {
+        const { data: { session } } = await supabase.auth.getSession()
+        if (session?.user) {
+          const nextMeta = { ...session.user.user_metadata }
+          if (address) {
+            nextMeta.service_area_address = address.display
+            nextMeta.service_area_lat = address.lat
+            nextMeta.service_area_lng = address.lng
+            nextMeta.service_area_drive_time = driveTime
+          }
+          const { data: authData } = await supabase.auth.updateUser({ data: nextMeta })
+          const u = authData?.user || session.user
+          await persistWorkerRowDraft(u, category, undefined, { onboardingStep: 'choose_category' })
+        }
+      } catch { /* continue */ }
+    }
+    navigate('/worker/signup')
+  }
+
   if (!category || !CATEGORY_META[category]) {
     navigate('/worker/signup', { replace: true })
     return null
@@ -262,7 +284,8 @@ export default function ServiceArea() {
   return (
     <div className="sa">
       <div className="sa__top">
-        <button type="button" className="sa__back btn-back" onClick={() => navigate(-1)}>
+        <span className="sa__step">{t('serviceArea.step')}</span>
+        <button type="button" className="sa__back btn-back" onClick={handleBack}>
           {t('common.back')}
         </button>
       </div>

@@ -41,3 +41,8 @@ These rules must **NEVER** be changed without explicit instruction from the user
 ## Before committing
 
 Any time a task touches files that contain these elements, **re-read this file** and verify none of these rules are violated before committing.
+
+## Worker onboarding
+
+- The Back button in worker onboarding **always** navigates to the **previous** step in the flow — it must **never** leave the user on the same step.
+- Worker onboarding progress is **always** saved to Supabase at **every** step transition (forward **and** backward), using `persistWorkerRowDraft` (and package draft helpers where applicable), not only in-memory component state.

@@ -1,6 +1,7 @@
 import { normalizeGalleryUrls } from './workerSupabase'
 
 export const WORKER_ONBOARDING_STEPS = [
+  'choose_category',
   'service_area',
   'about',
   'profile_photos',
@@ -16,6 +17,7 @@ export function stepIndex(step) {
 }
 
 export function pathForWorkerOnboardingStep(step, category) {
+  if (step === 'choose_category') return '/worker/signup'
   const c = VALID_CATEGORY.has(category) ? category : 'cleaning'
   switch (step) {
     case 'about':
@@ -36,7 +38,7 @@ export function pathForWorkerOnboardingStep(step, category) {
 export function inferWorkerOnboardingStep(user, row) {
   const m = user?.user_metadata || {}
   const cat = row?.category || m.worker_category
-  if (!cat || !VALID_CATEGORY.has(cat)) return 'service_area'
+  if (!cat || !VALID_CATEGORY.has(cat)) return 'choose_category'
 
   const addr = row?.service_area_address || m.service_area_address
   if (!addr) return 'service_area'

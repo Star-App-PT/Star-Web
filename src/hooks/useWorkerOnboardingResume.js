@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../supabase'
 import { useAuthSession } from '../contexts/AuthSessionContext'
@@ -12,18 +12,13 @@ import {
 const VALID_CATEGORY = new Set(['cleaning', 'repairs', 'services'])
 
 /**
- * Keeps worker onboarding on the correct step after refresh; stamps onboarding_step to Supabase.
+ * On refresh: if the user is *behind* their saved progress (e.g. bookmark), send them forward.
+ * If they navigated *back* (saved step ahead of this screen), stay here and downgrade saved step in DB.
  * @param {'service_area'|'about'|'profile_photos'|'portfolio'|'packages'} expectedStep
- * @param {string|undefined} category route param
  */
 export function useWorkerOnboardingResume(expectedStep, category) {
   const navigate = useNavigate()
   const { user } = useAuthSession()
-  const stampOnce = useRef(false)
-
-  useEffect(() => {
-    stampOnce.current = false
-  }, [expectedStep, category])
 
   useEffect(() => {
     if (!supabase || !user?.id || !category || !VALID_CATEGORY.has(category)) return undefined
@@ -31,26 +26,30 @@ export function useWorkerOnboardingResume(expectedStep, category) {
     let cancelled = false
 
     ;(async () => {
-      const row = await fetchWorkerDraftRow(user.id)
+      const { data: { session } } = await supabase.auth.getSession()
+      const sessionUser = session?.user
+      if (!sessionUser?.id || cancelled) return
+
+      const row = await fetchWorkerDraftRow(sessionUser.id)
       if (cancelled) return
 
       if (row?.onboarding_complete === true || row?.profile_complete === true) {
-        navigate(`/worker/${user.id}`, { replace: true })
+        navigate(`/worker/${sessionUser.id}`, { replace: true })
         return
       }
 
-      const saved = row?.onboarding_step || inferWorkerOnboardingStep(user, row)
+      const saved = row?.onboarding_step || inferWorkerOnboardingStep(sessionUser, row)
       const si = stepIndex(saved)
       const ci = stepIndex(expectedStep)
-      if (si !== ci) {
-        navigate(pathForWorkerOnboardingStep(saved, category), { replace: true })
+
+      /* Only block jumping *ahead* of allowed progress (si < ci). Never block going back (si > ci). */
+      if (si < ci) {
+        const cat = row?.category || sessionUser.user_metadata?.worker_category || category
+        navigate(pathForWorkerOnboardingStep(saved, cat), { replace: true })
         return
       }
 
-      if (!stampOnce.current) {
-        stampOnce.current = true
-        await persistWorkerRowDraft(user, category, undefined, { onboardingStep: expectedStep })
-      }
+      await persistWorkerRowDraft(sessionUser, category, undefined, { onboardingStep: expectedStep })
     })()
 
     return () => {

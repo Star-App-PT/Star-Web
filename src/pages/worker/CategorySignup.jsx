@@ -236,6 +236,43 @@ export default function CategorySignup() {
     navigate(`/worker/portfolio/${category}`)
   }
 
+  const handleBack = async () => {
+    if (!category) return
+    if (supabase) {
+      try {
+        const { data: { session } } = await supabase.auth.getSession()
+        if (session?.user) {
+          let profileUrl =
+            typeof imgSrc === 'string' && imgSrc.startsWith('http') ? imgSrc : session.user.user_metadata?.avatar_url || null
+          let coverUrl =
+            typeof coverSrc === 'string' && coverSrc.startsWith('http')
+              ? coverSrc
+              : session.user.user_metadata?.worker_cover_photo_url || null
+          if (profileFileRef.current) {
+            const { publicUrl } = await uploadWorkerAsset(session.user.id, 'profile', profileFileRef.current)
+            if (publicUrl) profileUrl = publicUrl
+          }
+          if (coverFileRef.current) {
+            const { publicUrl } = await uploadWorkerAsset(session.user.id, 'cover', coverFileRef.current)
+            if (publicUrl) coverUrl = publicUrl
+          }
+          const { data: authData } = await supabase.auth.updateUser({
+            data: {
+              ...session.user.user_metadata,
+              profile_photo_confirmed: true,
+              ...(profileUrl && { avatar_url: profileUrl, profile_photo_url: profileUrl }),
+              ...(coverUrl && { worker_cover_photo_url: coverUrl }),
+            },
+          })
+          if (authData?.user) {
+            await persistWorkerRowDraft(authData.user, category, undefined, { onboardingStep: 'about' })
+          }
+        }
+      } catch { /* continue */ }
+    }
+    navigate(`/worker/about/${category}`)
+  }
+
   if (!category) {
     navigate('/worker/signup', { replace: true })
     return null
@@ -247,7 +284,7 @@ export default function CategorySignup() {
     <div className="cs">
       <div className="cs__top">
         <span className="cs__step">{t('profilePhoto.step')}</span>
-        <button type="button" className="cs__back btn-back" onClick={() => navigate(`/worker/about/${category}`)}>
+        <button type="button" className="cs__back btn-back" onClick={handleBack}>
           {t('common.back')}
         </button>
       </div>

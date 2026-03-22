@@ -42,9 +42,11 @@ export default function WorkerSignup() {
         navigate(`/worker/${user.id}`, { replace: true })
         return
       }
+      const step = row?.onboarding_step || inferWorkerOnboardingStep(user, row)
+      if (step === 'choose_category') return
+
       const cat = row?.category || user.user_metadata?.worker_category
       if (!cat || !['cleaning', 'repairs', 'services'].includes(cat)) return
-      const step = row?.onboarding_step || inferWorkerOnboardingStep(user, row)
       navigate(pathForWorkerOnboardingStep(step, cat), { replace: true })
     })()
     return () => {

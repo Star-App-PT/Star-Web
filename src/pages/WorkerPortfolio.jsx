@@ -141,11 +141,41 @@ export default function WorkerPortfolio() {
     await persistGalleryAndGo(defaults)
   }
 
+  const handleBack = async () => {
+    if (!category) return
+    try {
+      if (supabase) {
+        const { data: { session } } = await supabase.auth.getSession()
+        if (session?.user) {
+          const urls = []
+          for (let i = 0; i < photos.length; i++) {
+            const p = photos[i]
+            if (p.file) {
+              const { publicUrl } = await uploadWorkerAsset(session.user.id, `gallery-${i}`, p.file)
+              if (publicUrl) urls.push(publicUrl)
+            } else if (typeof p.url === 'string' && p.url.startsWith('http')) {
+              urls.push(p.url)
+            }
+          }
+          const { data: authData } = await supabase.auth.updateUser({
+            data: {
+              ...session.user.user_metadata,
+              ...(urls.length > 0 && { portfolio_count: urls.length, worker_gallery_urls: urls }),
+            },
+          })
+          const u = authData?.user || session.user
+          await persistWorkerRowDraft(u, category, urls.length ? urls : undefined, { onboardingStep: 'profile_photos' })
+        }
+      }
+    } catch { /* continue */ }
+    navigate(`/worker/signup/${category}`)
+  }
+
   return (
     <div className="wp">
       <div className="wp__top">
         <span className="wp__step">{t('portfolio.step')}</span>
-        <button type="button" className="wp__back btn-back" onClick={() => navigate(`/worker/signup/${category}`)}>
+        <button type="button" className="wp__back btn-back" onClick={handleBack}>
           {t('common.back')}
         </button>
       </div>

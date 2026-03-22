@@ -352,6 +352,7 @@
     "agreeAndContinue": "Concordar e continuar"
   },
   "workerAbout": {
+    "step": "Passo 8 de 12",
     "title": "Conte-nos um pouco mais sobre si",
     "subtitle": "Ajude os clientes a perceber quem é antes de reservarem.",
     "yearsLabel": "Há quantos anos trabalha em {{category}}?",
@@ -379,6 +380,7 @@
     }
   },
   "serviceArea": {
+    "step": "Passo 7 de 12",
     "title": "Onde vai trabalhar?",
     "subtitle": "Introduza a sua localização inicial e defina o tempo máximo de deslocação.",
     "placeholder": "Introduza a sua localização inicial",
