@@ -1,0 +1,43 @@
+---
+description: Permanent UI/design decisions — do not revert without explicit user instruction
+alwaysApply: true
+---
+
+# Permanent Design Decisions — Do Not Revert
+
+These rules must **NEVER** be changed without explicit instruction from the user.
+
+## Profile Photo
+
+- The circular profile photo border/ring is always **WHITE** — never blue, never gray
+- The camera icon on the profile photo is always positioned **INSIDE** the white ring, overlapping the bottom of the photo
+- The camera icon style matches the cover photo camera icon (dark rounded square, white icon)
+
+## Header
+
+- "Switch to Worker", "Switch to Client", "Become a Star" text is always **BLACK (#222)** — never blue, never underlined
+- These links show a **pill-shaped hover state in #ebebeb** — no other hover style
+
+## Brand Colors
+
+- Primary brand color: **#1B4FBA** (blue) — used for buttons, links, active states only
+- **Never** apply #1B4FBA to plain text links in the header
+
+## Worker Card
+
+- Worker preview card on the service area page aligns to the **TOP** of the map — never centered
+
+## Footer
+
+- Footer always contains: **Privacy Policy | Terms of Service | © 2025 Star**
+- Footer is present on **every** page
+
+## General
+
+- Never remove features or UI elements that are already working without explicit instruction
+- Never revert a visual fix that was explicitly requested
+- When in doubt about a style decision, **check this file first** before applying defaults
+
+## Before committing
+
+Any time a task touches files that contain these elements, **re-read this file** and verify none of these rules are violated before committing.
