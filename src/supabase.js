@@ -8,5 +8,10 @@ export const AUTH_REDIRECT_URL = 'https://starpros.app'
 
 export const supabase =
   supabaseUrl && supabaseKey
-    ? createClient(supabaseUrl, supabaseKey)
+    ? createClient(supabaseUrl, supabaseKey, {
+        auth: {
+          detectSessionInUrl: true,
+          flowType: 'pkce',
+        },
+      })
     : null
