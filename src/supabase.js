@@ -3,11 +3,27 @@ import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || ''
 const supabaseKey = import.meta.env.VITE_SUPABASE_KEY || ''
 
-/** OAuth and email redirect URL — must be https://starpros.app (no localhost). */
+/**
+ * Production site URL when `window` is unavailable.
+ * PKCE stores the code verifier in localStorage, which is per-origin — OAuth
+ * redirect URLs must use the same origin the user had when starting sign-in
+ * (e.g. www vs non-www).
+ */
 export const AUTH_REDIRECT_URL = 'https://starpros.app'
 
-/** PKCE OAuth return URL — add this exact URL to Supabase Auth → Redirect URLs. */
-export const AUTH_OAUTH_CALLBACK_URL = `${AUTH_REDIRECT_URL}/auth/callback`
+/** Same as AUTH_REDIRECT_URL; use getAuthSiteOrigin() in browser OAuth/email handlers. */
+export const AUTH_SITE_URL_DEFAULT = AUTH_REDIRECT_URL
+
+export function getAuthSiteOrigin() {
+  if (typeof window !== 'undefined' && window.location?.origin) {
+    return window.location.origin.replace(/\/$/, '')
+  }
+  return AUTH_SITE_URL_DEFAULT
+}
+
+export function getAuthOAuthCallbackUrl() {
+  return `${getAuthSiteOrigin()}/auth/callback`
+}
 
 export const supabase =
   supabaseUrl && supabaseKey

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { X } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { supabase, AUTH_REDIRECT_URL, AUTH_OAUTH_CALLBACK_URL } from '../../supabase'
+import { supabase, getAuthSiteOrigin, getAuthOAuthCallbackUrl } from '../../supabase'
 import { WORKER_SIGNUP_PENDING_KEY } from '../../constants/workerSignup'
 import { useDemoMode } from '../../contexts/DemoModeContext'
 import { useNavigate } from 'react-router-dom'
@@ -63,7 +63,7 @@ export default function WorkerSignupAuthModal({ open, onClose }) {
     markWorkerSignupPending()
     supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: AUTH_OAUTH_CALLBACK_URL },
+      options: { redirectTo: getAuthOAuthCallbackUrl() },
     })
   }, [])
 
@@ -73,7 +73,7 @@ export default function WorkerSignupAuthModal({ open, onClose }) {
     markWorkerSignupPending()
     supabase.auth.signInWithOAuth({
       provider: 'apple',
-      options: { redirectTo: AUTH_OAUTH_CALLBACK_URL },
+      options: { redirectTo: getAuthOAuthCallbackUrl() },
     })
   }, [])
 
@@ -92,7 +92,7 @@ export default function WorkerSignupAuthModal({ open, onClose }) {
     setLoading(true)
     const { error: err } = await supabase.auth.signInWithOtp({
       email: email.trim(),
-      options: { emailRedirectTo: AUTH_REDIRECT_URL },
+      options: { emailRedirectTo: getAuthSiteOrigin() },
     })
     setLoading(false)
     if (err) {

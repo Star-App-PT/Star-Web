@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useDemoMode } from '../../../contexts/DemoModeContext'
-import { supabase, AUTH_REDIRECT_URL, AUTH_OAUTH_CALLBACK_URL } from '../../../supabase'
+import { supabase, getAuthOAuthCallbackUrl } from '../../../supabase'
 import './ClientSignup.css'
 
 export default function ClientSignupWelcome() {
@@ -12,10 +12,10 @@ export default function ClientSignupWelcome() {
   const { isDemoMode } = useDemoMode()
 
   const handleGoogle = () => {
-    supabase.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: AUTH_REDIRECT_URL } })
+    supabase.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: getAuthOAuthCallbackUrl() } })
   }
   const handleApple = () => {
-    supabase.auth.signInWithOAuth({ provider: 'apple', options: { redirectTo: AUTH_OAUTH_CALLBACK_URL } })
+    supabase.auth.signInWithOAuth({ provider: 'apple', options: { redirectTo: getAuthOAuthCallbackUrl() } })
   }
   const handlePhone = () => navigate('/client/signup/name')
 
